@@ -11,7 +11,7 @@ const Login = () => {
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Login - Plan my Admission</title>
+        <title>Login - Plan My Admission</title>
       </Helmet>
       <div className="max-w-7xl bg-light rounded-3xl mx-auto my-20 grid md:grid-cols-2 py-20 ">
         <div className="px-20 hidden md:block flex flex-row items-center my-5">
