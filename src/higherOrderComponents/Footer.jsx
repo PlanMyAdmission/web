@@ -72,8 +72,10 @@ const Footer = () => {
             <h6 className="font-bold uppercase">Contact Details</h6>
             <ul className="cursor-pointer font-medium">
               <li className="py-2 text-sm">About</li>
-              <li className="py-2 text-sm">Blog</li>
-              <li className="py-2 text-sm">Careers</li>
+              <Link to="/blogs">
+                <li className="py-2 text-sm">Blog</li>
+              </Link>
+              {/* <li className="py-2 text-sm">Careers</li> */}
             </ul>
           </div>
           <div className="">
@@ -82,9 +84,11 @@ const Footer = () => {
               <Link to="/how-it-works">
                 <li className="py-2 text-sm">How it works</li>
               </Link>
-              <li className="py-2 text-sm">careers</li>
-              <li className="py-2 text-sm">Guides</li>
-              <li className="py-2 text-sm">courses</li>
+              {/* <li className="py-2 text-sm">careers</li>
+              <li className="py-2 text-sm">Guides</li> */}
+              <Link to="/explore">
+                <li className="py-2 text-sm">Courses</li>
+              </Link>
             </ul>
           </div>
         </div>

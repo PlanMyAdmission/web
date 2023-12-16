@@ -2,7 +2,7 @@ export const pricingPlans = [
   {
     title: "Basic",
     price: 0,
-    currency: "USD",
+    currency: "INR",
     frequency: "/month",
     // description: "Lorem ipsum, dite",
     features: [
@@ -16,8 +16,8 @@ export const pricingPlans = [
   },
   {
     title: "Essential",
-    price: 2000,
-    currency: "USD",
+    price: 1000,
+    currency: "INR",
     frequency: "/month",
     // description: "Lorem ipsum, dite",
     features: [
@@ -34,7 +34,7 @@ export const pricingPlans = [
   {
     title: "Premium",
     price: 2000,
-    currency: "USD",
+    currency: "INR",
     frequency: "/month",
     // description: "Lorem ipsum, dite",
     features: [

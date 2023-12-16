@@ -42,6 +42,9 @@ module.exports = {
       '7xl': ['4.5rem', {
         lineHeight: '1',
       }],
+      '1.7lr': ['1.7rem', {
+        lineHeight: '1',
+      }],
       'xs': '0.9rem',
       '2xs': '0.8rem',
       '3xs': '0.5rem',
@@ -50,7 +53,7 @@ module.exports = {
       '2lr': '2.5rem',
       '1.5lr': '1.2rem',
       'lr': '1.1rem',
-      '1.7lr': '1.7rem',
+
       '1.9lr': '1.9rem',
     },
     extend: {

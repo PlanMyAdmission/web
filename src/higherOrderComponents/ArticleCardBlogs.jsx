@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 const ArticleCard = ({ props }) => {
   const nav = useNavigate()
   return (
-    <div className="snap-center shrink-0">
-      <div className="md:max-w-sm w-full transition duration-500 ease-in-out border-b-4 border-white  mx-auto md:mx-0 mb-3 md:mb-0">
-        <img className="w-full" src={props.image} alt="ArticleImage" />
+    <div className="">
+      <div className=" w-full h-[100%] transition duration-500 ease-in-out mx-auto bg-white p-3">
+        <img className="w-full rounded-lg" src={props.image} alt="ArticleImage" />
         <div className="py-3">
           <p className="md:text-2xl text-xl font-semibold leading-tight">
             {props.head}

@@ -1,7 +1,9 @@
 import React from "react";
 import Bussiness from "../../assets/ForInstitutions/Bussiness.svg";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
+  const navigate = useNavigate()
   return (
     <div className="flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto my-10 md:px-10 xl:px-0 px-5">
       <div>
@@ -12,12 +14,12 @@ const Banner = () => {
           </span>
         </h1>
         <p className="py-5 font-bold md:pl-0 px-5">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam
-          voluptatibus quidem in maiores assumenda ipsum doloremque recusandae
-          adipisci harum, culpa deleniti, ex impedit, sunt quibusdam laboriosam
-          quisquam facere placeat quis?
+          Plan My Admission increases student conversion rates, streamlines global student-institution connections, and boosts enrollment through advanced technology and a large student network.
         </p>
-        <button className="bg-main px-5 md:px-0 py-2 text-white rounded-md block my-3 w-[40vw] md:w-[10vw] ml-5 md:ml-0 text-center font-semibold">
+        <button className="bg-main px-5 md:px-0 py-2 text-white rounded-md block my-3 w-[40vw] md:w-[10vw] ml-5 md:ml-0 text-center font-semibold"
+          onClick={() => {
+            navigate("/for-institutions")
+          }}>
           Know More
         </button>
       </div>

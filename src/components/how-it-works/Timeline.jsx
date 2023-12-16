@@ -11,7 +11,7 @@ const Timeline = () => {
               className="bg-light mb-8 rounded-lg md:px-10 px-5 py-5 flex flex-row items-center justify-center relative "
             >
               {/* <span className="bg-main text-white font-bold w-[100px] inline-flex rounded-full items-center h-auto px-5 py-5 md:mr-10 mr-4 "> */}
-              <span className="w-[120px] rounded-full inline-flex bg-main sm:mr-8 mr-4 md:p-5 p-4 text-white font-bold text-2xl object-cover object-center">
+              <span className="w-[90px] rounded-full inline-flex bg-main sm:mr-8 mr-4 md:p-5 p-4 text-white font-bold text-2xl object-cover object-center">
                 {item.id}
               </span>
               <div>
@@ -42,24 +42,24 @@ const data = [
     id: "01",
     title: "Create your account",
     detatils:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum minima magni aliquid voluptates facere maxime aliquam distinctio quidem?Quibusdam exercitationem autem tenetur voluptatem dicta nemo assumenda",
+      "Hey there! Take the first step towards studying abroad by creating an account on our website.",
   },
   {
     id: "02",
     title: "Shortlist University",
     detatils:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum minima magni aliquid voluptates facere maxime aliquam distinctio quidem?Quibusdam exercitationem autem tenetur voluptatem dicta nemo assumenda",
+      "Fill up your profile information and our AI technology provides recommendation and saves you time and money at every step of the application process.",
   },
   {
     id: "03",
     title: "Consult your expert",
     detatils:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum minima magni aliquid voluptates facere maxime aliquam distinctio quidem?Quibusdam exercitationem autem tenetur voluptatem dicta nemo assumenda",
+      "Schedule a one-on-one session with our in-house experts to get guidance on factors like- SOP, LOR, Scholarships, Visa application, and more!",
   },
   {
     id: "04",
     title: "Apply",
     detatils:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum minima magni aliquid voluptates facere maxime aliquam distinctio quidem?Quibusdam exercitationem autem tenetur voluptatem dicta nemo assumenda",
+      "We will help you apply to multiple programs and universities around the world. Then, you wait for your university acceptance and get ready to fly!",
   },
 ];

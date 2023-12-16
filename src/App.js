@@ -13,6 +13,7 @@ import Blog from "./components/home/Blog";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import { useAuth } from "./context/AuthProvider";
 import ExploreUniversityData from "./components/explore_university/ExploreUniversityData"
+// import Article1 from "./higherOrderComponents/Articles/Article1";
 const Explore = lazy(() => import("./components/explore_university/Explore"));
 const Profile = lazy(() => import("./components/dashboard/user/Profile"));
 const Pricing = lazy(() => import("./components/pricing/Pricing"));
@@ -24,6 +25,10 @@ const NotFound = lazy(() => import("./higherOrderComponents/404"));
 const GoToTop = lazy(() => import("./higherOrderComponents/GoToTop"));
 const About = lazy(() => import("./components/aboutUs/About"));
 const Login = lazy(() => import("./components/dashboard/login/Login"));
+const Article1 = lazy(() => import("./higherOrderComponents/Articles/Article1"))
+const Article2 = lazy(() => import("./higherOrderComponents/Articles/Article2"))
+const Article3 = lazy(() => import("./higherOrderComponents/Articles/Article3"))
+const Article4 = lazy(() => import("./higherOrderComponents/Articles/Article4"))
 const Institutions = lazy(() =>
   import("./components/forInstitutions/Institutions")
 );
@@ -79,18 +84,24 @@ const App = () => {
             <Route exact path="terms&conditions" element={<Terms />} />
             <Route exact path="privacy-policy" element={<Privacy />} />
             <Route exact path="how-it-works" element={<HowItWorks />} />
+            <Route exact path="/Navigating-the-American-Campus" element={<Article1 />} />
+            <Route exact path="/Embarking-on-Excellence" element={<Article2 />} />
+            <Route exact path="/Pennsylvania-State-University" element={<Article3 />} />
+            <Route exact path="/Mastering-the-Art-of-Financial-Planning" element={<Article4 />} />
             {/* {isSignedIn == false ? <Route exact path="login" element={<Login />} />
               : <Route exact path="login" element={<NotFound />} />
             }
             {isSignedIn == false ? <Route exact path="register" element={<Register />} />
               : <Route exact path="register" element={<NotFound />} />
             } */}
-            <Route exact path="login" element={<Login />} />
-            <Route exact path="register" element={<Register />} />
+            {isSignedIn == true ? <Route exact path="login" element={<Dashboard />} /> : <Route exact path="login" element={<Login />} />}
+            {isSignedIn == true ? <Route exact path="register" element={<Dashboard />} /> : <Route exact path="register" element={<Register />} />}
+            {/* <Route exact path="register" element={<Register />} /> */}
             <Route exact path="explore" element={<Explore />} />
             {/* <Route element={<ProtectedRoutes />}> */}
-            {isSignedIn == true ? <Route path="dashboard" element={<Dashboard />}>
-              {/* <Route index path="dashboard" element={<Dashboard />} />
+            {isSignedIn == true ?
+              <Route path="dashboard" element={<Dashboard />}>
+                {/* <Route index path="dashboard" element={<Dashboard />} />
               <Route exact path="profile" element={<Profile />} />
               <Route exact path="documents" element={<Documents />} />
               <Route
@@ -98,10 +109,10 @@ const App = () => {
                 path="recommendations"
                 element={<Recommendations />}
               /> */}
-              <Route path=":topic_url" element={<Topic />} />
-              <Route path="recommendations/university" element={<Landing />} />
-              <Route path="shortlisted/university" element={<Landing />} />
-            </Route> : <Route path="dashboard" element={<NotFound />} />}
+                <Route path=":topic_url" element={<Topic />} />
+                <Route path="recommendations/university" element={<Landing />} />
+                <Route path="shortlisted/university" element={<Landing />} />
+              </Route> : <Route path="dashboard" element={<NotFound />} />}
             {/* </Route> */}
             <Route exact path="explore/university" element={<ExploreUniversityData />} />
             <Route index path="blogs" element={<Blog />} />

@@ -20,12 +20,7 @@ const Section = () => {
   return (
     <div className="flex flex-col-reverse md:flex-row items-center justify-evenly max-w-6xl px-2 sm:px-5 md:mx-auto md:mb-20 mb-10 mx-5">
       <p className="md:px-10 md:mx-10 w-full py-10 ">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laborum minima
-        magni aliquid voluptates facere maxime aliquam distinctio quidem?
-        Quibusdam exercitationem autem tenetur voluptatem dicta nemo assumenda
-        rerum iusto inventore veritatis ipsa doloribus adipisci natus soluta
-        earum, minus itaque repellendus nobis quisquam non nulla optio.
-        Obcaecati aspernatur architecto possimus ad odit.
+        Studying at a prestigious university abroad is something that thousands of students from all over the world dream about. Researching and applying to these universities is a complicated and time-consuming hassle. But it doesn't have to be. Plan My Admission is the simple one stop shop for all your higher education requirements.
       </p>
       <img
         src={ArticleImage}

@@ -1,20 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Card = (plan) => {
+  const navigate = useNavigate()
   console.log(plan.forInstitutions);
   return (
     <div className="bg-white shadow-lg rounded-3xl flex flex-col">
       <div
         key={plan.title}
-        className={`${
-          plan.forInstitutions
-            ? "border-b-2 border-main md:mx-auto"
-            : "bg-light shadow-lg rounded-2xl  "
-        } m-4 text-center `}
+        className={`${plan.forInstitutions
+          ? "border-b-2 border-main md:mx-auto"
+          : "bg-light shadow-lg rounded-2xl  "
+          } m-4 text-center `}
       >
         <h3 className="text-5xl font-bold py-2 text-main">{plan.title}</h3>
         <h3 className="text-4xl font-bold py-2 ">
-          ${plan.price}
+          ₹{plan.price}
           <span className="text-[15px] text-grey">{plan.frequency}</span>
         </h3>
         <p className="py-4 font-bold">{plan.description}</p>
@@ -43,7 +44,13 @@ const Card = (plan) => {
           );
         })}
       </ul>
-      <button className="mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center hover:text-white hover:bg-main font-semibold">
+      <button className={plan.title == "Basic" ? "mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center hover:text-white hover:bg-main font-semibold" : "mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center font-semibold cursor-not-allowed"} disabled={plan.title == "Essential" || plan.title == "Premium" ? true : false}
+        onClick={() => {
+          if (plan.title == "Basic") {
+            navigate("/register")
+          }
+        }}
+      >
         {plan.cta}
       </button>
     </div>

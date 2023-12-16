@@ -1,8 +1,14 @@
 import React, { useRef, useState } from "react";
 import ArticleCard from "../../higherOrderComponents/ArticleCard";
 import { Link } from "react-router-dom";
+import article1 from "../../assets/articles/article1.png"
+import article2 from "../../assets/articles/article2.png"
+import article3 from "../../assets/articles/article3.png"
+import article4 from "../../assets/articles/article4.png"
+import { useNavigate } from "react-router-dom";
 
 const ArticlesSection = () => {
+  const navigate = useNavigate()
   // const article = useRef(null);
   const elementRef = useRef(null);
 
@@ -11,6 +17,37 @@ const ArticlesSection = () => {
   // };
   const [arrowDisable, setArrowDisable] = useState(true);
   // const unsplashed = "https://source.unsplash.com/200x200/";
+
+  const data = [
+    {
+      id: 1,
+      image: article1,
+      head: "Navigating the American Campus | A Student's Guide to Living in the USA",
+      desc: "Venturing into the United States for higher education is not just...",
+      link: "/Navigating-the-American-Campus",
+    },
+    {
+      id: 2,
+      image: article2,
+      head: "Embarking on Excellence | A Comprehensive Guide to Studying Abroad",
+      desc: "Embarking on the adventure of studying abroad is a transformative...",
+      link: "/Embarking-on-Excellence",
+    },
+    {
+      id: 3,
+      image: article3,
+      head: "Pennsylvania State University | Elevating Education to Unparalleled Heights",
+      desc: "In the realm of higher education, few institutions stand as tall and...",
+      link: "/Pennsylvania-State-University",
+    },
+    {
+      id: 4,
+      image: article4,
+      head: "Mastering the Art of Financial Planning for Your Study Abroad Adventure",
+      desc: "Embarking on the journey of studying abroad is an exciting adventure...",
+      link: "/Mastering-the-Art-of-Financial-Planning",
+    },
+  ]
 
   const handleHorizantalScroll = (element, speed, distance, step) => {
     let scrollAmount = 0;
@@ -46,7 +83,10 @@ const ArticlesSection = () => {
           consectetur officia!
         </p>
         <Link to="blogs">
-          <button className="bg-main md:block hidden text-white font-semibold px-5 py-2 md:mt-8 mx-5 rounded-md whitespace-nowrap">
+          <button className="bg-main md:block hidden text-white font-semibold px-5 py-2 md:mt-8 mx-5 rounded-md whitespace-nowrap"
+            onClick={() => {
+              navigate("/blogs")
+            }}>
             Explore more Resources &rarr;
           </button>
         </Link>
@@ -60,11 +100,16 @@ const ArticlesSection = () => {
           }}
           className="  md:flex hidden  sm:items-center  justify-safe md:overflow-x-scroll z-2 gap-6 "
         >
+          {/* <ArticleCard />
           <ArticleCard />
           <ArticleCard />
           <ArticleCard />
-          <ArticleCard />
-          <ArticleCard />
+          <ArticleCard /> */}
+          {
+            data && data.map((item) => {
+              return <ArticleCard props={item} />
+            })
+          }
         </main>
         {/* <div class="button-container hidden md:flex flex-row justify-evenly mt-4 text-2xl font-bold">
           <button
@@ -87,8 +132,14 @@ const ArticlesSection = () => {
         </div> */}
       </div>
       <div className="md:hidden flex flex-col mx-3">
-        <ArticleCard />
-        <ArticleCard />
+        {
+          data && data.map((item) => {
+            if (item.id == 1 || item.id == 3) {
+              return <ArticleCard props={item} />
+            }
+
+          })
+        }
       </div>
 
       <Link to="blogs">
