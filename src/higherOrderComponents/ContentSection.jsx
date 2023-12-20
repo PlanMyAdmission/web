@@ -4,7 +4,7 @@ import { useState } from "react";
 import JoinUs from "../components/home/JoinUs";
 
 
-const ContentSection = ({ id, content, features, btn1, btn2, video, props }) => {
+const ContentSection = ({ id, content, features, btn1, btn2, video, props, forInstitutions }) => {
   const navigate = useNavigate()
   const [scrollTo, setScrollTo] = useState(false);
   const scrollToBottom = () => {
@@ -25,7 +25,11 @@ const ContentSection = ({ id, content, features, btn1, btn2, video, props }) => 
           })}
         </ul>
         <div className="grid grid-cols-2 gap-3 text-2.75xs sm:text-base mb-4">
-          <button className="border border-main px-4 py-2 rounded-md bg-main text-white sm:w-2/3 justify-center sm:ml-12" onClick={() => { navigate("/register") }}>
+          <button disabled={forInstitutions} className={forInstitutions ? "border border-main px-4 py-2 rounded-md bg-main text-white cursor-not-allowed sm:w-2/3 justify-center sm:ml-12" : "border border-main px-4 py-2 rounded-md bg-main text-white sm:w-2/3 justify-center sm:ml-12"} onClick={() => {
+            if (!forInstitutions) {
+              navigate("/register")
+            }
+          }}>
             {btn1}
           </button>
           <button className="border border-main px-4 py-2  sm:w-2/3 rounded-md hover:bg-light " onClick={scrollToBottom}>

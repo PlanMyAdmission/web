@@ -21,7 +21,7 @@ const Institutions = () => {
         })}
       </div>
       {/* <div className="hidden md:block mt-10 bg-white h-5"></div> */}
-      <Band line="Looking for more details" cta="Learn More" />
+      {/* <Band line="Looking for more details" cta="Learn More" /> */}
     </>
   );
 };

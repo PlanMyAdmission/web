@@ -44,15 +44,29 @@ const Card = (plan) => {
           );
         })}
       </ul>
-      <button className={plan.title == "Basic" ? "mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center hover:text-white hover:bg-main font-semibold" : "mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center font-semibold cursor-not-allowed"} disabled={plan.title == "Essential" || plan.title == "Premium" ? true : false}
-        onClick={() => {
-          if (plan.title == "Basic") {
-            navigate("/register")
-          }
-        }}
-      >
-        {plan.cta}
-      </button>
+      {
+        plan.forInstitutions == true ? (
+          <button className={"mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center font-semibold cursor-not-allowed"} disabled={true}
+            onClick={() => {
+
+            }}
+          >
+            {plan.cta}
+          </button>
+        ) :
+          (
+            <button className={plan.title == "Basic" ? "mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center hover:text-white hover:bg-main font-semibold" : "mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center font-semibold cursor-not-allowed"} disabled={plan.title == "Essential" || plan.title == "Premium" ? true : false}
+              onClick={() => {
+                if (plan.title == "Basic") {
+                  navigate("/register")
+                }
+              }}
+            >
+              {plan.cta}
+            </button>
+          )
+      }
+
     </div>
   );
 };

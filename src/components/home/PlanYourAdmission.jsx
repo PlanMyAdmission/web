@@ -24,6 +24,7 @@ const data = {
   btn1: "Register Now",
   btn2: "Book Your Consultation",
   video: "https://www.youtube.com/embed/0Qoct60N6lY",
+  forInstitutions: false,
 };
 
 export default PlanYourAdmission;

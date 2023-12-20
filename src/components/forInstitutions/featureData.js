@@ -12,23 +12,11 @@ const data = [
     btn1: "Register Now",
     btn2: "Book Your Free Consultation",
     video: "https://www.youtube.com/embed/9Qxa6Y_Qv6E",
+    forInstitutions: true,
   },
+
   {
     id: 3,
-    content:
-      "Turn prospective students into enrolled students by customizing your messaging utilizing our holistic analytics.",
-    features: [
-      "Reduce Drop-Offs and Summers Melts",
-      " Identify at-risk students",
-      "Get actionable insights for corrective course",
-      "Nudge students",
-    ],
-    btn1: "Register Now",
-    btn2: "Book Your payed Consultation",
-    video: "https://www.youtube.com/embed/QS5RlK0Cq34",
-  },
-  {
-    id: 4,
     content:
       "Optimize the relationship between you and your prospects by allowing them to directly book a time with you, instantly. Scale your ability to recruit without losing the personal touch.",
     features: [
@@ -40,19 +28,38 @@ const data = [
     btn1: "Register Now",
     btn2: "Book Your Consultation",
     video: "https://www.youtube.com/embed/d8R-cfipBvg",
+    forInstitutions: true,
+  },
+  {
+    id: 4,
+    content:
+      "Turn prospective students into enrolled students by customizing your messaging utilizing our holistic analytics.",
+    features: [
+      "Reduce Drop-Offs and Summers Melts",
+      " Identify at-risk students",
+      "Get actionable insights for corrective course",
+      "Nudge students",
+    ],
+    btn1: "Register Now",
+    btn2: "Book Your Consultation",
+    video: "https://www.youtube.com/embed/QS5RlK0Cq34",
+    forInstitutions: true,
   },
   {
     id: 5,
     content:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tristique vulputate ullamcorper. In urna turpis, vehicula eget felis quis, tristique",
+      "Provide personalized support via 360 degree interactions for better engagement",
     features: [
-      "Duis ut nibh sit amet nibh ultricies gravida.",
-      "Duis ut nibh sit amet.",
-      "Duis ut nibh sit amet.",
+      "24 / 7 Conversational Assistant(Chatbot)",
+      "Engagement Data",
+      "Global Agency Support",
+      "24 / 7 Human Success Coaches",
+      "24 / 7 On - demand Support Staff",
     ],
     btn1: "Register Now",
     btn2: "Book Your Consultation",
     video: "https://www.youtube.com/embed/9Qxa6Y_Qv6E",
+    forInstitutions: true,
   },
 ];
 

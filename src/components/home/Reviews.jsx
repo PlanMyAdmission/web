@@ -113,18 +113,6 @@ const Reviews = ({
 
 const Data = [
   {
-    gyan: "My experience with PlanMyAdmission was truly  transformative. Their expert guidance, personalized support, and dedicated mentorship played a pivotal role in helping me achieve my dream of studying abroad. Thanks to their assistance, I not only secured acceptance letters from top universities but also valuable scholarships, making my educational aspirations a reality. I'm immensely grateful for their unwavering commitment to my success.",
-    author: "Deepak Bhatia",
-    university: "University of Glasgow",
-    image: person1,
-  },
-  {
-    gyan: "I want to express my sincere thanks and appreciation for the outstanding help I received from PlanMyAdmission during my entire journey. Their in-depth knowledge of the UK higher education system was evident at every stage. Thanks to PlanMyAdmission, my dream of studying abroad is now a reality. Their rock-solid support and guidance have been invaluable. Grateful to the entire team.",
-    author: "Shagun bansal",
-    university: "University of Bristol- UK",
-    image: person2,
-  },
-  {
     gyan: "PlanMyAdmission is an exciting and supportive platform with a fantastic team dedicated to helping students pursue their studies abroad. I found their assistance to be very helpful, and they were always ready to answer not only my questions but also those of my parents. Choosing to take their counseling was one of the best decisions I made. Thanks to their guidance, I successfully secured admission and a visa for my Bachelor of Science in Accounting program at Central Queensland University in Australia.",
     author: "Viren Sood",
     university: "Central Queensland University in Australia.",
@@ -135,6 +123,21 @@ const Data = [
     author: "Ritika Singh",
     university: "Long Island University ",
     image: person4,
+  },
+
+  {
+    gyan: "My experience with PlanMyAdmission was truly  transformative. Their expert guidance, personalized support, and dedicated mentorship played a pivotal role in helping me achieve my dream of studying abroad. Thanks to their assistance, I not only secured acceptance letters from top universities but also valuable scholarships, making my educational aspirations a reality. I'm immensely grateful for their unwavering commitment to my success.",
+    author: "Deepak Bhatia",
+    university: "University of Glasgow",
+    image: person1,
+  },
+
+
+  {
+    gyan: "I want to express my sincere thanks and appreciation for the outstanding help I received from PlanMyAdmission during my entire journey. Their in-depth knowledge of the UK higher education system was evident at every stage. Thanks to PlanMyAdmission, my dream of studying abroad is now a reality. Their rock-solid support and guidance have been invaluable. Grateful to the entire team.",
+    author: "Shagun bansal",
+    university: "University of Bristol- UK",
+    image: person2,
   },
 ];
 export default Content;

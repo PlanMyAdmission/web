@@ -94,8 +94,8 @@ const App = () => {
             {isSignedIn == false ? <Route exact path="register" element={<Register />} />
               : <Route exact path="register" element={<NotFound />} />
             } */}
-            {isSignedIn == true ? <Route exact path="login" element={<Dashboard />} /> : <Route exact path="login" element={<Login />} />}
-            {isSignedIn == true ? <Route exact path="register" element={<Dashboard />} /> : <Route exact path="register" element={<Register />} />}
+            <Route exact path="login" element={<Login />} />
+            <Route exact path="register" element={<Register />} />
             {/* <Route exact path="register" element={<Register />} /> */}
             <Route exact path="explore" element={<Explore />} />
             {/* <Route element={<ProtectedRoutes />}> */}

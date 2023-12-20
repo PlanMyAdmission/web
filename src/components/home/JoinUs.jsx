@@ -47,7 +47,15 @@ const JoinUs = () => {
               type="submit"
               className="bg-main px-4 py-4 rounded-md text-white w-[90%]"
               onClick={() => {
-                navigate("/register", { state: { id: 1, name: name, email: email } })
+                if (localStorage.getItem("logged")) {
+                  if (localStorage.getItem("logged") == "true") {
+                    navigate("/dashboard/profile#about")
+                  }
+                }
+                else {
+                  navigate("/register", { state: { id: 1, name: name, email: email } })
+                }
+
               }}
             >
               Create Account

@@ -54,11 +54,12 @@ const dataTestimo = [
   },
   {
     id: 2,
-    content: "Glad that I made the timely decision to choose PlanMyAdmission Their personalized approach to each student helps turn dreams into reality, with a team that is both motivating and supportive.",
-    author: "Mitransh Saini",
-    univ: "Angel Ruskin University",
-    img: Mitransh,
+    content: "Team at PlanMyAdmission is so easy to work with. They're always available, keep me in the loop, and everything goes smoothly. I'm really happy with them!",
+    author: "Deepanshi",
+    univ: "University of Greenwich",
+    img: Deepanshi,
   },
+
   {
     id: 3,
     content: "No doubt The process was both efficient and hassle-free. Thanks to the coach, everything became more accessible. Leverage Edu's visa support and mock interviews not only boosted my confidence but also enhanced my responses.",
@@ -68,11 +69,12 @@ const dataTestimo = [
   },
   {
     id: 4,
-    content: "Team at PlanMyAdmission is so easy to work with. They're always available, keep me in the loop, and everything goes smoothly. I'm really happy with them!",
-    author: "Deepanshi",
-    univ: "University of Greenwich",
-    img: Deepanshi,
+    content: "Glad that I made the timely decision to choose PlanMyAdmission Their personalized approach to each student helps turn dreams into reality, with a team that is both motivating and supportive.",
+    author: "Mitransh Saini",
+    univ: "Angel Ruskin University",
+    img: Mitransh,
   },
+
 
 ]
 
