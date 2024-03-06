@@ -221,9 +221,20 @@ const Explore = () => {
     <>
       {/* <Options /> */}
       <Helmet>
-        <meta charSet="utf-8" />
-        <title>Explore - Plan My Admission</title>
+        <title>Explore best university of your choice with Planmyadmission</title>
+        <meta name="title" content="Explore best university of your choice with Planmyadmission" />
+        <meta name="description" content="Explore universities worldwide on our platform. Navigate through a sea of opportunities and find your perfect academic haven with simplicity and ease." />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:title" content="Explore best university of your choice with Planmyadmission" />
+        <meta property="og:description" content="Explore universities worldwide on our platform. Navigate through a sea of opportunities and find your perfect academic haven with simplicity and ease." />
+        <meta property="og:image" content="https://planmyadmission.com" />
+        <meta property="og:url" content="https://planmyadmission.com/explore" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Explore best university of your choice with Planmyadmission" />
+        <meta name="twitter:description" content="Explore universities worldwide on our platform. Navigate through a sea of opportunities and find your perfect academic haven with simplicity and ease." />
       </Helmet>
+
 
       <div className="max-w-6xl mx-auto bg-light px-5 py-10 rounded my-5">
         <form >

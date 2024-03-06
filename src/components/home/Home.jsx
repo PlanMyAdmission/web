@@ -19,9 +19,21 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <meta charSet="utf-8" />
-        <title>Home - Plan My Admission</title>
+        <title>Unlock Opportunities: Apply for Study Abroad 2024 Courses</title>
+        <meta name="title" content="Unlock Opportunities: Apply for Study Abroad 2024 Courses" />
+        <meta name="description" content="Discover the best study abroad options for 2024 with expert advice on colleges, courses, exams, and the admission process. Get free counselling for your international journey." />
+        <link rel="canonical" href="https://planmyadmission.com/" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:title" content="Unlock Opportunities: Apply for Study Abroad 2024 Courses" />
+        <meta property="og:description" content="Discover the best study abroad options for 2024 with expert advice on colleges, courses, exams, and the admission process. Get free counselling for your international journey." />
+        <meta property="og:image" content="https://planmyadmission.com" />
+        <meta property="og:url" content="https://planmyadmission.com" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Unlock Opportunities: Apply for Study Abroad 2024 Courses" />
+        <meta name="twitter:description" content="Discover the best study abroad options for 2024 with expert advice on colleges, courses, exams, and the admission process. Get free counselling for your international journey" />
       </Helmet>
+
       <Hero />
       <TechnologyPoweredBy />
       <PlanYourAdmission props={myRef} />
