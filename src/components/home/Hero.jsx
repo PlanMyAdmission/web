@@ -76,7 +76,7 @@ const Hero = () => {
           <h1 className="lg:text-7xl md:text-5xl text-4xl uppercase font-bold">
             BRING YOUR OVERSEAS EDUCATION
             <br />
-            <span className="text-main">dreams to life</span>
+            <span className="text-main">dreams to life!!</span>
           </h1>
           <img
             src={Arrow}
