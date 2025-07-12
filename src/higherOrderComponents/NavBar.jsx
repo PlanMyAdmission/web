@@ -15,10 +15,12 @@ import { useAuth } from "../context/AuthProvider";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
+  const toggleMobileNav = () => setNav(!nav);
   const [show, setShow] = useState(false);
   const router = useLocation();
   const navigate = useNavigate();
   const [loginClick, setClick] = useState(0)
+  const [showDropdown, setShowDropdown] = useState(false);
   const { currentUser, logout, profileData } = useAuth();
   const showSignOut = () => {
     // console.log("sign out....");
@@ -135,66 +137,43 @@ const NavBar = () => {
           </Link>
         </ul>
         <>
-          {currentUser ? (
-            <div className="flex flex-col">
+        {currentUser ? (
+            <div className="relative">
               <img
-                className="w-10 h-auto rounded-full cursor-pointer btn dropdown-toggle" style={{ border: "transparent" }}
-                id="dropdownMenuLink" data-bs-toggle="dropdown"
-                src={profileData?.photoURL ? profileData.photoURL : photoURL}
+                src={photoURL}
                 alt="profile"
-                // onClick={showSignOut}
-                onClick={() => {
-                  // if (window.location.href.includes("dashboard")) {
-                  //   showSignOut()
-                  // }
-                  // else {
-                  //   navigate("/dashboard/profile#about")
-                  // }
-
-                  // console.log(window.location.href)
-                  showSignOut()
-                  console.log(show)
-                }}
+                onClick={() => setShowDropdown(!showDropdown)}
+                className="w-10 h-10 rounded-full cursor-pointer border-2 border-main"
               />
-              {show && (
-                // <div className="absolute w-1/6 left-1/2 transform -translate-x-1/2  sm:top-16 bg-main sm:w-1/7 sm:right-2 text-light rounded-md p-1 outline-none">
-                <div className={show ? `dropdown-menu flex flex-col` : "hidden"}>
+              {showDropdown && (
+                <div className="absolute right-0 mt-2 w-40 bg-white border border-main rounded shadow-md z-50 text-sm">
                   <button
-                    className="invisible absolute dropdown-item py-1 mt-11 rounded-sm bg-main text-light px-2 right-1/2 translate-x-full sm:right-2 sm:-translate-x-0 2xl:right-10 2xl:-translate-x-12 2xl:mr-10 md:visible"
-                    onClick={logout}
-                  >
-                    Sign Out
-                  </button>
-                  <button
-                    className="invisible absolute dropdown-item py-1 mt-2 rounded-sm bg-main text-light px-2 right-1/2 translate-x-full sm:right-2 sm:-translate-x-0 2xl:right-10 2xl:-translate-x-12 2xl:mr-10 md:visible"
+                    className="block w-full text-left px-4 py-2 hover:bg-light"
                     onClick={() => {
-                      if (!window.location.href.includes("dashboard")) {
-                        navigate("/dashboard/profile#about")
-                      }
-                      setShow(!show);
-
+                      setShowDropdown(false);
+                      navigate("/dashboard/profile#about");
                     }}
                   >
                     Dashboard
+                  </button>
+                  <button
+                    className="block w-full text-left px-4 py-2 hover:bg-light"
+                    onClick={logout}
+                  >
+                    Sign Out
                   </button>
                 </div>
               )}
             </div>
           ) : (
-            <div className="hidden md:flex justify-center items-end space-x-1">
+            <div className="space-x-2">
               <Link to="/login">
-                <button className={localStorage.getItem("button") == "login" ? "text-white outline outline-main w-[100px] text-[18px] bg-main uppercase p-1 outline mr-1" : "w-[100px] text-main text-[18px] uppercase p-1 outline mr-1 hover:bg-light duration-100"}
-                  onClick={() => {
-                    localStorage.setItem("button", "login")
-                  }}>
+                <button className="bg-main border border-main text-white px-4 py-1 rounded-sm hover:bg-dark-blue transition">
                   Login
                 </button>
               </Link>
               <Link to="/register">
-                <button className={localStorage.getItem("button") == "reg" ? "text-white outline outline-main w-[100px] text-[18px] bg-main uppercase p-1 outline mr-1" : "w-[100px] text-main text-[18px] uppercase p-1 outline mr-1 hover:bg-light duration-100"}
-                  onClick={() => {
-                    localStorage.setItem("button", "reg")
-                  }}>
+                <button className="bg-white border border-main text-main px-4 py-1 rounded-sm hover:bg-main hover:text-white transition">
                   Register
                 </button>
               </Link>
@@ -266,37 +245,39 @@ const NavBar = () => {
               </li>
             </Link>
           </ul>
-          {currentUser ? <div className="flex flex-col text-main font-semibold">
-            {/*  */}
-            <button
-              className="py-1 mt-12 rounded-sm bg-main text-light p-1 ml-5 w-1/2 text-2xs sm:text-base sm:w-1/3"
-              onClick={() => {
-                if (!window.location.href.includes("dashboard")) {
-                  navigate("/dashboard/profile#about")
-                }
-                setShow(!show);
-
-              }}
-            >
-              Dashboard
-            </button>
-            <button
-              className="py-1 mt-2 rounded-sm bg-main text-light p-2 ml-5 w-1/2 text-2xs sm:text-base sm:w-1/3"
-              onClick={logout}
-            >
-              Sign Out
-            </button>
-          </div> : <div className="flex flex-col text-main font-semibold">
-            <Link to="/login">
-              <p className="p-2 pl-5 text-[18px] ">Login</p>
-            </Link>
-            <Link to="/register">
-              <p className="p-2 pl-5 text-[18px] ">Register</p>
-            </Link>
-          </div>}
+          <div className="mt-6 border-t border-main pt-4">
+          {currentUser ? (
+            <>
+              <button
+                className="block w-full text-left px-4 py-2 text-main hover:bg-light"
+                onClick={() => {
+                  navigate("/dashboard/profile#about");
+                  toggleMobileNav();
+                }}
+              >
+                Dashboard
+              </button>
+              <button
+                className="block w-full text-left px-4 py-2 text-main hover:bg-light"
+                onClick={logout}
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <p className="px-4 py-2 text-main bg-main text-white rounded-sm text-center">Login</p>
+              </Link>
+              <Link to="/register">
+                <p className="px-4 py-2 border border-main text-main rounded-sm text-center mt-2 hover:bg-main hover:text-white transition">Register</p>
+              </Link>
+            </>
+          )}
         </div>
       </div>
-    </div>
+        </div>
+      </div>
   );
 };
 
