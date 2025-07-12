@@ -109,10 +109,10 @@ const SuccessStories = () => {
           </section>
         </div>
         <div className="sm:hidden">
-          <section className="flex items-center justify-center z-20">
+        <section className="flex items-stretch justify-center z-20">
             <Carousel
               style={{ width: "100vw" }}
-              className="z-30"
+              className="z-30 flex items-stretch justify-center z-20"
               breakPoints={breakPoints}
             >
               {dataTestimo && dataTestimo.map((item) => {
@@ -141,17 +141,14 @@ const SuccessStories = () => {
 
 const YouTube = ({ props }) => {
   return (
-    <>
-      {console.log(props.link)}
-      <div className="aspect-w-9 aspect-h-16 relative">
-        <video
-          src={props.link}
-          controls
-          className="rounded-md w-full h-full object-cover"
-          preload="metadata"
-        />
-      </div>
-    </>
+    <div className="w-full max-w-sm mx-auto aspect-[9/16] relative">
+      <video
+        src={props.link}
+        controls
+        className="rounded-md w-full h-full object-contain bg-black"
+        preload="metadata"
+      />
+    </div>
   );
 };
 
