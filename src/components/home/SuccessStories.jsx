@@ -28,19 +28,19 @@ const breakPoints = [
 const dataYT = [
   {
     id: 1,
-    link: "https://youtube.com/embed/vpnCunS28oM?si=-1OZxFaUGRK6deS"
+    link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-1.mp4?alt=media&token=a08295c7-6864-4985-ba53-200165452c02"
   },
   {
     id: 2,
-    link: "https://youtube.com/embed/M7cM1c2qKmA?si=3Ms4uijruIriGJRe"
+    link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-2.mp4?alt=media&token=0e431a07-9cf3-4094-abb6-924d6c6b4738"
   },
   {
     id: 3,
-    link: "https://youtube.com/embed/6Jcq9jwOya8?si=fMS5AbWo_L4hlLit"
+    link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-3.mp4?alt=media&token=01e090cc-aae4-4d0f-9d8d-9e4e644a4f40"
   },
   {
     id: 4,
-    link: "https://youtube.com/embed/Evyzp-rBRuA?si=Nc3wf64fVRnNfP4V"
+    link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-4.mp4?alt=media&token=8475eae3-eb40-4c49-a59c-22f7ca80d419"
   },
 ]
 
@@ -139,34 +139,22 @@ const SuccessStories = () => {
   );
 };
 
-
 const YouTube = ({ props }) => {
   return (
-    // <div className="z-20 flex-1">
-    //   <div className="aspect-w-9 aspect-h-16">
-    //     <iframe
-    //       src="https://www.youtube.com/embed/AqAKTCU2Zvo"
-    //       title="Start SOP early || Tips to Write SOP || #shorts #studyabroad #statementofpurpose"
-    //       frameBorder="0"
-    //       className="rounded-md "
-    //     ></iframe>
-    //   </div>
     <>
       {console.log(props.link)}
       <div className="aspect-w-9 aspect-h-16 relative">
-        <iframe
+        <video
           src={props.link}
-          title="#shorts #studyabroad #statementofpurpose"
-          frameBorder="0"
-          className="rounded-md "
-        ></iframe>
-        {/* <div className="bg-gradient-to-t from-blurpink to-transparent p-3 text-white relative translate-y-5/2 rounded-md h-10 ">
-          Full Name
-        </div> */}
+          controls
+          className="rounded-md w-full h-full object-cover"
+          preload="metadata"
+        />
       </div>
     </>
   );
 };
+
 
 const Item = ({ props }) => {
   return (

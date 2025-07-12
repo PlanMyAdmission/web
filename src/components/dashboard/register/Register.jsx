@@ -56,6 +56,8 @@ const Register = () => {
 const RegisterForm = () => {
   const location = useLocation()
   const data = location.state;
+
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const usernameRef = useRef();
@@ -65,6 +67,7 @@ const RegisterForm = () => {
   const PhoneNumberRef = useRef();
   const { signup, currentUser } = useAuth();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [agree, setAgree] = useState(false)
 
   // useEffect(() => {
   //   console.log(data)
@@ -134,6 +137,7 @@ const RegisterForm = () => {
             requried
             pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$"
             ref={PhoneNumberRef}
+            defaultValue={data?.phone}
           ></input></label>
 
         <label for="email" className="block mb-2 text-sm font-medium relative">
@@ -200,6 +204,21 @@ const RegisterForm = () => {
             required
             ref={confirmPasswordRef}
           /></label>
+
+          <label className="flex items-start space-x-2 text-sm">
+            <input
+              type="checkbox"
+              name="agree"
+              checked={agree}
+              onChange={(e) => setAgree(!agree) }
+              className="mt-1"
+              required
+            />
+            <span>
+              I agree to the <strong>terms and conditions</strong> and the{" "}
+              <strong>disclaimer</strong>.
+            </span>
+          </label>
 
         <button
           disabled={loading}

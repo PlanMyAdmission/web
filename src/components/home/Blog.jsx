@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ArticleCard from '../../higherOrderComponents/ArticleCardBlogs'
 import Header from '../../higherOrderComponents/Header'
 import { Helmet } from 'react-helmet'
+import JoinUs from './JoinUs'
 
 const data = [
     {
@@ -67,6 +68,7 @@ const Blog = () => {
                     })
                 }
             </div>
+                <JoinUs  />
         </>
     )
 }

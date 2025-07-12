@@ -6,9 +6,12 @@ import { Link } from "react-router-dom";
 import algoliasearch from 'algoliasearch/lite';
 import Autosuggest from 'react-autosuggest';
 import { matchSorter } from "match-sorter";
+import { useNavigate } from "react-router-dom";
+
 
 const Hero = () => {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate()
 
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -53,6 +56,8 @@ const Hero = () => {
     setSearch(suggestion)
   };
 
+  
+
   const inputProps = {
     type: "search",
     placeholder: 'Search Universites,Courses...',
@@ -66,6 +71,10 @@ const Hero = () => {
 
   const containerProps = {
     className: "absolute w-full"
+  }
+
+  const handleDirectSelection = (topic) => {
+      navigate(`/explore?topic=${topic}`)
   }
 
   return (
@@ -148,29 +157,29 @@ const Hero = () => {
         <div className="w-full">
           <Button
             text="Computer Science"
-            showText={() => setSearch("computer science")}
+            showText={() => handleDirectSelection("computer science")}
           />
-          <Button text="MBA" showText={() => setSearch("MBA")} />
+          <Button text="MBA" showText={() => handleDirectSelection("MBA")} />
           <Button
             text="Mechanical Engineering "
-            showText={() => setSearch("Mechanical Engineering ")}
+            showText={() => handleDirectSelection("Mechanical Engineering ")}
           />
           <Button
             text="Data Analysis"
-            showText={() => setSearch("Data Analysis")}
+            showText={() => handleDirectSelection("Data Analysis")}
           />
-          <Button text="Boston" showText={() => setSearch("Boston")} />
-          <Button text="Toronto" showText={() => setSearch("Toronto")} />
-          <Button text="New York" showText={() => setSearch("MBA")} />
+          <Button text="Boston" showText={() => handleDirectSelection("Boston")} />
+          <Button text="Toronto" showText={() => handleDirectSelection("Toronto")} />
+          <Button text="New York" showText={() => handleDirectSelection("MBA")} />
           <Button
             text="University of Texas Dallas"
-            showText={() => setSearch("University of Texas Dallas")}
+            showText={() => handleDirectSelection("University of Texas Dallas")}
           />
           <Button
             text="University of Toronto"
-            showText={() => setSearch("University of Toronto")}
+            showText={() => handleDirectSelection("University of Toronto")}
           />
-          <Button text="MIT" showText={() => setSearch("MIT")} />
+          <Button text="MIT" showText={() => handleDirectSelection("MIT")} />
         </div>
       </div>
       <div className="">

@@ -6,6 +6,9 @@ const JoinUs = () => {
   const navigate = useNavigate()
   const [name, setname] = useState("")
   const [email, setemail] = useState("")
+  const [phone, setPhone] = useState("")
+
+
   return (
     <div>
       <Heading heading="Join Us" />
@@ -43,6 +46,15 @@ const JoinUs = () => {
               className="py-4 px-3 rounded-md w-[90%] outline-none"
               onChange={(e) => setemail(e.target.value)}
             />
+             <input
+              type="number"
+              name=""
+              id="phone"
+              value={phone}
+              placeholder="Phone No."
+              className="py-4 px-3 rounded-md w-[90%] outline-none"
+              onChange={(e) => setPhone(e.target.value)}
+            />
             <button
               type="submit"
               className="bg-main px-4 py-4 rounded-md text-white w-[90%]"
@@ -53,12 +65,12 @@ const JoinUs = () => {
                   }
                 }
                 else {
-                  navigate("/register", { state: { id: 1, name: name, email: email } })
+                  navigate("/register", { state: { id: 1, name: name, email: email, phone: phone} })
                 }
 
               }}
             >
-              Create Account
+              Book Your Free Consultation
             </button>
           </form>
         </div>

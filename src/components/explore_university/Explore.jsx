@@ -8,6 +8,8 @@ import algoliasearch from 'algoliasearch/lite';
 import Autosuggest from 'react-autosuggest';
 import { matchSorter } from "match-sorter";
 import { Helmet } from "react-helmet";
+import {  useSearchParams } from "react-router-dom";
+
 import {
   Firestore,
   getFirestore,
@@ -35,7 +37,13 @@ const duration = [
 ]
 
 const Explore = () => {
-  const [search, setSearch] = useState("");
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialQuery = searchParams.get('topic') ?? ''
+
+
+
+  const [search, setSearch] = useState(initialQuery);
   const [show, setShow] = useState(false);
   const [alldocs, setAlldocs] = useState([]);
   const [valueChanged, setValueChanged] = useState(false)
@@ -45,7 +53,7 @@ const Explore = () => {
   const { state } = useLocation()
   const ref = useRef(null)
   const [filterData, setFilterData] = useState({
-    course: "",
+    course: initialQuery,
     intake: "",
     country: "",
     year: "",
@@ -110,7 +118,7 @@ const Explore = () => {
 
     // setCountries([])
     // fetchCountries()
-  }, [])
+  }, [search])
 
   useEffect(() => {
     console.log(filterData)
