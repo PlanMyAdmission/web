@@ -1,439 +1,303 @@
-import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../firebase";
+import React, { useContext, useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  auth,
+  db,
+  storage
+} from "../firebase"; // assumes you export auth, db, and storage from your firebase.js
+import {
   createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,
   GoogleAuthProvider,
   signInWithPopup,
   setPersistence,
   browserSessionPersistence,
-  browserLocalPersistence,
+  updateProfile,
+  onAuthStateChanged,
 } from "firebase/auth";
-// import { toast } from "react-toastify"
-
 import {
-  arrayUnion,
-  collection,
   doc,
-  getDoc,
-  getFirestore,
-  onSnapshot,
   setDoc,
-  Timestamp,
   updateDoc,
-  getDocs,
-  query,
-  where,
+  getDoc,
+  onSnapshot,
+  arrayUnion,
+  Timestamp
 } from "firebase/firestore";
+import {
+  uploadBytes,
+  getDownloadURL,
+  ref
+} from "firebase/storage";
+import { toast } from "react-toastify";
 
-import { getDownloadURL, getStorage, uploadBytes, ref } from "firebase/storage";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-const db = getFirestore();
-const storage = getStorage();
-
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
-toast.configure()
-
-const AuthContext = React.createContext();
+const AuthContext = createContext();
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState(null);
   const [profileData, setProfileData] = useState(null);
-  const [isSignedIn, setSignedIn] = useState(false)
 
-
-  // signup
-
-  const googleSignIn = async () => {
-    const result = await setPersistence(auth, browserSessionPersistence).then(() => {
-      const provider = new GoogleAuthProvider()
-      return signInWithPopup(auth, provider)
-    })
-
-    const ref = doc(db, "users", result.user.uid);
-    if (ref) {
-      console.log("Data Entered")
-      localStorage.setItem("logged", true)
-      navigate("/dashboard/profile#about");
-    }
-    else {
-      const docref = await setDoc(ref, {
-        email: result.user.email,
-        uid: result.user.uid,
-        userName: result.user.displayName,
-      })
-        .then((re) => {
-          console.log("Data Entered")
-          localStorage.setItem("logged", true)
-          navigate("/dashboard/profile#about");
-        })
-    }
-
-  }
-
+  // =============================
+  // Auth: Signup with Email
+  // =============================
   const signup = async (email, password, name, number) => {
-    const result = await setPersistence(auth, browserSessionPersistence).then(() => {
-      return createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-    })
-    // console.log(result);
-    const ref = doc(db, "users", result.user.uid);
-    if (ref) {
-      console.log("Data Entered")
-      localStorage.setItem("logged", true)
-      navigate("/dashboard/profile#about");
-    }
-    else {
-      const docref = await setDoc(ref, {
-        email: result.user.email,
+    try {
+      await setPersistence(auth, browserSessionPersistence);
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+
+      await updateProfile(result.user, { displayName: name });
+
+      const userDocRef = doc(db, "users", result.user.uid);
+      await setDoc(userDocRef, {
         uid: result.user.uid,
+        email,
         userName: name,
         phoneNumber: number,
-      })
-        .then((re) => {
-          console.log("Data entered")
-          localStorage.setItem("logged", true)
-          alert("Registration successful")
-          navigate("/dashboard/profile#about");
-        })
-    }
-  };
+        createdAt: Timestamp.now()
+      });
 
-  //sign In
-  const signIn = async (email, password) => {
-    const user = await setPersistence(auth, browserSessionPersistence).then(() => {
-      return signInWithEmailAndPassword(auth, email, password);
-    })
-    console.log(user);
-    if (user) {
-      localStorage.setItem("logged", true)
+      localStorage.setItem("logged", "true");
+      toast.success("Registration successful!", { autoClose: 1500 });
       navigate("/dashboard/profile#about");
+    } catch (error) {
+      toast.error(error.message || "Signup failed. Please try again.");
+      console.error("Signup Error:", error);
+      throw error
     }
-    return user
   };
 
-  //logout
+  // =============================
+  // Auth: Sign in with Email
+  // =============================
+  const signIn = async (email, password) => {
+    try {
+      await setPersistence(auth, browserSessionPersistence);
+      await signInWithEmailAndPassword(auth, email, password);
+
+      localStorage.setItem("logged", "true");
+      toast.success("Login successful!", { autoClose: 1500 });
+      navigate("/dashboard/profile#about");
+    } catch (error) {
+      toast.error("Login failed: " + error.message);  
+      console.error("SignIn Error:", error);
+      throw error
+    }
+  };
+
+  // =============================
+  // Auth: Google Sign-In
+  // =============================
+  const googleSignIn = async () => {
+    try {
+      await setPersistence(auth, browserSessionPersistence);
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+
+      const ref = doc(db, "users", result.user.uid);
+      const docSnap = await getDoc(ref);
+
+      if (!docSnap.exists()) {
+        await setDoc(ref, {
+          uid: result.user.uid,
+          email: result.user.email,
+          userName: result.user.displayName,
+          createdAt: Timestamp.now()
+        });
+      }
+
+      localStorage.setItem("logged", "true");
+      toast.success("Google sign-in successful!");
+      navigate("/dashboard/profile#about");
+    } catch (error) {
+      toast.error("Google Sign-In failed: " + error.message);
+      console.error("Google Sign-In Error:", error);
+    }
+  };
+
+  // =============================
+  // Logout
+  // =============================
   const logout = async () => {
     try {
       await signOut(auth);
-      console.log("user Logges out");
-      localStorage.removeItem("logged")
+      localStorage.removeItem("logged");
+      toast.info("Logged out successfully");
+      navigate("/login");
     } catch (error) {
-      console.log(error.message);
+      toast.error("Logout failed: " + error.message);
+      console.error("Logout Error:", error);
     }
-    navigate("/login");
   };
 
-  //get current_user
-
+  // =============================
+  // Monitor Auth Changes
+  // =============================
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      console.log(currentUser);
     });
+
     return unsubscribe;
   }, []);
 
   useEffect(() => {
-    getCurrentUserData(currentUser?.uid, setProfileData);
+    if (currentUser?.uid) {
+      const ref = doc(db, "users", currentUser.uid);
+      return onSnapshot(ref, (docSnap) => {
+        if (docSnap.exists()) {
+          setProfileData(docSnap.data());
+        }
+      });
+    }
   }, [currentUser]);
 
+  // =============================
+  // Firestore Helpers
+  // =============================
   const uploadDataToFireStore = (data) => {
-    const newData = { ...data };
-    console.log("uploading.....");
-
-    // console.table(newData);
-
     const ref = doc(db, "users", currentUser.uid);
-    setDoc(ref, newData, { merge: true });
+    return setDoc(ref, data, { merge: true });
   };
 
   const uploadDataToFireStoreInArray = async (data, type) => {
     const newData = {
-      [type]: arrayUnion({
-        ...data,
-        id: Date.now(),
-      }),
+      [type]: arrayUnion({ ...data, id: Date.now() }),
     };
     const ref = doc(db, "users", currentUser.uid);
-    const docref = await updateDoc(ref, newData, { merge: true });
-    toast.success("Detail Added", {
-      className: "foo-bar",
-      autoClose: 1500
-    });
+    await updateDoc(ref, newData);
+    toast.success("Detail added successfully!", { autoClose: 1500 });
   };
 
-  const getCurrentUserData = async (id, setProfileData) => {
-    const docref = doc(db, "users", id);
-    // const docSnap = await getDoc(docref);
-
-    // if (docSnap.exists()) {
-    //   console.log(docSnap.data());
-    //   setProfileData(docSnap.data());
-    // } else {
-    //   console.log("No such document!");
-    // }
-
-    const unsub = onSnapshot(docref, (value) => {
-      if (value.exists()) {
-        console.log("Current Data : ", value.data());
-        setProfileData(value.data());
-      } else {
-        console.log("No such document!");
-      }
-    });
-  };
-  const [uniqueFavID, setUniqueFavID] = useState([]);
-
-  // const updateToLocalStorage = () => {
-  //   getCurrentUserData(currentUser.uid)
-  // }
-  // useEffect(() => {
-
-  // }, [profileData])
-  // useEffect(() => {
-  //   localStorage.setItem("favorites", uniqueFavID)
-  //   console.log(uniqueFavID)
-  //   // console.log(local)
-  // }, [uniqueFavID])
-
-  const uploadDocument = async (file, docname, currentUser) => {
-    const fileRef = ref(storage, `documents/${currentUser.uid}_${docname}`);
-
-    const snapshot = await uploadBytes(fileRef, file);
-    const keyName = await getDownloadURL(fileRef);
-    console.log(keyName);
-    toast.success("File uploaded successfully!", {
-      className: "foo-bar",
-      autoClose: 1500
-    });
-    <ToastContainer style={{ zIndex: "1000" }} />;
-
-    const ref_doc = doc(db, "users", currentUser.uid);
-    const date = new Date();
-    const day = date.toLocaleString("en-us", { weekday: "long" });
-
-    const newData = {
-      documents: arrayUnion({
-        id: Date.now(),
-        title: docname,
-        url: keyName,
-        date: date.getDate() + " " + day + " " + date.getFullYear(),
-      }),
-    };
-
-    // lastUpdateda: date,
-    const docref = await updateDoc(ref_doc, newData, { merge: true });
-    // alert("Updated Profile");
-    // updateProfile(currentUser, { keyName });
-    toast.success(`added ${docname}`, {
-      className: "foo-bar",
-      autoClose: 1500
-    })
-  };
-
+  // =============================
+  // Upload Profile Image
+  // =============================
   const uploadImage = async (file, fileExtension, setLoading) => {
-    const fileRef = ref(
-      storage,
-      `profile_pictures/${currentUser.uid}.${fileExtension}`
-    );
+    try {
+      const fileRef = ref(storage, `profile_pictures/${currentUser.uid}.${fileExtension}`);
+      setLoading(true);
+      await uploadBytes(fileRef, file, {
+        contentType: `image/${fileExtension}`,
+      });
+      const photoURL = await getDownloadURL(fileRef);
 
-    setLoading(true);
-    const metadata = {
-      contentType: `image/${fileExtension}`,
-    };
+      await updateProfile(currentUser, { photoURL });
+      await uploadDataToFireStore({ photoURL });
 
-    const snapshot = await uploadBytes(fileRef, file, metadata);
-    const photoURL = await getDownloadURL(fileRef);
-    const data = {
-      photoURL: photoURL,
-    };
-
-    uploadDataToFireStore(data);
-
-    updateProfile(currentUser, { photoURL });
-    setLoading(false);
-
-    toast.success("Detail Added", {
-      className: "foo-bar",
-      autoClose: 1500
-    });
-  };
-
-  const handelDocumentDelete = (docId, feild) => {
-    // console.log(id);
-
-    if (window.confirm("Are you sure")) {
-      const dataArray = profileData?.[feild];
-      const objectIndex = dataArray.findIndex((obj) => obj.id === docId);
-      const docref = doc(db, "users", currentUser.uid);
-      if (objectIndex !== -1) {
-        console.log(dataArray[objectIndex]);
-        dataArray.splice(objectIndex, 1);
-
-        updateDoc(docref, {
-          [feild]: dataArray,
-        })
-          .then(() => {
-            console.log("Document removed");
-            toast.success("Removed Successfully", {
-              className: "foo-bar",
-              autoClose: 1000
-            });
-          })
-          .catch((err) => {
-            console.log("Error occured in removal", err);
-          });
-      } else {
-        console.log("not working");
-      }
-    } else {
-      console.log("okay");
+      toast.success("Profile photo updated!");
+    } catch (error) {
+      toast.error("Image upload failed: " + error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // const handleFavoriteRemove = (id) => {
-  //   if (window.confirm("Are your sure?")) {
-  //     const dataArray = profileData?.["favorites"];
-  //     const objectIndex = dataArray.findIndex((obj) => obj.id === id)
-  //     const docref = doc(db, "users", currentUser.uid);
-  //     if (objectIndex !== -1) {
-  //       console.log(dataArray[objectIndex]);
-  //       dataArray.splice(objectIndex, 1)
+  // =============================
+  // Upload Document
+  // =============================
+  const uploadDocument = async (file, docname) => {
+    try {
+      const fileRef = ref(storage, `documents/${currentUser.uid}_${docname}`);
+      await uploadBytes(fileRef, file);
+      const url = await getDownloadURL(fileRef);
 
-  //       updateDoc(docref, {
-  //         ["favorites"]: dataArray,
-  //       })
-  //         .then(() => {
-  //         console.log(" Removed")
-  //       })
-  //     }
-  //   }
-  // }
+      const date = new Date();
+      const newData = {
+        documents: arrayUnion({
+          id: Date.now(),
+          title: docname,
+          url,
+          date: date.toDateString(),
+        }),
+      };
 
+      const ref_doc = doc(db, "users", currentUser.uid);
+      await updateDoc(ref_doc, newData);
+      toast.success(`${docname} uploaded successfully!`);
+    } catch (error) {
+      toast.error("Document upload failed: " + error.message);
+    }
+  };
+
+  // =============================
+  // Delete Document or Array Field Item
+  // =============================
+  const handleDocumentDelete = async (docId, field) => {
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
+
+    const dataArray = profileData?.[field];
+    if (!dataArray) return;
+
+    const updatedArray = dataArray.filter((item) => item.id !== docId);
+    const ref = doc(db, "users", currentUser.uid);
+
+    try {
+      await updateDoc(ref, { [field]: updatedArray });
+      toast.success("Item removed successfully!");
+    } catch (error) {
+      toast.error("Failed to remove item: " + error.message);
+    }
+  };
+
+  // =============================
+  // Favorites Management
+  // =============================
   const updateFavorite = async (value) => {
-    // let data = {
-    //   favorites: arrayUnion({
-    //     id: value,
-    //   })
-    // }
-    const data = [value,]
-    // const dataref = query(collection(db, "users"), where("id", "==", currentUser.uid));
-    // const snapshot = await getDocs(dataref)
-    // console.log(snapshot)
-    // if (!snapshot.empty) {
-    //   var favorite = snapshot.data.Favorite
-    //   favorite = [...data]
-    //   snapshot.ref.update({ "Favorite": favorite })
-    //   alert("data entered")
-    // }
-    // console.log(data)
+    const favorites = profileData?.favorites || [];
+    const exists = favorites.some((item) => item.id === value);
+
+    if (exists) {
+      return toast.warning("Already shortlisted");
+    }
+
+    if (favorites.length >= 10) {
+      return toast.warning("You can shortlist up to 10 universities only");
+    }
+
     const ref = doc(db, "users", currentUser.uid);
-    // const snapshot = await getDocs(docref)
-    // console.log(snapshot)
-    // await updateDoc(docref, {
-    //   ["favorites"]: [snapshot.doc.docs[0].favorites, ...data]
-    // })
     const newData = {
-      "favorites": arrayUnion({
-        id: value,
-      }),
+      favorites: arrayUnion({ id: value }),
     };
-    const dataArray = profileData?.["favorites"];
-    if (!dataArray) {
-      const docref = await updateDoc(ref, newData, { merge: true });
-      toast.success("Shortlisted successfully...", {
-        className: "foo-bar",
-        autoClose: 1000
-      });
-      return
-    }
-    const objectIndex = dataArray.findIndex((obj) => obj.id === value);
-    console.log(dataArray.length)
-    if (dataArray.length > 9 && objectIndex != -1) {
-      toast.warning("Already Shortlisted", {
-        className: "foo-bar",
-        autoClose: 1000
-      });
-    }
-    else if (dataArray.length > 9) {
-      toast.warning("You can shortlist upto 10 universities only", {
-        className: "foo-bar",
-        autoClose: 1000
-      });
-    }
-    else if (objectIndex == -1) {
-      const docref = await updateDoc(ref, newData, { merge: true });
-      toast.success("Shortlisted successfully...", {
-        className: "foo-bar",
-        autoClose: 1000
-      });
-    }
-    else {
-      console.log("already shortlisted")
-      toast.warning("Already Shortlisted", {
-        className: "foo-bar",
-        autoClose: 1000
-      });
 
+    try {
+      await updateDoc(ref, newData);
+      toast.success("Shortlisted successfully!");
+    } catch (error) {
+      toast.error("Shortlist failed: " + error.message);
     }
+  };
 
-
-
-  }
-
+  // =============================
+  // Upload Filter Data
+  // =============================
   const uploadFilterData = async (filterData) => {
-    let data = {
-      filterDetails: filterData
-    }
-    // const data = [value,]
-    // const dataref = query(collection(db, "users"), where("id", "==", currentUser.uid));
-    // const snapshot = await getDocs(dataref)
-    // console.log(snapshot)
-    // if (!snapshot.empty) {
-    //   var favorite = snapshot.data.Favorite
-    //   favorite = [...data]
-    //   snapshot.ref.update({ "Favorite": favorite })
-    //   alert("data entered")
-    // }
-    // console.log(data)
     const ref = doc(db, "users", currentUser.uid);
-    // const snapshot = await getDocs(docref)
-    // console.log(snapshot)
-    // await updateDoc(docref, {
-    //   ["favorites"]: [snapshot.doc.docs[0].favorites, ...data]
-    // })
-    const docref = await updateDoc(ref, data);
-  }
+    try {
+      await updateDoc(ref, { filterDetails: filterData });
+    } catch (error) {
+      toast.error("Failed to upload filter data: " + error.message);
+    }
+  };
 
+  // =============================
+  // Final Context Value
+  // =============================
   const value = {
     currentUser,
+    profileData,
     signup,
     signIn,
+    googleSignIn,
     logout,
     uploadDataToFireStore,
     uploadDataToFireStoreInArray,
-    getCurrentUserData,
-    profileData,
-    uploadDocument,
-    handelDocumentDelete,
     uploadImage,
+    uploadDocument,
+    handleDocumentDelete,
     updateFavorite,
     uploadFilterData,
-    googleSignIn,
-    isSignedIn,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

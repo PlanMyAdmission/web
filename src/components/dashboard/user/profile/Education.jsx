@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../../../context/AuthProvider";
-import Delete from "@mui/icons-material/DeleteOutline";
+import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import {
   getFirestore,
   collection,
@@ -11,7 +11,8 @@ import app from "../../../../firebase";
 
 const Education = () => {
   const db = getFirestore(app);
-  const label_style = "block text-sm font-medium text-gray-700 mb-1";
+  const labelStyle = "block text-sm font-medium text-gray-700 mb-1";
+
   const [degrees, setDegrees] = useState([]);
   const [disciplines, setDisciplines] = useState([]);
   const [show, setShow] = useState(true);
@@ -37,14 +38,14 @@ const Education = () => {
     const fetchDegrees = async () => {
       const ref = query(collection(db, "degrees"));
       const snap = await getDocs(ref);
-      const result = snap.docs.map(doc => doc.data());
+      const result = snap.docs.map((doc) => doc.data());
       setDegrees(result);
     };
 
     const fetchDisciplines = async () => {
       const ref = query(collection(db, "disciplines"));
       const snap = await getDocs(ref);
-      const result = snap.docs.map(doc => doc.data());
+      const result = snap.docs.map((doc) => doc.data());
       setDisciplines(result);
     };
 
@@ -89,83 +90,80 @@ const Education = () => {
 
   return (
     <>
+      <h2 className="text-xl font-semibold text-darkBlue mb-4 px-5 max-w-5xl mx-auto">Education</h2>
+
       {profileData?.education?.map((edu, index) => (
-        <div key={index} className="max-w-5xl mx-auto px-4 flex justify-between items-center border-b-2 mb-3 pb-2">
+        <div
+          key={index}
+          className="max-w-5xl mx-auto px-5 flex justify-between items-start border border-gray-200 shadow-sm rounded-2xl mb-3 py-4 bg-white"
+        >
           <div>
-            <h1 className="text-md font-bold">{edu.institute_name}</h1>
-            <p className="text-sm">
-              {edu.degree} &#x2022; {edu.field_of_study} &#x2022; {edu.score} ({edu.score_type})
+            <h3 className="text-lg font-bold text-darkBlue">{edu.institute_name}</h3>
+            <p className="text-sm text-gray-700">
+              {edu.degree} • {edu.field_of_study} • {edu.score} ({edu.score_type})
             </p>
-            <p className="text-xs">
+            <p className="text-xs text-gray-500 mt-1">
               {edu.start_date} to {edu.end_date}
             </p>
           </div>
-          <Delete
-            style={{ color: "red" }}
+          <DeleteIcon
+            style={{ color: "#F24822" }}
             className="cursor-pointer"
             onClick={() => handelDocumentDelete(edu.id, "education")}
           />
         </div>
       ))}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="bg-white max-w-5xl mx-auto rounded-2xl shadow px-6 py-6 mb-6">
         {data.map((input, index) => (
-          <div className="max-w-5xl md:mx-auto mb-8 mx-4" key={index}>
-            <div className="grid grid-cols-6 gap-6">
-              <div className="col-span-5">
-                <label htmlFor="institute_name" className={label_style}>
-                  Institute Name<span className="text-main">*</span>
-                </label>
+          <div key={index} className="border-b border-gray-200 pb-4 mb-6">
+            <div className="grid grid-cols-6 gap-4 mb-4">
+              <div className="col-span-6 md:col-span-4">
+                <label htmlFor="institute_name" className={labelStyle}>Institute Name<span className="text-red-500">*</span></label>
                 <input
                   type="text"
                   name="institute_name"
                   value={input.institute_name}
-                  className="bg-light outline-none w-full p-1 px-1.5"
                   onChange={(e) => handleChange(index, e)}
+                  className="bg-light outline-none w-full p-2 rounded-md border border-gray-300"
                   required
                 />
               </div>
 
-              <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                <label htmlFor="degree" className={label_style}>
-                  Degree<span className="text-main">*</span>
-                </label>
+              <div className="col-span-6 md:col-span-2">
+                <label htmlFor="degree" className={labelStyle}>Degree<span className="text-red-500">*</span></label>
                 <select
                   name="degree"
                   value={input.degree}
-                  className="w-full rounded-sm outline-none bg-light py-1.5 px-3"
                   onChange={(e) => handleChange(index, e)}
+                  className="bg-light w-full p-2 rounded-md border border-gray-300"
                   required
                 >
                   <option value="" disabled>Select</option>
                   {degrees.map((deg, i) => (
-                    <option value={deg.name} key={i}>{deg.name}</option>
+                    <option key={i} value={deg.name}>{deg.name}</option>
                   ))}
                 </select>
               </div>
 
-              <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                <label htmlFor="field_of_study" className={label_style}>
-                  Field of Study<span className="text-main">*</span>
-                </label>
+              <div className="col-span-6 md:col-span-3">
+                <label htmlFor="field_of_study" className={labelStyle}>Field of Study<span className="text-red-500">*</span></label>
                 <select
                   name="field_of_study"
                   value={input.field_of_study}
-                  className="w-full rounded-sm outline-none bg-light py-1.5 px-3"
                   onChange={(e) => handleChange(index, e)}
+                  className="bg-light w-full p-2 rounded-md border border-gray-300"
                   required
                 >
                   <option value="" disabled>Select</option>
                   {disciplines.map((dis, i) => (
-                    <option value={dis.name} key={i}>{dis.name}</option>
+                    <option key={i} value={dis.name}>{dis.name}</option>
                   ))}
                 </select>
               </div>
 
-              <div className="md:col-span-1 col-span-3">
-                <label htmlFor="score" className={label_style}>
-                  Score<span className="text-main">*</span>
-                </label>
+              <div className="col-span-3 md:col-span-1">
+                <label htmlFor="score" className={labelStyle}>Score<span className="text-red-500">*</span></label>
                 <input
                   type="text"
                   name="score"
@@ -177,20 +175,19 @@ const Education = () => {
                       ? "OUT OF 10"
                       : "OUT OF 100"
                   }
-                  className="bg-light w-full py-1 pb-1.5 px-1.5 outline-none"
                   onChange={(e) => handleChange(index, e)}
+                  className="bg-light w-full p-2 rounded-md border border-gray-300"
                   required
                 />
               </div>
 
-              <div className="md:col-span-1 col-span-3">
-                <label className={label_style}>Score Type</label>
+              <div className="col-span-3 md:col-span-2">
+                <label className={labelStyle}>Score Type</label>
                 <select
                   name="score_type"
                   value={input.score_type}
-                  className="w-full rounded-sm outline-none bg-light py-1.5 px-3"
                   onChange={(e) => handleChange(index, e)}
-                  required
+                  className="bg-light w-full p-2 rounded-md border border-gray-300"
                 >
                   <option>GPA(4)</option>
                   <option>CGPA(10)</option>
@@ -198,46 +195,42 @@ const Education = () => {
                 </select>
               </div>
 
-              <div className="md:col-span-2 col-span-6">
-                <label htmlFor="start_date" className={label_style}>
-                  Start Date<span className="text-main">*</span>
-                </label>
+              <div className="col-span-6 md:col-span-3">
+                <label htmlFor="start_date" className={labelStyle}>Start Date<span className="text-red-500">*</span></label>
                 <input
                   type="date"
                   name="start_date"
                   value={input.start_date}
-                  className="bg-light px-1.5 py-1 w-full"
                   onChange={(e) => handleChange(index, e)}
+                  className="bg-light w-full p-2 rounded-md border border-gray-300"
                   required
                 />
               </div>
 
-              <div className="md:col-span-2 col-span-6">
-                <label htmlFor="end_date" className={label_style}>
-                  End Date<span className="text-main">*</span>
-                </label>
+              <div className="col-span-6 md:col-span-3">
+                <label htmlFor="end_date" className={labelStyle}>End Date<span className="text-red-500">*</span></label>
                 <input
                   type="date"
                   name="end_date"
                   value={input.end_date}
-                  className="bg-light px-1.5 py-1 w-full"
                   onChange={(e) => handleChange(index, e)}
+                  className="bg-light w-full p-2 rounded-md border border-gray-300"
                   required
                 />
               </div>
             </div>
 
-            <div className="mt-4 flex gap-3">
+            <div className="flex justify-end gap-3 mt-4">
               <button
                 type="submit"
-                className="bg-light px-4 py-1 rounded-sm hover:bg-main hover:text-white transition"
+                className="bg-darkBlue text-white px-6 py-2 rounded-md hover:bg-blue-800 transition"
               >
                 Save
               </button>
               <button
                 type="button"
-                className="bg-light px-4 py-1 rounded-sm hover:bg-main hover:text-white transition"
                 onClick={() => removeclick(index)}
+                className="bg-gray-200 px-6 py-2 rounded-md hover:bg-gray-300 transition"
               >
                 Cancel
               </button>
@@ -245,12 +238,12 @@ const Education = () => {
           </div>
         ))}
 
-        {!show && (
-          <div className="max-w-5xl mx-auto">
+        {show && (
+          <div className="max-w-5xl mx-auto px-5">
             <button
               type="button"
-              className="bg-light px-4 p-1 mt-3 mb-4 rounded-sm hover:outline outline-main hover:text-main transition"
               onClick={addClick}
+              className="border border-main text-main px-5 py-2 rounded-md hover:bg-main hover:text-white transition duration-200 mt-4"
             >
               Add Education
             </button>

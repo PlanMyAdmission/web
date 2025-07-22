@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useState} from "react";
 import Heading from "../../higherOrderComponents/Heading";
 import Testimonials from "./Testimonials";
 import Human from "../../assets/Human.svg";
@@ -9,6 +9,13 @@ import Bhavesh from "../../assets/homeAssets/Bhavesh .jpg";
 import Mansi from "../../assets/homeAssets/Mansi .jpg";
 import Deepanshi from "../../assets/homeAssets/Deepanshi .jpg";
 import Mitransh from "../../assets/homeAssets/Mitransh .jpg";
+
+import Testimony1 from "../../assets/testimonies/PlanMyAdmission -1.png";
+import Testimony2 from "../../assets/testimonies/PlanMyAdmission -2.png";
+import Testimony3 from "../../assets/testimonies/PlanMyAdmission -3.png";
+import Testimony4 from "../../assets/testimonies/PlanMyAdmission -4.png";
+
+
 
 // const Data = [
 //   {
@@ -28,18 +35,24 @@ const breakPoints = [
 const dataYT = [
   {
     id: 1,
+    thumbnail: Testimony1,
     link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-1.mp4?alt=media&token=a08295c7-6864-4985-ba53-200165452c02"
   },
   {
     id: 2,
+    thumbnail: Testimony2,
     link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-2.mp4?alt=media&token=0e431a07-9cf3-4094-abb6-924d6c6b4738"
   },
   {
     id: 3,
+    thumbnail: Testimony3,
+
     link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-3.mp4?alt=media&token=01e090cc-aae4-4d0f-9d8d-9e4e644a4f40"
   },
   {
     id: 4,
+    thumbnail: Testimony4,
+
     link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-4.mp4?alt=media&token=8475eae3-eb40-4c49-a59c-22f7ca80d419"
   },
 ]
@@ -138,20 +151,49 @@ const SuccessStories = () => {
     </div>
   );
 };
-
 const YouTube = ({ props }) => {
+  const [play, setPlay] = useState(false);
+
   return (
-    <div className="w-full max-w-sm mx-auto aspect-[9/16] relative">
-      <video
-        src={props.link}
-        controls
-        className="rounded-md w-full h-full object-contain bg-black"
-        preload="metadata"
-      />
+    <div className="w-full max-w-sm mx-auto aspect-[9/16] relative rounded-xl overflow-hidden bg-black shadow-md">
+      {play ? (
+        <video
+          src={props.link}
+          controls
+          autoPlay
+          className="w-full h-full object-cover"
+          preload="metadata"
+        />
+      ) : (
+        <>
+          {/* Thumbnail Image */}
+          <img
+            src={props.thumbnail}
+            alt="Video Thumbnail"
+            className="w-full h-full object-cover"
+          />
+
+          {/* Play Button Overlay */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <button
+              onClick={() => setPlay(true)}
+              className="flex items-center justify-center h-16 w-16 bg-main/70 hover:bg-main transition rounded-full shadow-xl border-2 border-white/30"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-8 w-8 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
-
 
 const Item = ({ props }) => {
   return (

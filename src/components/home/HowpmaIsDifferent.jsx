@@ -1,181 +1,72 @@
-// import React from "react";
-// import image from "../../assets/HowPmaIsDifferent.svg";
-
-// const HowpmaIsDifferent = () => {
-//   return (
-//     <div className="">
-//       <h1 className="flex items-center flex-col text-center md:text-[45px] text-2xl  md:p-2 p-1 font-bold m-5 mt-30">
-//         How PMA is Different
-//         <span className="border-b-4 md:ml-4 ml-3 border-b-main md:w-[98px] w-[50px] md:py-2 py-1 mb-[10px]"></span>
-//       </h1>
-//       <div className="flex  md:flex-row justify-evenly items-center flex-col-reverse p-10">
-//         <div className="border-b-4 border-main py-10 md:w-[500px]">
-//           <h2 className="font-bold md:text-3xl text-xl">
-//             Digitized Solution for end to end
-//             <br /> application process
-//           </h2>
-//           <p className="py-2">
-//             Proin quis aliquam elit. Nam quis eleifend elit. Vestibulum volutpat
-//             ligula non dolor varius vehicula. Curabitur pellentesque, purus sit
-//             amet finibus placerat, odio turpis tempor dui, sed condimentum quam
-//             purus non nibh.
-//           </p>
-//         </div>
-//         <img src={image} alt="image" className="" />
-//       </div>
-//       <div className="flex  md:flex-row-reverse justify-evenly items-center flex-col-reverse p-10">
-//         <div className="border-b-4 border-main py-10 md:w-[500px]">
-//           <h2 className="font-bold md:text-3xl text-xl">
-//             Digitized Solution for end to end
-//             <br /> application process
-//           </h2>
-//           <p className="py-2">
-//             Proin quis aliquam elit. Nam quis eleifend elit. Vestibulum volutpat
-//             ligula non dolor varius vehicula. Curabitur pellentesque, purus sit
-//             amet finibus placerat, odio turpis tempor dui, sed condimentum quam
-//             purus non nibh.
-//           </p>
-//         </div>
-//         <img src={image} alt="image" className="" />
-//       </div>
-//       <div className="flex  md:flex-row justify-evenly items-center flex-col-reverse p-10">
-//         <div className="border-b-4 border-main py-10 md:w-[500px]">
-//           <h2 className="font-bold md:text-3xl text-xl">
-//             Digitized Solution for end to end
-//             <br /> application process
-//           </h2>
-//           <p className="py-2">
-//             Proin quis aliquam elit. Nam quis eleifend elit. Vestibulum volutpat
-//             ligula non dolor varius vehicula. Curabitur pellentesque, purus sit
-//             amet finibus placerat, odio turpis tempor dui, sed condimentum quam
-//             purus non nibh.
-//           </p>
-//         </div>
-//         <img src={image} alt="image" className="" />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default HowpmaIsDifferent;
-
 import React from "react";
 import image1 from "../../assets/diff11.jpg";
 import image2 from "../../assets/diff2.jpg";
 import image3 from "../../assets/diff3.jpg";
 
+const contentSections = [
+  {
+    title: "Get Personalized Course Recommendations from 300,000+ Global Programs",
+    description: "Our AI-powered engine analyzes your background and preferences to help you discover the most relevant study abroad programs tailored just for you.",
+    image: image1,
+  },
+  {
+    title: "Boost Your Applications with Our Generative AI Writing Mentor",
+    description: "Craft compelling statements of purpose, essays, and resumes with real-time suggestions and edits powered by cutting-edge generative AI.",
+    image: image3,
+  },
+  {
+    title: "Guidance from Experts with 10+ Years of Experience",
+    description: "Get mentorship from seasoned professionals who’ve helped thousands of students successfully gain admission into top universities across the world.",
+    image: image2,
+  },
+];
+
 const HowpmaIsDifferent = () => {
   return (
-    <div className="">
-      <h1 className="flex items-center flex-col text-center md:text-[45px] text-2xl  md:p-2 p-1 font-bold m-5 mt-30">
-        How PMA is Different
-        <span className="border-b-4 md:ml-4 ml-3 border-b-main md:w-[98px] w-[50px] md:py-2 py-1 mb-[10px]"></span>
-      </h1>
-      <Section direction="flex-row" />
-      <Section1 direction="flex-row-reverse" />
-      <Section2 direction="flex-row" />
-    </div>
+    <section className="py-12 px-4">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-center text-3xl md:text-4xl font-bold mb-8">
+          How PMA is Different
+          <div className="mx-auto mt-2 h-1 w-16 bg-main"></div>
+        </h1>
+
+        <div className="space-y-12">
+          {contentSections.map((section, idx) => (
+            <SectionBlock
+              key={idx}
+              title={section.title}
+              description={section.description}
+              image={section.image}
+              reverse={idx % 2 !== 0}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
-const Section = ({ direction }) => {
-  let arr = [
-    "flex",
-    "justify-evenly ",
-    "items-center ",
-    "flex-col-reverse ",
-    "md:px-10",
-    "sm:px-8",
-    "px-6",
-    "py-10",
-  ];
-
-  if (direction === "flex-row") arr.push("md:flex-row");
-  else arr.push("md:flex-row-reverse");
-
+const SectionBlock = ({ title, description, image, reverse }) => {
   return (
-    <div className={arr.join(" ")}>
-      <div className="border-b-4 border-main py-10 md:w-[500px] ">
-        <h2 className="font-bold md:text-3xl text-xl">
-          Our AI technology-driven engine can give you personalized recommendations from a list of 300,000+ courses abroad.
-          <br />
-        </h2>
-        {/* <p className="py-2">
-          Proin quis aliquam elit. Nam quis eleifend elit. Vestibulum volutpat
-          ligula non dolor varius vehicula. Curabitur pellentesque, purus sit
-          amet finibus placerat, odio turpis tempor dui, sed condimentum quam
-          purus non nibh.
-        </p> */}
+    <div
+      className={`flex flex-col-reverse md:flex-row ${
+        reverse ? "md:flex-row-reverse" : ""
+      } items-center gap-8`}
+    >
+      {/* Text Section */}
+      <div className="md:w-1/2">
+        <h2 className="text-xl md:text-2xl font-semibold mb-3">{title}</h2>
+        <p className="text-gray-700 text-base">{description}</p>
       </div>
-      <img src={image1} alt="photo" className="w-[300px] h-full" />
-    </div>
-  );
-};
 
-const Section1 = ({ direction }) => {
-  let arr = [
-    "flex",
-    "justify-evenly ",
-    "items-center ",
-    "flex-col-reverse ",
-    "md:px-10",
-    "sm:px-8",
-    "px-6",
-    "py-10",
-  ];
-
-  if (direction === "flex-row") arr.push("md:flex-row");
-  else arr.push("md:flex-row-reverse");
-
-  return (
-    <div className={arr.join(" ")}>
-      <div className="border-b-4 border-main py-10 md:w-[500px] ">
-        <h2 className="font-bold md:text-3xl text-xl">
-          Generative AI based writing mentor tool.
-          <br />
-        </h2>
-        {/* <p className="py-2">
-          Proin quis aliquam elit. Nam quis eleifend elit. Vestibulum volutpat
-          ligula non dolor varius vehicula. Curabitur pellentesque, purus sit
-          amet finibus placerat, odio turpis tempor dui, sed condimentum quam
-          purus non nibh.
-        </p> */}
+      {/* Image Section */}
+      <div className="md:w-1/2 flex justify-center">
+        <img
+          src={image}
+          alt="Section"
+          className="w-full max-w-[300px] md:max-w-[320px] lg:max-w-[360px] rounded-md object-contain shadow-sm"
+        />
       </div>
-      <img src={image3} alt="photo" className="w-[300px] h-full" />
-    </div>
-  );
-};
-
-const Section2 = ({ direction }) => {
-  let arr = [
-    "flex",
-    "justify-evenly ",
-    "items-center ",
-    "flex-col-reverse ",
-    "md:px-10",
-    "sm:px-8",
-    "px-6",
-    "py-10",
-  ];
-
-  if (direction === "flex-row") arr.push("md:flex-row");
-  else arr.push("md:flex-row-reverse");
-
-  return (
-    <div className={arr.join(" ")}>
-      <div className="border-b-4 border-main py-10 md:w-[500px] ">
-        <h2 className="font-bold md:text-3xl text-xl">
-          10+ Year expert to assist as big brother till your admission.
-          <br />
-        </h2>
-        {/* <p className="py-2">
-          Proin quis aliquam elit. Nam quis eleifend elit. Vestibulum volutpat
-          ligula non dolor varius vehicula. Curabitur pellentesque, purus sit
-          amet finibus placerat, odio turpis tempor dui, sed condimentum quam
-          purus non nibh.
-        </p> */}
-      </div>
-      <img src={image2} alt="photo" className="w-[300px] h-full" />
     </div>
   );
 };

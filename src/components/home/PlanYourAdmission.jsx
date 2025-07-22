@@ -4,7 +4,7 @@ import ContentSection from "../../higherOrderComponents/ContentSection";
 
 const PlanYourAdmission = ({ props }) => {
   return (
-    <div className="bg-light my-[60px]">
+    <div className="bg-light py-8">
       {/* underline with heading */}
       <Heading heading="Plan Your Admission with us" />
       <ContentSection {...data} props={props} />

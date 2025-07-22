@@ -13,6 +13,9 @@ import Blog from "./components/home/Blog";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import { useAuth } from "./context/AuthProvider";
 import ExploreUniversityData from "./components/explore_university/ExploreUniversityData"
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
@@ -86,6 +89,18 @@ const App = () => {
       }>
         <NavBar />
         <GoToTop />
+
+        <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
+
         <Routes>
           <Route path="/">
             <Route index path="/" element={<Home />} />

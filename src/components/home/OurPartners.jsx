@@ -1,24 +1,33 @@
 import React from "react";
 import MicroSoft from "../../assets/Microsoft.png";
 import google from "../../assets/google.svg";
-import Heading from "../../higherOrderComponents/Heading";
 
 const OurPartners = () => {
   return (
-    <>
-      <Heading heading={"Technology Powered by"} />
-      <div className="flex flex-row  justify-evenly items-center md:p-4  h-full w-full">
-        <div className="w-1/4 flex justify-center">
-          <img src={google} alt="" />
+    <section className="w-full   border-t border-gray-200 py-4 px-6 shadow-sm">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-center">
+        <p className="text-sm sm:text-base font-bold text-gray-700">
+          In collaboration with:
+        </p>
+
+        <div className="flex items-center gap-4 sm:gap-6">
+          <img
+            src={google}
+            alt="Google Logo"
+            className="h-6 sm:h-8 object-contain"
+          />
+          <img
+            src={MicroSoft}
+            alt="Microsoft Logo"
+            className="h-6 sm:h-8 object-contain"
+          />
         </div>
-        <div className="w-1/4 flex justify-center">
-          <img src={MicroSoft} alt="" />
-        </div>
-        <div className="w-1/4 flex justify-center">
-          <p className="font-medium text-lg sm:text-3xl text-main">PMA AI Tools</p>
-        </div>
+
+        <p className="text-sm sm:text-base font-semibold text-main mt-1 sm:mt-0">
+          + Powered by PMA AI Tools
+        </p>
       </div>
-    </>
+    </section>
   );
 };
 

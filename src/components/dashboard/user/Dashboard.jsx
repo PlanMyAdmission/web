@@ -1,81 +1,25 @@
-import React, { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
-import Documents from "./Documents";
-import Profile from "./Profile";
-import Recommendations from "./Recommendations";
+import React from "react";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import logo from "../../../assets/homeAssets/logo.svg"
+import logo from "../../../assets/homeAssets/logo.svg";
 
-// const Dashboard = () => {
-//   const [tab, setTab] = useState("dashboard");
-//   const GET_CURRENT_LOCATION = window.location.pathname;
-//   // console.log(GET_CURRENT_LOCATION);
-//   const style =
-//     "py-2 px-4  focus:bg-white active:bg-white   focus:outline-none outline-none mx-2 my-1 rounded-md transition-all duration-500 ease-in-out  ";
-//   return (
-//     <div className="max-w-7xl mx-auto">
-//       <div className=" bg-light md:max-w-7xl md:mx-auto flex justify-start rounded-md overflow-x-auto  hide-scroll-bar whitespace-nowrap snap-x my-10 ">
-//         <Link to="/dashboard">
-//           <button
-//             autoFocus={true}
-//             className={style}
-//             onClick={() => setTab("dashboard")}
-//           >
-//             Dashboard
-//           </button>
-//         </Link>
-//         <Link to="recommendations">
-//           <button className={style} onClick={() => setTab("recommendations")}>
-//             Recommendations
-//           </button>
-//         </Link>
-//         <Link to="profile">
-//           <button className={style} onClick={() => setTab("profile")}>
-//             Profile
-//           </button>
-//         </Link>
-//         <Link to="documents">
-//           <button className={style} onClick={() => setTab("documents")}>
-//             Documents
-//           </button>
-//         </Link>
-//       </div>
-//       <>
-//         {tab === "profile" && <Profile />}
-//         {tab === "dashboard" && <Dashboard_mini />}
-//         {tab === "documents" && <Documents />}
-//         {tab === "recommendations" && <Recommendations />}
-//       </>
-//     </div>
-//   );
-// };
-
-const data = [
-  {
-    id: 1,
-    name: "Shortlisted",
-    url: "shortlisted",
-  },
-  {
-    id: 2,
-    name: "Profile",
-    url: "profile",
-  },
-  {
-    id: 3,
-    name: "Recommendations",
-    url: "recommendations",
-  },
-  {
-    id: 4,
-    name: "Documents",
-    url: "documents",
-  },
+const tabItems = [
+  { id: 1, name: "Shortlisted", url: "shortlisted" },
+  { id: 2, name: "Profile", url: "profile" },
+  { id: 3, name: "Recommendations", url: "recommendations" },
+  { id: 4, name: "Documents", url: "documents" },
 ];
 
 const Dashboard = () => {
-  const style =
-    "py-2 px-4  focus:bg-white active:bg-white focus:outline-none outline-none mx-2 my-1 rounded-md transition-all duration-500 ease-in-out  ";
+  const location = useLocation();
+  const currentPath = location.pathname.split("/").pop(); // get last segment like 'profile'
+
+const isRootDashboard = ["/dashboard", "/dashboard/"].includes(location.pathname);
+
+if (isRootDashboard) {
+  return <Navigate to="/dashboard/profile" replace />;
+}
+
   return (
     <>
       <Helmet>
@@ -83,21 +27,35 @@ const Dashboard = () => {
         <title>Dashboard - Plan My Admission</title>
         <link rel="icon" href={logo} />
       </Helmet>
-      <div className="max-w-7xl mx-auto">
-        <div className=" bg-light md:max-w-7xl md:mx-auto flex justify-start rounded-md overflow-x-auto hide-scroll-bar whitespace-nowrap snap-x my-10 ">
-          {data.map((topic) => {
+
+      <div className="max-w-7xl mx-auto px-4">
+        <nav
+          className="bg-light flex justify-start overflow-x-auto hide-scroll-bar whitespace-nowrap snap-x my-10 rounded-md shadow-sm"
+          aria-label="Dashboard Tabs"
+        >
+          {tabItems.map((tab) => {
+            const isActive = currentPath === tab.url ;
             return (
-              <span key={topic.id}>
-                <Link to={topic.url}>
-                  <button autoFocus={false} className={style}>
-                    {topic.name}
-                  </button>
-                </Link>
-              </span>
+              <Link key={tab.id} to={tab.url} className="snap-start">
+                <button
+                  className={`py-2 px-4 mx-2 my-1 rounded-md transition-all duration-300 
+                    ${
+                      isActive
+                        ? "bg-white text-main font-semibold shadow-md"
+                        : "bg-light text-gray-700 hover:bg-white hover:text-main"
+                    }`}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {tab.name}
+                </button>
+              </Link>
             );
           })}
+        </nav>
+
+        <div className="px-2 sm:px-0">
+          <Outlet />
         </div>
-        <Outlet />
       </div>
     </>
   );

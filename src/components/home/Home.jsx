@@ -38,13 +38,14 @@ const Home = () => {
       <TechnologyPoweredBy />
       <PlanYourAdmission props={myRef} />
       <HowpmaIsDifferent />
+      <OurPartners />
+
       <SuccessStories />
       {/* <Universities /> */}
       <ArticlesSection />
 
       <FAQ />
       <JoinUs ref={myRef} />
-      <OurPartners />
       <ScrollDown />
       <Outlet />
     </>
