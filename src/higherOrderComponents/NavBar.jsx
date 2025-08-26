@@ -6,7 +6,6 @@ import mobile_logo from "../assets/homeAssets/logo_mobile.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   Link,
-  Navigate,
   NavLink,
   useLocation,
   useNavigate,
@@ -19,13 +18,10 @@ const NavBar = () => {
   const [show, setShow] = useState(false);
   const router = useLocation();
   const navigate = useNavigate();
-  const [loginClick, setClick] = useState(0)
+
   const [showDropdown, setShowDropdown] = useState(false);
-  const { currentUser, logout, profileData } = useAuth();
-  const showSignOut = () => {
-    // console.log("sign out....");
-    setShow(!show);
-  };
+  const { currentUser, logout } = useAuth();
+
   const [photoURL, setPhotoURL] = useState(
     "https://imgs.search.brave.com/IfCu-rlEANrldypDGTbEYE4_XyiekbuS1xeWWgBNJ7M/rs:fit:1000:1080:1/g:ce/aHR0cHM6Ly9jZG4x/LnZlY3RvcnN0b2Nr/LmNvbS9pLzEwMDB4/MTAwMC83MS84NS9t/YWxlLWF2YXRhci1w/cm9maWxlLWljb24t/cm91bmQtbWFuLWZh/Y2UtdmVjdG9yLTE4/MzA3MTg1LmpwZw"
   );
@@ -51,7 +47,6 @@ const NavBar = () => {
             alt="logo"
             className="hidden md:block relative md:-translate-x-6  md:h-12 h-10 md:scale-150 scale-110 md:top-4 top-2 w-100 mx-2 md:px-4"
             onClick={() => {
-              setClick(0)
               localStorage.removeItem("button")
             }}
           />
@@ -67,7 +62,6 @@ const NavBar = () => {
               className={`hover:underline ${router.pathname === "/" ? "font-bold" : ""
                 }`}
               onClick={() => {
-                setClick(0)
                 localStorage.removeItem("button")
               }}
             >
@@ -79,7 +73,6 @@ const NavBar = () => {
               className={`hover:underline ${router.pathname === "/explore" ? "font-bold" : ""
                 }`}
               onClick={() => {
-                setClick(0)
                 localStorage.removeItem("button")
               }}
             >
@@ -91,7 +84,6 @@ const NavBar = () => {
               className={`hover:underline ${router.pathname === "/blogs" ? "font-bold" : ""
                 }`}
               onClick={() => {
-                setClick(0)
                 localStorage.removeItem("button")
               }}
             >
@@ -104,7 +96,6 @@ const NavBar = () => {
               className={`hover:underline ${router.pathname === "/about" ? "font-bold" : ""
                 }`}
               onClick={() => {
-                setClick(0)
                 localStorage.removeItem("button")
               }}
             >
@@ -116,7 +107,6 @@ const NavBar = () => {
               className={`hover:underline ${router.pathname === "/pricing" ? "font-bold" : ""
                 }`}
               onClick={() => {
-                setClick(0)
                 localStorage.removeItem("button")
               }}
             >
@@ -128,7 +118,6 @@ const NavBar = () => {
               className={`hover:underline ${router.pathname === "/contact" ? "font-bold" : ""
                 }`}
               onClick={() => {
-                setClick(0)
                 localStorage.removeItem("button")
               }}
             >
@@ -167,16 +156,16 @@ const NavBar = () => {
             </div>
           ) : (
             <div className="space-x-2">
-              <Link to="/login">
+              <a href="https://app.coursefinder.ai/student-platform/777d47d0/login">
                 <button className="bg-main border border-main text-white px-4 py-1 rounded-sm hover:bg-dark-blue transition">
                   Login
                 </button>
-              </Link>
-              <Link to="/register">
+              </a>
+              <a href="https://app.coursefinder.ai/student-platform/777d47d0/sign-up">
                 <button className="bg-white border border-main text-main px-4 py-1 rounded-sm hover:bg-main hover:text-white transition">
                   Register
                 </button>
-              </Link>
+              </a>
             </div>
           )}
         </>
@@ -266,12 +255,12 @@ const NavBar = () => {
             </>
           ) : (
             <>
-              <Link to="/login">
+              <a href="https://app.coursefinder.ai/student-platform/777d47d0/login">
                 <p className="px-4 py-2 text-main bg-main text-white rounded-sm text-center">Login</p>
-              </Link>
-              <Link to="/register">
+              </a>
+              <a href="https://app.coursefinder.ai/student-platform/777d47d0/sign-up">
                 <p className="px-4 py-2 border border-main text-main rounded-sm text-center mt-2 hover:bg-main hover:text-white transition">Register</p>
-              </Link>
+              </a>
             </>
           )}
         </div>

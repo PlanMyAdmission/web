@@ -8,22 +8,22 @@ const content = [
   {
     icon: <SchoolIcon className="text-main" fontSize="large" />,
     heading: '10+ Years Experts',
-    subtext: 'Plan Your Overseas Journey',
+    subtext: '10+ Years of Expert Counsellors backed by AI in Loop',
   },
   {
     icon: <PublicIcon className="text-main" fontSize="large" />,
     heading: '1500+ Universities',
-    subtext: '95%+ Visa Success Rate',
+    subtext: '900+ university tie-ups through our trusted partners',
   },
   {
     icon: <PsychologyIcon className="text-main" fontSize="large" />,
-    heading: 'AI + Human',
-    subtext: 'To Ensure Your Success',
+    heading: 'Personalized Expert guidance Until Admission Success',
+    subtext: 'Limited Seats',
   },
   {
     icon: <VerifiedUserIcon className="text-main" fontSize="large" />,
-    heading: 'Zero Service Charges',
-    subtext: "Till NOV'2023",
+    heading: 'Student Selfhelp Portal',
+    subtext: "",
   },
 ];
 

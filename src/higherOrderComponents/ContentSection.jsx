@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
 const ContentSection = ({
   id,
@@ -10,8 +9,6 @@ const ContentSection = ({
   video,
   forInstitutions = false,
 }) => {
-  const navigate = useNavigate();
-  const [scrollTo, setScrollTo] = useState(false);
 
   const scrollToBottom = () => {
     window.scrollTo({
@@ -46,7 +43,7 @@ const ContentSection = ({
                   : "bg-main hover:bg-opacity-90"
               }`}
               onClick={() => {
-                if (!forInstitutions) navigate("/register");
+                if (!forInstitutions) window.location.href = "https://app.coursefinder.ai/student-platform/777d47d0/sign-up";
               }}
             >
               {btn1}

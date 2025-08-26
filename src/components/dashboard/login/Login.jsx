@@ -179,13 +179,13 @@ const LoginForm = () => {
         </button>
         <p className="py-2 text-sm">
           Not a user?
-          <Link
-            to="/register"
+          <a
+            href="https://app.coursefinder.ai/student-platform/777d47d0/sign-up"
             className="text-main hover:underline px-1"
             onClick={() => localStorage.setItem("button", "reg")}
           >
             Register
-          </Link>
+          </a>
         </p>
       </form>
       <p className="py-2 text-sm text-center font-bold text-lg">OR</p>

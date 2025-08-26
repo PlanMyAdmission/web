@@ -239,13 +239,13 @@ const RegisterForm = () => {
 
         <p className="text-sm mt-1">
           Already a user?
-          <Link
-            to="/login"
+          <a
+            href="https://app.coursefinder.ai/student-platform/777d47d0/login"
             className="text-main hover:underline px-1"
             onClick={() => localStorage.setItem("button", "login")}
           >
             login
-          </Link>
+          </a>
         </p>
       </form>
     </div>

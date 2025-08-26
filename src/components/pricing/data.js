@@ -11,7 +11,7 @@ export const pricingPlans = [
       "Essay and SOP Grading Tool",
       "Visa/MBA Interview Tool",
     ],
-    cta: "Register",
+    cta: "Enroll",
     forInstitutions: false,
   },
   {
@@ -28,7 +28,7 @@ export const pricingPlans = [
       "On - demand Test Preparation",
       "6 Applications Allowed",
     ],
-    cta: "Register",
+    cta: "Enroll",
     forInstitutions: false,
   },
   {
@@ -45,7 +45,7 @@ export const pricingPlans = [
       "On - demand Test Preparation",
       "10 Applications Allowed",
     ],
-    cta: "Register",
+    cta: "Enroll",
     forInstitutions: false,
   },
 ];

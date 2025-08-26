@@ -6,7 +6,7 @@ import image3 from "../../assets/diff3.jpg";
 const contentSections = [
   {
     title: "Get Personalized Course Recommendations from 300,000+ Global Programs",
-    description: "Our AI-powered engine analyzes your background and preferences to help you discover the most relevant study abroad programs tailored just for you.",
+    description: "PMA leverages AI and advanced algorithms to analyze each student’s profile against a vast global database of courses and universities, simplifying the study abroad journey with precise recommendations. Every suggestion is then reviewed and refined by experienced counsellors, ensuring that the final options are not just data-driven but also personalized to your goals and aspirations.",
     image: image1,
   },
   {

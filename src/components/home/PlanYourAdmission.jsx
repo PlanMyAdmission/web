@@ -6,7 +6,7 @@ const PlanYourAdmission = ({ props }) => {
   return (
     <div className="bg-light py-8">
       {/* underline with heading */}
-      <Heading heading="Plan Your Admission with us" />
+      <Heading heading="Plan Your Overseas Admission with us" />
       <ContentSection {...data} props={props} />
     </div>
   );
@@ -15,11 +15,11 @@ const PlanYourAdmission = ({ props }) => {
 const data = {
   id: 1,
   content:
-    "Start your study abroad journey and Let our expert Plan & Secure your admission. PMA based out of Mumbai is an emerging AI Platform is team of overseas education expert that plans you overseas education & help you get into the best universities in the world.",
+    "At Plan My Admission (PMA), our foundation is built on deep experience—our mentors and counselors bring over a decade of hands-on expertise helping students achieve their global education dreams.",
   features: [
-    "Propritory AI Platform to recommend best suited university based on you profile with 95% accuracy rate.",
-    "10+ year expert mentor to support one on one till admission is secured.",
-    "Generative AI assisted process.",
+    "We follow an AI-first approach with a human touch, harnessing advanced technology to smartly identify the best university options while ensuring real experts guide every choice.",
+    "Our commitment to personalized one-on-one guidance means we work with only a select number of students, guaranteeing every applicant receives dedicated support from planning through admission.",
+    "Real student success stories are at the heart of PMA. Time and again, our tailored blend of technology and mentorship has helped aspiring scholars secure spots at top universities worldwide. Your dream university is just a plan away—let's make it happen together!",
   ],
   btn1: "Register Now",
   btn2: "Book Your Consultation",

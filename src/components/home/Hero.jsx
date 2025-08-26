@@ -12,6 +12,9 @@ import { useNavigate } from "react-router-dom";
 const Hero = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate()
+  const [name, setname] = useState("")
+  const [email, setemail] = useState("")
+  const [phone, setPhone] = useState("")
 
   const [value, setValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -78,7 +81,7 @@ const Hero = () => {
   }
 
   return (
-    <div className="flex md:flex-row flex-col max-w-7xl lg:mx-auto gap-5 md:items-center md:my-20 my-10 xl:px-2 sm:px-10 px-5">
+    <div className="flex md:flex-row flex-col max-w-7xl lg:mx-auto gap-5 md:items-center md:my-10 my-10 xl:px-2 sm:px-10 px-5">
       <div className="md:w-[60%] w-full grow flex-1">
         <img src={Plane} alt="/" className="md:hidden block " />
         <div className="relative flex flex-row">
@@ -96,91 +99,58 @@ const Hero = () => {
         <p className="font-bold text-[18px] md:w-1/2 py-4 leading-[20px]">
           Put the power of AI & Industry experts to work for you
         </p>
-        <p className="text-main uppercase font-bold p-3">ai powered search</p>
-
-        <form className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-          <div className="col-span-4">
-            <div className="relative">
-              <div className="flex absolute inset-y-5 left-0 items-center pl-3 pointer-events-none z-1">
-                <svg
-                  aria-hidden="true"
-                  className="w-5 h-5 text-main"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  ></path>
-                </svg>
-              </div>
-            </div>
-            <div className="relative">
-              <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={onSuggestionsClearRequested}
-                onSuggestionSelected={onSuggestionSelected}
-                getSuggestionValue={suggestion => suggestion}
-                containerProps={containerProps}
-                renderSuggestion={suggestion => <div className=" w-full list-none text-main text-sm bg-white divide-y divide-solid border p-1 rounded cursor-pointer">{suggestion}</div>}
-                inputProps={inputProps}
-              />
-            </div>
-            {/* <input
-              type="search"
-              id="default-search"
-              className="block p-3 pl-10 w-full text-sm rounded-lg ring-main ring-offset-1 ring-1 focus:outline-none placeholder:text-[11px] md:placeholder:text-[14px]"
-              placeholder="Search Universites,Courses..."
-              required=""
-              value={search}
-              autoComplete="off"
-              onChange={(e) => setSearch(e.target.value)}
-            /> */}
-          </div>
-          <Link to="explore" state={{
-            search: search
-            // coursedata: uniqueCourse,
-          }}>
+        <div className="md:w-[600px] w-[90%] pt-8 pb-8 bg-light rounded-lg mb-10 ">
+          <form
+            action=""
+            className="flex flex-col justify-center items-center space-y-3"
+          >
+            <input
+              type="text"
+              name=""
+              id="name"
+              value={name}
+              placeholder="Name"
+              className="py-2 px-3  rounded-md w-[90%] outline-none"
+              onChange={(e) => setname(e.target.value)}
+            />
+            <input
+              type="email"
+              name=""
+              id="email"
+              value={email}
+              placeholder="Email"
+              className="py-2 px-3 rounded-md w-[90%] outline-none"
+              onChange={(e) => setemail(e.target.value)}
+            />
+             <input
+              type="number"
+              name=""
+              id="phone"
+              value={phone}
+              placeholder="Phone No."
+              className="py-2 px-3 rounded-md w-[90%] outline-none"
+              onChange={(e) => setPhone(e.target.value)}
+            />
             <button
               type="submit"
-              className="text-white uppercase rounded-lg w-full px-4 py-2 mt-10 sm:my-auto bg-main"
+              className="bg-main px- py-2 rounded-md text-white w-[90%]"
+              onClick={() => {
+                if (localStorage.getItem("logged")) {
+                  if (localStorage.getItem("logged") == "true") {
+                    navigate("/dashboard/profile#about")
+                  }
+                }
+                else {
+                  window.location.href = "https://app.coursefinder.ai/student-platform/777d47d0/sign-up"
+                }
+
+              }}
             >
-              Explore
-            </button></Link>
-        </form>
-        <h2 className="font-bold text-xl p-4">Most Popular</h2>
-        <div className="w-full">
-          <Button
-            text="Computer Science"
-            showText={() => handleDirectSelection("computer science")}
-          />
-          <Button text="MBA" showText={() => handleDirectSelection("MBA")} />
-          <Button
-            text="Mechanical Engineering "
-            showText={() => handleDirectSelection("Mechanical Engineering ")}
-          />
-          <Button
-            text="Data Analysis"
-            showText={() => handleDirectSelection("Data Analysis")}
-          />
-          <Button text="Boston" showText={() => handleDirectSelection("Boston")} />
-          <Button text="Toronto" showText={() => handleDirectSelection("Toronto")} />
-          <Button text="New York" showText={() => handleDirectSelection("MBA")} />
-          <Button
-            text="University of Texas Dallas"
-            showText={() => handleDirectSelection("University of Texas Dallas")}
-          />
-          <Button
-            text="University of Toronto"
-            showText={() => handleDirectSelection("University of Toronto")}
-          />
-          <Button text="MIT" showText={() => handleDirectSelection("MIT")} />
+              Book Your Free Consultation
+            </button>
+          </form>
         </div>
+       
       </div>
       <div className="">
         <img

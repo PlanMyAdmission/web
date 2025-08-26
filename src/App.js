@@ -33,11 +33,9 @@ const Pricing = lazy(() => import("./components/pricing/Pricing"));
 const Terms = lazy(() => import("./components/privacy-policy/Terms"));
 const Privacy = lazy(() => import("./components/privacy-policy/Privacy"));
 const HowItWorks = lazy(() => import("./components/how-it-works/HowItWorks"));
-const Register = lazy(() => import("./components/dashboard/register/Register"));
 const NotFound = lazy(() => import("./higherOrderComponents/404"));
 const GoToTop = lazy(() => import("./higherOrderComponents/GoToTop"));
 const About = lazy(() => import("./components/aboutUs/About"));
-const Login = lazy(() => import("./components/dashboard/login/Login"));
 const Article1 = lazy(() => import("./higherOrderComponents/Articles/Article1"))
 const Article2 = lazy(() => import("./higherOrderComponents/Articles/Article2"))
 const Article3 = lazy(() => import("./higherOrderComponents/Articles/Article3"))
@@ -122,25 +120,24 @@ const App = () => {
             {isSignedIn == false ? <Route exact path="register" element={<Register />} />
               : <Route exact path="register" element={<NotFound />} />
             } */}
-            <Route exact path="login" element={<Login />} />
-            <Route exact path="register" element={<Register />} />
+            {/* Login and Register routes removed - now using external URLs */}
             {/* <Route exact path="register" element={<Register />} /> */}
             <Route exact path="explore" element={<Explore />} />
             {/* <Route element={<ProtectedRoutes />}> */}
-            {isSignedIn == true ?
+            {/* {isSignedIn == true ?
               <Route path="dashboard" element={<Dashboard />}>
-                {/* <Route index path="dashboard" element={<Dashboard />} />
-              <Route exact path="profile" element={<Profile />} />
-              <Route exact path="documents" element={<Documents />} />
-              <Route
-                exact
-                path="recommendations"
-                element={<Recommendations />}
-              /> */}
+                      <Route index path="dashboard" element={<Dashboard />} />
+                    <Route exact path="profile" element={<Profile />} />
+                    <Route exact path="documents" element={<Documents />} />
+                    <Route
+                      exact
+                      path="recommendations"
+                      element={<Recommendations />}
+                    />
                 <Route path=":topic_url" element={<Topic />} />
                 <Route path="recommendations/university" element={<Landing />} />
                 <Route path="shortlisted/university" element={<Landing />} />
-              </Route> : <Route path="dashboard" element={<NotFound />} />}
+              </Route> : <Route path="dashboard" element={<NotFound />} />} */}
             {/* </Route> */}
             <Route exact path="explore/university" element={<ExploreUniversityData />} />
             <Route index path="blogs" element={<Blog />} />

@@ -125,7 +125,7 @@ export const AuthProvider = ({ children }) => {
       await signOut(auth);
       localStorage.removeItem("logged");
       toast.info("Logged out successfully");
-      navigate("/login");
+      window.location.href = "https://app.coursefinder.ai/student-platform/777d47d0/login";
     } catch (error) {
       toast.error("Logout failed: " + error.message);
       console.error("Logout Error:", error);

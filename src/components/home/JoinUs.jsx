@@ -65,7 +65,7 @@ const JoinUs = () => {
                   }
                 }
                 else {
-                  navigate("/register", { state: { id: 1, name: name, email: email, phone: phone} })
+                  window.location.href = "https://app.coursefinder.ai/student-platform/777d47d0/sign-up"
                 }
 
               }}

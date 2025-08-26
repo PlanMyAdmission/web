@@ -22,7 +22,7 @@ const ExploreUniversityData = () => {
         if (currentUser)
             navigate('/dashboard/applications')
         else
-            navigate('/login')
+            window.location.href = 'https://app.coursefinder.ai/student-platform/777d47d0/login'
     }
 
     return (

@@ -1,10 +1,108 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 const Card = (plan) => {
-  const navigate = useNavigate()
+  const [showModal, setShowModal] = useState(false);
   console.log(plan.forInstitutions);
+
+  const handleEnrollClick = () => {
+      setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
+    <>
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto mx-4 sm:mx-0">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-6 border-b">
+              <h2 className="text-2xl font-bold text-gray-800">Enroll Now</h2>
+              <button
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 space-y-6">
+              {/* QR Code Section */}
+              <div className="text-center">
+                <h3 className="text-lg font-semibold mb-4 text-gray-800">
+                  Scan QR Code to Pay
+                </h3>
+                <div className="flex justify-center mb-4">
+                  <img
+                    src="/paymentqr.jpeg"
+                    alt="Payment QR Code"
+                    className="w-40 h-40 sm:w-48 sm:h-48 object-contain border-2 border-gray-200 rounded-lg"
+                  />
+                </div>
+                <p className="text-sm text-gray-600 mb-4">
+                  Scan this QR code with your preferred payment app
+                </p>
+              </div>
+
+              {/* Contact Information */}
+              <div className="border-t pt-6">
+                <h3 className="text-lg font-semibold mb-4 text-gray-800">
+                  Contact Information
+                </h3>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <svg className="w-5 h-5 text-main flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                      <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    <span className="text-gray-700 text-sm sm:text-base break-all">support@planmyadmission.com</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <svg className="w-5 h-5 text-main flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                    </svg>
+                    <span className="text-gray-700 text-sm sm:text-base">+91 98765 43210</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <svg className="w-5 h-5 text-main flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-gray-700 text-sm sm:text-base">WhatsApp: +91 98765 43210</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Additional Information */}
+              <div className="border-t pt-6">
+                <h3 className="text-lg font-semibold mb-3 text-gray-800">
+                  Need Help?
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Our support team is available 24/7 to assist you with the enrollment process.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={() => window.open('mailto:support@planmyadmission.com', '_blank')}
+                    className="flex-1 bg-main text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                  >
+                    Email Support
+                  </button>
+                  <button
+                    onClick={() => window.open('https://wa.me/919876543210', '_blank')}
+                    className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                  >
+                    WhatsApp
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     <div className="bg-white shadow-lg rounded-3xl flex flex-col">
       <div
         key={plan.title}
@@ -45,22 +143,16 @@ const Card = (plan) => {
         })}
       </ul>
       {
-        plan.forInstitutions == true ? (
+        plan.forInstitutions === true ? (
           <button className={"mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center font-semibold cursor-not-allowed"} disabled={true}
-            onClick={() => {
-
-            }}
+            onClick={handleEnrollClick}
           >
             {plan.cta}
           </button>
         ) :
           (
-            <button className={plan.title == "Basic" ? "mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center hover:text-white hover:bg-main font-semibold" : "mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center font-semibold cursor-not-allowed"} disabled={plan.title == "Essential" || plan.title == "Premium" ? true : false}
-              onClick={() => {
-                if (plan.title == "Basic") {
-                  navigate("/register")
-                }
-              }}
+            <button className={"mt-8 mb-5 block border border-main rounded-full mx-6 py-2 px-3 text-center hover:text-white hover:bg-main font-semibold"} 
+              onClick={handleEnrollClick}
             >
               {plan.cta}
             </button>
@@ -68,6 +160,7 @@ const Card = (plan) => {
       }
 
     </div>
+    </>
   );
 };
 
