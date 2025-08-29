@@ -19,9 +19,10 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Unlock Opportunities: Apply for Study Abroad 2024 Courses</title>
-        <meta name="title" content="Unlock Opportunities: Apply for Study Abroad 2024 Courses" />
-        <meta name="description" content="Discover the best study abroad options for 2024 with expert advice on colleges, courses, exams, and the admission process. Get free counselling for your international journey." />
+        <title>Plan My Admission - Trusted Overseas Education Consultants 2025</title>
+        <meta name="title" content="Plan My Admission - Trusted Overseas Education Consultants 2025" />
+        <meta name="description" content="Plan My Admission offers expert overseas education consulting with personalized university admissions guidance, student visa support, and career planning. Leveraging advanced AI tools to enhance your study abroad experience and success." />
+        <meta name="keywords" content="overseas education consultant, study abroad admission help, student visa assistance, international university counselling, best education consultants 2025, study abroad guidance, AI-powered education consulting, university admission experts, career planning abroad" />
         <link rel="canonical" href="https://planmyadmission.com/" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta property="og:title" content="Unlock Opportunities: Apply for Study Abroad 2024 Courses" />

@@ -68,38 +68,15 @@ const NavBar = () => {
               Home
             </li>
           </NavLink>
-          <Link to="/explore">
+          <Link to="/how-it-works">
             <li
-              className={`hover:underline ${router.pathname === "/explore" ? "font-bold" : ""
+              className={`hover:underline ${router.pathname === "/how-it-works" ? "font-bold" : ""
                 }`}
               onClick={() => {
                 localStorage.removeItem("button")
               }}
             >
-              Explore University
-            </li>
-          </Link>
-          <Link to="/blogs">
-            <li
-              className={`hover:underline ${router.pathname === "/blogs" ? "font-bold" : ""
-                }`}
-              onClick={() => {
-                localStorage.removeItem("button")
-              }}
-            >
-              Blogs
-            </li>
-          </Link>
-
-          <Link to="/about">
-            <li
-              className={`hover:underline ${router.pathname === "/about" ? "font-bold" : ""
-                }`}
-              onClick={() => {
-                localStorage.removeItem("button")
-              }}
-            >
-              About
+              How It Works
             </li>
           </Link>
           <Link to="/pricing">
@@ -111,6 +88,29 @@ const NavBar = () => {
               }}
             >
               Pricing
+            </li>
+          </Link>
+
+          <Link to="/about">
+            <li
+              className={`hover:underline ${router.pathname === "/about" ? "font-bold" : ""
+                }`}
+              onClick={() => {
+                localStorage.removeItem("button")
+              }}
+            >
+              About Us
+            </li>
+          </Link>
+          <Link to="/blogs">
+            <li
+              className={`hover:underline ${router.pathname === "/blogs" ? "font-bold" : ""
+                }`}
+              onClick={() => {
+                localStorage.removeItem("button")
+              }}
+            >
+              Blogs
             </li>
           </Link>
           <Link to="/contact">

@@ -24,6 +24,9 @@ const OurPartners = () => {
         </div>
 
         <p className="text-sm sm:text-base font-semibold text-main mt-1 sm:mt-0">
+           Coursefinder.ai
+        </p>
+        <p className="text-sm sm:text-base font-semibold text-main mt-1 sm:mt-0">
           + Powered by PMA AI Tools
         </p>
       </div>

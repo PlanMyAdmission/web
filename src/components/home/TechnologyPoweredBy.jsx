@@ -7,23 +7,23 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 const content = [
   {
     icon: <SchoolIcon className="text-main" fontSize="large" />,
-    heading: '10+ Years Experts',
-    subtext: '10+ Years of Expert Counsellors backed by AI in Loop',
+    heading: '10+ Years of Expertise',
+    subtext: 'Trusted counsellors with over a decade of experience, supported by AI technology.',
   },
   {
     icon: <PublicIcon className="text-main" fontSize="large" />,
-    heading: '1500+ Universities',
-    subtext: '900+ university tie-ups through our trusted partners',
+    heading: '1500+ Universities Worldwide',
+    subtext: 'Access to 900+ trusted university partnerships through our extensive network.',
   },
   {
     icon: <PsychologyIcon className="text-main" fontSize="large" />,
-    heading: 'Personalized Expert guidance Until Admission Success',
-    subtext: 'Limited Seats',
+    heading: 'Personalized Guidance Until Success',
+    subtext: 'Tailored expert support from application to admission. We cater to Limited seats, hurry up!',
   },
   {
     icon: <VerifiedUserIcon className="text-main" fontSize="large" />,
-    heading: 'Student Selfhelp Portal',
-    subtext: "",
+    heading: 'Student Self-Served AI Portal',
+    subtext: "Empower your admissions journey with our intuitive AI platform.",
   },
 ];
 

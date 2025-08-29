@@ -57,9 +57,9 @@ const Footer = () => {
               <Link to="/pricing">
                 <li className="py-2 text-sm">Pricing</li>
               </Link>
-              <Link to="/for-institutions">
+              {/* <Link to="/for-institutions">
                 <li className="py-2 text-sm">For Institutions</li>
-              </Link>
+              </Link> */}
               <Link to="/terms&conditions">
                 <li className="py-2 text-sm">Terms and conditions</li>
               </Link>
@@ -81,8 +81,8 @@ const Footer = () => {
           <div className="">
             <h6 className="font-bold uppercase">Others</h6>
             <ul className="cursor-pointer font-medium">
-              <Link to="/how-it-works">
-                <li className="py-2 text-sm">How it works</li>
+              <Link to="/explore">
+                <li className="py-2 text-sm">Explore University</li>
               </Link>
               {/* <li className="py-2 text-sm">careers</li>
               <li className="py-2 text-sm">Guides</li> */}
