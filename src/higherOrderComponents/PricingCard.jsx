@@ -40,7 +40,7 @@ const Card = (plan) => {
                 </h3>
                 <div className="flex justify-center mb-4">
                   <QRCodeSVG
-                    value={`upi://pay?pa=vasaniyakush@okicici&pn=Kush%20Vasaniya&am=${plan.price}&cu=INR&tn=Test%20Payment`} 
+                    value={`upi://pay?pa=pravindubey@okhdfcbank&pn=Pravin%20Dubey&am=${plan.price}&cu=INR&tn=Test%20Payment`} 
                     alt="Payment QR Code"
                     className="w-40 h-40 sm:w-48 sm:h-48 object-contain border-2 border-gray-200 rounded-lg"
                   />

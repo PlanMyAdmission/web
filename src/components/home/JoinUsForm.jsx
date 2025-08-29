@@ -47,7 +47,7 @@ const JoinUsForm = ({className}) => {
     }
     
     // Phone validation
-    const phoneRegex = /^\+?\d{10,15}$/;
+    const phoneRegex = /^\+?\d{5,15}$/;
     if (!phone.trim()) {
       newErrors.phone = "Phone number is required";
     } else if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
