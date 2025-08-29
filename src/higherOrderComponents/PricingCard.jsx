@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { QRCodeSVG } from "qrcode.react"; // You can also use QRCodeSVG
 
 const Card = (plan) => {
   const [showModal, setShowModal] = useState(false);
+  // const [price, setPrice] = useState(plan.price);
   console.log(plan.forInstitutions);
 
   const handleEnrollClick = () => {
@@ -37,15 +39,23 @@ const Card = (plan) => {
                   Scan QR Code to Pay
                 </h3>
                 <div className="flex justify-center mb-4">
-                  <img
-                    src="/paymentqr.jpeg"
+                  <QRCodeSVG
+                    value={`upi://pay?pa=vasaniyakush@okicici&pn=Kush%20Vasaniya&am=${plan.price}&cu=INR&tn=Test%20Payment`} 
                     alt="Payment QR Code"
                     className="w-40 h-40 sm:w-48 sm:h-48 object-contain border-2 border-gray-200 rounded-lg"
                   />
                 </div>
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-sm text-gray-600 mb-2">
                   Scan this QR code with your preferred payment app
                 </p>
+                <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                  <p className="text-lg font-semibold text-gray-800">
+                    Amount: ₹{plan.price}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {plan.title}
+                  </p>
+                </div>
               </div>
 
               {/* Contact Information */}

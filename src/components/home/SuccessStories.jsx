@@ -104,9 +104,9 @@ const SuccessStories = () => {
           className="hidden lg:block absolute w-full -top-20"
         />
         <div className="hidden sm:block">
-          <section className="flex items-center justify-center z-20">
+          <section className="flex items-center justify-center z-20 px-4">
             <Carousel
-              style={{ width: "80vw" }}
+              style={{ width: "80vw", maxWidth: "1200px" }}
               className="z-30 crousel"
               breakPoints={breakPoints}
             >
@@ -122,9 +122,9 @@ const SuccessStories = () => {
           </section>
         </div>
         <div className="sm:hidden">
-        <section className="flex items-stretch justify-center z-20">
+        <section className="flex items-stretch justify-center z-20 px-4">
             <Carousel
-              style={{ width: "100vw" }}
+              style={{ width: "calc(100vw - 2rem)" }}
               className="z-30 flex items-stretch justify-center z-20"
               breakPoints={breakPoints}
             >
@@ -142,7 +142,7 @@ const SuccessStories = () => {
           <YouTube />
           <YouTube />
         </div> */}
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto lg:py-20 py-10 px-20 z-20">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto lg:py-20 py-10 sm:px-20 px-4 z-20">
           {dataYT && dataYT.map((item) => {
             return <YouTube props={item} />
           })}

@@ -80,7 +80,7 @@ const Reviews = ({
                   <span className="text-main text-sm">{university}</span>
                 </div>
 
-                <div className="flex pt-4 sm:pt-0 sm:ml-4">
+                <div className="flex py-4 sm:pt-0 sm:ml-4">
                   <button
                     className="text-white bg-main py-1 px-2 mr-2 rounded-sm"
                     onClick={onShowLeft}

@@ -36,7 +36,7 @@ const Pricing = () => {
           Choose a plan tailored to your needs
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+        <div className="flex flex-wrap justify-center gap-10 max-w-6xl mx-auto">
           {pricingPlans.map((plan, index) => (
             <Card key={index} {...plan} useFor="pricing" />
           ))}

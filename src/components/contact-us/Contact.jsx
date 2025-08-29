@@ -6,6 +6,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import { Helmet } from "react-helmet";
+import JoinUsForm from "../home/JoinUsForm";
 
 const Contact = () => {
   return (
@@ -110,36 +111,9 @@ const Form = () => {
   let check_for = "after:absolute after:text-main after:content-['*']";
   return (
     <div className="relative ">
-      <form className="flex  flex-col md:w-2/3 w-[90vw] border border-main rounded-xl md:px-8 px-3 py-5 md:-translate-y-[320px] bg-white mx-auto" target="_blank" action="https://formsubmit.co/7d15bde2f29f8a6c5a261986268d68a7" method="POST">
-        <label htmlFor="Full Name" className={check_for}>
-          Full Name
-        </label>
-        <input type="text" className={style} name="name" required></input>
-        <label htmlFor="email" className={check_for}>
-          Email
-        </label>
-        <input type="email" name="email" className={style} requried></input>
-        <label htmlFor="Full Name">Phone Number</label>
-        <input
-          type="tel"
-          name="tel"
-          className={style}
-          requried
-          pattern="^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$"
-        ></input>
-        <label htmlFor="Full Name" className={check_for}>
-          Subject
-        </label>
-        <input type="text" name="subject" className={style} requried></input>
-        <label className={check_for}>Message</label>
-        <textarea className={style} requried rows="5" name="message" ></textarea>
-        <button
-          type="submit"
-          className="bg-main py-2 my-4 rounded-sm text-white"
-        >
-          Submit
-        </button>
-      </form>
+      <div className="flex  flex-col md:w-2/3 w-[90vw] border border-main rounded-xl md:px-8 px-3 py-5 md:-translate-y-[200px] bg-white mx-auto" target="_blank" action="https://formsubmit.co/7d15bde2f29f8a6c5a261986268d68a7" method="POST">
+       <JoinUsForm className={" w-[100%]"} />
+        </div>
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.8763366259523!2d72.93846841112874!3d19.156889681989608!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b86721f841d7%3A0x8a2f54f532ea5fa9!2sSwami%20Smarth!5e0!3m2!1sen!2sin!4v1698586185308!5m2!1sen!2sin"
         // style="border:0;"

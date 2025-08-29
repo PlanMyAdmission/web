@@ -42,7 +42,7 @@ const Footer = () => {
         </div>
         <div className="lg:col-span-2 grid grid-cols-2 sm:flex sm:grid-none gap-5  md:justify-evenly justify-between md:mt-6 md:text-right text-left">
           {/* <div className="grid md:grid-cols-3 gap-4 grid-cols-2 md:flex-1"> */}
-          <div className="">
+          {/* <div className="">
             <h6 className="font-bold uppercase">Universities</h6>
             <ul className="cursor-pointer font-medium">
               <li className="py-2 text-sm">Unviersity of Calirfornia</li>
@@ -50,7 +50,7 @@ const Footer = () => {
               <li className="py-2 text-sm">Unviersity of UK</li>
               <li className="py-2 text-sm">Unviersity of Toranto</li>
             </ul>
-          </div>
+          </div> */}
           <div className="">
             <h6 className="font-bold uppercase">Important links</h6>
             <ul className="cursor-pointer font-medium">

@@ -7,6 +7,7 @@ import algoliasearch from 'algoliasearch/lite';
 import Autosuggest from 'react-autosuggest';
 import { matchSorter } from "match-sorter";
 import { useNavigate } from "react-router-dom";
+import JoinUsForm from "./JoinUsForm";
 
 
 const Hero = () => {
@@ -207,7 +208,7 @@ const Hero = () => {
         <p className="font-bold text-[18px] md:w-1/2 py-4 leading-[20px]">
           Put the power of AI & Industry experts to work for you
         </p>
-        <div className="md:w-[600px] w-[90%] pt-4 pb-8 bg-light rounded-lg mb-10 ">
+        {/* <div className="md:w-[600px] w-[90%] pt-4 pb-8 bg-light rounded-lg mb-10 ">
           {!isSubmitted ? (
             <>
               <h2 className="text-md font-semibold text-center text-gray-800 mb-6 px-4 leading-tight">
@@ -308,8 +309,8 @@ const Hero = () => {
               </button>
             </div>
           )}
-        </div>
-       
+        </div> */}
+       <JoinUsForm />
       </div>
       <div className="">
         <img

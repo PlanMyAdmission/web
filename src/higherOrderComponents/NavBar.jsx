@@ -193,28 +193,12 @@ const NavBar = () => {
                 Home
               </li>
             </Link>
-            <Link to="/explore">
+            <Link to="/how-it-works">
               <li
-                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/explore" ? "font-bold" : ":"
+                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/how-it-works" ? "font-bold" : ":"
                   }`}
               >
-                Explore Universities
-              </li>
-            </Link>
-            <Link to="/blogs">
-              <li
-                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/blogs" ? "font-bold" : ":"
-                  }`}
-              >
-                Explore Universities
-              </li>
-            </Link>
-            <Link to="/about">
-              <li
-                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/about" ? "font-bold" : ":"
-                  }`}
-              >
-                About
+                How It Works
               </li>
             </Link>
             <Link to="/pricing">
@@ -223,6 +207,22 @@ const NavBar = () => {
                   }`}
               >
                 Pricing
+              </li>
+            </Link>
+            <Link to="/about">
+              <li
+                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/about" ? "font-bold" : ":"
+                  }`}
+              >
+                About Us
+              </li>
+            </Link>
+            <Link to="/blogs">
+              <li
+                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/blogs" ? "font-bold" : ":"
+                  }`}
+              >
+                Blogs
               </li>
             </Link>
             <Link to="/contact">
