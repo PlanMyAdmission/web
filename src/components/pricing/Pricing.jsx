@@ -4,6 +4,7 @@ import Card from "../../higherOrderComponents/PricingCard";
 import FAQ from "../home/FAQ";
 import Header from "../../higherOrderComponents/Header";
 import { Helmet } from "react-helmet";
+import { pricingFAQ } from "./data";
 
 const Pricing = () => {
   return (
@@ -36,7 +37,7 @@ const Pricing = () => {
           Choose a plan tailored to your needs
         </p>
 
-        <div className="flex flex-wrap justify-center gap-10 max-w-6xl mx-auto">
+        <div className="flex sm:flex-row flex-col justify-center gap-6 max-w-6xl mx-auto">
           {pricingPlans.map((plan, index) => (
             <Card key={index} {...plan} useFor="pricing" />
           ))}
@@ -44,7 +45,7 @@ const Pricing = () => {
       </section>
 
       <section className="mt-16">
-        <FAQ />
+        <FAQ data={pricingFAQ} />
       </section>
     </main>
   );

@@ -33,7 +33,8 @@ const ContentSection = ({
               <li key={index}>{item}</li>
             ))}
           </ul>
-
+            <div className="text-sm text-gray-700 pt-2"> Explore our free Student AI Portal to research overseas options and manage your entire admission journey effortlessly. Plus, book your free personalized consultation today!
+            </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 md:px-8">
             <button
               disabled={forInstitutions}

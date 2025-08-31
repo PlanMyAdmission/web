@@ -1,48 +1,73 @@
 const data = {
-  head: "Terms and Conditions",
+  head: "Terms and Conditions for PlanMyAdmission",
   content:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus nesciunt quod laboriosam doloremque totam ex beatae dolores, ducimus sint, iure quos, molestias saepe harum corporis animi optio itaque alias officia nemo! Suscipit quo commodi facilis doloribus atque, temporibus neque vel debitis iure at ratione aliquam ut impedit veniam eligendi sapiente!",
+    "<strong>Effective Date: Sep 2025</strong><br><br>PlanMyAdmission.com (\"Site\") is operated by PMS Study Abroad LLP (\"we,\" \"our,\" or \"us\"), a limited liability partnership registered in India. These Terms and Conditions (\"Terms\") govern your use of our website and related services (\"Services\"). By accessing or using the Site and Services, you agree to comply with and be bound by these Terms.",
 
   policy: [
     {
-      title: "Policy 1",
+      title: "Use of the Website and Services",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "You agree to use the Site and Services only for lawful purposes and in compliance with applicable laws.<br>You certify that all information you provide is truthful, accurate, and complete. False or misleading information may result in denial or termination of services.<br>We reserve the right to refuse service or terminate accounts at our discretion.",
     },
     {
-      title: "Policy 2",
+      title: "Intellectual Property Rights",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione reprehenderit, ex ea nam quia debitis assumenda nemo soluta fuga minus pariatur consequatur, laboriosam corporis odit rerum libero id ullam! Fugit minima tempora mollitia. Corrupti aut eius nobis molestiae dicta ullam possimus obcaecati labore sed perspiciatis ad enim blanditiis veritatis adipisci ab, soluta beatae totam? Sed magni veritatis, incidunt reiciendis necessitatibus blanditiis fuga odit similique velit neque dolores quod sunt recusandae illum alias unde ipsum delectus! Qui, corporis ducimus adipisci vitae dolorum cumque architecto sequi est modi cupiditate optio mollitia voluptate veritatis placeat ratione, cum laborum ea rem quam velit quibusdam.",
+        "All content, trademarks, and materials on the Site are owned or licensed by PMS Study Abroad LLP and are protected by law.<br>You may not reproduce or use any content without our prior written consent.",
     },
     {
-      title: "Policy 3",
+      title: "Payment Terms",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione reprehenderit, ex ea nam quia debitis assumenda nemo soluta fuga minus pariatur consequatur, laboriosam corporis odit rerum libero id ullam! Fugit minima tempora mollitia. Corrupti aut eius nobis molestiae dicta ullam possimus obcaecati labore sed perspiciatis ad enim blanditiis veritatis adipisci ab, soluta beatae totam? Sed magni veritatis, incidunt reiciendis necessitatibus blanditiis fuga odit similique velit neque dolores quod sunt recusandae illum alias unde ipsum delectus! Qui, corporis ducimus adipisci vitae dolorum cumque architecto sequi est modi cupiditate optio mollitia voluptate veritatis placeat ratione, cum laborum ea rem quam velit quibusdam.",
+        "Payments must be made by QR scan only. You must share the payment confirmation screenshot via WhatsApp at +91 88280 99194 or email support@planmyadmission.com.<br>University application fees are paid directly by you and are separate from our fees.<br>Fees paid to us are non-refundable except as per our refund policy.",
     },
     {
-      title: "Policy 4",
+      title: "No Guarantee of Outcomes",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "We provide advice and support, but admission, visa approval, and scholarships depend on external factors beyond our control. No guarantees are made.",
     },
     {
-      title: "Policy 5",
+      title: "Limitation of Liability",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "PMS Study Abroad LLP and its affiliates shall not be liable for indirect, incidental, or consequential damages arising from your use of our Site or Services.<br>Our total liability is limited to the fees you paid for the Services.",
     },
     {
-      title: "Policy 6",
+      title: "User Content",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "By submitting content to our Site, you grant us a license to use it for providing our Services.<br>You are responsible for the legality and appropriateness of your submissions.",
     },
     {
-      title: "Policy 6",
+      title: "Privacy",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "Your use of the Site is subject to our Privacy Policy, detailing how we handle your personal data.",
     },
     {
-      title: "Policy 7",
+      title: "Third-Party Links",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "We are not responsible for third-party websites linked on our Site.",
+    },
+    {
+      title: "Changes to Terms",
+      description:
+        "We may update these Terms at any time. Continued use signifies acceptance of changes.",
+    },
+    {
+      title: "Termination",
+      description:
+        "We may suspend or terminate your access for violations of these Terms.",
+    },
+    {
+      title: "Governing Law",
+      description:
+        "These Terms are governed by Indian law, with disputes resolved exclusively in Mumbai courts.",
+    },
+    {
+      title: "Severability",
+      description:
+        "Invalid provisions do not affect the rest of the Terms.",
+    },
+    {
+      title: "Contact Us",
+      description:
+        "Email: support@planmyadmission.com<br>Phone: +91 88280 99194",
     },
   ],
 };

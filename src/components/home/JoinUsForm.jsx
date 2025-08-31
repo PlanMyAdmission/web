@@ -47,7 +47,7 @@ const JoinUsForm = ({className}) => {
     }
     
     // Phone validation
-    const phoneRegex = /^\+?\d{5,15}$/;
+    const phoneRegex = /^\+?\d{10,15}$/;
     if (!phone.trim()) {
       newErrors.phone = "Phone number is required";
     } else if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
@@ -191,6 +191,10 @@ const JoinUsForm = ({className}) => {
                 'Start Your Overseas Journey'
               )}
             </button>
+            
+            <p className="text-gray-500 text-[10px] text-center w-[90%] mt-1 leading-tight">
+              I authorise PlanMyAdmission & to contact me via Email/SMS/WhatsApp/Call.
+            </p>
           </form>
         </>
       ) : (

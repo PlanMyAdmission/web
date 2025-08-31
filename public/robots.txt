@@ -1,4 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Sitemap: https://pma-test.netlify.app/sitemap.xml
 Disallow:
+
+Sitemap: https://www.planmyadmission.com/sitemap.xml

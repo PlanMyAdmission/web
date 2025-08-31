@@ -6,17 +6,17 @@ import image3 from "../../assets/diff3.jpg";
 const contentSections = [
   {
     title: "Get Personalized Course Recommendations from 300,000+ Global Programs",
-    description: "PMA leverages AI and advanced algorithms to analyze each student’s profile against a vast global database of courses and universities, simplifying the study abroad journey with precise recommendations. Every suggestion is then reviewed and refined by experienced counsellors, ensuring that the final options are not just data-driven but also personalized to your goals and aspirations.",
+    description: "PMA leverages AI and advanced algorithms to analyze each student's profile against a vast global database of courses and universities, simplifying the study abroad journey with precise recommendations. Every suggestion is then reviewed and refined by experienced counsellors, ensuring that the final options are not just data-driven but also personalized to your goals and aspirations.",
     image: image1,
   },
   {
-    title: "Boost Your Applications with Our Generative AI Writing Mentor",
-    description: "Craft compelling statements of purpose, essays, and resumes with real-time suggestions and edits powered by cutting-edge generative AI.",
+    title: "Boost Your Applications with Our Generative AI Writing Mentor.",
+    description: "Craft compelling statements of purpose, essays, and resumes with real-time suggestions and edits powered by cutting-edge generative AI",
     image: image3,
   },
   {
     title: "Guidance from Experts with 10+ Years of Experience",
-    description: "Get mentorship from seasoned professionals who’ve helped thousands of students successfully gain admission into top universities across the world.",
+    description: "Get mentorship from seasoned professionals who've helped thousands of students successfully gain admission into top universities across the world.",
     image: image2,
   },
 ];

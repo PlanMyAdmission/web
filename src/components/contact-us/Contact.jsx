@@ -75,7 +75,7 @@ const Contact = () => {
           <label className="font-bold py-2">Email</label>
           <p className="md:pb-5 pb-2">support@planmyadmission.com</p>
           <label className="font-bold py-2">Phone</label>
-          <p className="md:pb-5 pb-2">+91 9372349731</p>
+          <p className="md:pb-5 pb-2">+91 8828099194</p>
           <label className="font-bold py-2">Location</label>
           <p className="pb-5">
             PlanMyAdmission - Samarth Garden, Datta Mandir Road, Bhandup 400078

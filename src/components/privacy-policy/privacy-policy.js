@@ -1,48 +1,70 @@
 const privacy = {
   head: "Privacy Policy",
   content:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus nesciunt quod laboriosam doloremque totam ex beatae dolores, ducimus sint, iure quos, molestias saepe harum corporis animi optio itaque alias officia nemo! Suscipit quo commodi facilis doloribus atque, temporibus neque vel debitis iure at ratione aliquam ut impedit veniam eligendi sapiente!",
+    `Effective Date: [Sep 2025]<br/>
+    PlanMyAdmission ("we," "our," or "us") is committed to protecting and respecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website [www.planmyadmission.com] and use our services. Please read this policy carefully to understand our views and practices regarding your personal data and how we will treat it.
+    `,
 
   policy: [
     {
-      title: "Policy 1",
+      title: "Information We Collect",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "We may collect and process the following data about you:<br/><br/><strong>Personal Identification Information:</strong> Name, email address, phone numbers, postal address, date of birth, and other identifiers.<br/><br/><strong>Application and Academic Details:</strong> Education history, documents you provide for university applications, test scores, and counseling sessions details.<br/><br/><strong>Payment Information:</strong> Payment transaction details, QR scan payment confirmations, and billing information.<br/><br/><strong>Usage Data:</strong> Information about how you use our website and services including IP address, browser type, pages visited, access times, and referring URLs.<br/><br/><strong>Cookies and Tracking Technologies:</strong> We use cookies and similar technologies to improve your experience and collect usage data (see section 7).",
     },
     {
-      title: "Policy 2",
+      title: "How We Use Your Information",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione reprehenderit, ex ea nam quia debitis assumenda nemo soluta fuga minus pariatur consequatur, laboriosam corporis odit rerum libero id ullam! Fugit minima tempora mollitia. Corrupti aut eius nobis molestiae dicta ullam possimus obcaecati labore sed perspiciatis ad enim blanditiis veritatis adipisci ab, soluta beatae totam? Sed magni veritatis, incidunt reiciendis necessitatibus blanditiis fuga odit similique velit neque dolores quod sunt recusandae illum alias unde ipsum delectus! Qui, corporis ducimus adipisci vitae dolorum cumque architecto sequi est modi cupiditate optio mollitia voluptate veritatis placeat ratione, cum laborum ea rem quam velit quibusdam.",
+        "We use your personal information to:<br/><br/>• Provide, operate, and maintain our services<br/>• Process your applications and support your study abroad journey<br/>• Communicate with you regarding your account or services<br/>• Personalize your experience and deliver tailored recommendations (including AI-based tools)<br/>• Manage payments and prevent fraud or unauthorized transactions<br/>• Improve our website, service offerings, and customer support<br/>• Comply with legal obligations and enforce our policies",
     },
     {
-      title: "Policy 3",
+      title: "Disclosure of Information",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione reprehenderit, ex ea nam quia debitis assumenda nemo soluta fuga minus pariatur consequatur, laboriosam corporis odit rerum libero id ullam! Fugit minima tempora mollitia. Corrupti aut eius nobis molestiae dicta ullam possimus obcaecati labore sed perspiciatis ad enim blanditiis veritatis adipisci ab, soluta beatae totam? Sed magni veritatis, incidunt reiciendis necessitatibus blanditiis fuga odit similique velit neque dolores quod sunt recusandae illum alias unde ipsum delectus! Qui, corporis ducimus adipisci vitae dolorum cumque architecto sequi est modi cupiditate optio mollitia voluptate veritatis placeat ratione, cum laborum ea rem quam velit quibusdam.",
+        "We do not sell your personal information. We may share your information with:<br/><br/><strong>Partner Universities and Service Providers:</strong> For application processing, scholarship applications, and related educational services.<br/><br/><strong>Payment Processors and Financial Institutions:</strong> To facilitate payments and refunds securely.<br/><br/><strong>Legal Authorities:</strong> When required to comply with legal obligations, requests, or to protect our legal rights.<br/><br/><strong>Service Providers and Contractors:</strong> Who assist in business operations under strict confidentiality agreements.",
     },
     {
-      title: "Policy 4",
+      title: "Data Security",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "We implement appropriate technical and organizational measures to protect your data against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.",
     },
     {
-      title: "Policy 5",
+      title: "Your Rights",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "Depending on your jurisdiction, you may have the right to:<br/><br/>• Access, correct, or delete your personal information<br/>• Object to or restrict certain data processing<br/>• Withdraw consent where processing is based on it<br/>• Lodge complaints with relevant data protection authorities<br/><br/>To exercise your rights, please contact us at support@planmyadmission.com.",
     },
     {
-      title: "Policy 6",
+      title: "Data Retention",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "We retain your personal information only for as long as necessary to provide our services, comply with legal requirements, resolve disputes, and enforce agreements.",
     },
     {
-      title: "Policy 6",
+      title: "Cookies and Tracking",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "Our website uses cookies to enhance your experience. You can control cookie preferences via your browser settings. For more details, refer to our Cookie Policy on the website.",
     },
     {
-      title: "Policy 7",
+      title: "International Data Transfers",
       description:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit tempore labore nulla modi quaerat quo fugit enim optio, possimus sint!",
+        "If you are located outside India, your data may be transferred to, stored, and processed in India or other countries where our service providers operate. We ensure such transfers comply with applicable data protection laws.",
+    },
+    {
+      title: "Children's Privacy",
+      description:
+        "Our services are not intended for individuals under 18 without parental consent. We do not knowingly collect or solicit personally identifiable information from children under 18.",
+    },
+    {
+      title: "Changes to This Policy",
+      description:
+        "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page with an updated effective date. Continued use of our services constitutes your acceptance of the updated policy.",
+    },
+    {
+      title: "Limitation of Liability and Legal Safeguards",
+      description:
+        "By using PlanMyAdmission services, you agree that PlanMyAdmission shall not be held liable for any indirect, incidental, consequential, or punitive damages arising from data breaches or third-party misuse of your information. We reserve the right to disclose your information to defend or enforce our legal rights and interests.",
+    },
+    {
+      title: "Contact Us",
+      description:
+        "If you have any questions about this Privacy Policy or your personal data, please contact us at:<br/><br/><strong>Email:</strong> support@planmyadmission.com<br/><strong>Phone:</strong> +91 88280 99194<br/><strong>Address:</strong> PMA Study Abroad, Samarth Garden, Datta Mandir Road, Bhandup - 400078",
     },
   ],
 };

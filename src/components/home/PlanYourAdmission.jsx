@@ -20,7 +20,6 @@ const data = {
     "We follow an AI-first approach with a human touch, harnessing advanced technology to smartly identify the best university options while ensuring real experts guide every choice.",
     "Our commitment to personalized one-on-one guidance means we work with only a select number of students, guaranteeing every applicant receives dedicated support from planning through admission.",
     "Real student success stories are at the heart of PMA. Time and again, our tailored blend of technology and mentorship has helped aspiring scholars secure spots at top universities worldwide. Your dream university is just a plan away—let's make it happen together!",
-    "Explore our free Student AI Portal to research overseas options and manage your entire admission journey effortlessly. Plus, book your free personalized consultation today!",
   ],
   btn1: "Explore AI Portal",
   btn2: "Book Your Free Consultation",

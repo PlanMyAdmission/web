@@ -87,6 +87,22 @@ const dataTestimo = [
     univ: "Angel Ruskin University",
     img: Mitransh,
   },
+  {
+    id: 5,
+    content: "Reflecting on my journey, I recall the uncertain beginnings of my overseas education process, having previously felt unsupported and unsure. That changed with the guidance I received through Plan My Admission. From day one, I was met with unwavering commitment and empathy, transforming my outlook and giving me the confidence to pursue my dreams. The support extended beyond professional advice—it included personal encouragement and dedicated listening, even during moments of frustration. Over eight months, this steadfast guidance helped me navigate tough decisions and finally secure admission to a top university in the USA. Looking back, I firmly believe this achievement would not have been possible without their expertise and heartfelt support.",
+    author: "Riddhi Singh Rathore"
+  },
+  {
+    id: 6,
+    content: "After facing confusion and repeated doubt in the admission process, finding Plan My Admission proved to be a turning point. The team assisted me at every step, from shaping my resume and Statement of Purpose to timely solutions for every query and concern. Their consistent availability gave me peace of mind, and the genuine care made me feel understood and valued. Through their expert advice, I was able to submit strong applications and ultimately secure admission at one of the best colleges matching my ambitions. I am grateful for their guidance and can confidently recommend their services to anyone looking for personalized and reliable support in higher education.",
+    author:"Hema Jangir"
+  },
+  {
+    id: 7,
+    content:"My experience with Plan My Admission began with the daunting process of applying for master’s programs abroad. With their expertise, I received personalized counseling, proactive guidance on my applications, and thorough support during the visa process. Even complex procedures felt manageable thanks to their clear advice and ongoing encouragement. Regular follow-ups, helpful resources, and skilled mentoring made every stage less overwhelming, leading to successful admission in the right college and swift visa approval. I highly recommend their support to anyone planning to study abroad and needing expert help for their higher education journey.",
+    author:"Ashish Giri"
+  }
+
 
 
 ]
