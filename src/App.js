@@ -123,17 +123,17 @@ const App = () => {
             {/* Login and Register routes removed - now using external URLs */}
             {/* <Route exact path="register" element={<Register />} /> */}
             <Route exact path="explore" element={<Explore />} />
+            <Route
+              exact
+              path="recommendations"
+              element={<Recommendations />}
+            />
             {/* <Route element={<ProtectedRoutes />}> */}
             {/* {isSignedIn == true ?
               <Route path="dashboard" element={<Dashboard />}>
                       <Route index path="dashboard" element={<Dashboard />} />
                     <Route exact path="profile" element={<Profile />} />
                     <Route exact path="documents" element={<Documents />} />
-                    <Route
-                      exact
-                      path="recommendations"
-                      element={<Recommendations />}
-                    />
                 <Route path=":topic_url" element={<Topic />} />
                 <Route path="recommendations/university" element={<Landing />} />
                 <Route path="shortlisted/university" element={<Landing />} />

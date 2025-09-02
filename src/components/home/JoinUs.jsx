@@ -2,6 +2,7 @@ import React from "react";
 import joinUs from "../../assets/JoinUs.svg";
 import Heading from "../../higherOrderComponents/Heading";
 import JoinUsForm from "./JoinUsForm";
+// import registerQR from "../../../public/register-qr.jpg"
 
 const JoinUs = () => {
 
@@ -20,7 +21,14 @@ const JoinUs = () => {
             className="relative top-14 -z-10 overflow-hidden sm:left-20"
           />
         </div>
-        <JoinUsForm className={"md:w-[400px] w-[90%]"} />
+        <div className="md:w-[400px] w-[90%] flex items-center justify-center mt-10 md:mt-0">
+          <img
+            src={"/register-qr.jpeg"}
+            alt="Join Us Illustration"
+            className="w-full h-auto rounded-lg shadow-md"
+          />
+        </div>
+        {/* <JoinUsForm className={"md:w-[400px] w-[90%]"} /> */}
       </div>
     </div>
   );
