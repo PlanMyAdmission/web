@@ -37,11 +37,11 @@ class Content extends React.Component {
           onShowLeft={handelLeft}
           onShowRight={handelRight}
         />
-        <Reviews
+        {/* <Reviews
           {...Data[3]}
           onShowLeft={handelLeft}
           onShowRight={handelRight}
-        />
+        /> */}
       </Carousel>
     );
   }
@@ -122,8 +122,7 @@ const Data = [
     author: "Ashish Giri",
     // university: "University of Glasgow",
     // image: person1,
-  },
-
+  }
 
 
 ];

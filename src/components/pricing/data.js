@@ -34,7 +34,7 @@ export const pricingPlans = [
   //   forInstitutions: false,
   // },
   {
-    title: "Standard Package",
+    title: "Advantage Package",
     price: 30000,
     currency: "INR",
     frequency: "/One-Time Payment",
