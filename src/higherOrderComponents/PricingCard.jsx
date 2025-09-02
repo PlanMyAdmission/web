@@ -154,7 +154,7 @@ const Card = (plan) => {
       </ul>
       {plan.price != 0 && (
         <p className="text-xs text-red-500 mt-4 px-8">
-          * Refund available within 15 days after 2 counseling sessions
+          * Refund available within 7 days after 2 counseling sessions
         </p>
       )}
       {

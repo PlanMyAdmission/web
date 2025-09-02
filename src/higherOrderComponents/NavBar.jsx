@@ -156,12 +156,12 @@ const NavBar = () => {
             </div>
           ) : (
             <div className="space-x-2">
-              <a href="https://app.coursefinder.ai/student-platform/777d47d0/login">
+              <a href="https://portal.planmyadmission.com/login">
                 <button className="bg-main border border-main text-white px-4 py-1 rounded-sm hover:bg-dark-blue transition">
                   Login
                 </button>
               </a>
-              <a href="https://app.coursefinder.ai/student-platform/777d47d0/sign-up">
+              <a href="https://portal.planmyadmission.com/sign-up">
                 <button className="bg-white border border-main text-main px-4 py-1 rounded-sm hover:bg-main hover:text-white transition">
                   Register
                 </button>
@@ -255,10 +255,10 @@ const NavBar = () => {
             </>
           ) : (
             <>
-              <a href="https://app.coursefinder.ai/student-platform/777d47d0/login">
+              <a href="https://portal.planmyadmission.com/login">
                 <p className="px-4 py-2 text-main bg-main text-white rounded-sm text-center">Login</p>
               </a>
-              <a href="https://app.coursefinder.ai/student-platform/777d47d0/sign-up">
+              <a href="https://portal.planmyadmission.com/sign-up">
                 <p className="px-4 py-2 border border-main text-main rounded-sm text-center mt-2 hover:bg-main hover:text-white transition">Register</p>
               </a>
             </>

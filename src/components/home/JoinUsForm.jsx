@@ -4,6 +4,7 @@ const JoinUsForm = ({className}) => {
   const [name, setname] = useState("")
   const [email, setemail] = useState("")
   const [phone, setPhone] = useState("")
+  const [agreed, setAgreed] = useState(false)
   const [errors, setErrors] = useState({})
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -54,6 +55,11 @@ const JoinUsForm = ({className}) => {
       newErrors.phone = "Please enter a valid phone number (10-15 digits)";
     }
     
+    // Agreement validation
+    if (!agreed) {
+      newErrors.agreed = "You must agree to be contacted to proceed";
+    }
+    
     return newErrors;
   };
 
@@ -76,8 +82,10 @@ const JoinUsForm = ({className}) => {
         email,
         phone
       };
-      
-      await fetch("https://script.google.com/macros/s/AKfycbwCEA5uGWKRFepk0XokYeLK9NcLH1hMI813EkiJewLwiIS3ONkREAfA-1q7uKmMxhgK/exec", {
+      //https://script.google.com/macros/s/AKfycbwkKKAHgTNxmUI1hleyYwmtWrA4Bi2TS5YvBoaR0xqWKPVXYTXLLAM-YSWs4AcnJ-gztw/exec
+      //https://script.google.com/macros/s/AKfycbwkKKAHgTNxmUI1hleyYwmtWrA4Bi2TS5YvBoaR0xqWKPVXYTXLLAM-YSWs4AcnJ-gztw/exec
+      //https://script.google.com/macros/s/AKfycbwC2aa6U2CQW7spM2tC_FekkXgieAXlu4SBFGQYoXA4TbkZpPtbnf3ld4ynbo35LIkd/exec
+      await fetch("https://script.google.com/macros/s/AKfycbwkKKAHgTNxmUI1hleyYwmtWrA4Bi2TS5YvBoaR0xqWKPVXYTXLLAM-YSWs4AcnJ-gztw/exec", {
         method: "POST",
         body: JSON.stringify(data)
       });
@@ -99,6 +107,7 @@ const JoinUsForm = ({className}) => {
       setname("");
       setemail("");
       setPhone("");
+      setAgreed(false);
       setIsSubmitted(true);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -167,6 +176,22 @@ const JoinUsForm = ({className}) => {
               {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
             </div>
             
+            <div className="w-[90%]">
+              <div className="flex items-start space-x-3">
+                <input
+                  type="checkbox"
+                  id="agreement"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  className={`mt-1 w-4 h-4 text-main bg-white border-gray-300 rounded focus:ring-main focus:ring-2 ${errors.agreed ? 'border-red-500' : ''}`}
+                />
+                <label htmlFor="agreement" className="text-gray-700 text-sm leading-tight">
+                  I authorize PlanMyAdmission to contact me via Email/SMS/WhatsApp/Call.
+                </label>
+              </div>
+              {errors.agreed && <p className="text-red-500 text-xs mt-1">{errors.agreed}</p>}
+            </div>
+            
             {errors.submit && <p className="text-red-500 text-sm">{errors.submit}</p>}
             
             <button
@@ -191,10 +216,6 @@ const JoinUsForm = ({className}) => {
                 'Start Your Overseas Journey'
               )}
             </button>
-            
-            <p className="text-gray-500 text-[10px] text-center w-[90%] mt-1 leading-tight">
-              I authorise PlanMyAdmission & to contact me via Email/SMS/WhatsApp/Call.
-            </p>
           </form>
         </>
       ) : (

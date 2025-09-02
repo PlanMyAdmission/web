@@ -174,7 +174,7 @@ export const pricingFAQ = [
   {
     id: 4,
     question: "What is the refund policy?",
-    answer: "Refund requests are accepted within 15 days of subscription activation and are evaluated on a case-by-case basis. Approved refunds are processed within 7 business days."
+    answer: "Refund requests are accepted within 7 days of subscription activation and are evaluated on a case-by-case basis. Approved refunds are processed within 7 business days."
   },
   {
     id: 5,

@@ -105,31 +105,26 @@ const Reviews = ({
 
 const Data = [
   {
-    gyan: "PlanMyAdmission is an exciting and supportive platform with a fantastic team dedicated to helping students pursue their studies abroad. I found their assistance to be very helpful, and they were always ready to answer not only my questions but also those of my parents. Choosing to take their counseling was one of the best decisions I made. Thanks to their guidance, I successfully secured admission and a visa for my Bachelor of Science in Accounting program at Central Queensland University in Australia.",
-    author: "Viren Sood",
-    university: "Central Queensland University in Australia.",
-    image: person3,
+    gyan: "Reflecting on my journey, I recall the uncertain beginnings of my overseas education process, having previously felt unsupported and unsure. That changed with the guidance I received through Plan My Admission. From day one, I was met with unwavering commitment and empathy, transforming my outlook and giving me the confidence to pursue my dreams. The support extended beyond professional advice—it included personal encouragement and dedicated listening, even during moments of frustration. Over eight months, this steadfast guidance helped me navigate tough decisions and finally secure admission to a top university in the USA. Looking back, I firmly believe this achievement would not have been possible without their expertise and heartfelt support.",
+    author: "Riddhi Singh Rathore",
+    // university: "Central Queensland University in Australia.",
+    // image: person3,
   },
   {
-    gyan: "Had a wonderful journey with PlanMyAdmission and I attribute much of that to Mr. Deepak. He played a pivotal role in my counseling, always available to offer guidance throughout the entire process. Not only does he possess great knowledge about studying abroad, but his expertise in visa matters made a significant impact. Thanks to his help, I successfully secured admission to Long Island University - C W Post, USA for my Master's in Biology. Thank you!",
-    author: "Ritika Singh",
-    university: "Long Island University ",
-    image: person4,
-  },
+    gyan: "After facing confusion and repeated doubt in the admission process, finding Plan My Admission proved to be a turning point. The team assisted me at every step, from shaping my resume and Statement of Purpose to timely solutions for every query and concern. Their consistent availability gave me peace of mind, and the genuine care made me feel understood and valued. Through their expert advice, I was able to submit strong applications and ultimately secure admission at one of the best colleges matching my ambitions. I am grateful for their guidance and can confidently recommend their services to anyone looking for personalized and reliable support in higher education.",
+    author: "Hema Jangir",
+    // university: "Long Island University ",
+    // image: person4,
+  },  
 
   {
-    gyan: "My experience with PlanMyAdmission was truly  transformative. Their expert guidance, personalized support, and dedicated mentorship played a pivotal role in helping me achieve my dream of studying abroad. Thanks to their assistance, I not only secured acceptance letters from top universities but also valuable scholarships, making my educational aspirations a reality. I'm immensely grateful for their unwavering commitment to my success.",
-    author: "Deepak Bhatia",
-    university: "University of Glasgow",
-    image: person1,
+    gyan: "My experience with Plan My Admission began with the daunting process of applying for master’s programs abroad. With their expertise, I received personalized counseling, proactive guidance on my applications, and thorough support during the visa process. Even complex procedures felt manageable thanks to their clear advice and ongoing encouragement. Regular follow-ups, helpful resources, and skilled mentoring made every stage less overwhelming, leading to successful admission in the right college and swift visa approval. I highly recommend their support to anyone planning to study abroad and needing expert help for their higher education journey.",
+    author: "Ashish Giri",
+    // university: "University of Glasgow",
+    // image: person1,
   },
 
 
-  {
-    gyan: "I want to express my sincere thanks and appreciation for the outstanding help I received from PlanMyAdmission during my entire journey. Their in-depth knowledge of the UK higher education system was evident at every stage. Thanks to PlanMyAdmission, my dream of studying abroad is now a reality. Their rock-solid support and guidance have been invaluable. Grateful to the entire team.",
-    author: "Shagun bansal",
-    university: "University of Bristol- UK",
-    image: person2,
-  },
+
 ];
 export default Content;

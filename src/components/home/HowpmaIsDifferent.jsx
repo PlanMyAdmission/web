@@ -10,8 +10,8 @@ const contentSections = [
     image: image1,
   },
   {
-    title: "Boost Your Applications with Our Generative AI Writing Mentor.",
-    description: "Craft compelling statements of purpose, essays, and resumes with real-time suggestions and edits powered by cutting-edge generative AI",
+    title: "Enhance Your Applications with Expert Writing Support.",
+    description: "Create impactful statements of purpose, essays, and resumes with real-time suggestions and professional edits designed to help you stand out.",
     image: image3,
   },
   {
