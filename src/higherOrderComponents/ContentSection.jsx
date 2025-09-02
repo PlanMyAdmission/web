@@ -10,9 +10,21 @@ const ContentSection = ({
   forInstitutions = false,
 }) => {
 
+  // Scroll smoothly to the bottom of the page, ensuring we reach the very end
   const scrollToBottom = () => {
     window.scrollTo({
-      top: document.documentElement.scrollHeight - 1150,
+      top: Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+      ),
+      behavior: "smooth",
+    });
+  };
+
+  // Scroll smoothly to the top of the page
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
       behavior: "smooth",
     });
   };
@@ -44,14 +56,14 @@ const ContentSection = ({
                   : "bg-main hover:bg-opacity-90"
               }`}
               onClick={() => {
-                if (!forInstitutions) window.location.href = "https://app.coursefinder.ai/student-platform/777d47d0/sign-up";
+                if (!forInstitutions) window.location.href = "https://portal.planmyadmission.com/sign-up";
               }}
             >
               {btn1}
             </button>
             <button
               className="px-4 py-2 rounded-md border border-main text-main hover:bg-light sm:w-full"
-              onClick={scrollToBottom}
+              onClick={scrollToTop}
             >
               {btn2}
             </button>
