@@ -1,0 +1,181 @@
+/* Plan My Admission - AI Suite Launcher Styles */
+
+#pmaAISuiteLauncher * {
+  box-sizing: border-box;
+}
+
+.pma-launcher {
+  position: fixed;
+  z-index: 1000;
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Position variations */
+.pma-launcher.top-right {
+  top: 90px;
+  right: 20px;
+}
+
+.pma-launcher.top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.pma-launcher.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.pma-launcher.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+.pma-launcher-button {
+  background: linear-gradient(135deg, #e91e63, #ad1457);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(233, 30, 99, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+}
+
+.pma-launcher-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+}
+
+.pma-launcher-icon {
+  font-size: 24px;
+  animation: bounce 2s infinite;
+}
+
+.pma-launcher-pulse {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 12px;
+  height: 12px;
+  background: #4caf50;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-5px); 
+  }
+}
+
+@keyframes pulse {
+  0% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+  50% { 
+    transform: scale(1.5); 
+    opacity: 0.5; 
+  }
+  100% { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .pma-launcher-button {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+  
+  .pma-launcher-text {
+    display: none;
+  }
+  
+  .pma-launcher-icon {
+    font-size: 28px;
+  }
+
+  .pma-launcher.bottom-right {
+    bottom: 80px; /* Account for mobile navigation */
+  }
+}
+
+/* Modal styles for fullscreen launch */
+.pma-suite-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.pma-suite-modal.active {
+  display: flex;
+}
+
+.pma-suite-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: white;
+}
+
+.pma-close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #e91e63;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.pma-close-button:hover {
+  background: #ad1457;
+  transform: scale(1.1);
+}
+
+.pma-close-button:focus {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* Additional mobile adjustments */
+@media (max-width: 480px) {
+  .pma-close-button {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+}

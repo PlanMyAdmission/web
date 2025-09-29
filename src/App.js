@@ -43,6 +43,11 @@ const Article4 = lazy(() => import("./higherOrderComponents/Articles/Article4"))
 const Institutions = lazy(() =>
   import("./components/forInstitutions/Institutions")
 );
+const AIUniversitySearch = lazy(() =>
+  import("./components/ai-university-search/AIUniversitySearch")
+);
+const AISuiteLauncher = lazy(() => import("./components/AISuiteLauncher"));
+const AIChatbot = lazy(() => import("./components/AIChatbot"));
 const NavBar = lazy(() => import("./higherOrderComponents/NavBar"));
 const Footer = lazy(() => import("./higherOrderComponents/Footer"));
 
@@ -123,6 +128,7 @@ const App = () => {
             {/* Login and Register routes removed - now using external URLs */}
             {/* <Route exact path="register" element={<Register />} /> */}
             <Route exact path="explore" element={<Explore />} />
+            <Route exact path="ai-university-search" element={<AIUniversitySearch />} />
             <Route
               exact
               path="recommendations"
@@ -141,9 +147,12 @@ const App = () => {
             {/* </Route> */}
             <Route exact path="explore/university" element={<ExploreUniversityData />} />
             <Route index path="blogs" element={<Blog />} />
+            <Route exact path="services" element={<Navigate to="/" replace />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <AISuiteLauncher />
+        <AIChatbot />
         <Footer />
         <Outlet />
       </Suspense>

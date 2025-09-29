@@ -113,6 +113,17 @@ const NavBar = () => {
               Blogs
             </li>
           </Link>
+          <Link to="/ai-university-search">
+            <li
+              className={`hover:underline ${router.pathname === "/ai-university-search" ? "font-bold" : ""
+                }`}
+              onClick={() => {
+                localStorage.removeItem("button")
+              }}
+            >
+              AI University Search
+            </li>
+          </Link>
           <Link to="/contact">
             <li
               className={`hover:underline ${router.pathname === "/contact" ? "font-bold" : ""
@@ -223,6 +234,14 @@ const NavBar = () => {
                   }`}
               >
                 Blogs
+              </li>
+            </Link>
+            <Link to="/ai-university-search">
+              <li
+                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/ai-university-search" ? "font-bold" : ":"
+                  }`}
+              >
+                AI University Search
               </li>
             </Link>
             <Link to="/contact">
