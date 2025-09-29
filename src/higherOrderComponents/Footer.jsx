@@ -57,6 +57,9 @@ const Footer = () => {
               <Link to="/pricing">
                 <li className="py-2 text-sm">Pricing</li>
               </Link>
+              <Link to="/how-it-works">
+                <li className="py-2 text-sm">How It Works</li>
+              </Link>
               {/* <Link to="/for-institutions">
                 <li className="py-2 text-sm">For Institutions</li>
               </Link> */}

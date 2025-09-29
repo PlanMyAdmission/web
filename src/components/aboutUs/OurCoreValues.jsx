@@ -27,7 +27,7 @@ function Card() {
 
       <h1 className="font-bold text-xl pt-4 ">Technology First</h1>
       <span className=" mt-[10px] py-5 border-b-4 border-main pr-4">
-        At Planmyadmission, we harness the power of technology to provide our clients with the most efficient and effective solutions. Our AI/ML technology allows us to personalize our services and provide each student with tailored recommendations for their journey.
+      At Plan My Admission, we harness the power of artificial intelligence and machine learning to provide our clients with the most efficient and effective solutions. Our proprietary AI technology analyzes over 500+ universities across USA, Canada, UK, and Australia to deliver personalized university recommendations in record time. We believe technology should empower human potential, not replace the personal touch that makes each student's journey unique.
 
       </span>
     </div>
@@ -40,7 +40,7 @@ function Card1() {
 
       <h1 className="font-bold text-xl pt-4 ">Transparency</h1>
       <span className=" mt-[10px] py-5 border-b-4 border-main pr-4">
-        We believe in maintaining transparency in all our interactions with students, ensuring they are well-informed and involved in the decision-making process. Our team provides honest and open communication to build trust and foster a strong relationship with our clients.
+      We believe in maintaining complete transparency in all our interactions with students, ensuring they are well-informed and involved in every step of the decision-making process. Unlike traditional consultants who rely on subjective opinions, our AI-powered recommendations are backed by comprehensive data and clear reasoning. Our team provides honest and open communication about admission chances, costs, and timelines to build trust and foster strong relationships with our clients.
       </span>
     </div>
   );
@@ -52,7 +52,7 @@ function Card2() {
 
       <h1 className="font-bold text-xl pt-4 ">Commitment</h1>
       <span className=" mt-[10px] py-5 border-b-4 border-main pr-4">
-        Our commitment to the success of our clients is unwavering. We go above and beyond to provide them with the best opportunities and support throughout their study abroad journey. Our team is dedicated to helping students achieve their dreams of studying in their dream university.
+      Our commitment to the success of our clients is unwavering. We go above and beyond traditional consulting by offering Human + AI support, real-time application tracking and their own Student own portal increasing the  success guarantee. Our team is dedicated to helping students achieve their dreams of studying at their ideal international university while providing ongoing support throughout their entire journey.
 
       </span>
     </div>
@@ -65,7 +65,7 @@ function Card3() {
 
       <h1 className="font-bold text-xl pt-4 ">Innovation</h1>
       <span className=" mt-[10px] py-5 border-b-4 border-main pr-4">
-        We constantly strive to innovate and improve our services to stay at the forefront of the education industry. Our team embraces new ideas and technologies to enhance our clients' experience and provide them with the best possible outcomes.
+      We constantly strive to innovate and improve our services to stay at the forefront of the education technology revolution. Our team embraces cutting-edge AI algorithms, natural language processing for essay optimization, and interactive interview simulation tools to enhance our clients' experience. We're not just following industry trends—we're creating them, with features like instant university matching, Admission Coach , intelligent document analysis that competitors can't match.
 
       </span>
     </div>
@@ -78,7 +78,7 @@ function Card4() {
 
       <h1 className="font-bold text-xl pt-4 ">Excellence</h1>
       <span className=" mt-[10px] py-5 border-b-4 border-main pr-4">
-        We hold ourselves to the highest standards of excellence in everything we do. Our team is committed to delivering exceptional services to our clients, ensuring their satisfaction and success. We take pride in our work and strive for excellence in all aspects of our business.
+      We hold ourselves to the highest standards of excellence in everything we do. Our team is committed to delivering exceptional services to our clients, ensuring their satisfaction and success. We take pride in our work and strive for excellence in all aspects of our business.
 
       </span>
     </div>

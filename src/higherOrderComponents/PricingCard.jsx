@@ -7,7 +7,13 @@ const Card = (plan) => {
   console.log(plan.forInstitutions);
 
   const handleEnrollClick = () => {
-      setShowModal(true);
+    // For Basic package (free), redirect to registration
+    if (plan.price === 0) {
+      window.location.href = 'https://portal.planmyadmission.com/sign-up';
+      return;
+    }
+    // For paid packages, show payment modal
+    setShowModal(true);
   };
 
   const closeModal = () => {
@@ -40,7 +46,7 @@ const Card = (plan) => {
                 </h3>
                 <div className="flex justify-center mb-4">
                   <QRCodeSVG
-                    value={`upi://pay?pa=pravindubey@okhdfcbank&pn=Pravin%20Dubey&am=${plan.price}&cu=INR&tn=Test%20Payment`} 
+                    value={`upi://pay?pa=mswipe.1430060225000556@mswipesbm&pn=MSWIPE&tr=&am=${plan.price}&cu=INR&tn=Test%20Payment`} 
                     alt="Payment QR Code"
                     className="w-40 h-40 sm:w-48 sm:h-48 object-contain border-2 border-gray-200 rounded-lg"
                   />
@@ -92,7 +98,7 @@ const Card = (plan) => {
                   Need Help?
                 </h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  Our support team is available 24/7 to assist you with the enrollment process.
+                  Our support team is available Mon to Fri 9 AM to 6 PM to assist you with the enrollment process.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
@@ -154,7 +160,8 @@ const Card = (plan) => {
       </ul>
       {plan.price != 0 && (
         <p className="text-xs text-red-500 mt-4 px-8">
-          * Refund available within 7 days after 2 counseling sessions
+          * Refund requests must be made within 7 days of payment and
+          will be processed at the discretion of PlanMyAdmission.
         </p>
       )}
       {

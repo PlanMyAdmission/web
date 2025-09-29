@@ -31,8 +31,8 @@ const About = () => {
       <AboutUsDescription />
       <OurCoreValues />
       <Founder />
-      <Advisors />
-      <Team />
+      {/* <Advisors /> */}
+      {/* <Team /> */}
       <Band line="Fast Track your journey" cta="Register Now" />
     </>
   );

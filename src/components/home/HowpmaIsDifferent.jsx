@@ -10,7 +10,7 @@ const contentSections = [
     image: image1,
   },
   {
-    title: "Enhance Your Applications with Expert Writing Support.",
+    title: "Enhance Your Applications with Expert Support and AI Driven Assistance.",
     description: "Create impactful statements of purpose, essays, and resumes with real-time suggestions and professional edits designed to help you stand out.",
     image: image3,
   },

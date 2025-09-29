@@ -1,7 +1,7 @@
 const data = {
   head: "Terms and Conditions for PlanMyAdmission",
   content:
-    "<strong>Effective Date: Sep 2025</strong><br><br>PlanMyAdmission.com (\"Site\") is operated by PMS Study Abroad LLP (\"we,\" \"our,\" or \"us\"), a limited liability partnership registered in India. These Terms and Conditions (\"Terms\") govern your use of our website and related services (\"Services\"). By accessing or using the Site and Services, you agree to comply with and be bound by these Terms.",
+    "<strong>Effective Date: Sep 2025</strong><br><br>PlanMyAdmission.com (\"Site\") is operated by PMS Study Abroad LLP (\"we,\" \"our,\" or \"us\"), a limited liability partnership registered in India. These Terms and Conditions (\"Terms\") govern your use of our website and related services (\"Services\"). By accessing or using the Site and Services, you agree to comply with and be bound by these Terms.<br><br>Planmyadmission operates under PMA Study Abroad LLP (LLPIN: ACP-2639), a limited liability partnership incorporated and registered in Mumbai, Maharashtra, India. By using our services, you acknowledge that you have read, understood, and agreed to our terms and conditions and privacy policies. We strongly encourage all users to carefully review these policies to fully understand their rights and obligations before engaging with our platform or services.",
 
   policy: [
     {

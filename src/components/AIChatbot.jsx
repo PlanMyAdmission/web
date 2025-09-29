@@ -168,6 +168,51 @@ const AIChatbot = () => {
     }
   }, [messages, isTyping]);
 
+  // Listen for external chatbot open events
+  useEffect(() => {
+    const handleOpenChatbot = (event) => {
+      try {
+        console.log('🤖 AI Chatbot: Received openAIChatbot event', event);
+        
+        if (!isOpen) {
+          console.log('🤖 AI Chatbot: Opening chatbot');
+          setIsOpen(true);
+          
+          // Add initial greeting if first time opening
+          if (messages.length === 0) {
+            setTimeout(() => {
+              const greeting = {
+                id: Date.now(),
+                type: 'bot',
+                content: `👋 Hi! I'm your AI Personal Admission Coach from Plan My Admission!
+
+I'm here to help you with your overseas education journey:
+• University selection and rankings 🏛️
+• Program guidance and career prospects 📚
+• Country comparisons and costs 🌍
+• Admission requirements 📝
+• Scholarship opportunities 💰
+
+What would you like to know about studying abroad?`
+              };
+              console.log('🤖 AI Chatbot: Setting greeting message', greeting);
+              setMessages([greeting]);
+            }, 500);
+          }
+        } else {
+          console.log('🤖 AI Chatbot: Already open, ignoring event');
+        }
+      } catch (error) {
+        console.error('🤖 AI Chatbot: Error handling openAIChatbot event', error);
+      }
+    };
+
+    window.addEventListener('openAIChatbot', handleOpenChatbot);
+    return () => {
+      window.removeEventListener('openAIChatbot', handleOpenChatbot);
+    };
+  }, [isOpen, messages.length]);
+
   const toggleChat = () => {
     console.log('Toggle chat clicked, current state:', isOpen);
     setIsOpen(!isOpen);

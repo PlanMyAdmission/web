@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const ContentSection = ({
   id,
@@ -6,9 +7,12 @@ const ContentSection = ({
   features = [],
   btn1 = "Register",
   btn2 = "Learn More",
+  btn3,
+  btn4,
   video,
   forInstitutions = false,
 }) => {
+  const navigate = useNavigate();
 
   // Scroll smoothly to the bottom of the page, ensuring we reach the very end
   const scrollToBottom = () => {
@@ -67,6 +71,39 @@ const ContentSection = ({
             >
               {btn2}
             </button>
+            {btn3 && (
+              <button
+                className="px-4 py-2 rounded-md bg-blurpink text-white hover:bg-opacity-90 sm:w-full"
+                onClick={(e) => {
+                  try {
+                    console.log('🎯 ContentSection: AI Personal Admission Coach button clicked');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Dispatch custom event to open AI chatbot
+                    const event = new CustomEvent('openAIChatbot', { 
+                      detail: { source: 'admission-coach-button' }
+                    });
+                    window.dispatchEvent(event);
+                    console.log('🎯 ContentSection: openAIChatbot event dispatched');
+                  } catch (error) {
+                    console.error('🎯 ContentSection: Error dispatching event', error);
+                  }
+                }}
+              >
+                {btn3}
+              </button>
+            )}
+            {btn4 && (
+              <button
+                className="px-4 py-2 rounded-md border border-blurpink text-blurpink hover:bg-gray-50 sm:w-full"
+                onClick={() => {
+                  navigate('/ai-university-search');
+                }}
+              >
+                {btn4}
+              </button>
+            )}
           </div>
         </div>
 

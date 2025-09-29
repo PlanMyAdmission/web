@@ -78,7 +78,7 @@ const Contact = () => {
           <p className="md:pb-5 pb-2">+91 8828099194</p>
           <label className="font-bold py-2">Location</label>
           <p className="pb-5">
-            PlanMyAdmission - Samarth Garden, Datta Mandir Road, Bhandup 400078
+            PlanMyAdmission - Horizon, Datta Mandir Road, Bhandup West, Mumbai - 400078
             <br />
             {/* <span className="text-main">View it on Google Map</span> */}
           </p>

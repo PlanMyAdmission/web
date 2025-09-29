@@ -2,7 +2,8 @@ const privacy = {
   head: "Privacy Policy",
   content:
     `Effective Date: [Sep 2025]<br/>
-    PlanMyAdmission ("we," "our," or "us") is committed to protecting and respecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website [www.planmyadmission.com] and use our services. Please read this policy carefully to understand our views and practices regarding your personal data and how we will treat it.
+    PlanMyAdmission ("we," "our," or "us") is committed to protecting and respecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website [www.planmyadmission.com] and use our services. Please read this policy carefully to understand our views and practices regarding your personal data and how we will treat it.<br/><br/>
+    Planmyadmission operates under PMA Study Abroad LLP (LLPIN: ACP-2639), a limited liability partnership incorporated and registered in Mumbai, Maharashtra, India. By using our services, you acknowledge that you have read, understood, and agreed to our terms and conditions and privacy policies. We strongly encourage all users to carefully review these policies to fully understand their rights and obligations before engaging with our platform or services.
     `,
 
   policy: [

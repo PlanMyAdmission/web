@@ -1,6 +1,6 @@
 import React from "react";
 import quote from "../../assets/about-us/quote.svg";
-import advisors from "../../assets/about-us/leader.svg";
+import advisors from "../../assets/about-us/Ram.jpg";
 import Heading from "../../higherOrderComponents/Heading";
 
 const Founder = () => {
@@ -15,10 +15,12 @@ const Founder = () => {
           className="block md:hidden [clip-path:circle()] object-cover object-center"
         />
         <div className="md:pl-10 md:w-2/3 w-full md:py-10 p-5">
-          <p className="font-bold text-xl md:pt-5">Mr. Dubey</p>
-          <p className="text-main ">Lorem ipsum</p>
+          <p className="font-bold text-xl md:pt-5">RamNivas Dubey</p>
+          <p className="text-main ">Founder</p>
           <p className="pt-5 md:pr-10 md:mr-20">
-            has a strong passion for education and a deep understanding of the challenges students face when pursuing international studies. With his years of experience in the field, he has shaped Planmyadmission into a one-stop destination for students seeking guidance and support in their study abroad journey. He strongly believes in empowering students and providing them with the right tools and resources to achieve their goals. Join us and let us help you turn your academic dreams into reality.
+          "The overseas education industry hasn't seen real innovation in decades. Students deserve better than slow, expensive, and generic advice that treats them like just another number. That's why we built Plan My Admission—to democratize access to world-class education consulting through artificial intelligence and human experts working together.
+          <br />
+          Our leadership brings together deep expertise in education, technology, and student success. With years of experience understanding the challenges students face when pursuing international studies, we've shaped Plan My Admission into India's topmost AI-powered overseas education platform with AI innovation at its core, building on the industry's learning over the last few decades. We strongly believe in empowering every student with personalized, data-driven guidance and the right technological tools to achieve their academic dreams, regardless of their background or budget."
           </p>
         </div>
         <img

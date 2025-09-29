@@ -68,17 +68,6 @@ const NavBar = () => {
               Home
             </li>
           </NavLink>
-          <Link to="/how-it-works">
-            <li
-              className={`hover:underline ${router.pathname === "/how-it-works" ? "font-bold" : ""
-                }`}
-              onClick={() => {
-                localStorage.removeItem("button")
-              }}
-            >
-              How It Works
-            </li>
-          </Link>
           <Link to="/pricing">
             <li
               className={`hover:underline ${router.pathname === "/pricing" ? "font-bold" : ""
@@ -202,14 +191,6 @@ const NavBar = () => {
                   }`}
               >
                 Home
-              </li>
-            </Link>
-            <Link to="/how-it-works">
-              <li
-                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/how-it-works" ? "font-bold" : ":"
-                  }`}
-              >
-                How It Works
               </li>
             </Link>
             <Link to="/pricing">

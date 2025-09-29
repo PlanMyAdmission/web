@@ -4,6 +4,7 @@ import ArticlesSection from "./ArticlesSection";
 import FAQ from "./FAQ";
 import Hero from "./Hero";
 import HowpmaIsDifferent from "./HowpmaIsDifferent";
+import HowItWorksSection from "./HowItWorksSection";
 import JoinUs from "./JoinUs";
 import OurPartners from "./OurPartners";
 import PlanYourAdmission from "./PlanYourAdmission";
@@ -46,6 +47,7 @@ const Home = () => {
       <ArticlesSection />
 
       <FAQ />
+      <HowItWorksSection />
       <JoinUs ref={myRef} />
       <ScrollDown />
       <Outlet />

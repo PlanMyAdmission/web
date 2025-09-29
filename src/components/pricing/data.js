@@ -35,7 +35,7 @@ export const pricingPlans = [
   // },
   {
     title: "Advantage Package",
-    price: 30000,
+    price: 24999,
     currency: "INR",
     frequency: "/One-Time Payment",
     // description: "Lorem ipsum, dite",
