@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const JoinUsForm = ({className}) => {
   const [name, setname] = useState("")
@@ -227,14 +228,14 @@ const JoinUsForm = ({className}) => {
           </div>
           <h3 className="text-xl font-semibold text-main mb-2">Thank You!</h3>
           <p className="text-gray-700 text-sm px-4 mb-4">
-            Thanks, We are creating AI Platform personalized for you.
+            Thanks for Submitting your Interest, our team of experts will connect with you shortly.<br/> In the meantime explore our <Link style={{"textDecoration":"underline", color:"blue"}} to="/ai-university-search">AI University Search</Link>
           </p>
-          <button
+          {/* <button
             onClick={handleFillAgain}
             className="text-main hover:text-main/80 text-sm underline underline-offset-2 transition-colors cursor-pointer"
           >
             Fill Again
-          </button>
+          </button> */}
         </div>
       )}
     </div>

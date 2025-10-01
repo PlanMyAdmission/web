@@ -115,13 +115,14 @@ const Form = () => {
        <JoinUsForm className={" w-[100%]"} />
         </div>
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.8763366259523!2d72.93846841112874!3d19.156889681989608!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b86721f841d7%3A0x8a2f54f532ea5fa9!2sSwami%20Smarth!5e0!3m2!1sen!2sin!4v1698586185308!5m2!1sen!2sin"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.9193094843877!2d72.93874407598106!3d19.15500904948591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b8615c9625ed%3A0x3c4edf53b3cb7ec4!2sAtul%20projects%20horizon!5e0!3m2!1sen!2sin!4v1759326710531!5m2!1sen!2sin"
         // style="border:0;"
         allowFullScreen=""
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
         className="hidden md:block absolute w-full bottom-10 h-[250px] px-5"
       ></iframe>
+      {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.9193094843877!2d72.93874407598106!3d19.15500904948591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b8615c9625ed%3A0x3c4edf53b3cb7ec4!2sAtul%20projects%20horizon!5e0!3m2!1sen!2sin!4v1759326710531!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> */}
     </div>
   );
 };

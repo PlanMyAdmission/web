@@ -68,6 +68,17 @@ const NavBar = () => {
               Home
             </li>
           </NavLink>
+           <Link to="/ai-university-search">
+            <li
+              className={`hover:underline ${router.pathname === "/ai-university-search" ? "font-bold" : ""
+                }`}
+              onClick={() => {
+                localStorage.removeItem("button")
+              }}
+            >
+              AI University Search
+            </li>
+          </Link>
           <Link to="/pricing">
             <li
               className={`hover:underline ${router.pathname === "/pricing" ? "font-bold" : ""
@@ -80,17 +91,6 @@ const NavBar = () => {
             </li>
           </Link>
 
-          <Link to="/about">
-            <li
-              className={`hover:underline ${router.pathname === "/about" ? "font-bold" : ""
-                }`}
-              onClick={() => {
-                localStorage.removeItem("button")
-              }}
-            >
-              About Us
-            </li>
-          </Link>
           <Link to="/blogs">
             <li
               className={`hover:underline ${router.pathname === "/blogs" ? "font-bold" : ""
@@ -102,15 +102,16 @@ const NavBar = () => {
               Blogs
             </li>
           </Link>
-          <Link to="/ai-university-search">
+         
+          <Link to="/about">
             <li
-              className={`hover:underline ${router.pathname === "/ai-university-search" ? "font-bold" : ""
+              className={`hover:underline ${router.pathname === "/about" ? "font-bold" : ""
                 }`}
               onClick={() => {
                 localStorage.removeItem("button")
               }}
             >
-              AI University Search
+              About Us
             </li>
           </Link>
           <Link to="/contact">
@@ -124,6 +125,8 @@ const NavBar = () => {
               Contact Us
             </li>
           </Link>
+          
+          
         </ul>
         <>
         {currentUser ? (
@@ -193,6 +196,14 @@ const NavBar = () => {
                 Home
               </li>
             </Link>
+            <Link to="/ai-university-search">
+              <li
+                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/ai-university-search" ? "font-bold" : ":"
+                  }`}
+              >
+                AI University Search
+              </li>
+            </Link>
             <Link to="/pricing">
               <li
                 className={`p-2 pl-5 text-[18px]  ${router.pathname === "/pricing" ? "font-bold" : ":"
@@ -201,14 +212,7 @@ const NavBar = () => {
                 Pricing
               </li>
             </Link>
-            <Link to="/about">
-              <li
-                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/about" ? "font-bold" : ":"
-                  }`}
-              >
-                About Us
-              </li>
-            </Link>
+           
             <Link to="/blogs">
               <li
                 className={`p-2 pl-5 text-[18px]  ${router.pathname === "/blogs" ? "font-bold" : ":"
@@ -217,12 +221,13 @@ const NavBar = () => {
                 Blogs
               </li>
             </Link>
-            <Link to="/ai-university-search">
+            
+             <Link to="/about">
               <li
-                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/ai-university-search" ? "font-bold" : ":"
+                className={`p-2 pl-5 text-[18px]  ${router.pathname === "/about" ? "font-bold" : ":"
                   }`}
               >
-                AI University Search
+                About Us
               </li>
             </Link>
             <Link to="/contact">
@@ -233,6 +238,7 @@ const NavBar = () => {
                 Contact us
               </li>
             </Link>
+            
           </ul>
           <div className="mt-6 border-t border-main pt-4">
           {currentUser ? (
