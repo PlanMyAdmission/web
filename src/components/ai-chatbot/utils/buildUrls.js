@@ -4,6 +4,6 @@ export function buildWebSocketUrl(agentId) {
 }
 
 export function buildSessionUrl(agentId) {
-  const sessionUrl = `https://ceronica.digiiq.ai/ceronica/session?agent_id=${agentId}`;
+  const sessionUrl = `https://ceronica.digiiq.ai/ceronica/agent-info?agent_id=${agentId}`;
   return sessionUrl;
 }
