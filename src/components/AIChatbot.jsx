@@ -3,7 +3,7 @@ import './AIChatbot.css';
 import { buildSessionUrl, buildWebSocketUrl } from './ai-chatbot/utils/buildUrls';
 import jsonParser from './ai-chatbot/utils/jsonParser';
 import { getSessionId, saveSessionId } from './ai-chatbot/utils/manageLocalSession';
-import { isVoiceCapable } from './ai-chatbot/utils/chatMode';
+import { isTextCapable, isValidMode, isVoiceCapable } from './ai-chatbot/utils/chatMode';
 import useVoiceStream from './ai-chatbot/hooks/useVoiceStream';
 import createPcmPlayer from './ai-chatbot/utils/createPcmPlayer';
 
@@ -16,7 +16,9 @@ const AIChatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [micError, setMicError] = useState(null);
-  const [micEnabled, setMicEnabled] = useState(false);
+  const [sessionChatMode, setSessionChatMode] = useState(null);
+  const [activeMode, setActiveMode] = useState(null);
+  const [requestedMode, setRequestedMode] = useState(null);
   const [authUrl, setAuthUrl] = useState(null);
   const [connecting, setConnecting] = useState(false);
   const [error, setError] = useState(null);
@@ -48,6 +50,8 @@ const AIChatbot = () => {
       })
       .then((data) => {
         if (!isMounted) return;
+        setSessionChatMode(data?.chat_mode || null);
+        setActiveMode(isTextCapable(data?.chat_mode) ? 'text' : null);
         setAuthUrl(data?.auth_url ?? null);
       })
       .catch(() => {
@@ -187,6 +191,14 @@ const AIChatbot = () => {
       ]);
     }
 
+    if (type === 'mode') {
+      const content = data?.content || data?.mode;
+      if (isValidMode(content)) {
+        setActiveMode(content);
+      }
+      return;
+    }
+
     if (type === 'barge_in') {
       if (pcmPlayerRef.current) {
         pcmPlayerRef.current.stop();
@@ -213,18 +225,6 @@ const AIChatbot = () => {
     reconnectTimeoutRef.current = setTimeout(() => {
       connectWebSocket();
     }, delay);
-  };
-
-  const sendMode = (mode) => {
-    if (!socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) {
-      return;
-    }
-    socketRef.current.send(
-      JSON.stringify({
-        type: 'mode',
-        content: mode,
-      }),
-    );
   };
 
   const connectWebSocket = () => {
@@ -269,9 +269,6 @@ const AIChatbot = () => {
         }),
       );
       setError(null);
-      if (micEnabled) {
-        sendMode('both');
-      }
     });
 
     socket.addEventListener('message', handleSocketMessage);
@@ -292,9 +289,10 @@ const AIChatbot = () => {
   useEffect(() => {
     if (!isOpen) {
       isActiveRef.current = false;
-      setMicEnabled(false);
       setIsListening(false);
       setMicError(null);
+      setRequestedMode(null);
+      setActiveMode(isTextCapable(sessionChatMode) ? 'text' : null);
 
       if (reconnectTimeoutRef.current) {
         clearTimeout(reconnectTimeoutRef.current);
@@ -324,23 +322,36 @@ const AIChatbot = () => {
         socketRef.current = null;
       }
     };
-  }, [isOpen, authUrl, micEnabled]);
+  }, [isOpen, authUrl, sessionChatMode]);
 
   useVoiceStream({
     socketRef,
-    active: isOpen && micEnabled,
+    active: isOpen && isVoiceCapable(activeMode),
     setMicError,
     setMicListening: setIsListening,
     setMicStream: undefined,
-    enabled: isVoiceCapable('both'),
+    enabled: isVoiceCapable(sessionChatMode),
   });
+
+  useEffect(() => {
+    if (!requestedMode || requestedMode === activeMode) return;
+    if (!socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) {
+      return;
+    }
+    socketRef.current.send(
+      JSON.stringify({
+        type: 'mode',
+        content: requestedMode,
+      }),
+    );
+  }, [requestedMode, activeMode]);
 
   const toggleChat = () => {
     setIsOpen((prev) => !prev);
   };
 
   const toggleVoice = () => {
-    if (!isVoiceCapable('both')) {
+    if (!isVoiceCapable(sessionChatMode)) {
       setMessages((prev) => [
         ...prev,
         {
@@ -353,9 +364,8 @@ const AIChatbot = () => {
       return;
     }
 
-    const nextEnabled = !micEnabled;
-    setMicEnabled(nextEnabled);
-    sendMode(nextEnabled ? 'both' : 'text');
+    const isMicOn = activeMode === 'both' || requestedMode === 'both';
+    setRequestedMode(isMicOn ? 'text' : 'both');
   };
 
   const handleSendMessage = (messageText = null) => {
