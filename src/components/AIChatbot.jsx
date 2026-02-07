@@ -18,7 +18,6 @@ import useVoiceStream from "./ai-chatbot/hooks/useVoiceStream";
 import createPcmPlayer from "./ai-chatbot/utils/createPcmPlayer";
 
 const AGENT_ID = "6136635b-b9d5-427c-a9df-49ddf0ff71e1";
-const DEFAULT_GREETING = "Hi how can I help you today";
 
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -135,20 +134,6 @@ const AIChatbot = () => {
     }));
   };
 
-  const ensureDefaultGreeting = (items) => {
-    if (!Array.isArray(items)) return items;
-    const firstMessage = items.find((item) => item?.content?.trim());
-    const firstLength = firstMessage?.content?.length || 0;
-    if (firstLength >= 40) return items;
-    return [
-      {
-        id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-        type: "bot",
-        content: DEFAULT_GREETING,
-      },
-      ...items,
-    ];
-  };
 
   const handleSocketMessage = async (event) => {
     const raw = event?.data;
@@ -182,8 +167,7 @@ const AIChatbot = () => {
           saveSessionId(data.sessionId);
           sessionIdRef.current = data.sessionId;
         }
-        const normalized = normalizeSessionItems(data.items);
-        setMessages(ensureDefaultGreeting(normalized));
+        setMessages(normalizeSessionItems(data.items));
         setIsTyping(false);
       }
       return;
