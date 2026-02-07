@@ -1,18 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './AIChatbot.css';
-import { buildSessionUrl, buildWebSocketUrl } from './ai-chatbot/utils/buildUrls';
-import jsonParser from './ai-chatbot/utils/jsonParser';
-import { getSessionId, saveSessionId } from './ai-chatbot/utils/manageLocalSession';
-import { isTextCapable, isValidMode, isVoiceCapable } from './ai-chatbot/utils/chatMode';
-import useVoiceStream from './ai-chatbot/hooks/useVoiceStream';
-import createPcmPlayer from './ai-chatbot/utils/createPcmPlayer';
+import React, { useEffect, useRef, useState } from "react";
+import "./AIChatbot.css";
+import {
+  buildSessionUrl,
+  buildWebSocketUrl,
+} from "./ai-chatbot/utils/buildUrls";
+import jsonParser from "./ai-chatbot/utils/jsonParser";
+import {
+  getSessionId,
+  saveSessionId,
+} from "./ai-chatbot/utils/manageLocalSession";
+import {
+  isTextCapable,
+  isValidMode,
+  isVoiceCapable,
+} from "./ai-chatbot/utils/chatMode";
+import useVoiceStream from "./ai-chatbot/hooks/useVoiceStream";
+import createPcmPlayer from "./ai-chatbot/utils/createPcmPlayer";
 
-const AGENT_ID = 'e69e1a3d-37a5-46bc-93c6-b058f8542c3a';
+const AGENT_ID = "6136635b-b9d5-427c-a9df-49ddf0ff71e1";
 
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [micError, setMicError] = useState(null);
@@ -41,7 +51,7 @@ const AIChatbot = () => {
   useEffect(() => {
     let isMounted = true;
 
-    fetch(buildSessionUrl(AGENT_ID), { method: 'GET' })
+    fetch(buildSessionUrl(AGENT_ID), { method: "GET" })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`Session request failed: ${response.status}`);
@@ -51,12 +61,12 @@ const AIChatbot = () => {
       .then((data) => {
         if (!isMounted) return;
         setSessionChatMode(data?.chat_mode || null);
-        setActiveMode(isTextCapable(data?.chat_mode) ? 'text' : null);
+        setActiveMode(isTextCapable(data?.chat_mode) ? "text" : null);
         setAuthUrl(data?.auth_url ?? null);
       })
       .catch(() => {
         if (!isMounted) return;
-        setError('Unable to initialize chat session.');
+        setError("Unable to initialize chat session.");
       });
 
     return () => {
@@ -74,12 +84,12 @@ const AIChatbot = () => {
 
   useEffect(() => {
     if (!error) return;
-    console.log('AIChatbot:', error);
+    console.log("AIChatbot:", error);
   }, [error]);
 
   useEffect(() => {
     if (!micError) return;
-    console.log('AIChatbot mic:', micError);
+    console.log("AIChatbot mic:", micError);
   }, [micError]);
 
   useEffect(() => {
@@ -87,9 +97,9 @@ const AIChatbot = () => {
       setIsOpen(true);
     };
 
-    window.addEventListener('openAIChatbot', handleOpenChatbot);
+    window.addEventListener("openAIChatbot", handleOpenChatbot);
     return () => {
-      window.removeEventListener('openAIChatbot', handleOpenChatbot);
+      window.removeEventListener("openAIChatbot", handleOpenChatbot);
     };
   }, []);
 
@@ -101,7 +111,7 @@ const AIChatbot = () => {
       if (targetIndex === -1) {
         updated.push({
           id: chunkId,
-          type: 'bot',
+          type: "bot",
           content: chunk,
         });
         return updated;
@@ -109,7 +119,7 @@ const AIChatbot = () => {
       const target = updated[targetIndex];
       updated[targetIndex] = {
         ...target,
-        content: `${target.content || ''}${chunk}`,
+        content: `${target.content || ""}${chunk}`,
       };
       return updated;
     });
@@ -119,8 +129,8 @@ const AIChatbot = () => {
     if (!Array.isArray(items)) return [];
     return items.map((item, index) => ({
       id: item.id || `${Date.now()}-${index}`,
-      type: item.role === 'assistant' ? 'bot' : 'user',
-      content: item.message?.content || '',
+      type: item.role === "assistant" ? "bot" : "user",
+      content: item.message?.content || "",
     }));
   };
 
@@ -128,8 +138,8 @@ const AIChatbot = () => {
     const data = jsonParser(event.data);
     const type = data?.type;
 
-    if (type === 'session') {
-      if (data.status === 'initialized') {
+    if (type === "session") {
+      if (data.status === "initialized") {
         setConnecting(false);
         if (data.sessionId) {
           saveSessionId(data.sessionId);
@@ -141,43 +151,44 @@ const AIChatbot = () => {
       return;
     }
 
-    if (type === 'chunk_start') {
-      const chunkId = data?.id || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    if (type === "chunk_start") {
+      const chunkId =
+        data?.id || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
       currentChunkIdRef.current = chunkId;
       setMessages((prev) => [
         ...prev,
         {
           id: chunkId,
-          type: 'bot',
-          content: '',
+          type: "bot",
+          content: "",
         },
       ]);
       setIsTyping(false);
       return;
     }
 
-    if (type === 'message_chunk') {
+    if (type === "message_chunk") {
       if (!currentChunkIdRef.current) return;
       if (data?.id && data.id !== currentChunkIdRef.current) return;
-      appendAssistantChunk(currentChunkIdRef.current, data?.content || '');
+      appendAssistantChunk(currentChunkIdRef.current, data?.content || "");
       return;
     }
 
-    if (type === 'chunk_end') {
+    if (type === "chunk_end") {
       if (!currentChunkIdRef.current) return;
       if (data?.id && data.id !== currentChunkIdRef.current) return;
       currentChunkIdRef.current = null;
       return;
     }
 
-    if (type === 'audio_chunk') {
+    if (type === "audio_chunk") {
       const content = data?.content;
       if (!content || !pcmPlayerRef.current) return;
       pcmPlayerRef.current.enqueueBase64Pcm(content);
       return;
     }
 
-    if (type === 'transcript') {
+    if (type === "transcript") {
       if (!data?.final) return;
       const content = data?.content?.trim();
       if (!content) return;
@@ -185,13 +196,13 @@ const AIChatbot = () => {
         ...prev,
         {
           id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-          type: 'user',
+          type: "user",
           content,
         },
       ]);
     }
 
-    if (type === 'mode') {
+    if (type === "mode") {
       const content = data?.content || data?.mode;
       if (isValidMode(content)) {
         setActiveMode(content);
@@ -199,7 +210,7 @@ const AIChatbot = () => {
       return;
     }
 
-    if (type === 'barge_in') {
+    if (type === "barge_in") {
       if (pcmPlayerRef.current) {
         pcmPlayerRef.current.stop();
       }
@@ -214,7 +225,7 @@ const AIChatbot = () => {
     reconnectAttemptsRef.current += 1;
 
     if (reconnectAttemptsRef.current >= RECONNECT_LIMIT) {
-      setError('Unable to connect to chat server.');
+      setError("Unable to connect to chat server.");
       return;
     }
 
@@ -242,18 +253,18 @@ const AIChatbot = () => {
       socketRef.current.readyState !== WebSocket.CLOSED &&
       socketRef.current.readyState !== WebSocket.CLOSING
     ) {
-      socketRef.current.close(1000, 'reconnecting');
+      socketRef.current.close(1000, "reconnecting");
       socketRef.current = null;
     }
 
     const socket = new WebSocket(buildWebSocketUrl(AGENT_ID));
 
-    socket.addEventListener('open', async () => {
+    socket.addEventListener("open", async () => {
       reconnectAttemptsRef.current = 0;
       let authPayload;
       if (authUrl) {
         try {
-          const response = await fetch(authUrl, { method: 'GET' });
+          const response = await fetch(authUrl, { method: "GET" });
           if (response.ok) {
             authPayload = await response.json();
           }
@@ -263,24 +274,24 @@ const AIChatbot = () => {
       }
       socket.send(
         JSON.stringify({
-          type: 'session',
+          type: "session",
           sessionId: sessionIdRef.current,
-          data: authPayload ? { auth: authPayload } : { a: 'lol' },
+          data: authPayload ? { auth: authPayload } : { a: "lol" },
         }),
       );
       setError(null);
     });
 
-    socket.addEventListener('message', handleSocketMessage);
+    socket.addEventListener("message", handleSocketMessage);
 
-    socket.addEventListener('close', () => {
+    socket.addEventListener("close", () => {
       if (!isActiveRef.current) return;
-      setError('Connection closed. Reconnecting...');
+      setError("Connection closed. Reconnecting...");
       scheduleReconnect();
     });
 
-    socket.addEventListener('error', () => {
-      setError('Connection error. Reconnecting...');
+    socket.addEventListener("error", () => {
+      setError("Connection error. Reconnecting...");
     });
 
     socketRef.current = socket;
@@ -292,14 +303,14 @@ const AIChatbot = () => {
       setIsListening(false);
       setMicError(null);
       setRequestedMode(null);
-      setActiveMode(isTextCapable(sessionChatMode) ? 'text' : null);
+      setActiveMode(isTextCapable(sessionChatMode) ? "text" : null);
 
       if (reconnectTimeoutRef.current) {
         clearTimeout(reconnectTimeoutRef.current);
         reconnectTimeoutRef.current = null;
       }
       if (socketRef.current) {
-        socketRef.current.close(1000, 'widget closed');
+        socketRef.current.close(1000, "widget closed");
         socketRef.current = null;
       }
       if (pcmPlayerRef.current) {
@@ -318,7 +329,7 @@ const AIChatbot = () => {
         reconnectTimeoutRef.current = null;
       }
       if (socketRef.current) {
-        socketRef.current.close(1000, 'cleanup');
+        socketRef.current.close(1000, "cleanup");
         socketRef.current = null;
       }
     };
@@ -340,7 +351,7 @@ const AIChatbot = () => {
     }
     socketRef.current.send(
       JSON.stringify({
-        type: 'mode',
+        type: "mode",
         content: requestedMode,
       }),
     );
@@ -356,16 +367,16 @@ const AIChatbot = () => {
         ...prev,
         {
           id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-          type: 'bot',
+          type: "bot",
           content:
-            'Voice is not available for this session. Please type your message.',
+            "Voice is not available for this session. Please type your message.",
         },
       ]);
       return;
     }
 
-    const isMicOn = activeMode === 'both' || requestedMode === 'both';
-    setRequestedMode(isMicOn ? 'text' : 'both');
+    const isMicOn = activeMode === "both" || requestedMode === "both";
+    setRequestedMode(isMicOn ? "text" : "both");
   };
 
   const handleSendMessage = (messageText = null) => {
@@ -376,11 +387,11 @@ const AIChatbot = () => {
       ...prev,
       {
         id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-        type: 'user',
+        type: "user",
         content: text,
       },
     ]);
-    setInputValue('');
+    setInputValue("");
     setIsTyping(true);
 
     if (pcmPlayerRef.current) {
@@ -393,8 +404,9 @@ const AIChatbot = () => {
         ...prev,
         {
           id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-          type: 'bot',
-          content: 'Connecting to the chat server. Please try again in a moment.',
+          type: "bot",
+          content:
+            "Connecting to the chat server. Please try again in a moment.",
         },
       ]);
       return;
@@ -402,14 +414,14 @@ const AIChatbot = () => {
 
     socketRef.current.send(
       JSON.stringify({
-        type: 'message',
+        type: "message",
         content: text,
       }),
     );
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -417,17 +429,17 @@ const AIChatbot = () => {
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
-    e.target.style.height = 'auto';
-    e.target.style.height = Math.min(e.target.scrollHeight, 140) + 'px';
+    e.target.style.height = "auto";
+    e.target.style.height = Math.min(e.target.scrollHeight, 140) + "px";
   };
 
   return (
     <div className="pma-chatbot-widget">
       {/* Chat Bubble */}
       <button
-        className={`pma-chatbot-bubble ${!isOpen ? 'pma-chatbot-pulse' : ''}`}
+        className={`pma-chatbot-bubble ${!isOpen ? "pma-chatbot-pulse" : ""}`}
         onClick={toggleChat}
-        style={{ display: isOpen ? 'none' : 'flex' }}
+        style={{ display: isOpen ? "none" : "flex" }}
         type="button"
       >
         AI
@@ -444,7 +456,11 @@ const AIChatbot = () => {
                 <p>Study Abroad Expert</p>
               </div>
             </div>
-            <button className="pma-chatbot-close" onClick={toggleChat} type="button">
+            <button
+              className="pma-chatbot-close"
+              onClick={toggleChat}
+              type="button"
+            >
               ×
             </button>
           </div>
@@ -456,7 +472,7 @@ const AIChatbot = () => {
                 className={`pma-chatbot-message pma-chatbot-${message.type}`}
               >
                 <div className="pma-chatbot-avatar">
-                  {message.type === 'bot' ? 'AI' : 'U'}
+                  {message.type === "bot" ? "AI" : "U"}
                 </div>
                 <div className="pma-chatbot-content">
                   {message.isUniversityCard && message.universityData ? (
@@ -475,10 +491,10 @@ const AIChatbot = () => {
                         </div>
                       </div>
                       <div className="pma-chatbot-details">
-                        <strong>Acceptance Rate:</strong>{' '}
+                        <strong>Acceptance Rate:</strong>{" "}
                         {message.universityData.acceptance_rate}
                         <br />
-                        <strong>Annual Tuition:</strong>{' '}
+                        <strong>Annual Tuition:</strong>{" "}
                         {message.universityData.tuition}
                       </div>
                     </div>
@@ -486,8 +502,8 @@ const AIChatbot = () => {
                     <div
                       dangerouslySetInnerHTML={{
                         __html: message.content
-                          .replace(/\n/g, '<br>')
-                          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'),
+                          .replace(/\n/g, "<br>")
+                          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>"),
                       }}
                     />
                   )}
@@ -530,11 +546,11 @@ const AIChatbot = () => {
               )}
             </div>
             <button
-              className={`pma-chatbot-voice-btn ${isListening ? 'pma-chatbot-listening' : ''}`}
+              className={`pma-chatbot-voice-btn ${isListening ? "pma-chatbot-listening" : ""}`}
               onClick={toggleVoice}
               type="button"
             >
-              {isListening ? 'STOP' : 'MIC'}
+              {isListening ? "STOP" : "MIC"}
             </button>
             <button
               className="pma-chatbot-send-btn"
