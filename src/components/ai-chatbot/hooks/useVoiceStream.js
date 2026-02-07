@@ -3,18 +3,6 @@ import { useEffect, useRef } from 'react';
 const SAMPLE_RATE = 16000;
 const PROCESSOR_BUFFER_SIZE = 512;
 
-const buildAudioMessage = (base64Pcm) =>
-  JSON.stringify({ type: 'audio', content: base64Pcm });
-
-const arrayBufferToBase64 = (buffer) => {
-  const bytes = new Uint8Array(buffer);
-  let binary = '';
-  for (let i = 0; i < bytes.length; i += 1) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
-};
-
 const floatToInt16 = (input) => {
   const output = new Int16Array(input.length);
   for (let i = 0; i < input.length; i += 1) {
@@ -41,8 +29,7 @@ export default function useVoiceStream({
     if (!socketRef.current || socketRef.current.readyState !== WebSocket.OPEN) {
       return;
     }
-    const base64 = arrayBufferToBase64(buffer);
-    socketRef.current.send(buildAudioMessage(base64));
+    socketRef.current.send(buffer);
   };
 
   const stopWebAudio = () => {

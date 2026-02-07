@@ -18,6 +18,7 @@ import useVoiceStream from "./ai-chatbot/hooks/useVoiceStream";
 import createPcmPlayer from "./ai-chatbot/utils/createPcmPlayer";
 
 const AGENT_ID = "6136635b-b9d5-427c-a9df-49ddf0ff71e1";
+const DEFAULT_GREETING = "Hi how can I help you today";
 
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -134,8 +135,44 @@ const AIChatbot = () => {
     }));
   };
 
-  const handleSocketMessage = (event) => {
-    const data = jsonParser(event.data);
+  const ensureDefaultGreeting = (items) => {
+    if (!Array.isArray(items)) return items;
+    const firstMessage = items.find((item) => item?.content?.trim());
+    const firstLength = firstMessage?.content?.length || 0;
+    if (firstLength >= 40) return items;
+    return [
+      {
+        id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        type: "bot",
+        content: DEFAULT_GREETING,
+      },
+      ...items,
+    ];
+  };
+
+  const handleSocketMessage = async (event) => {
+    const raw = event?.data;
+
+    if (raw instanceof ArrayBuffer) {
+      if (pcmPlayerRef.current) {
+        pcmPlayerRef.current.enqueuePcmArrayBuffer(raw);
+      }
+      return;
+    }
+
+    if (raw instanceof Blob) {
+      if (pcmPlayerRef.current) {
+        const buffer = await raw.arrayBuffer();
+        pcmPlayerRef.current.enqueuePcmArrayBuffer(buffer);
+      }
+      return;
+    }
+
+    if (typeof raw !== "string") {
+      return;
+    }
+
+    const data = jsonParser(raw);
     const type = data?.type;
 
     if (type === "session") {
@@ -145,7 +182,8 @@ const AIChatbot = () => {
           saveSessionId(data.sessionId);
           sessionIdRef.current = data.sessionId;
         }
-        setMessages(normalizeSessionItems(data.items));
+        const normalized = normalizeSessionItems(data.items);
+        setMessages(ensureDefaultGreeting(normalized));
         setIsTyping(false);
       }
       return;
@@ -258,6 +296,7 @@ const AIChatbot = () => {
     }
 
     const socket = new WebSocket(buildWebSocketUrl(AGENT_ID));
+    socket.binaryType = "arraybuffer";
 
     socket.addEventListener("open", async () => {
       reconnectAttemptsRef.current = 0;

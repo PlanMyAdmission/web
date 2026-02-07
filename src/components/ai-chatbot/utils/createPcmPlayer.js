@@ -50,20 +50,29 @@ export default function createPcmPlayer({ sampleRate = 16000 } = {}) {
     processorNode.connect(audioContext.destination);
   };
 
-  const base64ToFloat32 = (base64) => {
-    const binary = atob(base64);
-    const byteLength = binary.length - (binary.length % 2);
-    const buffer = new ArrayBuffer(byteLength);
-    const bytes = new Uint8Array(buffer);
-    for (let i = 0; i < byteLength; i += 1) {
-      bytes[i] = binary.charCodeAt(i);
-    }
-    const int16 = new Int16Array(buffer);
+  const int16BufferToFloat32 = (buffer) => {
+    if (!buffer || !buffer.byteLength) return new Float32Array();
+    const byteLength = buffer.byteLength - (buffer.byteLength % 2);
+    if (byteLength <= 0) return new Float32Array();
+    const int16 = new Int16Array(buffer.slice(0, byteLength));
     const float32 = new Float32Array(int16.length);
     for (let i = 0; i < int16.length; i += 1) {
       float32[i] = int16[i] / 32768;
     }
     return float32;
+  };
+
+  const enqueuePcmArrayBuffer = (buffer) => {
+    if (!buffer) return;
+    init();
+    if (!audioContext || !processorNode) return;
+    if (audioContext.state === 'suspended') {
+      audioContext.resume().catch(() => {});
+    }
+    const samples = int16BufferToFloat32(buffer);
+    if (samples.length) {
+      pcmQueue.push(samples);
+    }
   };
 
   const enqueueBase64Pcm = (content) => {
@@ -76,7 +85,14 @@ export default function createPcmPlayer({ sampleRate = 16000 } = {}) {
     const base64 = content.startsWith('data:')
       ? content.split(',')[1]
       : content;
-    const samples = base64ToFloat32(base64);
+    const binary = atob(base64);
+    const byteLength = binary.length - (binary.length % 2);
+    const buffer = new ArrayBuffer(byteLength);
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < byteLength; i += 1) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    const samples = int16BufferToFloat32(buffer);
     if (samples.length) {
       pcmQueue.push(samples);
     }
@@ -91,6 +107,7 @@ export default function createPcmPlayer({ sampleRate = 16000 } = {}) {
   };
 
   return {
+    enqueuePcmArrayBuffer,
     enqueueBase64Pcm,
     stop,
     onLevel: (listener) => {
