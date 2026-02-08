@@ -60,9 +60,9 @@ const AIChatbot = () => {
       })
       .then((data) => {
         if (!isMounted) return;
-        setSessionChatMode(data?.chat_mode || null);
-        setActiveMode(isTextCapable(data?.chat_mode) ? "text" : null);
-        setAuthUrl(data?.auth_url ?? null);
+        setSessionChatMode(data?.data?.chat_mode || null);
+        setActiveMode(isTextCapable(data?.data?.chat_mode) ? "text" : null);
+        setAuthUrl(data?.data?.auth_url ?? null);
       })
       .catch(() => {
         if (!isMounted) return;
@@ -133,7 +133,6 @@ const AIChatbot = () => {
       content: item.message?.content || "",
     }));
   };
-
 
   const handleSocketMessage = async (event) => {
     const raw = event?.data;
