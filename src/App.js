@@ -15,6 +15,7 @@ import { useAuth } from "./context/AuthProvider";
 import ExploreUniversityData from "./components/explore_university/ExploreUniversityData"
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import SEOManager from "./components/SEOManager";
 
 
 
@@ -90,6 +91,7 @@ const App = () => {
           <span class="sr-only">Loading...</span>
         </div>
       }>
+        <SEOManager />
         <NavBar />
         <GoToTop />
 
