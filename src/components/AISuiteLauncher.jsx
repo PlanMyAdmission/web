@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import './AISuiteLauncher.css';
+import React, { Suspense, lazy, useState, useEffect } from "react";
+import "./AISuiteLauncher.css";
+
+const AIAdmissionTool = lazy(() => import("./ai-admission/AIAdmissionTool"));
 
 const AISuiteLauncher = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Configuration for the AI suite
   const SUITE_CONFIG = {
-    appUrl: 'https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/17ce0c7c65e61adbc702a7f105a2b033/1a368b7f-031e-44d0-800a-9d972be0478d/index.html',
-    buttonText: 'Launch AI Admission Suite',
-    buttonPosition: 'top-right' // Options: 'top-right', 'top-left', 'bottom-right', 'bottom-left'
+    buttonText: "Launch AI Admission Suite",
+    buttonPosition: "top-right", // Options: 'top-right', 'top-left', 'bottom-right', 'bottom-left'
   };
 
   // Launch AI Suite in fullscreen modal
@@ -25,42 +26,42 @@ const AISuiteLauncher = () => {
       });
     }
     
-    console.log('🎓 Plan My Admission AI Suite launched');
+    console.log("Plan My Admission AI Suite launched");
   };
 
   // Close AI Suite
   const closePMASuite = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = "auto";
   };
 
   // Keyboard shortcut (Alt + A) to launch AI Suite
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.altKey && e.key === 'a') {
+      if (e.altKey && e.key === "a") {
         e.preventDefault();
         launchAISuite();
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
   }, []);
 
   return (
     <>
       {/* Launch Button */}
-      <div 
-        id="pmaAISuiteLauncher" 
+      <div
+        id="pmaAISuiteLauncher"
         className={`pma-launcher ${SUITE_CONFIG.buttonPosition}`}
         onClick={launchAISuite}
       >
@@ -74,19 +75,16 @@ const AISuiteLauncher = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="pma-suite-modal active">
-          <button 
-            className="pma-close-button" 
+          <button
+            className="pma-close-button"
             onClick={closePMASuite}
             aria-label="Close AI Suite"
           >
             ×
           </button>
-          <iframe 
-            src={SUITE_CONFIG.appUrl} 
-            className="pma-suite-frame" 
-            title="Plan My Admission AI Suite"
-            loading="lazy"
-          />
+          <Suspense fallback={<div className="pma-suite-loading">Loading...</div>}>
+            <AIAdmissionTool />
+          </Suspense>
         </div>
       )}
     </>

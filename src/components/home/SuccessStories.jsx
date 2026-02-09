@@ -3,7 +3,8 @@ import Heading from "../../higherOrderComponents/Heading";
 import Testimonials from "./Testimonials";
 import Human from "../../assets/Human.svg";
 import bgArrow from "../../assets/bgArrow.svg";
-import Carousel from "react-elastic-carousel";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import Reviews from "./Reviews";
 import Bhavesh from "../../assets/homeAssets/Bhavesh .jpg";
 import Mansi from "../../assets/homeAssets/Mansi .jpg";
@@ -27,10 +28,11 @@ import Testimony4 from "../../assets/testimonies/PlanMyAdmission -4.png";
 //   },
 // ];
 
-const breakPoints = [
-  { width: 1, itemsToShow: 1 },
-  { width: 550, itemsToShow: 2 },
-];
+const responsive = {
+  mobile: { breakpoint: { max: 639, min: 0 }, items: 1 },
+  tablet: { breakpoint: { max: 1024, min: 640 }, items: 2 },
+  desktop: { breakpoint: { max: 4000, min: 1025 }, items: 2 },
+};
 
 const dataYT = [
   {
@@ -124,7 +126,9 @@ const SuccessStories = () => {
             <Carousel
               style={{ width: "80vw", maxWidth: "1200px" }}
               className="z-30 crousel"
-              breakPoints={breakPoints}
+              responsive={responsive}
+              arrows={false}
+              infinite
             >
 
               {dataTestimo && dataTestimo.map((item) => {
@@ -142,7 +146,9 @@ const SuccessStories = () => {
             <Carousel
               style={{ width: "calc(100vw - 2rem)" }}
               className="z-30 flex items-stretch justify-center z-20"
-              breakPoints={breakPoints}
+              responsive={responsive}
+              arrows={false}
+              infinite
             >
               {dataTestimo && dataTestimo.map((item) => {
                 return <Item props={item} />

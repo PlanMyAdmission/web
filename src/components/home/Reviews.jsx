@@ -4,23 +4,31 @@ import person2 from "../../assets/homeAssets/Shagunbansal.jpeg";
 import person3 from "../../assets/homeAssets/virensood.jpeg";
 import person4 from "../../assets/homeAssets/Ritikasingh.jpeg";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import Carousel from "react-elastic-carousel";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import Girl2 from "../../assets/homeAssets/Girl2.svg";
 // import { useState } from "react";
 
 class Content extends React.Component {
   render() {
     const handelLeft = () => {
-      this.carousel.slidePrev();
+      if (this.carousel?.previous) {
+        this.carousel.previous();
+      }
     };
     const handelRight = () => {
-      this.carousel.slideNext();
+      if (this.carousel?.next) {
+        this.carousel.next();
+      }
     };
     return (
       <Carousel
         ref={(ref) => (this.carousel = ref)}
-        showArrows={false}
-        itemsToShow={1}
+        responsive={{
+          all: { breakpoint: { max: 4000, min: 0 }, items: 1 },
+        }}
+        arrows={false}
+        infinite
       >
         <Reviews
           {...Data[0]}

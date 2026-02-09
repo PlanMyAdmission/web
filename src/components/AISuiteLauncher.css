@@ -8,7 +8,7 @@
   position: fixed;
   z-index: 1000;
   cursor: pointer;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Position variations */
@@ -33,11 +33,11 @@
 }
 
 .pma-launcher-button {
-  background: linear-gradient(135deg, #e91e63, #ad1457);
-  color: white;
+  background: linear-gradient(135deg, #f40076, #840844);
+  color: #ffffff;
   padding: 15px 25px;
   border-radius: 50px;
-  box-shadow: 0 4px 20px rgba(233, 30, 99, 0.3);
+  box-shadow: 0 8px 24px rgba(244, 0, 118, 0.25);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -50,8 +50,9 @@
 }
 
 .pma-launcher-button:hover {
+  background: linear-gradient(135deg, #e6006b, #6d0639);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
+  box-shadow: 0 14px 30px rgba(244, 0, 118, 0.35);
 }
 
 .pma-launcher-icon {
@@ -65,7 +66,7 @@
   right: -5px;
   width: 12px;
   height: 12px;
-  background: #4caf50;
+  background: #ff6bb3;
   border-radius: 50%;
   animation: pulse 2s infinite;
 }
@@ -121,31 +122,26 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.95);
+  background: radial-gradient(circle at top, rgba(244, 0, 118, 0.15), rgba(132, 8, 68, 0.4)), rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
   z-index: 10000;
   display: none;
   align-items: center;
   justify-content: center;
+  padding: 24px;
 }
 
 .pma-suite-modal.active {
   display: flex;
 }
 
-.pma-suite-frame {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: white;
-}
-
 .pma-close-button {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: #e91e63;
-  color: white;
-  border: none;
+  background: #ffffff;
+  color: #f40076;
+  border: 1px solid rgba(244, 0, 118, 0.2);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -160,13 +156,21 @@
 }
 
 .pma-close-button:hover {
-  background: #ad1457;
+  background: linear-gradient(135deg, #f40076, #840844);
+  color: #ffffff;
   transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(244, 0, 118, 0.3);
 }
 
 .pma-close-button:focus {
-  outline: 2px solid white;
+  outline: 2px solid #f40076;
   outline-offset: 2px;
+}
+
+.pma-suite-loading {
+  color: #f7f5f0;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  font-size: 16px;
 }
 
 /* Additional mobile adjustments */
