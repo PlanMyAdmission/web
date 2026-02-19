@@ -1,14 +1,33 @@
 'use client';
-
 import Image from 'next/image';
-
 import React from 'react';
 import Header from '@/components/higherOrderComponents/Header.jsx';
 const article = '/images/articles/article2.png';
 const article1 = '/images/articles/article1.png';
 const article3 = '/images/articles/article3.png';
 const article4 = '/images/articles/article4.png';
+import ArticlePopularPosts from '@/components/higherOrderComponents/Articles/ArticlePopularPosts.jsx';
 import { useRouter } from 'next/navigation';
+
+const POPULAR_POSTS = [
+  {
+    href: '/Mastering-the-Art-of-Financial-Planning',
+    image: article1,
+    title: "Navigating the American Campus: A Student's Guide to Living in the USA",
+  },
+  {
+    href: '/Embarking-on-Excellence',
+    image: article3,
+    title:
+      'Pennsylvania State University | Elevating Education to Unparalleled Heights',
+  },
+  {
+    href: '/Mastering-the-Art-of-Financial-Planning',
+    image: article4,
+    title: 'Mastering the Art of Financial Planning for Your Study Abroad Adventure',
+  },
+];
+
 const Article2 = () => {
   const router = useRouter();
   return (
@@ -163,8 +182,6 @@ const Article2 = () => {
           </p>
 
           <p className="text-2xl font-bold mt-6">Seek Guidance:</p>
-          {}
-
           <p className="text-md pl-1">
             If the visa application process seems overwhelming, seek guidance
             from the international student office at your chosen university or
@@ -257,8 +274,6 @@ const Article2 = () => {
           </p>
 
           <p className="text-2xl font-bold mt-6">Conclusion</p>
-          {}
-
           <p className="text-md pl-1">
             Studying abroad is a profound and life-changing experience that
             demands careful preparation and guidance. By following these
@@ -268,83 +283,11 @@ const Article2 = () => {
             academic and personal growth that studying abroad affords. Your
             adventure awaits!
           </p>
-
-          {}
         </div>
-        <div className="w-full bg-transparent mx-auto gap-2 p-5 col-span-1 flex flex-col hidden md:block">
-          <p className="font-bold text-2xl p-2">Popular Blog Posts</p>
-          <div className="border-b-4  border-b-main w-1/5 ml-2 mb-5 items-center flex justify-center block"></div>
-
-          <div className="w-full px-1 text text-2xs">
-            <div
-              className="flex flex-row hover:cursor-pointer justify-between border-b-2 border-solid gap-2 border-main my-3 pb-3 "
-              onClick={() => {
-                router.push('/Mastering-the-Art-of-Financial-Planning');
-              }}
-            >
-              <Image
-                unoptimized
-                width={1200}
-                height={800}
-                sizes="100vw"
-                src={article1}
-                alt=""
-                className="w-1/3 rounded-md h-1/4 items-center justify-center"
-              />
-              <div className=" font-bold">
-                <p>
-                  Navigating the American Campus: A Student&apos;s Guide to
-                  Living in the USA
-                </p>
-              </div>
-            </div>
-            <div
-              className="flex flex-row  hover:cursor-pointer justify-between border-b-2 border-solid gap-2 border-main my-3 pb-3 "
-              onClick={() => {
-                router.push('/Embarking-on-Excellence');
-              }}
-            >
-              <Image
-                unoptimized
-                width={1200}
-                height={800}
-                sizes="100vw"
-                src={article3}
-                alt=""
-                className="w-1/3 rounded-md h-1/4 items-center justify-center"
-              />
-              <div className=" font-bold">
-                <p>
-                  Pennsylvania State University | Elevating Education to
-                  Unparalleled Heights
-                </p>
-              </div>
-            </div>
-            <div
-              className="flex flex-row hover:cursor-pointer justify-between border-b-2 border-solid gap-2 border-main my-3 pb-3 "
-              onClick={() => {
-                router.push('/Mastering-the-Art-of-Financial-Planning');
-              }}
-            >
-              <Image
-                unoptimized
-                width={1200}
-                height={800}
-                sizes="100vw"
-                src={article4}
-                alt=""
-                className="w-1/3 rounded-md h-1/4 items-center justify-center"
-              />
-              <div className=" font-bold">
-                <p>
-                  Mastering the Art of Financial Planning for Your Study Abroad
-                  Adventure
-                </p>
-              </div>
-            </div>
-            {}
-          </div>
-        </div>
+        <ArticlePopularPosts
+          posts={POPULAR_POSTS}
+          onNavigate={(href) => router.push(href)}
+        />
       </div>
     </>
   );

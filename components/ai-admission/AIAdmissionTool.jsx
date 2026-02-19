@@ -19,12 +19,16 @@ import {
   buildPrompt,
 } from '@/components/ai-admission/lib/prompt.js';
 import useProfileStorage from '@/components/ai-admission/hooks/useProfileStorage.js';
-const cx = (...classNames) =>
-  classNames
-    .flatMap((value) => `${value || ''}`.split(/\s+/))
-    .map((name) => styles[name])
-    .filter(Boolean)
-    .join(' ');
+import { mapModuleClasses } from '@/lib/cx.js';
+const cx = (...classNames) => mapModuleClasses(styles, ...classNames);
+
+const LOADING_MESSAGES = [
+  'Evaluating transcripts and academic fit...',
+  'Mapping strengths to program requirements...',
+  'Estimating admission competitiveness...',
+  'Drafting personalized recommendations...',
+];
+
 const AIAdmissionTool = () => {
   const [mode, setMode] = useState('form');
   const [flow, setFlow] = useState('start');
@@ -65,14 +69,8 @@ const AIAdmissionTool = () => {
   };
   useEffect(() => {
     if (status.type !== 'loading') return;
-    const messages = [
-      'Evaluating transcripts and academic fit...',
-      'Mapping strengths to program requirements...',
-      'Estimating admission competitiveness...',
-      'Drafting personalized recommendations...',
-    ];
     const interval = setInterval(() => {
-      setLoadingMessageIndex((prev) => (prev + 1) % messages.length);
+      setLoadingMessageIndex((prev) => (prev + 1) % LOADING_MESSAGES.length);
     }, 1600);
     return () => clearInterval(interval);
   }, [status.type]);
@@ -282,16 +280,7 @@ const AIAdmissionTool = () => {
       )}
 
       {flow === 'processing' && (
-        <ProcessingStep
-          message={
-            [
-              'Evaluating transcripts and academic fit...',
-              'Mapping strengths to program requirements...',
-              'Estimating admission competitiveness...',
-              'Drafting personalized recommendations...',
-            ][loadingMessageIndex]
-          }
-        />
+        <ProcessingStep message={LOADING_MESSAGES[loadingMessageIndex]} />
       )}
 
       {status.message && status.type !== 'loading' && (

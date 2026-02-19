@@ -2,25 +2,24 @@
 
 import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthProvider.jsx';
-import Delete from '@mui/icons-material/DeleteOutlined';
+import TestScoreSummary from '@/components/dashboard/user/profile/TestScoreSummary.jsx';
+
+const emptyTestScore = {
+  exam_type: '',
+  sub_type: '',
+  date: '',
+  listen_score: '',
+  read_score: '',
+  write_score: '',
+  exam_score: '',
+  analytical_score: '',
+  verbal_score: '',
+  quantitative_score: '',
+};
+
 const Test_Scores = () => {
   const label_style = 'block text-sm font-medium text-gray-700 mb-1';
-  const [type, setType] = useState('');
-  const [subType, setSubType] = useState('');
-  const [data, setData] = useState([
-    {
-      exam_type: '',
-      sub_type: '',
-      date: '',
-      listen_score: '',
-      read_score: '',
-      write_score: '',
-      exam_score: '',
-      analytical_score: '',
-      verbal_score: '',
-      quantitative_score: '',
-    },
-  ]);
+  const [data, setData] = useState([{ ...emptyTestScore }]);
   const {
     currentUser,
     uploadDataToFireStoreInArray,
@@ -28,21 +27,7 @@ const Test_Scores = () => {
     handleDocumentDelete,
   } = useAuth();
   const addClick = () => {
-    setData((prev) => [
-      ...prev,
-      {
-        exam_type: '',
-        sub_type: '',
-        date: '',
-        listen_score: '',
-        read_score: '',
-        write_score: '',
-        exam_score: '',
-        analytical_score: '',
-        verbal_score: '',
-        quantitative_score: '',
-      },
-    ]);
+    setData((prev) => [...prev, { ...emptyTestScore }]);
   };
   const removeClick = (index) => {
     const newData = [...data];
@@ -61,40 +46,11 @@ const Test_Scores = () => {
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
       {profileData?.test_score?.map((score) => (
-        <div
+        <TestScoreSummary
           key={score.id}
-          className="flex justify-between items-start border-b pb-4 mb-4"
-        >
-          <div>
-            <h2 className="text-lg font-semibold text-main">
-              {score.exam_type}
-            </h2>
-            <p className="text-sm font-medium text-gray-600">
-              Exam Type: {score.sub_type}
-            </p>
-            {score.exam_type === 'English Proficiency' && (
-              <>
-                <p>Listening Score: {score.listen_score}</p>
-                <p>Reading Score: {score.read_score}</p>
-                <p>Writing Score: {score.write_score}</p>
-              </>
-            )}
-            {score.exam_type !== 'English Proficiency' &&
-              score.sub_type !== 'GRE' && <p>Test Score: {score.exam_score}</p>}
-            {score.exam_type !== 'English Proficiency' &&
-              score.sub_type === 'GRE' && (
-                <>
-                  <p>Analytical: {score.analytical_score}</p>
-                  <p>Quantitative: {score.quantitative_score}</p>
-                  <p>Verbal: {score.verbal_score}</p>
-                </>
-              )}
-          </div>
-          <Delete
-            className="text-red-500 cursor-pointer"
-            onClick={() => handleDocumentDelete(score.id, 'test_score')}
-          />
-        </div>
+          score={score}
+          onDelete={() => handleDocumentDelete(score.id, 'test_score')}
+        />
       ))}
 
       <form onSubmit={handleSubmit} className="space-y-8">
@@ -195,10 +151,7 @@ const Test_Scores = () => {
                     <select
                       name="sub_type"
                       className="w-full rounded border p-2"
-                      onChange={(e) => {
-                        handleChange(index, e);
-                        setSubType(e.target.value);
-                      }}
+                      onChange={(e) => handleChange(index, e)}
                       required
                     >
                       <option value="">Select</option>
