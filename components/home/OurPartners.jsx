@@ -1,6 +1,6 @@
 import React from 'react';
-import MicroSoft from '@/assets/Microsoft.png';
-import google from '@/assets/google.svg';
+const MicroSoft = '/images/Microsoft.png';
+const google = '/images/google.svg';
 const OurPartners = () => {
   return (
     <section className="w-full   border-t border-gray-200 py-4 px-6 shadow-sm">

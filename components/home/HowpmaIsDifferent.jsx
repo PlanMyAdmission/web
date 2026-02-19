@@ -1,9 +1,9 @@
 import Image from 'next/image';
 
 import React from 'react';
-import image1 from '@/assets/diff11.jpg';
-import image2 from '@/assets/diff2.jpg';
-import image3 from '@/assets/diff3.jpg';
+const image1 = '/images/diff11.jpg';
+const image2 = '/images/diff2.jpg';
+const image3 = '/images/diff3.jpg';
 const contentSections = [
   {
     title:

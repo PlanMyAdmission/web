@@ -4,10 +4,10 @@ import Image from 'next/image';
 
 import React from 'react';
 import Header from '@/components/higherOrderComponents/Header.jsx';
-import article from '@assets/articles/article1.png';
-import article2 from '@assets/articles/article2.png';
-import article3 from '@assets/articles/article3.png';
-import article4 from '@assets/articles/article4.png';
+const article = '/images/articles/article1.png';
+const article2 = '/images/articles/article2.png';
+const article3 = '/images/articles/article3.png';
+const article4 = '/images/articles/article4.png';
 import { useRouter } from 'next/navigation';
 const Article1 = () => {
   const router = useRouter();

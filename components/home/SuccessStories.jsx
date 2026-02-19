@@ -4,19 +4,19 @@ import { React, useState } from 'react';
 import Image from 'next/image';
 import Heading from '@components/higherOrderComponents/Heading';
 import Testimonials from '@/components/home/Testimonials.jsx';
-import Human from '@/assets/Human.svg';
-import bgArrow from '@/assets/bgArrow.svg';
+const Human = '/images/Human.svg';
+const bgArrow = '/images/bgArrow.svg';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Reviews from '@/components/home/Reviews.jsx';
-import Bhavesh from '@/assets/homeAssets/Bhavesh .jpg';
-import Mansi from '@/assets/homeAssets/Mansi .jpg';
-import Deepanshi from '@/assets/homeAssets/Deepanshi .jpg';
-import Mitransh from '@/assets/homeAssets/Mitransh .jpg';
-import Testimony1 from '@/assets/testimonies/PlanMyAdmission -1.png';
-import Testimony2 from '@/assets/testimonies/PlanMyAdmission -2.png';
-import Testimony3 from '@/assets/testimonies/PlanMyAdmission -3.png';
-import Testimony4 from '@/assets/testimonies/PlanMyAdmission -4.png';
+const Bhavesh = '/images/homeAssets/Bhavesh .jpg';
+const Mansi = '/images/homeAssets/Mansi .jpg';
+const Deepanshi = '/images/homeAssets/Deepanshi .jpg';
+const Mitransh = '/images/homeAssets/Mitransh .jpg';
+const Testimony1 = '/images/testimonies/PlanMyAdmission -1.png';
+const Testimony2 = '/images/testimonies/PlanMyAdmission -2.png';
+const Testimony3 = '/images/testimonies/PlanMyAdmission -3.png';
+const Testimony4 = '/images/testimonies/PlanMyAdmission -4.png';
 const responsive = {
   mobile: {
     breakpoint: {

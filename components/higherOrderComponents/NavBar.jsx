@@ -7,8 +7,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import logo from '@assets/homeAssets/logo.svg';
-import mobile_logo from '@assets/homeAssets/logo_mobile.svg';
+const logo = '/images/homeAssets/logo.svg';
+const mobile_logo = '/images/homeAssets/logo_mobile.svg';
 import { useAuth } from '@context/AuthProvider';
 const navLinks = [
   {

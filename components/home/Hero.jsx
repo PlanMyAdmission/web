@@ -3,9 +3,9 @@
 import Image from 'next/image';
 
 import React, { useState, useEffect } from 'react';
-import human from '@/assets/Human.svg';
-import Arrow from '@/assets/homeAssets/Arrow.svg';
-import Plane from '@/assets/Plane.svg';
+const human = '/images/Human.svg';
+const Arrow = '/images/homeAssets/Arrow.svg';
+const Plane = '/images/Plane.svg';
 import algoliasearch from 'algoliasearch/lite';
 import Autosuggest from 'react-autosuggest';
 import { matchSorter } from 'match-sorter';

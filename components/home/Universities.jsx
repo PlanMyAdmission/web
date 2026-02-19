@@ -3,11 +3,11 @@
 import React, { useRef } from 'react';
 import Heading from '@components/higherOrderComponents/Heading';
 import UniversityCard from '@/components/home/UniversityCard.jsx';
-import harvard from '@/assets/homeAssets/harvard.png';
-import oxford from '@/assets/homeAssets/oxford.png';
-import stanford from '@/assets/homeAssets/stanford.png';
-import cambridge from '@/assets/homeAssets/cambridge.png';
-import toronto from '@/assets/homeAssets/toronto.png';
+const harvard = '/images/homeAssets/harvard.png';
+const oxford = '/images/homeAssets/oxford.png';
+const stanford = '/images/homeAssets/stanford.png';
+const cambridge = '/images/homeAssets/cambridge.png';
+const toronto = '/images/homeAssets/toronto.png';
 const Universities = ({ usedFor }) => {
   const hold = useRef(null);
   const handelwheel = (e) => {
