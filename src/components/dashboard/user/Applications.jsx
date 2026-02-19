@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 
 const university = [
   {
-    id: "5f044f13a55e24365a7238a4",
-    name: "Stanford University",
-    logo: "https://cdn.ischoolconnect.com/logo/1991.png",
-    addr_city: "Stanford",
-    addr_state: "California",
-    addr_country: "USA",
+    id: '5f044f13a55e24365a7238a4',
+    name: 'Stanford University',
+    logo: 'https://cdn.ischoolconnect.com/logo/1991.png',
+    addr_city: 'Stanford',
+    addr_state: 'California',
+    addr_country: 'USA',
   },
   {
-    id: "5f044f13a55e24365a7238a1",
-    name: "St. Thomas More College",
-    logo: "https://cdn.ischoolconnect.com/logo/1988.png",
-    addr_city: "Saskatoon",
-    addr_state: "Saskatchewan",
-    addr_country: "CAN",
+    id: '5f044f13a55e24365a7238a1',
+    name: 'St. Thomas More College',
+    logo: 'https://cdn.ischoolconnect.com/logo/1988.png',
+    addr_city: 'Saskatoon',
+    addr_state: 'Saskatchewan',
+    addr_country: 'CAN',
   },
 ];
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 const ScrollDown = () => {
   const [visible, setVisible] = useState(false);
@@ -12,8 +12,8 @@ const ScrollDown = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", listenToScroll);
-    return () => window.removeEventListener("scroll", listenToScroll);
+    window.addEventListener('scroll', listenToScroll);
+    return () => window.removeEventListener('scroll', listenToScroll);
   }, []);
 
   return (

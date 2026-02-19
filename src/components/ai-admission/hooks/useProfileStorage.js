@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-const STORAGE_KEY = "pmaProfileData";
+const STORAGE_KEY = 'pmaProfileData';
 
 const useProfileStorage = (formData, setFormData) => {
   useEffect(() => {

@@ -1,6 +1,6 @@
-import React from "react";
-import Header from "../../higherOrderComponents/Header";
-import data from "./term&conditions";
+import React from 'react';
+import Header from '../../higherOrderComponents/Header';
+import data from './term&conditions';
 
 const Content = (data) => {
   return (

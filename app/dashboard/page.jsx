@@ -1,7 +1,7 @@
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
 const DashboardIndexPage = () => {
-  redirect("/dashboard/profile");
+  redirect('/dashboard/profile');
 
   return null;
 };

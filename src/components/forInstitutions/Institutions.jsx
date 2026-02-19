@@ -1,11 +1,11 @@
-import React from "react";
-import Heading from "../../higherOrderComponents/Heading";
-import Universities from "../home/Universities";
-import Card from "../../higherOrderComponents/PricingCard";
-import Band from "./Band";
-import Banner from "./Banner";
-import Features from "./Features";
-import { pricingPlans } from "./pricingData";
+import React from 'react';
+import Heading from '../../higherOrderComponents/Heading';
+import Universities from '../home/Universities';
+import Card from '../../higherOrderComponents/PricingCard';
+import Band from './Band';
+import Banner from './Banner';
+import Features from './Features';
+import { pricingPlans } from './pricingData';
 const Institutions = () => {
   return (
     <>

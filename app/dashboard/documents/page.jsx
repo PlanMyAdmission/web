@@ -1,7 +1,7 @@
-import Documents from "@/components/dashboard/user/Documents";
-import { buildPageMetadata } from "@/lib/seo";
+import Documents from '@/components/dashboard/user/Documents';
+import { buildPageMetadata } from '@/lib/seo';
 
-export const metadata = buildPageMetadata("/dashboard/documents");
+export const metadata = buildPageMetadata('/dashboard/documents');
 
 const DashboardDocumentsPage = () => {
   return <Documents />;

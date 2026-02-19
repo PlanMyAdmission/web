@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
-const Band = ({ 
-  line, 
+const Band = ({
+  line,
   cta,
-  btn1 = "Register Now",
-  btn2 = "Book Your Free Consultation", 
-  btn3 = "AI Personal Admission Coach",
-  btn4 = "AI University Search",
-  forInstitutions = false 
+  btn1 = 'Register Now',
+  btn2 = 'Book Your Free Consultation',
+  btn3 = 'AI Personal Admission Coach',
+  btn4 = 'AI University Search',
+  forInstitutions = false,
 }) => {
   const router = useRouter();
 
@@ -18,7 +18,7 @@ const Band = ({
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
@@ -30,7 +30,7 @@ const Band = ({
             {line}
           </h1>
         </div>
-        
+
         {/* Buttons Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Button 1 - Register Now */}
@@ -38,11 +38,13 @@ const Band = ({
             disabled={forInstitutions}
             className={`px-4 py-3 rounded-md text-white font-semibold ${
               forInstitutions
-                ? "bg-main cursor-not-allowed opacity-70"
-                : "bg-main hover:bg-opacity-90"
+                ? 'bg-main cursor-not-allowed opacity-70'
+                : 'bg-main hover:bg-opacity-90'
             }`}
             onClick={() => {
-              if (!forInstitutions) window.location.href = "https://portal.planmyadmission.com/sign-up";
+              if (!forInstitutions)
+                window.location.href =
+                  'https://portal.planmyadmission.com/sign-up';
             }}
           >
             {btn1}
@@ -63,13 +65,15 @@ const Band = ({
             className="px-4 py-3 rounded-md bg-blurpink text-white hover:bg-opacity-90 font-semibold"
             onClick={(e) => {
               try {
-                console.log('🎯 Band: AI Personal Admission Coach button clicked');
+                console.log(
+                  '🎯 Band: AI Personal Admission Coach button clicked',
+                );
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 // Dispatch custom event to open AI chatbot
-                const event = new CustomEvent('openAIChatbot', { 
-                  detail: { source: 'band-admission-coach-button' }
+                const event = new CustomEvent('openAIChatbot', {
+                  detail: { source: 'band-admission-coach-button' },
                 });
                 window.dispatchEvent(event);
                 console.log('🎯 Band: openAIChatbot event dispatched');

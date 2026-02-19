@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import FilteredResponse from "../../../explore_university/FilteredResponse";
-import { year, month } from "./data";
-import Universities from "./Universities";
-import app from "../../../../firebase";
-import { useAuth } from "../../../../context/AuthProvider";
+import React, { useEffect, useState } from 'react';
+import FilteredResponse from '../../../explore_university/FilteredResponse';
+import { year, month } from './data';
+import Universities from './Universities';
+import app from '../../../../firebase';
+import { useAuth } from '../../../../context/AuthProvider';
 import {
   Firestore,
   getFirestore,
@@ -13,99 +13,95 @@ import {
   getDocs,
   limit,
   query,
-  where
-} from "firebase/firestore";
-import { toast } from "react-toastify";
+  where,
+} from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 const RecommandationsMain = () => {
   const db = getFirestore(app);
   const handleFilterChange = (e) => {
     // e.preventDefault();
-    const value = e.target.value
+    const value = e.target.value;
     setFilterData({
       ...filterData,
-      [e.target.name]: value
-    })
+      [e.target.name]: value,
+    });
   };
-  const [degrees, setDegrees] = useState([])
-  const [disciplines, setDisciplines] = useState([])
-  const [countries, setCountries] = useState([])
-  const [states, setStates] = useState([])
-  const { uploadFilterData } = useAuth()
+  const [degrees, setDegrees] = useState([]);
+  const [disciplines, setDisciplines] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const { uploadFilterData } = useAuth();
   // const [country, setCountry] = useState("")
   // const [state, setState] = useState("")
   // const [discipline, setDiscipline] = useState("")
   // const [degree, setDegree] = useState("")
 
-
   const fetchDegrees = async () => {
     // e.preventDefault();
-    const dataref = query(collection(db, "degrees"));
+    const dataref = query(collection(db, 'degrees'));
     const docSnap = await getDocs(dataref);
-    docSnap.forEach(doc => {
+    docSnap.forEach((doc) => {
       setDegrees((prev) => {
-        return [...prev, doc.data()]
-      })
-    })
-  }
+        return [...prev, doc.data()];
+      });
+    });
+  };
 
   const fetchDisciplines = async () => {
     // e.preventDefault();
-    const dataref = query(collection(db, "disciplines"));
+    const dataref = query(collection(db, 'disciplines'));
     const docSnap = await getDocs(dataref);
-    docSnap.forEach(doc => {
+    docSnap.forEach((doc) => {
       setDisciplines((prev) => {
-        return [...prev, doc.data()]
-      })
-    })
-  }
+        return [...prev, doc.data()];
+      });
+    });
+  };
 
   const fetchCountries = async () => {
     // e.preventDefault();
-    const dataref = query(collection(db, "countries_state"));
+    const dataref = query(collection(db, 'countries_state'));
     const docSnap = await getDocs(dataref);
-    docSnap.forEach(doc => {
+    docSnap.forEach((doc) => {
       setCountries((prev) => {
-        return [...prev, doc.data()]
-      })
-    })
-  }
+        return [...prev, doc.data()];
+      });
+    });
+  };
 
   useEffect(() => {
-    fetchCountries()
-    fetchDegrees()
-    fetchDisciplines()
-  }, [])
-
-
+    fetchCountries();
+    fetchDegrees();
+    fetchDisciplines();
+  }, []);
 
   const [filterData, setFilterData] = useState({
-    country: "",
-    degree: "",
-    discipline: "",
-    year: "",
-    month: "",
-    score: "",
-    certification: "",
-    aptitude: "",
-    proficiency: "",
-    state: "",
+    country: '',
+    degree: '',
+    discipline: '',
+    year: '',
+    month: '',
+    score: '',
+    certification: '',
+    aptitude: '',
+    proficiency: '',
+    state: '',
     // universityPartnered: "",
-    budget: "",
+    budget: '',
   });
   useEffect(() => {
-    console.log(filterData)
-  }, [filterData])
+    console.log(filterData);
+  }, [filterData]);
 
   useEffect(() => {
-    countries && countries?.filter((cnt) => {
-      if (cnt.name == filterData.country) {
-        setStates(cnt.states)
-      }
-    })
-  }, [filterData.country])
-
-
+    countries &&
+      countries?.filter((cnt) => {
+        if (cnt.name == filterData.country) {
+          setStates(cnt.states);
+        }
+      });
+  }, [filterData.country]);
 
   const [show, setShow] = useState(false);
   // const handelSubmit = (props) => {
@@ -117,26 +113,38 @@ const RecommandationsMain = () => {
   const Step1 = () => {
     return (
       <div className="m-5 grid gap-4 grid-cols-1 sm:grid-cols-6 justify-center">
-        <div className="col-span-1 sm:col-span-2"><p className="text-md">Choose your prefered Country<label className="text-main">*</label></p>
+        <div className="col-span-1 sm:col-span-2">
+          <p className="text-md">
+            Choose your prefered Country<label className="text-main">*</label>
+          </p>
           <select
             className="bg-light px-4 py-2 rounded-md my-1 w-full"
             name="country"
             onChange={(e) => {
-              handleFilterChange(e)
+              handleFilterChange(e);
             }}
             value={filterData.country}
             required
-          // autoFocus
+            // autoFocus
           >
-            <option value={""} disabled >Select</option>
-            {countries && countries.map((value) => {
-              return <option value={value.name} key={value.id}>{value.name}</option>;
-            })}
+            <option value={''} disabled>
+              Select
+            </option>
+            {countries &&
+              countries.map((value) => {
+                return (
+                  <option value={value.name} key={value.id}>
+                    {value.name}
+                  </option>
+                );
+              })}
           </select>
         </div>
 
         <div className="col-span-1 sm:col-span-1">
-          <p>Select State<label className="text-main">*</label></p>
+          <p>
+            Select State<label className="text-main">*</label>
+          </p>
           <select
             className="bg-light px-4 py-2 rounded-md my-1 w-full"
             onChange={handleFilterChange}
@@ -144,7 +152,9 @@ const RecommandationsMain = () => {
             value={filterData.state}
             required
           >
-            <option value={""} disabled>Select</option>
+            <option value={''} disabled>
+              Select
+            </option>
             {states.map((value) => {
               return <option value={value.name}>{value.name}</option>;
             })}
@@ -152,7 +162,10 @@ const RecommandationsMain = () => {
         </div>
 
         <div className="col-span-1 sm:col-span-2">
-          <p className="">Select the degree you wish to pursue<label className="text-main">*</label></p>
+          <p className="">
+            Select the degree you wish to pursue
+            <label className="text-main">*</label>
+          </p>
           <select
             className="bg-light px-4 py-2 rounded-md my-1 w-full"
             name="degree"
@@ -160,16 +173,24 @@ const RecommandationsMain = () => {
             value={filterData.degree}
             required
           >
-            <option value={""} disabled>Select</option>
-            {degrees && degrees.map((value) => {
-              return <option value={value.name} key={value.id}>{value.name}</option>;
-            })}
+            <option value={''} disabled>
+              Select
+            </option>
+            {degrees &&
+              degrees.map((value) => {
+                return (
+                  <option value={value.name} key={value.id}>
+                    {value.name}
+                  </option>
+                );
+              })}
           </select>
         </div>
 
         <div className="col-span-1 sm:col-span-3 mt-2">
           <p className="">
-            Select your preferred discipline/specialization<label className="text-main">*</label>
+            Select your preferred discipline/specialization
+            <label className="text-main">*</label>
           </p>
           <select
             className="bg-light px-4 py-2 rounded-md my-1 w-full"
@@ -178,17 +199,24 @@ const RecommandationsMain = () => {
             value={filterData.discipline}
             required
           >
-            <option value={""} disabled>Select</option>
-            {disciplines && disciplines.map((value) => {
-              return <option value={value.name} key={value.id}>{value.name}</option>;
-            })}
+            <option value={''} disabled>
+              Select
+            </option>
+            {disciplines &&
+              disciplines.map((value) => {
+                return (
+                  <option value={value.name} key={value.id}>
+                    {value.name}
+                  </option>
+                );
+              })}
           </select>
         </div>
 
         <div className="col-span-1 sm:col-span-3 mt-2">
           <p className="pt-2">Select your preferred application cycle.</p>
           <p className="flex gap-2">
-            Year:{" "}
+            Year:{' '}
             <div className="flex flex-col sm:flex-row">
               {year.map((value) => {
                 return (
@@ -199,7 +227,7 @@ const RecommandationsMain = () => {
                       value={value}
                       onChange={handleFilterChange}
                       checked={filterData.year == value}
-                    // radioGroup={year}
+                      // radioGroup={year}
                     />
                     <label>{value}</label>
                   </div>
@@ -209,21 +237,23 @@ const RecommandationsMain = () => {
           </p>
 
           <p className="pt-2">
-            Month:{" "}
+            Month:{' '}
             <select
               className="px-4 py-2 rounded-md bg-light"
               name="month"
               onChange={handleFilterChange}
               value={filterData.month}
             >
-              <option value="" disabled>Select</option>
+              <option value="" disabled>
+                Select
+              </option>
               {month.map((value) => {
                 return <option value={value}>{value}</option>;
               })}
             </select>
           </p>
         </div>
-      </div >
+      </div>
     );
   };
 
@@ -240,25 +270,30 @@ const RecommandationsMain = () => {
               name="certification"
               value="Extra-curricular"
               onChange={handleFilterChange}
-              checked={filterData.certification == "Extra-curricular"}
+              checked={filterData.certification == 'Extra-curricular'}
             />
-            <label className="px-2">Extra-curricular</label></div>
-          <div className="flex flex-row mr-3"><input
-            type="radio"
-            name="certification"
-            onChange={handleFilterChange}
-            value="Volunteering"
-            checked={filterData.certification == "Volunteering"}
-          />
-            <label className="px-2">Volunteering</label></div>
-          <div className="flex flex-row mr-3"><input
-            type="radio"
-            name="certification"
-            value="Both"
-            onChange={handleFilterChange}
-            checked={filterData.certification == "Both"}
-          />
-            <label className="px-2">Both</label></div>
+            <label className="px-2">Extra-curricular</label>
+          </div>
+          <div className="flex flex-row mr-3">
+            <input
+              type="radio"
+              name="certification"
+              onChange={handleFilterChange}
+              value="Volunteering"
+              checked={filterData.certification == 'Volunteering'}
+            />
+            <label className="px-2">Volunteering</label>
+          </div>
+          <div className="flex flex-row mr-3">
+            <input
+              type="radio"
+              name="certification"
+              value="Both"
+              onChange={handleFilterChange}
+              checked={filterData.certification == 'Both'}
+            />
+            <label className="px-2">Both</label>
+          </div>
         </div>
       </div>
     );
@@ -270,31 +305,36 @@ const RecommandationsMain = () => {
         <div className="col-span-1 sm:col-span-2">
           <p className="">Have you taken any aptitude tests?</p>
           <div className="flex flex-col">
-            <div className="flex flex-row mr-3 gap-1"><input
-              type="radio"
-              name="aptitude"
-              value="No,I'm planning to take"
-              onChange={handleFilterChange}
-              checked={filterData.aptitude == "No,I'm planning to take"}
-
-            />
-              <label>No,I'm planning to take</label></div>
-            <div className="flex flex-row mr-3 gap-1"><input
-              type="radio"
-              name="aptitude"
-              value="SAT"
-              onChange={handleFilterChange}
-              checked={filterData.aptitude == "SAT"}
-            />
-              <label>SAT</label></div>
-            <div className="flex flex-row mr-3 gap-1"><input
-              type="radio"
-              name="aptitude"
-              value="ACT"
-              onChange={handleFilterChange}
-              checked={filterData.aptitude == "ACT"}
-            />
-              <label>ACT</label></div>
+            <div className="flex flex-row mr-3 gap-1">
+              <input
+                type="radio"
+                name="aptitude"
+                value="No,I'm planning to take"
+                onChange={handleFilterChange}
+                checked={filterData.aptitude == "No,I'm planning to take"}
+              />
+              <label>No,I'm planning to take</label>
+            </div>
+            <div className="flex flex-row mr-3 gap-1">
+              <input
+                type="radio"
+                name="aptitude"
+                value="SAT"
+                onChange={handleFilterChange}
+                checked={filterData.aptitude == 'SAT'}
+              />
+              <label>SAT</label>
+            </div>
+            <div className="flex flex-row mr-3 gap-1">
+              <input
+                type="radio"
+                name="aptitude"
+                value="ACT"
+                onChange={handleFilterChange}
+                checked={filterData.aptitude == 'ACT'}
+              />
+              <label>ACT</label>
+            </div>
           </div>
         </div>
         <div className="col-span-1 sm:col-span-2">
@@ -308,31 +348,38 @@ const RecommandationsMain = () => {
                 onChange={handleFilterChange}
                 checked={filterData.proficiency == "No,I'm planning to take"}
               />
-              <label>No,I'm planning to take</label></div>
-            <div className="flex flex-row mr-3 gap-1"><input
-              type="radio"
-              name="proficiency"
-              value="IELTS"
-              onChange={handleFilterChange}
-              checked={filterData.proficiency == "IELTS"}
-            />
-              <label>IELTS</label></div>
-            <div className="flex flex-row mr-3 gap-1"><input
-              type="radio"
-              name="proficiency"
-              value="Cambridge English"
-              onChange={handleFilterChange}
-              checked={filterData.proficiency == "Cambridge English"}
-            />
-              <label>Cambridge English</label></div>
-            <div className="flex flex-row mr-3 gap-1"><input
-              type="radio"
-              name="proficiency"
-              value="PTE"
-              onChange={handleFilterChange}
-              checked={filterData.proficiency == "PTE"}
-            />
-              <label>PTE</label></div>
+              <label>No,I'm planning to take</label>
+            </div>
+            <div className="flex flex-row mr-3 gap-1">
+              <input
+                type="radio"
+                name="proficiency"
+                value="IELTS"
+                onChange={handleFilterChange}
+                checked={filterData.proficiency == 'IELTS'}
+              />
+              <label>IELTS</label>
+            </div>
+            <div className="flex flex-row mr-3 gap-1">
+              <input
+                type="radio"
+                name="proficiency"
+                value="Cambridge English"
+                onChange={handleFilterChange}
+                checked={filterData.proficiency == 'Cambridge English'}
+              />
+              <label>Cambridge English</label>
+            </div>
+            <div className="flex flex-row mr-3 gap-1">
+              <input
+                type="radio"
+                name="proficiency"
+                value="PTE"
+                onChange={handleFilterChange}
+                checked={filterData.proficiency == 'PTE'}
+              />
+              <label>PTE</label>
+            </div>
           </div>
         </div>
       </div>
@@ -342,7 +389,6 @@ const RecommandationsMain = () => {
   const Step4 = () => {
     return (
       <div>
-
         {/* <p>
           2. Do you need the university program to be approved by Saudi Arabian
           Ministry of Education?
@@ -378,13 +424,9 @@ const RecommandationsMain = () => {
           />
           <label>All</label> */}
         {/* </div> */}
-
-
       </div>
     );
   };
-
-
 
   return (
     <>
@@ -402,13 +444,14 @@ const RecommandationsMain = () => {
                 name="score"
                 className="bg-light px-4 py-2 rounded-md my-2 w-full sm:w-2/3"
                 value={filterData.score}
-                onChange={e => {
+                onChange={(e) => {
                   setFilterData({
                     ...filterData,
-                    score: e.target.value
-                  })
+                    score: e.target.value,
+                  });
                 }}
-              /></div>
+              />
+            </div>
             <Step2 />
           </div>
           <p className="text-center py-2 font-bold text-lg">Test Details</p>
@@ -426,13 +469,12 @@ const RecommandationsMain = () => {
                 min={0}
                 max={10000000}
                 value={filterData.budget}
-                onChange={e => {
+                onChange={(e) => {
                   setFilterData({
                     ...filterData,
-                    budget: e.target.value
-                  })
+                    budget: e.target.value,
+                  });
                 }}
-
               />
             </div>
           </div>
@@ -442,9 +484,9 @@ const RecommandationsMain = () => {
               <button
                 type="submit"
                 className="bg-main text-white px-4 py-2 rounded-md my-3 w-full hover:bg-white hover:outline outline-main hover:text-main transition duration-200"
-                onSubmit={() => { }}
+                onSubmit={() => {}}
                 onClick={(e) => {
-                  e.preventDefault()
+                  e.preventDefault();
                   // const allKeysHaveValues = Object.keys(filterData).every((key) => {
                   //   if (key == "country" || key == "degree" || key == "discipline" || key == "state") {
                   //     return (
@@ -455,18 +497,20 @@ const RecommandationsMain = () => {
                   //   }
                   // });
 
-                  const allKeys = filterData.state != "" && filterData.degree != "" && filterData.discipline != "" && filterData.state != ""
+                  const allKeys =
+                    filterData.state != '' &&
+                    filterData.degree != '' &&
+                    filterData.discipline != '' &&
+                    filterData.state != '';
                   if (allKeys) {
-                    setShow(!show)
-                    uploadFilterData(filterData)
+                    setShow(!show);
+                    uploadFilterData(filterData);
+                  } else {
+                    toast.error('Please enter the required details', {
+                      className: 'foo-bar',
+                      autoClose: 1500,
+                    });
                   }
-                  else {
-                    toast.error("Please enter the required details", {
-                      className: "foo-bar",
-                      autoClose: 1500
-                    })
-                  }
-
                 }}
               >
                 Generate
@@ -476,7 +520,7 @@ const RecommandationsMain = () => {
         </form>
       )}
 
-      {(show && <Universities props={filterData} />)}
+      {show && <Universities props={filterData} />}
     </>
   );
 };

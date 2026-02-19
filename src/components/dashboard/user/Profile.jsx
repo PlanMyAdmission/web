@@ -1,29 +1,29 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Education from "./profile/Education";
-import Experience from "./profile/Experience";
-import Test_Scores from "./profile/Test_Scores";
-import About from "./profile/About";
-import { useAuth } from "../../../context/AuthProvider";
-import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from 'react';
+import Education from './profile/Education';
+import Experience from './profile/Experience';
+import Test_Scores from './profile/Test_Scores';
+import About from './profile/About';
+import { useAuth } from '../../../context/AuthProvider';
+import { usePathname, useRouter } from 'next/navigation';
 
 const TABS = [
-  { id: "#about", label: "About" },
-  { id: "#experience", label: "Experience" },
-  { id: "#education", label: "Education" },
-  { id: "#test_score", label: "Test Scores" },
+  { id: '#about', label: 'About' },
+  { id: '#experience', label: 'Experience' },
+  { id: '#education', label: 'Education' },
+  { id: '#test_score', label: 'Test Scores' },
 ];
 
 const Profile = () => {
-  const [show, setShow] = useState("#about");
+  const [show, setShow] = useState('#about');
   const { uploadImage, currentUser, logout, profileData } = useAuth();
-  const [photoURL, setPhotoURL] = useState("");
+  const [photoURL, setPhotoURL] = useState('');
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.location.hash) {
+    if (typeof window !== 'undefined' && window.location.hash) {
       setShow(window.location.hash);
     }
   }, []);
@@ -33,18 +33,18 @@ const Profile = () => {
       setPhotoURL(currentUser.photoURL);
     } else {
       setPhotoURL(
-        "https://ui-avatars.com/api/?name=User&background=random&length=1"
+        'https://ui-avatars.com/api/?name=User&background=random&length=1',
       );
     }
   }, [currentUser]);
 
   const handleChange = (e) => {
     const file = e.target.files[0];
-    const fileExtension = file?.name?.split(".").pop().toLowerCase();
-    const allowed = ["jpg", "jpeg", "png"];
+    const fileExtension = file?.name?.split('.').pop().toLowerCase();
+    const allowed = ['jpg', 'jpeg', 'png'];
 
     if (!allowed.includes(fileExtension)) {
-      return alert(`Only ${allowed.join(", ")} files are allowed.`);
+      return alert(`Only ${allowed.join(', ')} files are allowed.`);
     }
 
     uploadImage(file, fileExtension);
@@ -61,7 +61,10 @@ const Profile = () => {
             alt="Avatar"
             className="w-full h-full object-cover"
           />
-          <label htmlFor="upload-avatar" className="absolute bottom-0 right-0 cursor-pointer">
+          <label
+            htmlFor="upload-avatar"
+            className="absolute bottom-0 right-0 cursor-pointer"
+          >
             <input
               type="file"
               id="upload-avatar"
@@ -94,11 +97,13 @@ const Profile = () => {
           <button
             key={tab.id}
             className={`py-2 px-4 text-sm md:text-base font-medium transition-colors duration-300 border-b-2 ${
-              show === tab.id ? "border-main text-main" : "border-transparent text-gray-500 hover:text-main"
+              show === tab.id
+                ? 'border-main text-main'
+                : 'border-transparent text-gray-500 hover:text-main'
             }`}
             onClick={() => {
               setShow(tab.id);
-              if (typeof window !== "undefined") {
+              if (typeof window !== 'undefined') {
                 router.replace(`${pathname}${tab.id}`);
               }
             }}
@@ -109,10 +114,10 @@ const Profile = () => {
       </div>
 
       <div className="mt-6">
-        {show === "#about" && <About />}
-        {show === "#experience" && <Experience />}
-        {show === "#education" && <Education />}
-        {show === "#test_score" && <Test_Scores />}
+        {show === '#about' && <About />}
+        {show === '#experience' && <Experience />}
+        {show === '#education' && <Education />}
+        {show === '#test_score' && <Test_Scores />}
       </div>
     </div>
   );

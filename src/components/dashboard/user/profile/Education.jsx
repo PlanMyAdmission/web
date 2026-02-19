@@ -1,49 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { useAuth } from "../../../../context/AuthProvider";
-import DeleteIcon from "@mui/icons-material/DeleteOutline";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  query,
-} from "firebase/firestore";
-import app from "../../../../firebase";
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../../../context/AuthProvider';
+import DeleteIcon from '@mui/icons-material/DeleteOutline';
+import { getFirestore, collection, getDocs, query } from 'firebase/firestore';
+import app from '../../../../firebase';
 
 const Education = () => {
   const db = getFirestore(app);
-  const labelStyle = "block text-sm font-medium text-gray-700 mb-1";
+  const labelStyle = 'block text-sm font-medium text-gray-700 mb-1';
 
   const [degrees, setDegrees] = useState([]);
   const [disciplines, setDisciplines] = useState([]);
   const [show, setShow] = useState(true);
   const [data, setData] = useState([
     {
-      institute_name: "",
-      degree: "",
-      field_of_study: "",
-      score_type: "GPA(4)",
-      score: "",
-      start_date: "",
-      end_date: "",
+      institute_name: '',
+      degree: '',
+      field_of_study: '',
+      score_type: 'GPA(4)',
+      score: '',
+      start_date: '',
+      end_date: '',
     },
   ]);
 
-  const {
-    profileData,
-    uploadDataToFireStoreInArray,
-    handleDocumentDelete,
-  } = useAuth();
+  const { profileData, uploadDataToFireStoreInArray, handleDocumentDelete } =
+    useAuth();
 
   useEffect(() => {
     const fetchDegrees = async () => {
-      const ref = query(collection(db, "degrees"));
+      const ref = query(collection(db, 'degrees'));
       const snap = await getDocs(ref);
       const result = snap.docs.map((doc) => doc.data());
       setDegrees(result);
     };
 
     const fetchDisciplines = async () => {
-      const ref = query(collection(db, "disciplines"));
+      const ref = query(collection(db, 'disciplines'));
       const snap = await getDocs(ref);
       const result = snap.docs.map((doc) => doc.data());
       setDisciplines(result);
@@ -61,7 +53,7 @@ const Education = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    uploadDataToFireStoreInArray(data[0], "education");
+    uploadDataToFireStoreInArray(data[0], 'education');
     removeclick();
   };
 
@@ -69,13 +61,13 @@ const Education = () => {
     setData([
       ...data,
       {
-        institute_name: "",
-        degree: "",
-        field_of_study: "",
-        score_type: "GPA(4)",
-        score: "",
-        start_date: "",
-        end_date: "",
+        institute_name: '',
+        degree: '',
+        field_of_study: '',
+        score_type: 'GPA(4)',
+        score: '',
+        start_date: '',
+        end_date: '',
       },
     ]);
     setShow(false);
@@ -90,7 +82,9 @@ const Education = () => {
 
   return (
     <>
-      <h2 className="text-xl font-semibold text-darkBlue mb-4 px-5 max-w-5xl mx-auto">Education</h2>
+      <h2 className="text-xl font-semibold text-darkBlue mb-4 px-5 max-w-5xl mx-auto">
+        Education
+      </h2>
 
       {profileData?.education?.map((edu, index) => (
         <div
@@ -98,28 +92,36 @@ const Education = () => {
           className="max-w-5xl mx-auto px-5 flex justify-between items-start border border-gray-200 shadow-sm rounded-2xl mb-3 py-4 bg-white"
         >
           <div>
-            <h3 className="text-lg font-bold text-darkBlue">{edu.institute_name}</h3>
+            <h3 className="text-lg font-bold text-darkBlue">
+              {edu.institute_name}
+            </h3>
             <p className="text-sm text-gray-700">
-              {edu.degree} • {edu.field_of_study} • {edu.score} ({edu.score_type})
+              {edu.degree} • {edu.field_of_study} • {edu.score} (
+              {edu.score_type})
             </p>
             <p className="text-xs text-gray-500 mt-1">
               {edu.start_date} to {edu.end_date}
             </p>
           </div>
           <DeleteIcon
-            style={{ color: "#F24822" }}
+            style={{ color: '#F24822' }}
             className="cursor-pointer"
-            onClick={() => handleDocumentDelete(edu.id, "education")}
+            onClick={() => handleDocumentDelete(edu.id, 'education')}
           />
         </div>
       ))}
 
-      <form onSubmit={handleSubmit} className="bg-white max-w-5xl mx-auto rounded-2xl shadow px-6 py-6 mb-6">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white max-w-5xl mx-auto rounded-2xl shadow px-6 py-6 mb-6"
+      >
         {data.map((input, index) => (
           <div key={index} className="border-b border-gray-200 pb-4 mb-6">
             <div className="grid grid-cols-6 gap-4 mb-4">
               <div className="col-span-6 md:col-span-4">
-                <label htmlFor="institute_name" className={labelStyle}>Institute Name<span className="text-red-500">*</span></label>
+                <label htmlFor="institute_name" className={labelStyle}>
+                  Institute Name<span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
                   name="institute_name"
@@ -131,7 +133,9 @@ const Education = () => {
               </div>
 
               <div className="col-span-6 md:col-span-2">
-                <label htmlFor="degree" className={labelStyle}>Degree<span className="text-red-500">*</span></label>
+                <label htmlFor="degree" className={labelStyle}>
+                  Degree<span className="text-red-500">*</span>
+                </label>
                 <select
                   name="degree"
                   value={input.degree}
@@ -139,15 +143,21 @@ const Education = () => {
                   className="bg-light w-full p-2 rounded-md border border-gray-300"
                   required
                 >
-                  <option value="" disabled>Select</option>
+                  <option value="" disabled>
+                    Select
+                  </option>
                   {degrees.map((deg, i) => (
-                    <option key={i} value={deg.name}>{deg.name}</option>
+                    <option key={i} value={deg.name}>
+                      {deg.name}
+                    </option>
                   ))}
                 </select>
               </div>
 
               <div className="col-span-6 md:col-span-3">
-                <label htmlFor="field_of_study" className={labelStyle}>Field of Study<span className="text-red-500">*</span></label>
+                <label htmlFor="field_of_study" className={labelStyle}>
+                  Field of Study<span className="text-red-500">*</span>
+                </label>
                 <select
                   name="field_of_study"
                   value={input.field_of_study}
@@ -155,25 +165,31 @@ const Education = () => {
                   className="bg-light w-full p-2 rounded-md border border-gray-300"
                   required
                 >
-                  <option value="" disabled>Select</option>
+                  <option value="" disabled>
+                    Select
+                  </option>
                   {disciplines.map((dis, i) => (
-                    <option key={i} value={dis.name}>{dis.name}</option>
+                    <option key={i} value={dis.name}>
+                      {dis.name}
+                    </option>
                   ))}
                 </select>
               </div>
 
               <div className="col-span-3 md:col-span-1">
-                <label htmlFor="score" className={labelStyle}>Score<span className="text-red-500">*</span></label>
+                <label htmlFor="score" className={labelStyle}>
+                  Score<span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
                   name="score"
                   value={input.score}
                   placeholder={
-                    input.score_type === "GPA(4)"
-                      ? "OUT OF 4"
-                      : input.score_type === "CGPA(10)"
-                      ? "OUT OF 10"
-                      : "OUT OF 100"
+                    input.score_type === 'GPA(4)'
+                      ? 'OUT OF 4'
+                      : input.score_type === 'CGPA(10)'
+                        ? 'OUT OF 10'
+                        : 'OUT OF 100'
                   }
                   onChange={(e) => handleChange(index, e)}
                   className="bg-light w-full p-2 rounded-md border border-gray-300"
@@ -196,7 +212,9 @@ const Education = () => {
               </div>
 
               <div className="col-span-6 md:col-span-3">
-                <label htmlFor="start_date" className={labelStyle}>Start Date<span className="text-red-500">*</span></label>
+                <label htmlFor="start_date" className={labelStyle}>
+                  Start Date<span className="text-red-500">*</span>
+                </label>
                 <input
                   type="date"
                   name="start_date"
@@ -208,7 +226,9 @@ const Education = () => {
               </div>
 
               <div className="col-span-6 md:col-span-3">
-                <label htmlFor="end_date" className={labelStyle}>End Date<span className="text-red-500">*</span></label>
+                <label htmlFor="end_date" className={labelStyle}>
+                  End Date<span className="text-red-500">*</span>
+                </label>
                 <input
                   type="date"
                   name="end_date"

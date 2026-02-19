@@ -5,7 +5,9 @@
   bottom: 30px;
   right: 130px; /* Position to the left of AI Suite Launcher */
   z-index: 2147483640; /* Lower than AI Suite Launcher */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue',
+    sans-serif;
 }
 
 .pma-chatbot-bubble {
@@ -42,11 +44,12 @@
 }
 
 @keyframes pmaChatbotPulse {
-  0%, 100% { 
+  0%,
+  100% {
     box-shadow: 0 12px 40px rgba(233, 30, 99, 0.6);
     transform: scale(1) translateZ(0);
   }
-  50% { 
+  50% {
     box-shadow: 0 12px 40px rgba(233, 30, 99, 1);
     transform: scale(1.08) translateZ(0);
   }
@@ -176,12 +179,12 @@
 }
 
 @keyframes pmaChatbotSlideIn {
-  from { 
-    opacity: 0 !important; 
+  from {
+    opacity: 0 !important;
     transform: translateY(15px) scale(0.95) !important;
   }
-  to { 
-    opacity: 1 !important; 
+  to {
+    opacity: 1 !important;
     transform: translateY(0) scale(1) !important;
   }
 }
@@ -364,10 +367,11 @@
 }
 
 @keyframes pmaChatbotPulseVoice {
-  0%, 100% { 
+  0%,
+  100% {
     box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7) !important;
   }
-  50% { 
+  50% {
     box-shadow: 0 0 0 15px rgba(244, 67, 54, 0) !important;
   }
 }
@@ -430,16 +434,22 @@
   animation: pmaChatbotTyping 1.4s infinite !important;
 }
 
-.pma-chatbot-dot:nth-child(2) { animation-delay: 0.2s !important; }
-.pma-chatbot-dot:nth-child(3) { animation-delay: 0.4s !important; }
+.pma-chatbot-dot:nth-child(2) {
+  animation-delay: 0.2s !important;
+}
+.pma-chatbot-dot:nth-child(3) {
+  animation-delay: 0.4s !important;
+}
 
 @keyframes pmaChatbotTyping {
-  0%, 60%, 100% { 
-    opacity: 0.3 !important; 
+  0%,
+  60%,
+  100% {
+    opacity: 0.3 !important;
     transform: translateY(0) scale(1) !important;
   }
-  30% { 
-    opacity: 1 !important; 
+  30% {
+    opacity: 1 !important;
     transform: translateY(-8px) scale(1.2) !important;
   }
 }
@@ -504,13 +514,13 @@
     bottom: 20px !important;
     right: 110px !important; /* Position to left of AI Suite Launcher on mobile */
   }
-  
+
   .pma-chatbot-bubble {
     width: 65px !important;
     height: 65px !important;
     font-size: 22px !important;
   }
-  
+
   .pma-chatbot-chat {
     bottom: 3vh !important;
     left: 3vw !important;
@@ -520,17 +530,17 @@
     height: 90vh !important;
     border-radius: 18px !important;
   }
-  
+
   .pma-chatbot-content {
     max-width: calc(94vw - 80px) !important;
     font-size: 15px !important;
   }
-  
+
   .pma-chatbot-input-area {
     padding: 18px 20px !important;
     gap: 14px !important;
   }
-  
+
   .pma-chatbot-voice-btn,
   .pma-chatbot-send-btn {
     width: 52px !important;
@@ -539,16 +549,16 @@
     min-height: 52px !important;
     font-size: 11px !important;
   }
-  
+
   .pma-chatbot-input {
     font-size: 16px !important; /* Prevents iOS zoom */
     min-height: 46px !important;
   }
-  
+
   .pma-chatbot-messages {
     padding: 20px !important;
   }
-  
+
   .pma-chatbot-header {
     padding: 18px 20px !important;
   }
@@ -564,12 +574,12 @@
     height: 93vh !important;
     border-radius: 16px !important;
   }
-  
+
   .pma-chatbot-content {
     max-width: calc(96vw - 70px) !important;
     font-size: 14px !important;
   }
-  
+
   .pma-chatbot-input-area {
     padding: 16px 18px !important;
   }
@@ -578,7 +588,9 @@
 /* Ensure no conflicts with main website */
 .pma-chatbot-widget {
   /* Override any potential global styles */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif !important;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue',
+    sans-serif !important;
   line-height: normal !important;
   text-align: left !important;
   color: inherit !important;

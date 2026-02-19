@@ -1,10 +1,10 @@
-import React from "react";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import React from 'react';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import Link from "next/link";
+import Link from 'next/link';
 
 const Footer = () => {
   const year = new Date();
@@ -15,29 +15,43 @@ const Footer = () => {
         <div>
           <h1 className="w-full text-4xl font-bold">Plan My Admission</h1>
           <p className="py-4">
-            Start your study abroad journey and Let our expert Plan & Secure your admission
+            Start your study abroad journey and Let our expert Plan & Secure
+            your admission
           </p>
           <div className="flex cursor-pointer justify-start md:w-[75%] mt-3">
-            <a href="https://instagram.com/planmyadmission?igshid=OGQ5ZDc2ODk2ZA" target={"_blank"}>
+            <a
+              href="https://instagram.com/planmyadmission?igshid=OGQ5ZDc2ODk2ZA"
+              target={'_blank'}
+            >
               <InstagramIcon
                 fontSize="large"
                 className="mr-3 cursor-pointer opacity-50 hover:opacity-100"
-              /></a>
-            <a href="https://www.facebook.com/profile.php?id=61552697291311" target={"_blank"}>
+              />
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61552697291311"
+              target={'_blank'}
+            >
               <FacebookIcon
                 fontSize="large"
                 className="mr-3 cursor-pointer  opacity-50 hover:opacity-100"
-              /></a>
-            <a href="https://www.youtube.com/channel/UCU5motLLs6TlH79FbnLBANg" target={"_blank"}>
+              />
+            </a>
+            <a
+              href="https://www.youtube.com/channel/UCU5motLLs6TlH79FbnLBANg"
+              target={'_blank'}
+            >
               <YouTubeIcon
                 fontSize="large"
                 className="mr-3 cursor-pointer   opacity-50 hover:opacity-100"
-              /></a>
-            <a href="https://twitter.com/planmyadmission" target={"_blank"}>
+              />
+            </a>
+            <a href="https://twitter.com/planmyadmission" target={'_blank'}>
               <TwitterIcon
                 fontSize="large"
                 className="mr-3 cursor-pointer   opacity-50 hover:opacity-100"
-              /></a>
+              />
+            </a>
           </div>
         </div>
         <div className="lg:col-span-2 grid grid-cols-2 sm:flex sm:grid-none gap-5  md:justify-evenly justify-between md:mt-6 md:text-right text-left">

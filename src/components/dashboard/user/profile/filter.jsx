@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 function FilterData() {
   const [filterCriteria, setFilterCriteria] = useState({
-    country: "",
-    degree: "",
-    gender: "",
+    country: '',
+    degree: '',
+    gender: '',
     // add more attributes here
   });
   const [filteredData, setFilteredData] = useState([]);
 
   const data = [
-    { name: "John", country: "USA", degree: "PhD", gender: "Male" },
-    { name: "Jane", country: "Canada", degree: "Masters", gender: "Female" },
-    { name: "Bob", country: "UK", degree: "Bachelors", gender: "Male" },
-    { name: "Mary", country: "Australia", degree: "PhD", gender: "Female" },
+    { name: 'John', country: 'USA', degree: 'PhD', gender: 'Male' },
+    { name: 'Jane', country: 'Canada', degree: 'Masters', gender: 'Female' },
+    { name: 'Bob', country: 'UK', degree: 'Bachelors', gender: 'Male' },
+    { name: 'Mary', country: 'Australia', degree: 'PhD', gender: 'Female' },
   ];
 
   const handleFilter = () => {
@@ -21,7 +21,7 @@ function FilterData() {
       return Object.keys(filterCriteria).every((key) => {
         const filterValue = filterCriteria[key].toLowerCase();
         const itemValue = item[key].toLowerCase();
-        return filterValue === "" || itemValue === filterValue;
+        return filterValue === '' || itemValue === filterValue;
       });
     });
     setFilteredData(filtered);

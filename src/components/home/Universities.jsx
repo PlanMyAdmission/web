@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
-import Heading from "../../higherOrderComponents/Heading";
-import UniversityCard from "./UniversityCard";
-import harvard from "../../assets/homeAssets/harvard.png"
-import oxford from "../../assets/homeAssets/oxford.png"
-import stanford from "../../assets/homeAssets/stanford.png"
-import cambridge from "../../assets/homeAssets/cambridge.png"
-import toronto from "../../assets/homeAssets/toronto.png"
+import React, { useRef } from 'react';
+import Heading from '../../higherOrderComponents/Heading';
+import UniversityCard from './UniversityCard';
+import harvard from '../../assets/homeAssets/harvard.png';
+import oxford from '../../assets/homeAssets/oxford.png';
+import stanford from '../../assets/homeAssets/stanford.png';
+import cambridge from '../../assets/homeAssets/cambridge.png';
+import toronto from '../../assets/homeAssets/toronto.png';
 
 const Universities = ({ usedFor }) => {
   const hold = useRef(null);
@@ -19,14 +19,14 @@ const Universities = ({ usedFor }) => {
         Top Universities with us
       </h1>
       <div className="md:hidden block">
-        <Heading heading={"Our Top Universites"} />
+        <Heading heading={'Our Top Universites'} />
       </div>
       <div className="md:overflow-hidden overflow-x-auto hide-scroll-bar min-w-0">
         <div className="md:animate-carousel flex">
-          {data && data.map((univ) => {
-            return <UniversityCard usedFor={usedFor} props={univ} />
-          })}
-
+          {data &&
+            data.map((univ) => {
+              return <UniversityCard usedFor={usedFor} props={univ} />;
+            })}
         </div>
       </div>
     </div>
@@ -36,34 +36,35 @@ const Universities = ({ usedFor }) => {
 const data = [
   {
     id: 1,
-    name: "Harvard University",
-    location: "Cambridge, USA",
+    name: 'Harvard University',
+    location: 'Cambridge, USA',
     img: harvard,
   },
   {
     id: 2,
-    name: "Oxford University",
-    location: "Oxford, GBR",
+    name: 'Oxford University',
+    location: 'Oxford, GBR',
     img: oxford,
   },
   {
     id: 3,
-    name: "Stanford University",
-    location: "Stanford, USA",
+    name: 'Stanford University',
+    location: 'Stanford, USA',
     img: stanford,
-  }, {
+  },
+  {
     id: 4,
-    name: "University of Toronto",
-    location: "Toronto, CAN",
+    name: 'University of Toronto',
+    location: 'Toronto, CAN',
     img: toronto,
   },
   {
     id: 5,
-    name: "University of Cambridge",
-    location: "Cambridge, GBR",
+    name: 'University of Cambridge',
+    location: 'Cambridge, GBR',
     img: cambridge,
-  }
-]
+  },
+];
 
 // <div className="relative my-20 ">
 //   <div className="h-44  bg-main md:ml-44 rounded-lg my-10 hidden md:block">

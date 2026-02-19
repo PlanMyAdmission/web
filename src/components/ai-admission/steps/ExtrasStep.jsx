@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react';
 
 const ExtrasStep = ({ formData, setField, onBack, onSubmit }) => {
   return (
     <div className="pma-ai-form">
       <div className="pma-ai-field">
         <label>Budget</label>
-        <input value={formData.budget} onChange={setField("budget")} />
+        <input value={formData.budget} onChange={setField('budget')} />
       </div>
       <div className="pma-ai-field">
         <label>Timeline / Intake</label>
-        <input value={formData.timeline} onChange={setField("timeline")} />
+        <input value={formData.timeline} onChange={setField('timeline')} />
       </div>
       <div className="pma-ai-field">
         <label>Work Experience</label>
         <textarea
           rows="2"
           value={formData.workExperience}
-          onChange={setField("workExperience")}
+          onChange={setField('workExperience')}
         />
       </div>
       <div className="pma-ai-field">
@@ -24,7 +24,7 @@ const ExtrasStep = ({ formData, setField, onBack, onSubmit }) => {
         <textarea
           rows="2"
           value={formData.extracurriculars}
-          onChange={setField("extracurriculars")}
+          onChange={setField('extracurriculars')}
         />
       </div>
       <div className="pma-ai-field pma-ai-field-full">
@@ -32,7 +32,7 @@ const ExtrasStep = ({ formData, setField, onBack, onSubmit }) => {
         <textarea
           rows="3"
           value={formData.notes}
-          onChange={setField("notes")}
+          onChange={setField('notes')}
         />
       </div>
       <div className="pma-ai-step-actions">

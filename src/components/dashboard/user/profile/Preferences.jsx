@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
 const Preferences = () => {
-  const label_style = "block text-sm font-medium text-gray-700 mb-1";
+  const label_style = 'block text-sm font-medium text-gray-700 mb-1';
 
   return (
     <div className="max-w-5xl mx-auto py-5 px-7 rounded-sm mb-10 space-y-2">

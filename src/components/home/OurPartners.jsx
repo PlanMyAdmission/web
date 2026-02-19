@@ -1,6 +1,6 @@
-import React from "react";
-import MicroSoft from "../../assets/Microsoft.png";
-import google from "../../assets/google.svg";
+import React from 'react';
+import MicroSoft from '../../assets/Microsoft.png';
+import google from '../../assets/google.svg';
 
 const OurPartners = () => {
   return (
@@ -24,7 +24,7 @@ const OurPartners = () => {
         </div> */}
 
         <p className="text-sm sm:text-base font-semibold text-main mt-1 sm:mt-0">
-           Coursefinder.ai
+          Coursefinder.ai
         </p>
         <p className="text-sm sm:text-base font-semibold text-main mt-1 sm:mt-0">
           + Powered by PMA AI Tools

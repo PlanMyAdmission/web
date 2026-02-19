@@ -1,25 +1,25 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { GoogleGenAI } from "@google/genai";
-import "./AIAdmissionTool.css";
-import { buildAdmissionReportHtml } from "./pdfReport";
-import StartStep from "./steps/StartStep";
-import CourseStep from "./steps/CourseStep";
-import ExtrasStep from "./steps/ExtrasStep";
-import ProcessingStep from "./steps/ProcessingStep";
-import ResultStep from "./steps/ResultStep";
-import initialForm from "./lib/initialForm";
-import { extractJson, getGeminiText } from "./lib/json";
-import { admissionJsonSchema, buildPrompt } from "./lib/prompt";
-import useProfileStorage from "./hooks/useProfileStorage";
+import React, { useEffect, useMemo, useState } from 'react';
+import { GoogleGenAI } from '@google/genai';
+import './AIAdmissionTool.css';
+import { buildAdmissionReportHtml } from './pdfReport';
+import StartStep from './steps/StartStep';
+import CourseStep from './steps/CourseStep';
+import ExtrasStep from './steps/ExtrasStep';
+import ProcessingStep from './steps/ProcessingStep';
+import ResultStep from './steps/ResultStep';
+import initialForm from './lib/initialForm';
+import { extractJson, getGeminiText } from './lib/json';
+import { admissionJsonSchema, buildPrompt } from './lib/prompt';
+import useProfileStorage from './hooks/useProfileStorage';
 
 const AIAdmissionTool = () => {
-  const [mode, setMode] = useState("form");
-  const [flow, setFlow] = useState("start");
+  const [mode, setMode] = useState('form');
+  const [flow, setFlow] = useState('start');
   const [formData, setFormData] = useState(initialForm);
   const [pdfFile, setPdfFile] = useState(null);
-  const [status, setStatus] = useState({ type: "idle", message: "" });
+  const [status, setStatus] = useState({ type: 'idle', message: '' });
   const [reportData, setReportData] = useState(null);
-  const [reportHtml, setReportHtml] = useState("");
+  const [reportHtml, setReportHtml] = useState('');
   const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
 
   const resolvedApiKey = useMemo(
@@ -39,10 +39,10 @@ const AIAdmissionTool = () => {
       setPdfFile(null);
       return;
     }
-    if (file.type !== "application/pdf") {
+    if (file.type !== 'application/pdf') {
       setStatus({
-        type: "error",
-        message: "Please upload a PDF file.",
+        type: 'error',
+        message: 'Please upload a PDF file.',
       });
       return;
     }
@@ -50,12 +50,12 @@ const AIAdmissionTool = () => {
   };
 
   useEffect(() => {
-    if (status.type !== "loading") return;
+    if (status.type !== 'loading') return;
     const messages = [
-      "Evaluating transcripts and academic fit...",
-      "Mapping strengths to program requirements...",
-      "Estimating admission competitiveness...",
-      "Drafting personalized recommendations...",
+      'Evaluating transcripts and academic fit...',
+      'Mapping strengths to program requirements...',
+      'Estimating admission competitiveness...',
+      'Drafting personalized recommendations...',
     ];
     const interval = setInterval(() => {
       setLoadingMessageIndex((prev) => (prev + 1) % messages.length);
@@ -67,16 +67,14 @@ const AIAdmissionTool = () => {
     const parts = [{ text: buildPrompt(formData, mode) }];
     if (pdfFile) {
       const buffer = await pdfFile.arrayBuffer();
-      const base64 = btoa(
-        String.fromCharCode(...new Uint8Array(buffer)),
-      );
+      const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
       parts.push({
         inlineData: {
-          mimeType: "application/pdf",
+          mimeType: 'application/pdf',
           data: base64,
         },
         mediaResolution: {
-          level: "media_resolution_medium",
+          level: 'media_resolution_medium',
         },
       });
     }
@@ -86,33 +84,33 @@ const AIAdmissionTool = () => {
   const generateReport = async () => {
     if (!resolvedApiKey) {
       setStatus({
-        type: "error",
-        message: "AI service is not configured yet.",
+        type: 'error',
+        message: 'AI service is not configured yet.',
       });
       return;
     }
 
-    if (mode === "form") {
+    if (mode === 'form') {
       const hasMinimum = formData.fullName && formData.lastName;
       if (!hasMinimum) {
         setStatus({
-          type: "error",
-          message: "Please add your first and last name to continue.",
+          type: 'error',
+          message: 'Please add your first and last name to continue.',
         });
         return;
       }
     } else if (!pdfFile) {
       setStatus({
-        type: "error",
-        message: "Please upload a PDF profile to continue.",
+        type: 'error',
+        message: 'Please upload a PDF profile to continue.',
       });
       return;
     }
 
-    setStatus({ type: "loading", message: "Analyzing your profile..." });
+    setStatus({ type: 'loading', message: 'Analyzing your profile...' });
     setReportData(null);
-    setReportHtml("");
-    if (mode === "form") {
+    setReportHtml('');
+    if (mode === 'form') {
       persistProfile();
     }
 
@@ -120,29 +118,29 @@ const AIAdmissionTool = () => {
       const parts = await buildGeminiParts();
       const client = new GoogleGenAI({
         apiKey: resolvedApiKey,
-        apiVersion: "v1alpha",
+        apiVersion: 'v1alpha',
       });
       const result = await client.models.generateContent({
-        model: "gemini-3-pro-preview",
-        contents: [{ role: "user", parts }],
+        model: 'gemini-3-pro-preview',
+        contents: [{ role: 'user', parts }],
         config: {
-          responseMimeType: "application/json",
+          responseMimeType: 'application/json',
           responseJsonSchema: admissionJsonSchema,
         },
       });
 
-      console.log("Gemini raw result:", result);
+      console.log('Gemini raw result:', result);
       const text = getGeminiText(result);
-      console.log("Gemini extracted text:", text);
-      if (result?.candidates?.[0]?.finishReason === "MAX_TOKENS") {
+      console.log('Gemini extracted text:', text);
+      if (result?.candidates?.[0]?.finishReason === 'MAX_TOKENS') {
         throw new Error(
-          "AI response was cut off. Please shorten the profile or try again.",
+          'AI response was cut off. Please shorten the profile or try again.',
         );
       }
       const parsed = extractJson(text);
 
       if (!parsed) {
-        throw new Error("Unable to parse Gemini response.");
+        throw new Error('Unable to parse Gemini response.');
       }
 
       const mergedProfile = {
@@ -153,21 +151,20 @@ const AIAdmissionTool = () => {
       const html = buildAdmissionReportHtml({
         profile: mergedProfile,
         evaluation: parsed,
-        sourceLabel: pdfFile ? pdfFile.name : "Profile form submission",
+        sourceLabel: pdfFile ? pdfFile.name : 'Profile form submission',
       });
 
       setReportData(parsed);
       setReportHtml(html);
-      setStatus({ type: "success", message: "Report ready to download." });
-      setFlow("result");
+      setStatus({ type: 'success', message: 'Report ready to download.' });
+      setFlow('result');
     } catch (error) {
       setStatus({
-        type: "error",
+        type: 'error',
         message:
-          error?.message ||
-          "Something went wrong while generating the report.",
+          error?.message || 'Something went wrong while generating the report.',
       });
-      setFlow("start");
+      setFlow('start');
     }
   };
 
@@ -175,19 +172,19 @@ const AIAdmissionTool = () => {
     setFormData(initialForm);
     setPdfFile(null);
     setReportData(null);
-    setReportHtml("");
-    setStatus({ type: "idle", message: "" });
-    setFlow("start");
-    setMode("form");
+    setReportHtml('');
+    setStatus({ type: 'idle', message: '' });
+    setFlow('start');
+    setMode('form');
   };
 
   const handlePrint = () => {
     if (!reportHtml) return;
-    const printWindow = window.open("", "_blank");
+    const printWindow = window.open('', '_blank');
     if (!printWindow) {
       setStatus({
-        type: "error",
-        message: "Pop-up blocked. Please allow pop-ups to download the PDF.",
+        type: 'error',
+        message: 'Pop-up blocked. Please allow pop-ups to download the PDF.',
       });
       return;
     }
@@ -213,7 +210,7 @@ const AIAdmissionTool = () => {
         </div>
       </div>
 
-      {flow === "start" && (
+      {flow === 'start' && (
         <StartStep
           mode={mode}
           onModeChange={setMode}
@@ -224,62 +221,60 @@ const AIAdmissionTool = () => {
           onContinue={() => {
             if (!formData.fullName || !formData.lastName) {
               setStatus({
-                type: "error",
-                message: "Please enter first and last name to continue.",
+                type: 'error',
+                message: 'Please enter first and last name to continue.',
               });
               return;
             }
-            setStatus({ type: "idle", message: "" });
-            setFlow("course");
+            setStatus({ type: 'idle', message: '' });
+            setFlow('course');
           }}
           onAnalyze={() => {
-            setFlow("processing");
+            setFlow('processing');
             generateReport();
           }}
         />
       )}
 
-      {flow === "course" && (
+      {flow === 'course' && (
         <CourseStep
           formData={formData}
           setField={setField}
-          onBack={() => setFlow("start")}
-          onNext={() => setFlow("extras")}
+          onBack={() => setFlow('start')}
+          onNext={() => setFlow('extras')}
         />
       )}
 
-      {flow === "extras" && (
+      {flow === 'extras' && (
         <ExtrasStep
           formData={formData}
           setField={setField}
-          onBack={() => setFlow("course")}
+          onBack={() => setFlow('course')}
           onSubmit={() => {
-            setFlow("processing");
+            setFlow('processing');
             generateReport();
           }}
         />
       )}
 
-      {flow === "processing" && (
+      {flow === 'processing' && (
         <ProcessingStep
           message={
             [
-              "Evaluating transcripts and academic fit...",
-              "Mapping strengths to program requirements...",
-              "Estimating admission competitiveness...",
-              "Drafting personalized recommendations...",
+              'Evaluating transcripts and academic fit...',
+              'Mapping strengths to program requirements...',
+              'Estimating admission competitiveness...',
+              'Drafting personalized recommendations...',
             ][loadingMessageIndex]
           }
         />
       )}
 
-      {status.message && status.type !== "loading" && (
-        <div className={`pma-ai-status ${status.type}`}>
-          {status.message}
-        </div>
+      {status.message && status.type !== 'loading' && (
+        <div className={`pma-ai-status ${status.type}`}>{status.message}</div>
       )}
 
-      {flow === "result" && (
+      {flow === 'result' && (
         <ResultStep
           reportData={reportData}
           onDownload={handlePrint}

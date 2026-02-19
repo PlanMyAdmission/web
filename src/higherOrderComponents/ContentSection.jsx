@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import { useRouter } from 'next/navigation';
 
 const ContentSection = ({
   id,
   content,
   features = [],
-  btn1 = "Register",
-  btn2 = "Learn More",
+  btn1 = 'Register',
+  btn2 = 'Learn More',
   btn3,
   btn4,
   video,
@@ -21,9 +21,9 @@ const ContentSection = ({
     window.scrollTo({
       top: Math.max(
         document.body.scrollHeight,
-        document.documentElement.scrollHeight
+        document.documentElement.scrollHeight,
       ),
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
@@ -31,15 +31,12 @@ const ContentSection = ({
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
   return (
-    <section
-      id={id}
-      className="w-full bg-light py-10 md:py-14"
-    >
+    <section id={id} className="w-full bg-light py-10 md:py-14">
       <div className="flex flex-col md:flex-row justify-between max-w-7xl mx-auto px-5 md:px-0 gap-10">
         {/* Text Section */}
         <div className="flex-1">
@@ -51,18 +48,24 @@ const ContentSection = ({
               <li key={index}>{item}</li>
             ))}
           </ul>
-            <div className="text-sm text-gray-700 pt-2"> Explore our free Student AI Portal to research overseas options and manage your entire admission journey effortlessly. Plus, book your free personalized consultation today!
-            </div>
+          <div className="text-sm text-gray-700 pt-2">
+            {' '}
+            Explore our free Student AI Portal to research overseas options and
+            manage your entire admission journey effortlessly. Plus, book your
+            free personalized consultation today!
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 md:px-8">
             <button
               disabled={forInstitutions}
               className={`px-4 py-2 rounded-md text-white sm:w-full ${
                 forInstitutions
-                  ? "bg-main cursor-not-allowed opacity-70"
-                  : "bg-main hover:bg-opacity-90"
+                  ? 'bg-main cursor-not-allowed opacity-70'
+                  : 'bg-main hover:bg-opacity-90'
               }`}
               onClick={() => {
-                if (!forInstitutions) window.location.href = "https://portal.planmyadmission.com/sign-up";
+                if (!forInstitutions)
+                  window.location.href =
+                    'https://portal.planmyadmission.com/sign-up';
               }}
             >
               {btn1}
@@ -78,18 +81,25 @@ const ContentSection = ({
                 className="px-4 py-2 rounded-md bg-blurpink text-white hover:bg-opacity-90 sm:w-full"
                 onClick={(e) => {
                   try {
-                    console.log('🎯 ContentSection: AI Personal Admission Coach button clicked');
+                    console.log(
+                      '🎯 ContentSection: AI Personal Admission Coach button clicked',
+                    );
                     e.preventDefault();
                     e.stopPropagation();
-                    
+
                     // Dispatch custom event to open AI chatbot
-                    const event = new CustomEvent('openAIChatbot', { 
-                      detail: { source: 'admission-coach-button' }
+                    const event = new CustomEvent('openAIChatbot', {
+                      detail: { source: 'admission-coach-button' },
                     });
                     window.dispatchEvent(event);
-                    console.log('🎯 ContentSection: openAIChatbot event dispatched');
+                    console.log(
+                      '🎯 ContentSection: openAIChatbot event dispatched',
+                    );
                   } catch (error) {
-                    console.error('🎯 ContentSection: Error dispatching event', error);
+                    console.error(
+                      '🎯 ContentSection: Error dispatching event',
+                      error,
+                    );
                   }
                 }}
               >

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const ResultsPanel = ({ results }) => {
   if (!results) return null;
@@ -12,12 +12,12 @@ const ResultsPanel = ({ results }) => {
           <div className="pma-uni-card" key={`${uni.name}-${index}`}>
             <div className="pma-uni-card-header">
               <h4>{uni.name}</h4>
-              <span className={`pma-uni-fit ${uni.fit?.toLowerCase() || ""}`}>
-                {uni.fit || "Fit"}
+              <span className={`pma-uni-fit ${uni.fit?.toLowerCase() || ''}`}>
+                {uni.fit || 'Fit'}
               </span>
             </div>
             <p className="pma-uni-meta">
-              {uni.country || "Country"} · {uni.program || "Program"}
+              {uni.country || 'Country'} · {uni.program || 'Program'}
             </p>
             <p className="pma-uni-reason">{uni.reason}</p>
           </div>

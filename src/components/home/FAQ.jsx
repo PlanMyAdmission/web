@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Heading from "../../higherOrderComponents/Heading";
-import { defaultFAQ } from "../pricing/data";
-
+import React, { useState } from 'react';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Heading from '../../higherOrderComponents/Heading';
+import { defaultFAQ } from '../pricing/data';
 
 const AccordionItem = ({ item, isOpen, onToggle }) => {
   return (
@@ -14,11 +13,19 @@ const AccordionItem = ({ item, isOpen, onToggle }) => {
           onClick={onToggle}
         >
           {item.question}
-          <span>{isOpen ? <ExpandLessIcon fontSize="large" /> : <ExpandMoreIcon fontSize="large" />}</span>
+          <span>
+            {isOpen ? (
+              <ExpandLessIcon fontSize="large" />
+            ) : (
+              <ExpandMoreIcon fontSize="large" />
+            )}
+          </span>
         </h2>
         {isOpen && (
           <div className="mt-2 px-2 md:px-0 text-sm transition-all ease-in duration-300">
-            {item.answer && <p dangerouslySetInnerHTML={{ __html: item.answer }} />}
+            {item.answer && (
+              <p dangerouslySetInnerHTML={{ __html: item.answer }} />
+            )}
             {item.points && (
               <ul className="list-decimal list-inside mt-2 space-y-1">
                 {item.points.map((point, idx) => (
@@ -36,13 +43,13 @@ const AccordionItem = ({ item, isOpen, onToggle }) => {
   );
 };
 
-const FAQ = ({data}) => {
+const FAQ = ({ data }) => {
   const [activeId, setActiveId] = useState(null);
 
   const toggleAccordion = (id) => {
     setActiveId((prevId) => (prevId === id ? null : id));
   };
-  if(!data) data = defaultFAQ;
+  if (!data) data = defaultFAQ;
 
   return (
     <div className="md:mb-20 mb-8">

@@ -1,6 +1,6 @@
-import React from "react";
-import StarRateIcon from "@mui/icons-material/StarRate";
-import Human from "../../assets/Human.svg";
+import React from 'react';
+import StarRateIcon from '@mui/icons-material/StarRate';
+import Human from '../../assets/Human.svg';
 
 const Testimonials = ({ props }) => {
   return (
@@ -12,9 +12,7 @@ const Testimonials = ({ props }) => {
         <StarRateIcon className="pr-1 font-bold" />
         <StarRateIcon className="pr-1 font-bold" />
       </div>
-      <p className="py-3 ">
-        {props.content}
-      </p>
+      <p className="py-3 ">{props.content}</p>
       <div className="flex leading-4  items-center">
         <img
           src={props.img}

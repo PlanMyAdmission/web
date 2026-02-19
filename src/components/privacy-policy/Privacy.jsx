@@ -1,6 +1,6 @@
-import React from "react";
-import Header from "../../higherOrderComponents/Header";
-import data from "./privacy-policy";
+import React from 'react';
+import Header from '../../higherOrderComponents/Header';
+import data from './privacy-policy';
 
 const Content = (data) => {
   return (

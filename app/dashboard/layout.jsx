@@ -1,4 +1,4 @@
-import DashboardNav from "@/components/dashboard/user/DashboardNav";
+import DashboardNav from '@/components/dashboard/user/DashboardNav';
 
 const DashboardLayout = ({ children }) => {
   return (

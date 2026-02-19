@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
-import ArticleImage from "../assets/homeAssets/ArticleImage.svg";
-import article from "../assets/articles/article1.png";
-import { useRouter } from "next/navigation";
+import React from 'react';
+import ArticleImage from '../assets/homeAssets/ArticleImage.svg';
+import article from '../assets/articles/article1.png';
+import { useRouter } from 'next/navigation';
 
 const ArticleCard = ({ props }) => {
   const router = useRouter();
@@ -15,16 +15,14 @@ const ArticleCard = ({ props }) => {
           <p className="md:text-2xl text-xl font-semibold leading-tight">
             {props.head}
           </p>
-          <p className="py-2">
-            {props.desc}
-          </p>
+          <p className="py-2">{props.desc}</p>
           <button
             className="text-main p-3"
             onClick={() => {
               router.push(props.link);
             }}
           >
-            Read More {">>"}
+            Read More {'>>'}
           </button>
         </div>
       </div>

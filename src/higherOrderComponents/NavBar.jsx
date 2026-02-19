@@ -1,28 +1,28 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import logo from "../assets/homeAssets/logo.svg";
-import mobile_logo from "../assets/homeAssets/logo_mobile.svg";
-import { useAuth } from "../context/AuthProvider";
+import React, { useState, useEffect } from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import logo from '../assets/homeAssets/logo.svg';
+import mobile_logo from '../assets/homeAssets/logo_mobile.svg';
+import { useAuth } from '../context/AuthProvider';
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/ai-university-search", label: "AI University Search" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/blogs", label: "Blogs" },
-  { href: "/about", label: "About Us" },
-  { href: "/contact", label: "Contact Us" },
+  { href: '/', label: 'Home' },
+  { href: '/ai-university-search', label: 'AI University Search' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/blogs', label: 'Blogs' },
+  { href: '/about', label: 'About Us' },
+  { href: '/contact', label: 'Contact Us' },
 ];
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [photoURL, setPhotoURL] = useState(
-    "https://imgs.search.brave.com/IfCu-rlEANrldypDGTbEYE4_XyiekbuS1xeWWgBNJ7M/rs:fit:1000:1080:1/g:ce/aHR0cHM6Ly9jZG4x/LnZlY3RvcnN0b2Nr/LmNvbS9pLzEwMDB4/MTAwMC83MS84NS9t/YWxlLWF2YXRhci1w/cm9maWxlLWljb24t/cm91bmQtbWFuLWZh/Y2UtdmVjdG9yLTE4/MzA3MTg1LmpwZw"
+    'https://imgs.search.brave.com/IfCu-rlEANrldypDGTbEYE4_XyiekbuS1xeWWgBNJ7M/rs:fit:1000:1080:1/g:ce/aHR0cHM6Ly9jZG4x/LnZlY3RvcnN0b2Nr/LmNvbS9pLzEwMDB4/MTAwMC83MS84NS9t/YWxlLWF2YXRhci1w/cm9maWxlLWljb24t/cm91bmQtbWFuLWZh/Y2UtdmVjdG9yLTE4/MzA3MTg1LmpwZw',
   );
   const pathname = usePathname();
   const router = useRouter();
@@ -41,11 +41,11 @@ const NavBar = () => {
   const handleDashboardNavigate = () => {
     setShowDropdown(false);
     closeMobileNav();
-    router.push("/dashboard/profile#about");
+    router.push('/dashboard/profile#about');
   };
 
   const handleNavItemClick = () => {
-    localStorage.removeItem("button");
+    localStorage.removeItem('button');
     closeMobileNav();
   };
 
@@ -57,7 +57,7 @@ const NavBar = () => {
             src={logo}
             alt="logo"
             className="hidden md:block relative md:-translate-x-6  md:h-12 h-10 md:scale-150 scale-110 md:top-4 top-2 w-100 mx-2 md:px-4"
-            onClick={() => localStorage.removeItem("button")}
+            onClick={() => localStorage.removeItem('button')}
           />
           <img
             src={mobile_logo}
@@ -69,8 +69,8 @@ const NavBar = () => {
           {navLinks.map((item) => (
             <li
               key={item.href}
-              className={`hover:underline ${pathname === item.href ? "font-bold" : ""}`}
-              onClick={() => localStorage.removeItem("button")}
+              className={`hover:underline ${pathname === item.href ? 'font-bold' : ''}`}
+              onClick={() => localStorage.removeItem('button')}
             >
               <Link href={item.href}>{item.label}</Link>
             </li>
@@ -103,27 +103,38 @@ const NavBar = () => {
           </div>
         ) : (
           <div className="space-x-2">
-            <a href="https://portal.planmyadmission.com/login" rel="noreferrer" target="_blank">
+            <a
+              href="https://portal.planmyadmission.com/login"
+              rel="noreferrer"
+              target="_blank"
+            >
               <button className="bg-main border border-main text-white px-4 py-1 rounded-sm hover:bg-main/80 transition">
                 Login
               </button>
             </a>
-            <a href="https://portal.planmyadmission.com/sign-up" rel="noreferrer" target="_blank">
+            <a
+              href="https://portal.planmyadmission.com/sign-up"
+              rel="noreferrer"
+              target="_blank"
+            >
               <button className="bg-white border border-main text-main px-4 py-1 rounded-sm hover:bg-main hover:text-white transition">
                 Register
               </button>
             </a>
           </div>
         )}
-        <div onClick={handleNavToggle} className="block md:hidden px-4 text-main">
+        <div
+          onClick={handleNavToggle}
+          className="block md:hidden px-4 text-main"
+        >
           {!nav ? <MenuIcon /> : <CloseIcon />}
         </div>
 
         <div
           className={
             nav
-              ? "bg-white fixed left-0 top-0 w-[60%] h-full border-r border-r-black-900 duration-700 ease-in-out z-50"
-              : "bg-white duration-10 h-0 ease-in border-none fixed left-[-100%]"
+              ? 'bg-white fixed left-0 top-0 w-[60%] h-full border-r border-r-black-900 duration-700 ease-in-out z-50'
+              : 'bg-white duration-10 h-0 ease-in border-none fixed left-[-100%]'
           }
         >
           <div className="flex items-center justify-between px-5 py-4 border-b border-main">
@@ -138,7 +149,7 @@ const NavBar = () => {
             {navLinks.map((item) => (
               <li
                 key={`mobile-${item.href}`}
-                className={`p-2 pl-5 text-[18px] ${pathname === item.href ? "font-bold" : ""}`}
+                className={`p-2 pl-5 text-[18px] ${pathname === item.href ? 'font-bold' : ''}`}
                 onClick={handleNavItemClick}
               >
                 <Link href={item.href}>{item.label}</Link>
@@ -163,11 +174,23 @@ const NavBar = () => {
               </>
             ) : (
               <>
-                <a href="https://portal.planmyadmission.com/login" rel="noreferrer" target="_blank">
-                  <p className="px-4 py-2 text-main bg-main text-white rounded-sm text-center">Login</p>
+                <a
+                  href="https://portal.planmyadmission.com/login"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <p className="px-4 py-2 text-main bg-main text-white rounded-sm text-center">
+                    Login
+                  </p>
                 </a>
-                <a href="https://portal.planmyadmission.com/sign-up" rel="noreferrer" target="_blank">
-                  <p className="px-4 py-2 border border-main text-main rounded-sm text-center mt-2 hover:bg-main hover:text-white transition">Register</p>
+                <a
+                  href="https://portal.planmyadmission.com/sign-up"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <p className="px-4 py-2 border border-main text-main rounded-sm text-center mt-2 hover:bg-main hover:text-white transition">
+                    Register
+                  </p>
                 </a>
               </>
             )}

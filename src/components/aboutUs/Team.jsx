@@ -1,11 +1,11 @@
-import React from "react";
-import Heading from "../../higherOrderComponents/Heading";
-import advisors from "../../assets/about-us/leader.svg";
+import React from 'react';
+import Heading from '../../higherOrderComponents/Heading';
+import advisors from '../../assets/about-us/leader.svg';
 
 const Team = () => {
   return (
     <>
-      <Heading heading={"Our Team Members"} />
+      <Heading heading={'Our Team Members'} />
       <div className="flex justify-center flex-col md:flex-row items-center">
         <Name name="Full Name" desig="founder" />
         <Name name="Full Name" desig="founder" />

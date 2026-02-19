@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const ProfileUpload = ({ pdfFile, onFileChange }) => {
   return (
@@ -11,7 +11,9 @@ const ProfileUpload = ({ pdfFile, onFileChange }) => {
         Attach your profile to personalize results. If you skip this, we’ll
         return a strong general list for the course.
       </p>
-      {pdfFile && <div className="pma-ai-upload-file">Selected: {pdfFile.name}</div>}
+      {pdfFile && (
+        <div className="pma-ai-upload-file">Selected: {pdfFile.name}</div>
+      )}
     </div>
   );
 };

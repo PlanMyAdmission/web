@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { useAuth } from "../../../../context/AuthProvider";
-import Delete from "@mui/icons-material/DeleteOutlined";
+import React, { useState } from 'react';
+import { useAuth } from '../../../../context/AuthProvider';
+import Delete from '@mui/icons-material/DeleteOutlined';
 
 const Test_Scores = () => {
-  const label_style = "block text-sm font-medium text-gray-700 mb-1";
-  const [type, setType] = useState("");
-  const [subType, setSubType] = useState("");
+  const label_style = 'block text-sm font-medium text-gray-700 mb-1';
+  const [type, setType] = useState('');
+  const [subType, setSubType] = useState('');
   const [data, setData] = useState([
     {
-      exam_type: "",
-      sub_type: "",
-      date: "",
-      listen_score: "",
-      read_score: "",
-      write_score: "",
-      exam_score: "",
-      analytical_score: "",
-      verbal_score: "",
-      quantitative_score: "",
+      exam_type: '',
+      sub_type: '',
+      date: '',
+      listen_score: '',
+      read_score: '',
+      write_score: '',
+      exam_score: '',
+      analytical_score: '',
+      verbal_score: '',
+      quantitative_score: '',
     },
   ]);
 
@@ -32,16 +32,16 @@ const Test_Scores = () => {
     setData((prev) => [
       ...prev,
       {
-        exam_type: "",
-        sub_type: "",
-        date: "",
-        listen_score: "",
-        read_score: "",
-        write_score: "",
-        exam_score: "",
-        analytical_score: "",
-        verbal_score: "",
-        quantitative_score: "",
+        exam_type: '',
+        sub_type: '',
+        date: '',
+        listen_score: '',
+        read_score: '',
+        write_score: '',
+        exam_score: '',
+        analytical_score: '',
+        verbal_score: '',
+        quantitative_score: '',
       },
     ]);
   };
@@ -60,7 +60,7 @@ const Test_Scores = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    uploadDataToFireStoreInArray(data[0], "test_score");
+    uploadDataToFireStoreInArray(data[0], 'test_score');
   };
 
   return (
@@ -77,27 +77,27 @@ const Test_Scores = () => {
             <p className="text-sm font-medium text-gray-600">
               Exam Type: {score.sub_type}
             </p>
-            {score.exam_type === "English Proficiency" && (
+            {score.exam_type === 'English Proficiency' && (
               <>
                 <p>Listening Score: {score.listen_score}</p>
                 <p>Reading Score: {score.read_score}</p>
                 <p>Writing Score: {score.write_score}</p>
               </>
             )}
-            {score.exam_type !== "English Proficiency" && score.sub_type !== "GRE" && (
-              <p>Test Score: {score.exam_score}</p>
-            )}
-            {score.exam_type !== "English Proficiency" && score.sub_type === "GRE" && (
-              <>
-                <p>Analytical: {score.analytical_score}</p>
-                <p>Quantitative: {score.quantitative_score}</p>
-                <p>Verbal: {score.verbal_score}</p>
-              </>
-            )}
+            {score.exam_type !== 'English Proficiency' &&
+              score.sub_type !== 'GRE' && <p>Test Score: {score.exam_score}</p>}
+            {score.exam_type !== 'English Proficiency' &&
+              score.sub_type === 'GRE' && (
+                <>
+                  <p>Analytical: {score.analytical_score}</p>
+                  <p>Quantitative: {score.quantitative_score}</p>
+                  <p>Verbal: {score.verbal_score}</p>
+                </>
+              )}
           </div>
           <Delete
             className="text-red-500 cursor-pointer"
-            onClick={() => handleDocumentDelete(score.id, "test_score")}
+            onClick={() => handleDocumentDelete(score.id, 'test_score')}
           />
         </div>
       ))}
@@ -124,7 +124,7 @@ const Test_Scores = () => {
                 </select>
               </div>
 
-              {input.exam_type === "English Proficiency" && (
+              {input.exam_type === 'English Proficiency' && (
                 <>
                   <div>
                     <label className={label_style}>Sub Type *</label>
@@ -193,7 +193,7 @@ const Test_Scores = () => {
                 </>
               )}
 
-              {input.exam_type === "Entrance Exam" && (
+              {input.exam_type === 'Entrance Exam' && (
                 <>
                   <div>
                     <label className={label_style}>Sub Type *</label>
@@ -224,7 +224,7 @@ const Test_Scores = () => {
                       required
                     />
                   </div>
-                  {input.sub_type === "GRE" ? (
+                  {input.sub_type === 'GRE' ? (
                     <>
                       <div>
                         <label className={label_style}>Analytical *</label>

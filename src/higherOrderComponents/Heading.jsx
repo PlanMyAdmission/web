@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Heading = ({ heading }) => {
   return (
@@ -10,7 +10,6 @@ const Heading = ({ heading }) => {
 };
 
 export default Heading;
-
 
 // <div className="my-10">
 // <h1 className="md:text-[45px] text-2xl font-bold text-center my-10 relative after:content['']  after:absolute after:md:w-[7vw] after:w-[20vw] after:border-b-[5px] after:border-b-main after:md:-bottom-4 after:-bottom-2 after:left-[50%] after:-translate-x-[50%]">{heading}</h1>

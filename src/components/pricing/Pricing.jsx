@@ -1,9 +1,9 @@
-import React from "react";
-import { pricingPlans } from "./data";
-import Card from "../../higherOrderComponents/PricingCard";
-import FAQ from "../home/FAQ";
-import Header from "../../higherOrderComponents/Header";
-import { pricingFAQ } from "./data";
+import React from 'react';
+import { pricingPlans } from './data';
+import Card from '../../higherOrderComponents/PricingCard';
+import FAQ from '../home/FAQ';
+import Header from '../../higherOrderComponents/Header';
+import { pricingFAQ } from './data';
 
 const Pricing = () => {
   return (

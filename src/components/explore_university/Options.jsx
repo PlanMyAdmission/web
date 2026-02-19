@@ -1,10 +1,10 @@
-import React from "react";
-import { useState } from "react";
+import React from 'react';
+import { useState } from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import { createAutocomplete } from '@algolia/autocomplete-core';
 import { getAlgoliaResults } from '@algolia/autocomplete-preset-algolia';
 // import { Autocomplete } from '../../higherOrderComponents/Autocomplete';
-import { Item } from '../../higherOrderComponents/Item'
+import { Item } from '../../higherOrderComponents/Item';
 
 const appId = '8CPNZ7GSBE';
 const apiKey = 'd5e280b4cfd33be419ebfd25c236e5e0';
@@ -12,9 +12,8 @@ const searchClient = algoliasearch(appId, apiKey);
 
 // (1) Create a React state.
 
-
 const Options = () => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [autocompleteState, setAutocompleteState] = React.useState({});
   const autocomplete = React.useMemo(
     () =>
@@ -54,14 +53,16 @@ const Options = () => {
           ];
         },
       }),
-    []
+    [],
   );
   return (
     <div className="max-w-6xl mx-auto bg-light px-5 py-10 rounded my-5">
-      <form >
+      <form>
         <div className="grid md:grid-cols-10 gap-6 sm:grid-cols-6 mb-8">
           <div className="col-span-4 sm:col-span-4">
-            <label for="search" className="block pb-3 text-main font-bold">Search Course</label>
+            <label for="search" className="block pb-3 text-main font-bold">
+              Search Course
+            </label>
             <div className="relative">
               <div className="flex absolute inset-y-5 left-0 items-center pl-3 pointer-events-none">
                 <svg
@@ -101,7 +102,10 @@ const Options = () => {
                     return (
                       <div key={`source-${index}`} className="aa-Source">
                         {items.length > 0 && (
-                          <ul className="aa-List" {...autocomplete.getListProps()}>
+                          <ul
+                            className="aa-List"
+                            {...autocomplete.getListProps()}
+                          >
                             {items.map((item) => (
                               <li
                                 key={item.objectID}
@@ -121,19 +125,18 @@ const Options = () => {
                   })}
               </div>
             </div>
-
-
-
           </div>
           <div className="col-span-2 sm:col-span-2">
-            <label for="search" className="block pb-3 text-main font-bold">Intake</label>
+            <label for="search" className="block pb-3 text-main font-bold">
+              Intake
+            </label>
             <select
               id="intake"
               name="intake"
               autocomplete="intake"
               className="inline-block bg-transparent w-full p-3 pr-20 text-sm ring-main ring-offset-1 ring-1 focus:outline-none"
-              onChange={() => { }}
-              defaultValue={"Select"}
+              onChange={() => {}}
+              defaultValue={'Select'}
             >
               <option value="">Select</option>
               <option>yes</option>
@@ -144,14 +147,16 @@ const Options = () => {
           </div>
 
           <div className="col-span-2 sm:col-span-2">
-            <label for="search" className="block pb-3 text-main font-bold">Year</label>
+            <label for="search" className="block pb-3 text-main font-bold">
+              Year
+            </label>
             <select
               id="year"
               name="year"
               autocomplete="year"
               className="inline-block bg-transparent w-full p-3 pr-20 text-sm ring-main ring-offset-1 ring-1 focus:outline-none"
-              onChange={() => { }}
-              defaultValue={""}
+              onChange={() => {}}
+              defaultValue={''}
             >
               <option value="">Select</option>
               <option>yes</option>
@@ -168,7 +173,6 @@ const Options = () => {
               Explore
             </button>
           </div>
-
         </div>
         <div className="grid md:grid-cols-10 gap-6 sm:grid-cols-6 md:grid-cols-8">
           <div className="col-span-2 sm:col-span-2">
@@ -194,8 +198,6 @@ const Options = () => {
                 <label className="pl-1">Twinning Programmes (UG) </label>
               </div>
             </div>
-
-
           </div>
           <div className="col-span-2 sm:col-span-2">
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-1">
@@ -206,8 +208,8 @@ const Options = () => {
                   name="year"
                   autocomplete="year"
                   className="inline-block bg-transparent w-full pr-20 text-sm ring-main ring-offset-1 ring-1 focus:outline-none"
-                  onChange={() => { }}
-                  defaultValue={""}
+                  onChange={() => {}}
+                  defaultValue={''}
                 >
                   <option value="">Select</option>
                   <option>India</option>
@@ -223,8 +225,8 @@ const Options = () => {
                   name="year"
                   autocomplete="year"
                   className="inline-block bg-transparent w-full pr-20 text-sm ring-main ring-offset-1 ring-1 focus:outline-none"
-                  onChange={() => { }}
-                  defaultValue={""}
+                  onChange={() => {}}
+                  defaultValue={''}
                 >
                   <option value="">Select</option>
                   <option>India</option>
@@ -240,8 +242,8 @@ const Options = () => {
                   name="year"
                   autocomplete="year"
                   className="inline-block bg-transparent w-full pr-20 text-sm ring-main ring-offset-1 ring-1 focus:outline-none"
-                  onChange={() => { }}
-                  defaultValue={""}
+                  onChange={() => {}}
+                  defaultValue={''}
                 >
                   <option value="">Select</option>
                   <option>India</option>
@@ -250,7 +252,6 @@ const Options = () => {
                 </select>
               </div>
             </div>
-
           </div>
 
           <div className="col-span-2 sm:col-span-2">
@@ -262,8 +263,8 @@ const Options = () => {
                   name="year"
                   autocomplete="year"
                   className="inline-block bg-transparent w-full pr-20 text-sm ring-main ring-offset-1 ring-1 focus:outline-none"
-                  onChange={() => { }}
-                  defaultValue={""}
+                  onChange={() => {}}
+                  defaultValue={''}
                 >
                   <option value="">Select</option>
                   <option>India</option>
@@ -279,8 +280,8 @@ const Options = () => {
                   name="year"
                   autocomplete="year"
                   className="inline-block bg-transparent w-full pr-20 text-sm ring-main ring-offset-1 ring-1 focus:outline-none"
-                  onChange={() => { }}
-                  defaultValue={""}
+                  onChange={() => {}}
+                  defaultValue={''}
                 >
                   <option value="">Select</option>
                   <option>India</option>
@@ -356,8 +357,7 @@ const Options = () => {
               </div>
             </div> */}
         </div>
-
-      </form >
+      </form>
       <div>
         <p>Other poplular searches</p>
         <button className="border border-main md:py-2 px-4 m-1 rounded-full hover:bg-light md:text-[14px] text-main text-[10px] py-1">
@@ -373,7 +373,7 @@ const Options = () => {
           PHD
         </button>
       </div>
-    </div >
+    </div>
   );
 };
 

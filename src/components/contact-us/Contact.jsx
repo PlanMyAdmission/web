@@ -1,20 +1,20 @@
-import React from "react";
-import Header from "../../higherOrderComponents/Header";
-import contactus from "../../assets/about-us/contactus.svg";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import React from 'react';
+import Header from '../../higherOrderComponents/Header';
+import contactus from '../../assets/about-us/contactus.svg';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import JoinUsForm from "../home/JoinUsForm";
+import JoinUsForm from '../home/JoinUsForm';
 
 const Contact = () => {
   return (
     <div>
-      <Header heading={"Contact Us"} />
+      <Header heading={'Contact Us'} />
       <div className="grid md:grid-cols-2 items-center justify-center mx-w-7xl mx-auto">
         {/* <div className="md:mb-2 -mt-24 md:w-1/3 relative md:left-40 mx-auto md:mx-0 "> */}
         <div className="-mt-24 flex items-center justify-center">
-          <img src={contactus} alt="contactus" className="" width={"500px"} />
+          <img src={contactus} alt="contactus" className="" width={'500px'} />
         </div>
 
         {/* dummy code but necessary for image loading */}
@@ -51,9 +51,15 @@ const Contact = () => {
             Contact Details
           </h1>
           <p className="py-5">
-            Thank you for considering Planmyadmission as your trusted partner for your overseas education journey. Our team of dedicated professionals is here to provide you with unparalleled support and guidance to help you achieve your dream of studying abroad.<br></br>
-            We understand that the decision to study in a foreign country can be overwhelming and we are here to make the process easier for you. Our AI/ML solution is designed to personalize your experience and provide you with tailored recommendations based on your academic background and preferences.
-
+            Thank you for considering Planmyadmission as your trusted partner
+            for your overseas education journey. Our team of dedicated
+            professionals is here to provide you with unparalleled support and
+            guidance to help you achieve your dream of studying abroad.<br></br>
+            We understand that the decision to study in a foreign country can be
+            overwhelming and we are here to make the process easier for you. Our
+            AI/ML solution is designed to personalize your experience and
+            provide you with tailored recommendations based on your academic
+            background and preferences.
           </p>
           <label className="font-bold py-2">Email</label>
           <p className="md:pb-5 pb-2">support@planmyadmission.com</p>
@@ -61,7 +67,8 @@ const Contact = () => {
           <p className="md:pb-5 pb-2">+91 8828099194</p>
           <label className="font-bold py-2">Location</label>
           <p className="pb-5">
-            PlanMyAdmission - Horizon, Datta Mandir Road, Bhandup West, Mumbai - 400078
+            PlanMyAdmission - Horizon, Datta Mandir Road, Bhandup West, Mumbai -
+            400078
             <br />
             {/* <span className="text-main">View it on Google Map</span> */}
           </p>
@@ -69,17 +76,35 @@ const Contact = () => {
             We would love to hear from you and answer any questions you may have. Please feel free to reach out to us through our contact form, email, or phone. Our team will be happy to assist you in any way possible. Let us be a part of your exciting journey towards a successful international education. We look forward to hearing from you soon.
           </p> */}
           <div className="pb-10 flex cursor-pointer justify-start md:w-[75%] mt-3 text-main">
-            <a href="https://instagram.com/planmyadmission?igshid=OGQ5ZDc2ODk2ZA" target={"_blank"}>
-              <InstagramIcon fontSize="large" className="mr-3 cursor-pointer  opacity-50 hover:opacity-100" /></a>
+            <a
+              href="https://instagram.com/planmyadmission?igshid=OGQ5ZDc2ODk2ZA"
+              target={'_blank'}
+            >
+              <InstagramIcon
+                fontSize="large"
+                className="mr-3 cursor-pointer  opacity-50 hover:opacity-100"
+              />
+            </a>
 
             {/* <LinkedInIcon fontSize="large" className="mr-3 cursor-pointer" /> */}
-            <a href="https://www.facebook.com/profile.php?id=61552697291311" target={"_blank"}>
+            <a
+              href="https://www.facebook.com/profile.php?id=61552697291311"
+              target={'_blank'}
+            >
               <FacebookIcon
                 fontSize="large"
                 className="mr-3 cursor-pointer  opacity-50 hover:opacity-100"
-              /></a>
-            <a href="https://www.youtube.com/channel/UCU5motLLs6TlH79FbnLBANg" target={"_blank"}>
-              <YouTubeIcon fontSize="large" className="mr-3 cursor-pointer  opacity-50 hover:opacity-100" /></a>
+              />
+            </a>
+            <a
+              href="https://www.youtube.com/channel/UCU5motLLs6TlH79FbnLBANg"
+              target={'_blank'}
+            >
+              <YouTubeIcon
+                fontSize="large"
+                className="mr-3 cursor-pointer  opacity-50 hover:opacity-100"
+              />
+            </a>
           </div>
         </div>
         <Form />
@@ -90,13 +115,18 @@ const Contact = () => {
 
 const Form = () => {
   let style =
-    "outline-none focus:outline-none bg-light px-2 py-2 my-2 form-control rounded-sm focus:border focus:border-main transition ease-in-out duration-900 form-control";
+    'outline-none focus:outline-none bg-light px-2 py-2 my-2 form-control rounded-sm focus:border focus:border-main transition ease-in-out duration-900 form-control';
   let check_for = "after:absolute after:text-main after:content-['*']";
   return (
     <div className="relative ">
-      <div className="flex  flex-col md:w-2/3 w-[90vw] border border-main rounded-xl md:px-8 px-3 py-5 md:-translate-y-[200px] bg-white mx-auto" target="_blank" action="https://formsubmit.co/7d15bde2f29f8a6c5a261986268d68a7" method="POST">
-       <JoinUsForm className={" w-[100%]"} />
-        </div>
+      <div
+        className="flex  flex-col md:w-2/3 w-[90vw] border border-main rounded-xl md:px-8 px-3 py-5 md:-translate-y-[200px] bg-white mx-auto"
+        target="_blank"
+        action="https://formsubmit.co/7d15bde2f29f8a6c5a261986268d68a7"
+        method="POST"
+      >
+        <JoinUsForm className={' w-[100%]'} />
+      </div>
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.9193094843877!2d72.93874407598106!3d19.15500904948591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b8615c9625ed%3A0x3c4edf53b3cb7ec4!2sAtul%20projects%20horizon!5e0!3m2!1sen!2sin!4v1759326710531!5m2!1sen!2sin"
         // style="border:0;"

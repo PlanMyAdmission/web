@@ -1,6 +1,6 @@
-import React from "react";
-import advisors from "../../assets/about-us/leader.svg";
-import Heading from "../../higherOrderComponents/Heading";
+import React from 'react';
+import advisors from '../../assets/about-us/leader.svg';
+import Heading from '../../higherOrderComponents/Heading';
 
 const Advisors = () => {
   return (

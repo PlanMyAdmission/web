@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Timeline = () => {
   return (
@@ -22,9 +22,9 @@ const Timeline = () => {
               </div>
               <div
                 className={
-                  item.id !== "04"
-                    ? "bg-main w-1 h-24 -z-40 absolute -bottom-10 md:left-[70px] left-[50px]"
-                    : ""
+                  item.id !== '04'
+                    ? 'bg-main w-1 h-24 -z-40 absolute -bottom-10 md:left-[70px] left-[50px]'
+                    : ''
                 }
               ></div>
             </div>
@@ -39,27 +39,27 @@ export default Timeline;
 
 const data = [
   {
-    id: "01",
-    title: "Create your account",
+    id: '01',
+    title: 'Create your account',
     detatils:
-      "Hey there! Take the first step towards studying abroad by creating an account on our website.",
+      'Hey there! Take the first step towards studying abroad by creating an account on our website.',
   },
   {
-    id: "02",
-    title: "Shortlist University",
+    id: '02',
+    title: 'Shortlist University',
     detatils:
-      "Fill up your profile information and our AI technology provides recommendation and saves you time and money at every step of the application process.",
+      'Fill up your profile information and our AI technology provides recommendation and saves you time and money at every step of the application process.',
   },
   {
-    id: "03",
-    title: "Consult your expert",
+    id: '03',
+    title: 'Consult your expert',
     detatils:
-      "Schedule a one-on-one session with our in-house experts to get guidance on factors like- SOP, LOR, Scholarships, Visa application, and more!",
+      'Schedule a one-on-one session with our in-house experts to get guidance on factors like- SOP, LOR, Scholarships, Visa application, and more!',
   },
   {
-    id: "04",
-    title: "Apply",
+    id: '04',
+    title: 'Apply',
     detatils:
-      "We will help you apply to multiple programs and universities around the world. Then, you wait for your university acceptance and get ready to fly!",
+      'We will help you apply to multiple programs and universities around the world. Then, you wait for your university acceptance and get ready to fly!',
   },
 ];

@@ -1,44 +1,44 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import human from "../../assets/Human.svg";
-import Arrow from "../../assets/homeAssets/Arrow.svg";
-import Plane from "../../assets/Plane.svg";
+import React, { useState, useEffect } from 'react';
+import human from '../../assets/Human.svg';
+import Arrow from '../../assets/homeAssets/Arrow.svg';
+import Plane from '../../assets/Plane.svg';
 import algoliasearch from 'algoliasearch/lite';
 import Autosuggest from 'react-autosuggest';
-import { matchSorter } from "match-sorter";
-import { useRouter } from "next/navigation";
-import JoinUsForm from "./JoinUsForm";
-
+import { matchSorter } from 'match-sorter';
+import { useRouter } from 'next/navigation';
+import JoinUsForm from './JoinUsForm';
 
 const Hero = () => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const router = useRouter();
 
-
-  const searchClient = algoliasearch('8CPNZ7GSBE', 'd5e280b4cfd33be419ebfd25c236e5e0');
+  const searchClient = algoliasearch(
+    '8CPNZ7GSBE',
+    'd5e280b4cfd33be419ebfd25c236e5e0',
+  );
   const index = searchClient.initIndex('explore');
 
-
-
   const inputProps = {
-    type: "search",
+    type: 'search',
     placeholder: 'Search Universites,Courses...',
     value: search,
     onChange: (event, { newValue }) => {
-      setSearch(newValue)
+      setSearch(newValue);
     },
-    className: "inline p-3 pl-10 w-full text-sm rounded-lg ring-main ring-offset-1 ring-1 bg-transparent focus:outline-none placeholder:text-[11px] md:placeholder:text-[14px]",
-    placeholder: "Search Universites,Courses and more..."
+    className:
+      'inline p-3 pl-10 w-full text-sm rounded-lg ring-main ring-offset-1 ring-1 bg-transparent focus:outline-none placeholder:text-[11px] md:placeholder:text-[14px]',
+    placeholder: 'Search Universites,Courses and more...',
   };
 
   const containerProps = {
-    className: "absolute w-full"
-  }
+    className: 'absolute w-full',
+  };
 
-    const handleDirectSelection = (topic) => {
-      router.push(`/explore?topic=${topic}`)
-    }
+  const handleDirectSelection = (topic) => {
+    router.push(`/explore?topic=${topic}`);
+  };
 
   return (
     <div className="flex md:flex-row flex-col max-w-7xl lg:mx-auto gap-5 md:items-center md:my-10 my-10 xl:px-2 sm:px-10 px-5">
@@ -161,7 +161,7 @@ const Hero = () => {
             </div>
           )}
         </div> */}
-       <JoinUsForm />
+        <JoinUsForm />
       </div>
       <div className="">
         <img

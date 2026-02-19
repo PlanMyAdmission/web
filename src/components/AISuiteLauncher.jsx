@@ -1,15 +1,15 @@
-import React, { Suspense, lazy, useState, useEffect } from "react";
-import "./AISuiteLauncher.css";
+import React, { Suspense, lazy, useState, useEffect } from 'react';
+import './AISuiteLauncher.css';
 
-const AIAdmissionTool = lazy(() => import("./ai-admission/AIAdmissionTool"));
+const AIAdmissionTool = lazy(() => import('./ai-admission/AIAdmissionTool'));
 
 const AISuiteLauncher = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Configuration for the AI suite
   const SUITE_CONFIG = {
-    buttonText: "Launch AI Admission Suite",
-    buttonPosition: "top-right", // Options: 'top-right', 'top-left', 'bottom-right', 'bottom-left'
+    buttonText: 'Launch AI Admission Suite',
+    buttonPosition: 'top-right', // Options: 'top-right', 'top-left', 'bottom-right', 'bottom-left'
   };
 
   // Launch AI Suite in fullscreen modal
@@ -17,43 +17,43 @@ const AISuiteLauncher = () => {
     setIsModalOpen(true);
     // Prevent body scroll
     document.body.style.overflow = 'hidden';
-    
+
     // Analytics tracking (if gtag is available)
     if (typeof window.gtag !== 'undefined') {
       window.gtag('event', 'ai_suite_launched', {
         event_category: 'engagement',
-        event_label: 'floating_button'
+        event_label: 'floating_button',
       });
     }
-    
-    console.log("Plan My Admission AI Suite launched");
+
+    console.log('Plan My Admission AI Suite launched');
   };
 
   // Close AI Suite
   const closePMASuite = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = "auto";
+    document.body.style.overflow = 'auto';
   };
 
   // Keyboard shortcut (Alt + A) to launch AI Suite
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.altKey && e.key === "a") {
+      if (e.altKey && e.key === 'a') {
         e.preventDefault();
         launchAISuite();
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     };
   }, []);
 
@@ -82,7 +82,9 @@ const AISuiteLauncher = () => {
           >
             ×
           </button>
-          <Suspense fallback={<div className="pma-suite-loading">Loading...</div>}>
+          <Suspense
+            fallback={<div className="pma-suite-loading">Loading...</div>}
+          >
             <AIAdmissionTool />
           </Suspense>
         </div>

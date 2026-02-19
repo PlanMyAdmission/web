@@ -1,22 +1,20 @@
-import {React, useState} from "react";
-import Heading from "../../higherOrderComponents/Heading";
-import Testimonials from "./Testimonials";
-import Human from "../../assets/Human.svg";
-import bgArrow from "../../assets/bgArrow.svg";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import Reviews from "./Reviews";
-import Bhavesh from "../../assets/homeAssets/Bhavesh .jpg";
-import Mansi from "../../assets/homeAssets/Mansi .jpg";
-import Deepanshi from "../../assets/homeAssets/Deepanshi .jpg";
-import Mitransh from "../../assets/homeAssets/Mitransh .jpg";
+import { React, useState } from 'react';
+import Heading from '../../higherOrderComponents/Heading';
+import Testimonials from './Testimonials';
+import Human from '../../assets/Human.svg';
+import bgArrow from '../../assets/bgArrow.svg';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import Reviews from './Reviews';
+import Bhavesh from '../../assets/homeAssets/Bhavesh .jpg';
+import Mansi from '../../assets/homeAssets/Mansi .jpg';
+import Deepanshi from '../../assets/homeAssets/Deepanshi .jpg';
+import Mitransh from '../../assets/homeAssets/Mitransh .jpg';
 
-import Testimony1 from "../../assets/testimonies/PlanMyAdmission -1.png";
-import Testimony2 from "../../assets/testimonies/PlanMyAdmission -2.png";
-import Testimony3 from "../../assets/testimonies/PlanMyAdmission -3.png";
-import Testimony4 from "../../assets/testimonies/PlanMyAdmission -4.png";
-
-
+import Testimony1 from '../../assets/testimonies/PlanMyAdmission -1.png';
+import Testimony2 from '../../assets/testimonies/PlanMyAdmission -2.png';
+import Testimony3 from '../../assets/testimonies/PlanMyAdmission -3.png';
+import Testimony4 from '../../assets/testimonies/PlanMyAdmission -4.png';
 
 // const Data = [
 //   {
@@ -38,55 +36,59 @@ const dataYT = [
   {
     id: 1,
     thumbnail: Testimony1,
-    link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-1.mp4?alt=media&token=a08295c7-6864-4985-ba53-200165452c02"
+    link: 'https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-1.mp4?alt=media&token=a08295c7-6864-4985-ba53-200165452c02',
   },
   {
     id: 2,
     thumbnail: Testimony2,
-    link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-2.mp4?alt=media&token=0e431a07-9cf3-4094-abb6-924d6c6b4738"
+    link: 'https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-2.mp4?alt=media&token=0e431a07-9cf3-4094-abb6-924d6c6b4738',
   },
   {
     id: 3,
     thumbnail: Testimony3,
 
-    link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-3.mp4?alt=media&token=01e090cc-aae4-4d0f-9d8d-9e4e644a4f40"
+    link: 'https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-3.mp4?alt=media&token=01e090cc-aae4-4d0f-9d8d-9e4e644a4f40',
   },
   {
     id: 4,
     thumbnail: Testimony4,
 
-    link: "https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-4.mp4?alt=media&token=8475eae3-eb40-4c49-a59c-22f7ca80d419"
+    link: 'https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-4.mp4?alt=media&token=8475eae3-eb40-4c49-a59c-22f7ca80d419',
   },
-]
+];
 
 const dataTestimo = [
   {
     id: 1,
-    content: "PlanMyAdmission has been truly exceptional, with a seamless visa process, exceptional coaching from Nitin, and outstanding support from their loan and accounts team.",
-    author: "Mansi Soni",
-    univ: "University of North Texas",
+    content:
+      'PlanMyAdmission has been truly exceptional, with a seamless visa process, exceptional coaching from Nitin, and outstanding support from their loan and accounts team.',
+    author: 'Mansi Soni',
+    univ: 'University of North Texas',
     img: Mansi,
   },
   {
     id: 2,
-    content: "Team at PlanMyAdmission is so easy to work with. They're always available, keep me in the loop, and everything goes smoothly. I'm really happy with them!",
-    author: "Deepanshi",
-    univ: "University of Greenwich",
+    content:
+      "Team at PlanMyAdmission is so easy to work with. They're always available, keep me in the loop, and everything goes smoothly. I'm really happy with them!",
+    author: 'Deepanshi',
+    univ: 'University of Greenwich',
     img: Deepanshi,
   },
 
   {
     id: 3,
-    content: "No doubt The process was both efficient and hassle-free. Thanks to the coach, everything became more accessible. Leverage Edu's visa support and mock interviews not only boosted my confidence but also enhanced my responses.",
-    author: "Bhavesh Mathur",
-    univ: "University of Bristol",
+    content:
+      "No doubt The process was both efficient and hassle-free. Thanks to the coach, everything became more accessible. Leverage Edu's visa support and mock interviews not only boosted my confidence but also enhanced my responses.",
+    author: 'Bhavesh Mathur',
+    univ: 'University of Bristol',
     img: Bhavesh,
   },
   {
     id: 4,
-    content: "Glad that I made the timely decision to choose PlanMyAdmission Their personalized approach to each student helps turn dreams into reality, with a team that is both motivating and supportive.",
-    author: "Mitransh Saini",
-    univ: "Angel Ruskin University",
+    content:
+      'Glad that I made the timely decision to choose PlanMyAdmission Their personalized approach to each student helps turn dreams into reality, with a team that is both motivating and supportive.',
+    author: 'Mitransh Saini',
+    univ: 'Angel Ruskin University',
     img: Mitransh,
   },
   // {
@@ -104,10 +106,7 @@ const dataTestimo = [
   //   content:"My experience with Plan My Admission began with the daunting process of applying for master’s programs abroad. With their expertise, I received personalized counseling, proactive guidance on my applications, and thorough support during the visa process. Even complex procedures felt manageable thanks to their clear advice and ongoing encouragement. Regular follow-ups, helpful resources, and skilled mentoring made every stage less overwhelming, leading to successful admission in the right college and swift visa approval. I highly recommend their support to anyone planning to study abroad and needing expert help for their higher education journey.",
   //   author:"Ashish Giri"
   // }
-
-
-
-]
+];
 
 const SuccessStories = () => {
   return (
@@ -124,16 +123,16 @@ const SuccessStories = () => {
         <div className="hidden sm:block">
           <section className="flex items-center justify-center z-20 px-4">
             <Carousel
-              style={{ width: "80vw", maxWidth: "1200px" }}
+              style={{ width: '80vw', maxWidth: '1200px' }}
               className="z-30 crousel"
               responsive={responsive}
               arrows={false}
               infinite
             >
-
-              {dataTestimo && dataTestimo.map((item) => {
-                return <Item props={item} />
-              })}
+              {dataTestimo &&
+                dataTestimo.map((item) => {
+                  return <Item props={item} />;
+                })}
               {/* <Item />
               <Item />
               <Item />
@@ -142,17 +141,18 @@ const SuccessStories = () => {
           </section>
         </div>
         <div className="sm:hidden">
-        <section className="flex items-stretch justify-center z-20 px-4">
+          <section className="flex items-stretch justify-center z-20 px-4">
             <Carousel
-              style={{ width: "calc(100vw - 2rem)" }}
+              style={{ width: 'calc(100vw - 2rem)' }}
               className="z-30 flex items-stretch justify-center z-20"
               responsive={responsive}
               arrows={false}
               infinite
             >
-              {dataTestimo && dataTestimo.map((item) => {
-                return <Item props={item} />
-              })}
+              {dataTestimo &&
+                dataTestimo.map((item) => {
+                  return <Item props={item} />;
+                })}
             </Carousel>
           </section>
         </div>
@@ -165,9 +165,10 @@ const SuccessStories = () => {
           <YouTube />
         </div> */}
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto lg:py-20 py-10 sm:px-20 px-4 z-20">
-          {dataYT && dataYT.map((item) => {
-            return <YouTube props={item} />
-          })}
+          {dataYT &&
+            dataYT.map((item) => {
+              return <YouTube props={item} />;
+            })}
         </div>
       </div>
     </div>

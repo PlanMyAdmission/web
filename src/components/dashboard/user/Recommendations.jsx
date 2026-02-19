@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { useAuth } from "../../../context/AuthProvider";
-import RecommandationsMain from "./profile/RecommandationsMain";
+import React, { useState } from 'react';
+import { useAuth } from '../../../context/AuthProvider';
+import RecommandationsMain from './profile/RecommandationsMain';
 
 const Recommendations = () => {
   const [show, setShow] = useState(false);
@@ -12,7 +12,9 @@ const Recommendations = () => {
     <div>
       {!show && (
         <div className="bg-light flex items-center justify-center flex-col p-10 my-10 h-96">
-          <p className=" p-2 text-center">Generate Recommendations based on your profile</p>
+          <p className=" p-2 text-center">
+            Generate Recommendations based on your profile
+          </p>
           <button
             className="bg-main text-white text-center px-7 rounded-sm py-1.5 hover:bg-white hover:outline outline-main hover:text-main transition duration-200"
             onClick={() => setShow(!show)}

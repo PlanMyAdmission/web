@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -30,7 +29,7 @@
 }
 
 * {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .hide-scroll-bar {
@@ -88,14 +87,18 @@ button.rec.rec-arrow:focus {
   .clip-review {
     /* clip-path: polygon(0% 11%, 100% 8%, 93% 78%, 16% 76%); */
     /* clip-path: polygon(7% 15%, 100% 15%, 93% 78%, 15% 77%); */
-    clip-path: polygon(0 theme(spacing.14),
-        100% theme(spacing.12),
-        calc(100% - theme(spacing.10)) calc(100% - theme(spacing.10)),
-        theme(spacing.8) calc(100% - theme(spacing.12)));
-    -webkit-clip-path: polygon(0 theme(spacing.14),
-        100% theme(spacing.12),
-        calc(100% - theme(spacing.10)) calc(100% - theme(spacing.10)),
-        theme(spacing.8) calc(100% - theme(spacing.12)));
+    clip-path: polygon(
+      0 theme(spacing.14),
+      100% theme(spacing.12),
+      calc(100% - theme(spacing.10)) calc(100% - theme(spacing.10)),
+      theme(spacing.8) calc(100% - theme(spacing.12))
+    );
+    -webkit-clip-path: polygon(
+      0 theme(spacing.14),
+      100% theme(spacing.12),
+      calc(100% - theme(spacing.10)) calc(100% - theme(spacing.10)),
+      theme(spacing.8) calc(100% - theme(spacing.12))
+    );
   }
 
   .clip-image {
@@ -105,7 +108,7 @@ button.rec.rec-arrow:focus {
 }
 
 .maskFounder {
-  mask-image: url("./assets/about-us/frame.png");
+  mask-image: url('./assets/about-us/frame.png');
   object-fit: cover;
   width: 500px;
   /* height:500px; */

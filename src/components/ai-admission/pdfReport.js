@@ -5,16 +5,16 @@ const toLineArray = (value) => {
 };
 
 const sanitize = (value) =>
-  String(value || "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+  String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 
 const buildList = (items) =>
   items.length
-    ? items.map((item) => `<li>${sanitize(item)}</li>`).join("")
-    : "<li>Not provided</li>";
+    ? items.map((item) => `<li>${sanitize(item)}</li>`).join('')
+    : '<li>Not provided</li>';
 
 export const buildAdmissionReportHtml = ({
   profile,
@@ -34,14 +34,14 @@ export const buildAdmissionReportHtml = ({
         .map(
           (rec) => `
             <li>
-              <strong>${sanitize(rec.program || "Program")}</strong>
-              <span>${sanitize(rec.country || "Country")}</span>
-              <p>${sanitize(rec.reason || "Reason not provided")}</p>
+              <strong>${sanitize(rec.program || 'Program')}</strong>
+              <span>${sanitize(rec.country || 'Country')}</span>
+              <p>${sanitize(rec.reason || 'Reason not provided')}</p>
             </li>
           `,
         )
-        .join("")
-    : "<li>Not provided</li>";
+        .join('')
+    : '<li>Not provided</li>';
 
   return `
     <!doctype html>
@@ -133,37 +133,39 @@ export const buildAdmissionReportHtml = ({
       <body>
         <div class="page">
           <h1>Plan My Admission - AI College Evaluation Report</h1>
-          <div class="meta">${sanitize(sourceLabel || "Profile form submission")}</div>
+          <div class="meta">${sanitize(sourceLabel || 'Profile form submission')}</div>
 
           <div class="grid">
             <div class="card">
               <h2>Candidate Snapshot</h2>
               <p><strong>Name:</strong> ${sanitize(
-                `${profile.fullName || ""} ${profile.lastName || ""}`.trim() ||
-                  "Not provided",
+                `${profile.fullName || ''} ${profile.lastName || ''}`.trim() ||
+                  'Not provided',
               )}</p>
-              <p><strong>Email:</strong> ${sanitize(profile.email || "Not provided")}</p>
+              <p><strong>Email:</strong> ${sanitize(profile.email || 'Not provided')}</p>
               <p><strong>Target Country/Region:</strong> ${sanitize(
-                profile.targetCountry || "Not provided",
+                profile.targetCountry || 'Not provided',
               )}</p>
               <p><strong>Degree Level:</strong> ${sanitize(
-                profile.degreeLevel || "Not provided",
+                profile.degreeLevel || 'Not provided',
               )}</p>
               <p><strong>Field of Study:</strong> ${sanitize(
-                profile.fieldOfStudy || "Not provided",
+                profile.fieldOfStudy || 'Not provided',
               )}</p>
-              <p><strong>GPA:</strong> ${sanitize(profile.gpa || "Not provided")}</p>
+              <p><strong>GPA:</strong> ${sanitize(profile.gpa || 'Not provided')}</p>
               <p><strong>Test Scores:</strong> ${sanitize(
-                profile.testScores || "Not provided",
+                profile.testScores || 'Not provided',
               )}</p>
-              <p><strong>Budget:</strong> ${sanitize(profile.budget || "Not provided")}</p>
-              <p><strong>Timeline:</strong> ${sanitize(profile.timeline || "Not provided")}</p>
+              <p><strong>Budget:</strong> ${sanitize(profile.budget || 'Not provided')}</p>
+              <p><strong>Timeline:</strong> ${sanitize(profile.timeline || 'Not provided')}</p>
             </div>
             <div class="card">
               <h2>Evaluation Summary</h2>
-              <p>${sanitize(evaluation.summary || "No summary provided.")}</p>
+              <p>${sanitize(evaluation.summary || 'No summary provided.')}</p>
               <div class="score">${
-                evaluation.score ? `Overall Fit Score: ${sanitize(evaluation.score)}` : ""
+                evaluation.score
+                  ? `Overall Fit Score: ${sanitize(evaluation.score)}`
+                  : ''
               }</div>
             </div>
           </div>

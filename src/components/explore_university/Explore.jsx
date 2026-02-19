@@ -1,5 +1,5 @@
-import React from "react";
-import UniversityCourseFinder from "./UniversityCourseFinder";
+import React from 'react';
+import UniversityCourseFinder from './UniversityCourseFinder';
 
 const Explore = () => {
   return (

@@ -1,22 +1,27 @@
-import React from "react";
-import image1 from "../../assets/diff11.jpg";
-import image2 from "../../assets/diff2.jpg";
-import image3 from "../../assets/diff3.jpg";
+import React from 'react';
+import image1 from '../../assets/diff11.jpg';
+import image2 from '../../assets/diff2.jpg';
+import image3 from '../../assets/diff3.jpg';
 
 const contentSections = [
   {
-    title: "Get Personalized Course Recommendations from 300,000+ Global Programs",
-    description: "PMA leverages AI and advanced algorithms to analyze each student's profile against a vast global database of courses and universities, simplifying the study abroad journey with precise recommendations. Every suggestion is then reviewed and refined by experienced counsellors, ensuring that the final options are not just data-driven but also personalized to your goals and aspirations.",
+    title:
+      'Get Personalized Course Recommendations from 300,000+ Global Programs',
+    description:
+      "PMA leverages AI and advanced algorithms to analyze each student's profile against a vast global database of courses and universities, simplifying the study abroad journey with precise recommendations. Every suggestion is then reviewed and refined by experienced counsellors, ensuring that the final options are not just data-driven but also personalized to your goals and aspirations.",
     image: image1,
   },
   {
-    title: "Enhance Your Applications with Expert Support and AI Driven Assistance.",
-    description: "Create impactful statements of purpose, essays, and resumes with real-time suggestions and professional edits designed to help you stand out.",
+    title:
+      'Enhance Your Applications with Expert Support and AI Driven Assistance.',
+    description:
+      'Create impactful statements of purpose, essays, and resumes with real-time suggestions and professional edits designed to help you stand out.',
     image: image3,
   },
   {
-    title: "Guidance from Experts with 10+ Years of Experience",
-    description: "Get mentorship from seasoned professionals who've helped thousands of students successfully gain admission into top universities across the world.",
+    title: 'Guidance from Experts with 10+ Years of Experience',
+    description:
+      "Get mentorship from seasoned professionals who've helped thousands of students successfully gain admission into top universities across the world.",
     image: image2,
   },
 ];
@@ -50,7 +55,7 @@ const SectionBlock = ({ title, description, image, reverse }) => {
   return (
     <div
       className={`flex flex-col-reverse md:flex-row ${
-        reverse ? "md:flex-row-reverse" : ""
+        reverse ? 'md:flex-row-reverse' : ''
       } items-center gap-8`}
     >
       {/* Text Section */}
