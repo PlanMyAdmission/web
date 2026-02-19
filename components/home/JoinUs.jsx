@@ -30,7 +30,7 @@ const JoinUs = () => {
             width={0}
             height={0}
             sizes="100vw"
-            src={'/register-qr.jpeg'}
+            src={'/images/qr/register-qr.jpeg'}
             alt="Join Us Illustration"
             className="w-full h-auto rounded-lg shadow-md"
           />
