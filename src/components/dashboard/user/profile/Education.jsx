@@ -31,7 +31,7 @@ const Education = () => {
   const {
     profileData,
     uploadDataToFireStoreInArray,
-    handelDocumentDelete,
+    handleDocumentDelete,
   } = useAuth();
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const Education = () => {
           <DeleteIcon
             style={{ color: "#F24822" }}
             className="cursor-pointer"
-            onClick={() => handelDocumentDelete(edu.id, "education")}
+            onClick={() => handleDocumentDelete(edu.id, "education")}
           />
         </div>
       ))}

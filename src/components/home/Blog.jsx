@@ -3,10 +3,8 @@ import article1 from "../../assets/articles/article1.png"
 import article2 from "../../assets/articles/article2.png"
 import article3 from "../../assets/articles/article3.png"
 import article4 from "../../assets/articles/article4.png"
-import { useNavigate } from "react-router-dom";
 import ArticleCard from '../../higherOrderComponents/ArticleCardBlogs'
 import Header from '../../higherOrderComponents/Header'
-import { Helmet } from 'react-helmet'
 import JoinUs from './JoinUs'
 
 const data = [
@@ -43,22 +41,6 @@ const data = [
 const Blog = () => {
     return (
         <>
-            <Helmet>
-                <title>Planmyadmission blogs | Explore the World of Studying Abroad with us</title>
-                <meta name="title" content="Planmyadmission blogs | Explore the World of Studying Abroad with us" />
-                <meta name="description" content="Dive into our blog for the latest updates and valuable insights on studying abroad in 2024. Stay informed about colleges, courses, exams, and application tips. Your comprehensive guide to a successful international education journey awaits." />
-                <link rel="canonical" href="https://planmyadmission.com/about" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <meta property="og:title" content="Planmyadmission blogs | Explore the World of Studying Abroad with us" />
-                <meta property="og:description" content="Dive into our blog for the latest updates and valuable insights on studying abroad in 2024. Stay informed about colleges, courses, exams, and application tips. Your comprehensive guide to a successful international education journey awaits." />
-                <meta property="og:image" content="https://planmyadmission.com" />
-                <meta property="og:url" content="https://planmyadmission.com/blogs" />
-                <meta property="og:type" content="website" />
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Planmyadmission blogs | Explore the World of Studying Abroad with us" />
-                <meta name="twitter:description" content="Dive into our blog for the latest updates and valuable insights on studying abroad in 2024. Stay informed about colleges, courses, exams, and application tips. Your comprehensive guide to a successful international education journey awaits." />
-            </Helmet>
-
             <Header heading={"Our Blogs"} />
             {/* <div className="md:border-b-4  border-b-main w-1/5 ml-5 mb-5 items-center flex justify-center md:block"></div> */}
             <div className='max-w-6xl mx-auto bg-light mx-auto px-5 p-10 rounded-xl mt-5 grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-7'>

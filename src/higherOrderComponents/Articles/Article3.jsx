@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react'
 import Header from '../Header'
 import article from "../../assets/articles/article3.png"
@@ -5,28 +7,13 @@ import article2 from "../../assets/articles/article2.png"
 import article1 from "../../assets/articles/article1.png"
 // import article3 from "../../assets/articles/article3.png"
 import article4 from "../../assets/articles/article4.png"
-import { useNavigate } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
+import { useRouter } from 'next/navigation'
 
 const Article3 = () => {
-    const navigate = useNavigate()
+    const router = useRouter()
     return (
         <>
-            <Helmet>
-                <title>Planmyadmission blogs | Explore the World of Studying Abroad with us</title>
-                <meta name="title" content="Planmyadmission blogs | Explore the World of Studying Abroad with us" />
-                <meta name="description" content="Step into a world of educational exploration with our blog. Dive into diverse topics, from university highlights to study hacks, as we navigate the ever-evolving landscape of higher education." />
-                <link rel="canonical" href="https://planmyadmission.com/about" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <meta property="og:title" content="Planmyadmission blogs | Explore the World of Studying Abroad with us" />
-                <meta property="og:description" content="Dive into our blog for the latest updates and valuable insights on studying abroad in 2024. Stay informed about colleges, courses, exams, and application tips. Your comprehensive guide to a successful international education journey awaits." />
-                <meta property="og:image" content="https://planmyadmission.com" />
-                <meta property="og:url" content="https://planmyadmission.com/blogs" />
-                <meta property="og:type" content="website" />
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Planmyadmission blogs | Explore the World of Studying Abroad with us" />
-                <meta name="twitter:description" content="Dive into our blog for the latest updates and valuable insights on studying abroad in 2024. Stay informed about colleges, courses, exams, and application tips. Your comprehensive guide to a successful international education journey awaits." />
-            </Helmet>
+            
             <div className='max-w-5xl mx-auto bg-light mx-auto px-5 p-10 rounded-xl my-5 mt-20 grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-7'>
                 <img src={article} alt="" className="w-6/7 rounded-xl col-span-1 items-center justify-center" />
                 <div className='col-span-1 text-4xl font-bold'>
@@ -126,7 +113,7 @@ const Article3 = () => {
 
                     <div className='w-full px-1 text text-2xs'>
                         <div className='flex flex-row hover:cursor-pointer justify-between border-b-2 border-solid gap-2 border-main my-3 pb-3 ' onClick={() => {
-                            navigate("/Navigating-the-American-Campus")
+                            router.push("/Navigating-the-American-Campus")
                         }}>
                             <img src={article1} alt="" className="w-1/3 rounded-md h-1/4 items-center justify-center" />
                             <div className=' font-bold'>
@@ -144,7 +131,7 @@ const Article3 = () => {
 
                         </div> */}
                         <div className='flex flex-row hover:cursor-pointer justify-between border-b-2 border-solid gap-2 border-main my-3 pb-3 ' onClick={() => {
-                            navigate("/Mastering-the-Art-of-Financial-Planning")
+                            router.push("/Mastering-the-Art-of-Financial-Planning")
                         }}>
                             <img src={article4} alt="" className="w-1/3 rounded-md h-1/4 items-center justify-center" />
                             <div className=' font-bold'>
@@ -153,7 +140,7 @@ const Article3 = () => {
 
                         </div>
                         <div className='flex flex-row hover:cursor-pointer justify-between border-b-2 border-solid gap-2 border-main my-3 pb-3 ' onClick={() => {
-                            navigate("/Embarking-on-Excellence")
+                            router.push("/Embarking-on-Excellence")
                         }}>
                             <img src={article2} alt="" className="w-1/3 rounded-md h-1/4 items-center justify-center" />
                             <div className=' font-bold'>

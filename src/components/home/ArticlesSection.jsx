@@ -1,13 +1,15 @@
+"use client";
+
 import React, { useRef, useState } from "react";
 import ArticleCard from "../../higherOrderComponents/ArticleCard";
-import { Link, useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import article1 from "../../assets/articles/article1.png";
 import article2 from "../../assets/articles/article2.png";
 import article3 from "../../assets/articles/article3.png";
 import article4 from "../../assets/articles/article4.png";
 
 const ArticlesSection = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const elementRef = useRef(null);
   const [arrowDisable, setArrowDisable] = useState(true);
 
@@ -64,7 +66,7 @@ const ArticlesSection = () => {
         </p>
         <button
           className="bg-main text-white font-semibold px-5 py-2 mt-6 rounded-md hidden md:block"
-          onClick={() => navigate("/blogs")}
+          onClick={() => router.push("/blogs")}
         >
           Explore more Resources &rarr;
         </button>
@@ -104,7 +106,7 @@ const ArticlesSection = () => {
 
         <button
           className="bg-main text-white font-semibold px-5 py-2 mt-6 mx-auto rounded-md block md:hidden"
-          onClick={() => navigate("/blogs")}
+          onClick={() => router.push("/blogs")}
         >
           Explore more Resources &rarr;
         </button>

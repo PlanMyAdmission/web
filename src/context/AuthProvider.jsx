@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useContext, useState, useEffect, createContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import {
   auth,
   db,
@@ -36,7 +38,7 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [currentUser, setCurrentUser] = useState(null);
   const [profileData, setProfileData] = useState(null);
 
@@ -61,7 +63,7 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem("logged", "true");
       toast.success("Registration successful!", { autoClose: 1500 });
-      navigate("/dashboard/profile#about");
+      router.push("/dashboard/profile#about");
     } catch (error) {
       toast.error(error.message || "Signup failed. Please try again.");
       console.error("Signup Error:", error);
@@ -79,7 +81,7 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem("logged", "true");
       toast.success("Login successful!", { autoClose: 1500 });
-      navigate("/dashboard/profile#about");
+      router.push("/dashboard/profile#about");
     } catch (error) {
       toast.error("Login failed: " + error.message);  
       console.error("SignIn Error:", error);
@@ -110,7 +112,7 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem("logged", "true");
       toast.success("Google sign-in successful!");
-      navigate("/dashboard/profile#about");
+      router.push("/dashboard/profile#about");
     } catch (error) {
       toast.error("Google Sign-In failed: " + error.message);
       console.error("Google Sign-In Error:", error);

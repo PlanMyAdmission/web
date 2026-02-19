@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 const Band = ({ 
   line, 
@@ -10,7 +12,7 @@ const Band = ({
   btn4 = "AI University Search",
   forInstitutions = false 
 }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Scroll smoothly to the top of the page
   const scrollToTop = () => {
@@ -50,7 +52,7 @@ const Band = ({
           <button
             className="px-4 py-3 rounded-md border border-main text-main hover:bg-gray-50 font-semibold"
             onClick={() => {
-              navigate('/');
+              router.push('/');
             }}
           >
             {btn2}
@@ -83,7 +85,7 @@ const Band = ({
           <button
             className="px-4 py-3 rounded-md border border-blurpink text-blurpink hover:bg-gray-50 font-semibold"
             onClick={() => {
-              navigate('/ai-university-search');
+              router.push('/ai-university-search');
             }}
           >
             {btn4}

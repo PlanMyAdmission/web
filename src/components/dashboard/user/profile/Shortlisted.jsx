@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { useAuth } from '../../../../context/AuthProvider'
+"use client";
+
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../../../context/AuthProvider';
 import app from '../../../../firebase';
-import { Link } from 'react-router-dom';
 import Delete from "@mui/icons-material/DeleteOutlined";
 import {
-    Firestore,
     getFirestore,
-    doc,
     collection,
-    onSnapshot,
     getDocs,
-    limit,
     query,
     where
 } from "firebase/firestore";
+import { useRouter } from 'next/navigation';
+import { setRouteState, ROUTE_STATE_KEYS } from '../../../../lib/routeState';
 
 const Shortlisted = () => {
-    // const [loading, setLoading] = useState(false)
-    const { currentUser, profileData, handelDocumentDelete, getCurrentUserData
-    } = useAuth()
+    const { currentUser, profileData, handleDocumentDelete, getCurrentUserData } = useAuth();
     const [favData, setFavData] = useState()
     const [courses, setcourses] = useState([])
     const [univ, setUniv] = useState([])
@@ -31,6 +28,7 @@ const Shortlisted = () => {
     let university = "";
     let fee = 0
     let curr = ""
+    const router = useRouter();
     let accept = 0
     let rank = 0
     let duration = 0
@@ -135,8 +133,12 @@ const Shortlisted = () => {
     //     fetchCourses();
     // }, [uniqueID])
 
-
-
+        const handleEnroll = (payload) => {
+            setRouteState(ROUTE_STATE_KEYS.universityDetails, {
+                udata: payload,
+            });
+            router.push('/dashboard/university');
+        };
 
     return (
         <>
@@ -223,7 +225,7 @@ const Shortlisted = () => {
                                     <div className='ml-5 top-0'><button
                                         className="font-bold"
                                         onClick={() => {
-                                            handelDocumentDelete(data.id, "favorites")
+                                            handleDocumentDelete(data.id, "favorites")
                                             getCurrentUserData()
                                         }}
                                     // onClick={showMenu}
@@ -235,20 +237,13 @@ const Shortlisted = () => {
                                     </button>
                                     </div>
 
-                                    <Link to="university" state={{
-                                        udata: univdata,
-                                        // coursedata: uniqueCourse,
-                                    }}><button
-                                        type="submit"
+                                    <button
+                                        type="button"
                                         className="block text-main w-full uppercase bg-transparent p-1 font-bold text-lg mb-0 mt-5"
+                                        onClick={() => handleEnroll(univdata)}
                                     >
-                                            Enroll
-                                        </button>
-                                    </Link>
-                                </div>
-                            </div>
-                        );
-                    })}
+                                        Enroll
+                                    </button>
                 </div>
                 <div className="mb-10">
                     <button

@@ -5,28 +5,11 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from '@mui/icons-material/Facebook';
-import { Helmet } from "react-helmet";
 import JoinUsForm from "../home/JoinUsForm";
 
 const Contact = () => {
   return (
     <div>
-      <Helmet>
-        <title>Connect with us - Your Gateway to Study Abroad 2024 Insights"</title>
-        <meta name="title" content="Connect with us - Your Gateway to Study Abroad 2024 Insights" />
-        <meta name="description" content="Questions about studying abroad in 2024? Contact us for personalized guidance on colleges, courses, exams, and applications. Your international journey starts here!" />
-        <link rel="canonical" href="https://planmyadmission.com/about" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta property="og:title" content="Connect with us - Your Gateway to Study Abroad 2024 Insights" />
-        <meta property="og:description" content="Questions about studying abroad in 2024? Contact us for personalized guidance on colleges, courses, exams, and applications. Your international journey starts here!" />
-        <meta property="og:image" content="https://planmyadmission.com" />
-        <meta property="og:url" content="https://planmyadmission.com/contact" />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Connect with us - Your Gateway to Study Abroad 2024 Insights" />
-        <meta name="twitter:description" content="Questions about studying abroad in 2024? Contact us for personalized guidance on colleges, courses, exams, and applications. Your international journey starts here!" />
-      </Helmet>
-
       <Header heading={"Contact Us"} />
       <div className="grid md:grid-cols-2 items-center justify-center mx-w-7xl mx-auto">
         {/* <div className="md:mb-2 -mt-24 md:w-1/3 relative md:left-40 mx-auto md:mx-0 "> */}

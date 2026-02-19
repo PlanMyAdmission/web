@@ -1,18 +1,19 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import human from "../../assets/Human.svg";
 import Arrow from "../../assets/homeAssets/Arrow.svg";
 import Plane from "../../assets/Plane.svg";
-import { Link } from "react-router-dom";
 import algoliasearch from 'algoliasearch/lite';
 import Autosuggest from 'react-autosuggest';
 import { matchSorter } from "match-sorter";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import JoinUsForm from "./JoinUsForm";
 
 
 const Hero = () => {
   const [search, setSearch] = useState("");
-  const navigate = useNavigate()
+  const router = useRouter();
 
 
   const searchClient = algoliasearch('8CPNZ7GSBE', 'd5e280b4cfd33be419ebfd25c236e5e0');
@@ -35,9 +36,9 @@ const Hero = () => {
     className: "absolute w-full"
   }
 
-  const handleDirectSelection = (topic) => {
-      navigate(`/explore?topic=${topic}`)
-  }
+    const handleDirectSelection = (topic) => {
+      router.push(`/explore?topic=${topic}`)
+    }
 
   return (
     <div className="flex md:flex-row flex-col max-w-7xl lg:mx-auto gap-5 md:items-center md:my-10 my-10 xl:px-2 sm:px-10 px-5">

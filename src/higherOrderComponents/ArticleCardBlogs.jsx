@@ -1,10 +1,12 @@
+"use client";
+
 import React from "react";
 import ArticleImage from "../assets/homeAssets/ArticleImage.svg";
-import article from "../assets/articles/article1.png"
-import { useNavigate } from "react-router-dom";
-//md:hover:border-b-main
+import article from "../assets/articles/article1.png";
+import { useRouter } from "next/navigation";
+
 const ArticleCard = ({ props }) => {
-  const nav = useNavigate()
+  const router = useRouter();
   return (
     <div className="">
       <div className=" w-full h-[100%] transition duration-500 ease-in-out mx-auto bg-white p-3">
@@ -16,9 +18,14 @@ const ArticleCard = ({ props }) => {
           <p className="py-2">
             {props.desc}
           </p>
-          <button className="text-main p-3" onClick={() => {
-            nav(props.link)
-          }}>Read More {">>"} </button>
+          <button
+            className="text-main p-3"
+            onClick={() => {
+              router.push(props.link);
+            }}
+          >
+            Read More {">>"}
+          </button>
         </div>
       </div>
     </div>

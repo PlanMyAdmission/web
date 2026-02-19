@@ -3,30 +3,11 @@ import { pricingPlans } from "./data";
 import Card from "../../higherOrderComponents/PricingCard";
 import FAQ from "../home/FAQ";
 import Header from "../../higherOrderComponents/Header";
-import { Helmet } from "react-helmet";
 import { pricingFAQ } from "./data";
 
 const Pricing = () => {
   return (
     <main>
-      <Helmet>
-        <title>Craft Your Academic Journey with our Exclusive Pricing and Plans</title>
-        <meta name="title" content="Craft Your Academic Journey with our Exclusive Pricing and Plans" />
-        <meta name="description" content="Discover affordable excellence with planmyadmission’s budget-friendly pricing options" />
-        <link rel="canonical" href="https://planmyadmission.com/pricing" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        <meta property="og:title" content="Craft Your Academic Journey with our Exclusive Pricing and Plans" />
-        <meta property="og:description" content="Discover affordable excellence with planmyadmission’s budget-friendly pricing options" />
-        <meta property="og:image" content="https://planmyadmission.com" />
-        <meta property="og:url" content="https://planmyadmission.com/pricing" />
-        <meta property="og:type" content="website" />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Craft Your Academic Journey with our Exclusive Pricing and Plans" />
-        <meta name="twitter:description" content="Discover affordable excellence with planmyadmission’s budget-friendly pricing options" />
-      </Helmet>
-
       <Header heading="pricing" />
 
       <section className="max-w-7xl mx-auto bg-light px-6 py-16 md:p-20 rounded-3xl shadow-sm">

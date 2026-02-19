@@ -1,10 +1,12 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import Education from "./profile/Education";
 import Experience from "./profile/Experience";
 import Test_Scores from "./profile/Test_Scores";
 import About from "./profile/About";
 import { useAuth } from "../../../context/AuthProvider";
+import { usePathname, useRouter } from "next/navigation";
 
 const TABS = [
   { id: "#about", label: "About" },
@@ -17,13 +19,14 @@ const Profile = () => {
   const [show, setShow] = useState("#about");
   const { uploadImage, currentUser, logout, profileData } = useAuth();
   const [photoURL, setPhotoURL] = useState("");
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (location.hash) {
-      setShow(location.hash);
+    if (typeof window !== "undefined" && window.location.hash) {
+      setShow(window.location.hash);
     }
-  }, [location.hash]);
+  }, []);
 
   useEffect(() => {
     if (currentUser?.photoURL) {
@@ -88,15 +91,20 @@ const Profile = () => {
 
       <div className="flex mt-8 overflow-x-auto hide-scroll-bar border-b border-main">
         {TABS.map((tab) => (
-          <Link key={tab.id} to={tab.id} className="flex-shrink-0">
-            <button
-              className={`py-2 px-4 text-sm md:text-base font-medium transition-colors duration-300 border-b-2 ${
-                show === tab.id ? "border-main text-main" : "border-transparent text-gray-500 hover:text-main"
-              }`}
-            >
-              {tab.label}
-            </button>
-          </Link>
+          <button
+            key={tab.id}
+            className={`py-2 px-4 text-sm md:text-base font-medium transition-colors duration-300 border-b-2 ${
+              show === tab.id ? "border-main text-main" : "border-transparent text-gray-500 hover:text-main"
+            }`}
+            onClick={() => {
+              setShow(tab.id);
+              if (typeof window !== "undefined") {
+                router.replace(`${pathname}${tab.id}`);
+              }
+            }}
+          >
+            {tab.label}
+          </button>
         ))}
       </div>
 

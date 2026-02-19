@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
 import Navigator from './Navigator'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
+import { getRouteState, ROUTE_STATE_KEYS } from '../../../lib/routeState'
 
 
 
@@ -10,8 +12,7 @@ const University = () => {
 
     // const [locationKeys, setLocationKeys] = useState([])
     const [finishStatus, setfinishStatus] = useState(false);
-    const navigate = useNavigate()
-    const { state } = useLocation()
+    const router = useRouter()
     const [undata, setunData] = useState([])
 
 
@@ -31,8 +32,14 @@ const University = () => {
     //     };
     // }, []);
     useEffect(() => {
-        setunData(state.udata)
-    }, [])
+        const payload = getRouteState(ROUTE_STATE_KEYS.universityDetails)
+        if (payload?.udata) {
+            const data = Array.isArray(payload.udata) ? payload.udata : [payload.udata]
+            setunData(data)
+        } else {
+            router.replace('/dashboard')
+        }
+    }, [router])
     useEffect(() => {
         console.log(undata)
         // console.log(state.courseData)

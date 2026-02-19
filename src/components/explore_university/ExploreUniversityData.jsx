@@ -1,26 +1,32 @@
+"use client";
+
 import React, { useState, useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
 import ExploreMainPage from "./ExploreMainPage"
 import { useAuth } from '../../context/AuthProvider'
+import { useRouter } from 'next/navigation'
+import { getRouteState, ROUTE_STATE_KEYS } from '../../lib/routeState'
 
 
 const ExploreUniversityData = () => {
 
-    const { state } = useLocation()
-    const navigate = useNavigate()
+    const router = useRouter()
     const [undata, setunData] = useState([])
     const { currentUser } = useAuth()
     const [img, setImg] = useState("")
 
     useEffect(() => {
-        console.log(state.udata)
-        setunData([state.udata])
-        setImg(state.url)
-    }, [])
+        const payload = getRouteState(ROUTE_STATE_KEYS.exploreUniversity)
+        if (payload?.udata) {
+            setunData([payload.udata])
+            setImg(payload.url)
+        } else {
+            router.replace('/explore')
+        }
+    }, [router])
 
     const navigateLogin = () => {
         if (currentUser)
-            navigate('/dashboard/applications')
+            router.push('/dashboard/applications')
         else
             window.location.href = 'https://app.coursefinder.ai/student-platform/777d47d0/login'
     }

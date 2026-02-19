@@ -4,7 +4,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const Footer = () => {
   const year = new Date();
@@ -54,44 +54,39 @@ const Footer = () => {
           <div className="">
             <h6 className="font-bold uppercase">Important links</h6>
             <ul className="cursor-pointer font-medium">
-              <Link to="/pricing">
-                <li className="py-2 text-sm">Pricing</li>
-              </Link>
-              <Link to="/how-it-works">
-                <li className="py-2 text-sm">How It Works</li>
-              </Link>
-              {/* <Link to="/for-institutions">
-                <li className="py-2 text-sm">For Institutions</li>
-              </Link> */}
-              <Link to="/terms&conditions">
-                <li className="py-2 text-sm">Terms and conditions</li>
-              </Link>
-              <Link to="/privacy-policy">
-                <li className="py-2 text-sm">Privacy Policy</li>
-              </Link>
+              <li className="py-2 text-sm">
+                <Link href="/pricing">Pricing</Link>
+              </li>
+              <li className="py-2 text-sm">
+                <Link href="/how-it-works">How It Works</Link>
+              </li>
+              <li className="py-2 text-sm">
+                <Link href="/terms&conditions">Terms and conditions</Link>
+              </li>
+              <li className="py-2 text-sm">
+                <Link href="/privacy-policy">Privacy Policy</Link>
+              </li>
             </ul>
           </div>
           <div className="">
             <h6 className="font-bold uppercase">Contact Details</h6>
             <ul className="cursor-pointer font-medium">
               <li className="py-2 text-sm">About</li>
-              <Link to="/blogs">
-                <li className="py-2 text-sm">Blog</li>
-              </Link>
+              <li className="py-2 text-sm">
+                <Link href="/blogs">Blog</Link>
+              </li>
               {/* <li className="py-2 text-sm">Careers</li> */}
             </ul>
           </div>
           <div className="">
             <h6 className="font-bold uppercase">Others</h6>
             <ul className="cursor-pointer font-medium">
-              <Link to="/explore">
-                <li className="py-2 text-sm">Explore University</li>
-              </Link>
-              {/* <li className="py-2 text-sm">careers</li>
-              <li className="py-2 text-sm">Guides</li> */}
-              <Link to="/explore">
-                <li className="py-2 text-sm">Courses</li>
-              </Link>
+              <li className="py-2 text-sm">
+                <Link href="/explore">Explore University</Link>
+              </li>
+              <li className="py-2 text-sm">
+                <Link href="/explore">Courses</Link>
+              </li>
             </ul>
           </div>
         </div>

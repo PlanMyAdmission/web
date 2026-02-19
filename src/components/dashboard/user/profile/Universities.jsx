@@ -1,5 +1,6 @@
+"use client";
+
 import React from 'react'
-import { Link } from 'react-router-dom';
 import app from '../../../../firebase';
 import {
     Firestore,
@@ -14,6 +15,8 @@ import {
 } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../../../context/AuthProvider';
+import { useRouter } from 'next/navigation';
+import { setRouteState, ROUTE_STATE_KEYS } from '../../../../lib/routeState';
 
 const Universities = ({ props }) => {
     const [courses, setcourses] = useState([]);
@@ -24,6 +27,7 @@ const Universities = ({ props }) => {
     const [n, setN] = useState(10)
     const [showElement, setShowElement] = useState(true)
     const db = getFirestore(app);
+    const router = useRouter();
     const { currentUser, updateFavorite, profileData } = useAuth()
     const [loading, setLoading] = useState(false)
     const fetchCourses = async () => {
@@ -131,6 +135,13 @@ const Universities = ({ props }) => {
     let rank = 0
     let duration = 0
 
+    const handleEnroll = (payload) => {
+        setRouteState(ROUTE_STATE_KEYS.universityDetails, {
+            udata: payload,
+        });
+        router.push('/dashboard/university');
+    };
+
     return (
         <>
             {!loading ? <div className="flex flex-col items-center">
@@ -224,16 +235,13 @@ const Universities = ({ props }) => {
                                             }}
                                         />
                                     </div>
-                                    <Link to="university" state={{
-                                        udata: univdata,
-                                        // coursedata: uniqueCourse,
-                                    }}><button
-                                        type="submit"
+                                    <button
+                                        type="button"
                                         className="block text-main w-full uppercase bg-transparent p-1 font-bold text-lg mb-0 mt-5"
+                                        onClick={() => handleEnroll(univdata)}
                                     >
-                                            Enroll
-                                        </button>
-                                    </Link>
+                                        Enroll
+                                    </button>
                                 </div>
                             </div>
                         );

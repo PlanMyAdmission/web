@@ -1,5 +1,6 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../../../../context/AuthProvider";
 import {
@@ -9,10 +10,11 @@ import {
   query,
 } from "firebase/firestore";
 import app from "../../../../firebase";
+import { useRouter } from "next/navigation";
 
 const About = () => {
   const { currentUser, uploadDataToFireStore, profileData } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const db = getFirestore(app);
 
   const [loading, setLoading] = useState(false);
@@ -67,9 +69,9 @@ const About = () => {
   useEffect(() => {
     getLocation();
     if (localStorage.getItem("logged") === "false") {
-      navigate("/");
+      router.replace("/");
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     if (profileData) {

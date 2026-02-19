@@ -1,6 +1,7 @@
 // import { getFirestore } from 'firebase/firestore';
+"use client";
+
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
 import app from '../../firebase';
 import {
     Firestore,
@@ -15,6 +16,8 @@ import {
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { setRouteState, ROUTE_STATE_KEYS } from '../../lib/routeState';
 
 const FilteredResponse = ({ props }) => {
     const [docs, setDocs] = useState([])
@@ -34,6 +37,7 @@ const FilteredResponse = ({ props }) => {
     const [mapDocs, setMapDocs] = useState()
     const [sortClicked, setSortClicked] = useState(false)
     const docref = collection(db, "explore_university")
+    const router = useRouter();
 
     const shuffle = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
@@ -443,6 +447,14 @@ const FilteredResponse = ({ props }) => {
     //     console.log(docs)
 
     // }, [docs])
+    const handleEnroll = (data, logoUrl) => {
+        setRouteState(ROUTE_STATE_KEYS.exploreUniversity, {
+            udata: data,
+            url: logoUrl,
+        });
+        router.push('/explore/university');
+    };
+
     return (
         <>
             {mapDocs && country && mapDocs.length > 0 ? <div className="max-w-6xl mx-auto bg-transparent px-5 pt-10 pb-1 rounded my-1">
@@ -761,18 +773,13 @@ const FilteredResponse = ({ props }) => {
                                             </ul>
                                         </div>
                                         <div className='col-span-2 sm:col-span-1 flex flex-col justify-between'>
-                                            {/* <div className='mb-10 top-0'><label className='text text-sm mx-1'>Shortlist</label><input type="checkbox" className='mt-2 ml-2' /></div> */}
-                                            <Link to="university" state={{
-                                                udata: data,
-                                                url: lurl
-                                            }}><button
-                                                type="submit"
+                                            <button
+                                                type="button"
                                                 className="block text-main w-full uppercase bg-transparent p-1 font-bold text-lg mb-0"
-
+                                                onClick={() => handleEnroll(data, lurl)}
                                             >
-                                                    Enroll
-                                                </button>
-                                            </Link>
+                                                Enroll
+                                            </button>
                                         </div>
                                     </div>
                                 );

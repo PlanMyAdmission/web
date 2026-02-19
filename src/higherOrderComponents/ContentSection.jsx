@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 const ContentSection = ({
   id,
@@ -12,7 +14,7 @@ const ContentSection = ({
   video,
   forInstitutions = false,
 }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Scroll smoothly to the bottom of the page, ensuring we reach the very end
   const scrollToBottom = () => {
@@ -98,7 +100,7 @@ const ContentSection = ({
               <button
                 className="px-4 py-2 rounded-md border border-blurpink text-blurpink hover:bg-gray-50 sm:w-full"
                 onClick={() => {
-                  navigate('/ai-university-search');
+                  router.push('/ai-university-search');
                 }}
               >
                 {btn4}

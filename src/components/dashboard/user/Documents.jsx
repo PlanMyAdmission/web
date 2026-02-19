@@ -1,10 +1,12 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthProvider";
 import Delete from "@mui/icons-material/DeleteOutlined";
 import { toast } from "react-toastify";
 
 const Documents = () => {
-  const { profileData, uploadDocument, currentUser, handelDocumentDelete } = useAuth();
+  const { profileData, uploadDocument, currentUser, handleDocumentDelete } = useAuth();
   const [select, setSelect] = useState("");
   const [document, setDocument] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -59,7 +61,7 @@ const Documents = () => {
                 </td>
                 <td className="p-2">{doc.date}</td>
                 <td className="p-2">
-                  <button onClick={() => handelDocumentDelete(doc.id, "documents")}>
+                  <button onClick={() => handleDocumentDelete(doc.id, "documents")}>
                     <Delete style={{ color: "red" }} className="cursor-pointer" />
                   </button>
                 </td>

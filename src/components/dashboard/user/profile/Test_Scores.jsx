@@ -25,7 +25,7 @@ const Test_Scores = () => {
     currentUser,
     uploadDataToFireStoreInArray,
     profileData,
-    handelDocumentDelete,
+    handleDocumentDelete,
   } = useAuth();
 
   const addClick = () => {
@@ -97,7 +97,7 @@ const Test_Scores = () => {
           </div>
           <Delete
             className="text-red-500 cursor-pointer"
-            onClick={() => handelDocumentDelete(score.id, "test_score")}
+            onClick={() => handleDocumentDelete(score.id, "test_score")}
           />
         </div>
       ))}
