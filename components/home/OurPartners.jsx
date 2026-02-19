@@ -1,6 +1,6 @@
 import React from 'react';
-const MicroSoft = '/images/Microsoft.png';
-const google = '/images/google.svg';
+const MicroSoft = '/images/partners/Microsoft.png';
+const google = '/images/partners/google.svg';
 const OurPartners = () => {
   return (
     <section className="w-full   border-t border-gray-200 py-4 px-6 shadow-sm">

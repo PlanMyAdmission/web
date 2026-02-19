@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import React from 'react';
 import Heading from '@components/higherOrderComponents/Heading';
-const advisors = '/images/about-us/leader.svg';
+const advisors = '/images/about/leader.svg';
 const Team = () => {
   return (
     <>

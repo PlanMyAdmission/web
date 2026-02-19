@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import React from 'react';
 import Heading from '@components/higherOrderComponents/Heading';
-const ArticleImage = '/images/homeAssets/ArticleImage.svg';
+const ArticleImage = '/images/home/ArticleImage.svg';
 const HowItWorksSection = () => {
   return (
     <div className="py-12">

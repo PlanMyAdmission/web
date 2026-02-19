@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import React from 'react';
 import Header from '@components/higherOrderComponents/Header';
-const contactus = '/images/about-us/contactus.svg';
+const contactus = '/images/about/contactus.svg';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';

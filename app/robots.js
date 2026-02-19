@@ -1,12 +1,19 @@
-import { BASE_URL } from '@lib/seo';
+import { BASE_URL, isProductionCrawlAllowed } from '@lib/seo';
 
 export default function robots() {
+  const allowCrawl = isProductionCrawlAllowed();
+
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/dashboard', '/dashboard/*'],
-    },
+    rules: allowCrawl
+      ? {
+          userAgent: '*',
+          allow: '/',
+          disallow: ['/dashboard', '/dashboard/*'],
+        }
+      : {
+          userAgent: '*',
+          disallow: '/',
+        },
     sitemap: `${BASE_URL}/sitemap.xml`,
     host: BASE_URL,
   };

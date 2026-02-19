@@ -3,7 +3,7 @@
 import Image from 'next/image';
 
 import React from 'react';
-const icon = '/images/about-us/icon.svg';
+const icon = '/images/about/icon.svg';
 const OurCoreValues = () => {
   return (
     <div className="my-20 mx-5 bg-light rounded-md p-[30px] flex flex-col max-w-7xl md:mx-auto justify-center">

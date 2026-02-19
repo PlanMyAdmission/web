@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
 import React from 'react';
-const quote = '/images/about-us/quote.svg';
-const advisors = '/images/about-us/Ram.jpg';
+const quote = '/images/about/quote.svg';
+const advisors = '/images/about/Ram.jpg';
 import Heading from '@components/higherOrderComponents/Heading';
 const Founder = () => {
   return (

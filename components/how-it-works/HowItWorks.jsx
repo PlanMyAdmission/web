@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 import Header from '@components/higherOrderComponents/Header';
 import Heading from '@components/higherOrderComponents/Heading';
-const ArticleImage = '/images/homeAssets/ArticleImage.svg';
+const ArticleImage = '/images/home/ArticleImage.svg';
 import Timeline from '@/components/how-it-works/Timeline.jsx';
 const HowItWorks = () => {
   return (

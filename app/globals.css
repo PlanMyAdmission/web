@@ -120,7 +120,7 @@ button.rec.rec-arrow:focus {
 }
 
 .maskFounder {
-  mask-image: url('/images/about-us/frame.png');
+  mask-image: url('/images/about/frame.png');
   object-fit: cover;
   width: 500px;
 

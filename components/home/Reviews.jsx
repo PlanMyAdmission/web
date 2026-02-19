@@ -1,14 +1,14 @@
 'use client';
 
 import React from 'react';
-const person1 = '/images/homeAssets/deepakbhatia.jpeg';
-const person2 = '/images/homeAssets/Shagunbansal.jpeg';
-const person3 = '/images/homeAssets/virensood.jpeg';
-const person4 = '/images/homeAssets/Ritikasingh.jpeg';
+const person1 = '/images/home/deepakbhatia.jpeg';
+const person2 = '/images/home/Shagunbansal.jpeg';
+const person3 = '/images/home/virensood.jpeg';
+const person4 = '/images/home/Ritikasingh.jpeg';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-const Girl2 = '/images/homeAssets/Girl2.svg';
+const Girl2 = '/images/home/Girl2.svg';
 class Content extends React.Component {
   render() {
     const handelLeft = () => {

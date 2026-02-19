@@ -3,7 +3,7 @@
 import Image from 'next/image';
 
 import React from 'react';
-const Bussiness = '/images/ForInstitutions/Bussiness.svg';
+const Bussiness = '/images/institutions/Bussiness.svg';
 import { useRouter } from 'next/navigation';
 const Banner = () => {
   const router = useRouter();

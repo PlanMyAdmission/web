@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import React from 'react';
-const aboutusTeam = '/images/about-us/about-us.svg';
+const aboutusTeam = '/images/about/about-us.svg';
 const AboutUsDescription = () => {
   return (
     <div className="max-w-7xl md:mx-auto flex md:flex-row flex-col mt-20 justify-center items-center px-5 gap-5">

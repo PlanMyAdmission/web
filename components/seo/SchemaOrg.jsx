@@ -22,11 +22,17 @@ const SchemaOrg = () => {
   const organizationSchema = useMemo(
     () => ({
       '@context': 'https://schema.org',
-      '@type': 'Organization',
+      '@type': 'EducationalOrganization',
       name: SITE_NAME,
       url: BASE_URL,
       logo: `${BASE_URL}/images/brand/logo.svg`,
-      sameAs: [],
+      description: DEFAULT_DESCRIPTION,
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        url: `${BASE_URL}/contact`,
+        availableLanguage: ['English'],
+      },
     }),
     [],
   );
