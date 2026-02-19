@@ -3,7 +3,7 @@ import Image from 'next/image';
 const UniversityCard = ({ usedFor, props }) => {
   return (
     <div
-      className={`${usedFor === 'institutions' ? 'justify-evenly h-50 py-10' : 'h-60 justify-between'} bg-white drop-shadow-xl  rounded-md md:w-[168px] mx-4 flex flex-col items-center  text-center pt-4 shrink-0 border-[1px] border-light`}
+      className={`${usedFor === 'institutions' ? 'justify-evenly h-[200px] py-10' : 'h-[240px] justify-between'} bg-white drop-shadow-xl  rounded-md md:w-[168px] mx-4 flex flex-col items-center  text-center pt-4 shrink-0 border-[1px] border-light`}
     >
       <Image
         src={props.img}

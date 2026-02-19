@@ -616,13 +616,13 @@ const FilteredResponse = ({ props }) => {
                             return (
                               <Image
                                 unoptimized
-                                width={0}
-                                height={0}
+                                width={1200}
+                                height={800}
                                 sizes="100vw"
                                 key={val.id}
                                 src={val.url}
                                 alt={data.id}
-                                className="col-span-1 sm:col-span-1 h-10 rounded-md sm:h-20"
+                                className="col-span-1 sm:col-span-1 w-full h-10 rounded-md sm:h-20 object-contain"
                               />
                             );
                           }
@@ -630,12 +630,12 @@ const FilteredResponse = ({ props }) => {
                         {imgav == false && (
                           <Image
                             unoptimized
-                            width={0}
-                            height={0}
+                            width={1200}
+                            height={800}
                             sizes="100vw"
                             src="Not Available"
                             alt={'Not Available'}
-                            className="col-span-1 sm:col-span-1 h-10 rounded-md sm:h-20"
+                            className="col-span-1 sm:col-span-1 w-full h-10 rounded-md sm:h-20 object-contain"
                           />
                         )}
                         <div className="col-span-2 sm:col-span-5">

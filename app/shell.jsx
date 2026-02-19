@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/ReactToastify.css';
 import NavBar from '@components/higherOrderComponents/NavBar';
 import Footer from '@components/higherOrderComponents/Footer';
 import GoToTop from '@components/higherOrderComponents/GoToTop';

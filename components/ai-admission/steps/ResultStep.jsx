@@ -1,23 +1,30 @@
 'use client';
 
 import React from 'react';
+import styles from '@/components/ai-admission/AIAdmissionTool.module.css';
+const cx = (...classNames) =>
+  classNames
+    .flatMap((value) => `${value || ''}`.split(/\s+/))
+    .map((name) => styles[name])
+    .filter(Boolean)
+    .join(' ');
 const ResultStep = ({ reportData, onDownload, onReset }) => {
   return (
     <>
-      <div className="pma-ai-actions">
-        <button className="pma-ai-secondary" onClick={onReset} type="button">
+      <div className={cx('pma-ai-actions')}>
+        <button className={cx('pma-ai-secondary')} onClick={onReset} type="button">
           Start Over
         </button>
-        <button className="pma-ai-download" onClick={onDownload} type="button">
+        <button className={cx('pma-ai-download')} onClick={onDownload} type="button">
           Download PDF Report
         </button>
       </div>
 
       {reportData && (
-        <div className="pma-ai-preview">
+        <div className={cx('pma-ai-preview')}>
           <h3>Report Preview</h3>
           <p>{reportData.summary}</p>
-          <div className="pma-ai-preview-grid">
+          <div className={cx('pma-ai-preview-grid')}>
             <div>
               <h4>Strengths</h4>
               <ul>

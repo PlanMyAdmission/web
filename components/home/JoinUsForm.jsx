@@ -106,12 +106,12 @@ const JoinUsForm = ({ className = '' }) => {
     setErrors({});
   };
   return (
-    <div className={`py-6 bg-light rounded-lg mb-2 max-w-[680px] ${className}`}>
+    <div className={`py-8 bg-light rounded-lg mb-2 ${className}`}>
       {!isSubmitted ? (
         <>
           <form
             action=""
-            className="flex flex-col justify-center items-center space-y-4"
+            className="flex flex-col justify-center items-center space-y-5"
           >
             <div className="w-[90%]">
               <input
@@ -120,7 +120,7 @@ const JoinUsForm = ({ className = '' }) => {
                 id="name"
                 value={name}
                 placeholder="Name"
-                className={`py-3.5 px-3 rounded-md w-full outline-none ${errors.name ? 'border border-red-500' : ''}`}
+                className={`py-4 px-3 rounded-md w-full outline-none ${errors.name ? 'border border-red-500' : ''}`}
                 onChange={(e) => setname(e.target.value)}
               />
               {errors.name && (
@@ -135,7 +135,7 @@ const JoinUsForm = ({ className = '' }) => {
                 id="phone"
                 value={phone}
                 placeholder="Phone No. (e.g. +91 9876543210)"
-                className={`py-3.5 px-3 rounded-md w-full outline-none ${errors.phone ? 'border border-red-500' : ''}`}
+                className={`py-4 px-3 rounded-md w-full outline-none ${errors.phone ? 'border border-red-500' : ''}`}
                 pattern="^\+?\d{10,15}$"
                 maxLength={15}
                 autoComplete="tel"
@@ -156,7 +156,7 @@ const JoinUsForm = ({ className = '' }) => {
                 id="email"
                 value={email}
                 placeholder="Email"
-                className={`py-3.5 px-3 rounded-md w-full outline-none ${errors.email ? 'border border-red-500' : ''}`}
+                className={`py-4 px-3 rounded-md w-full outline-none ${errors.email ? 'border border-red-500' : ''}`}
                 onChange={(e) => setemail(e.target.value)}
               />
               {errors.email && (
@@ -192,7 +192,7 @@ const JoinUsForm = ({ className = '' }) => {
 
             <button
               type="submit"
-              className={`bg-main px-4 py-3.5 rounded-md text-white w-[90%] transition-colors flex items-center justify-center ${isLoading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-main/90'}`}
+              className={`bg-main px-4 py-4 rounded-md text-white w-[90%] transition-colors flex items-center justify-center ${isLoading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-main/90'}`}
               onClick={handleSubmit}
               disabled={isLoading}
             >

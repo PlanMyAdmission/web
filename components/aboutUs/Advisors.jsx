@@ -20,12 +20,12 @@ const Leaders = ({ name, desig }) => {
     <div className="m-2">
       <Image
         unoptimized
-        width={0}
-        height={0}
-        sizes="100vw"
+        width={320}
+        height={220}
+        sizes="320px"
         src={advisors}
         alt=""
-        className=""
+        className="w-full h-auto"
       />
       <div className="text-white relative -top-12 px-3 bg-gradient-to-t  from-blurpink to-transparent py-3 flex justify-between">
         <p>{name}</p>

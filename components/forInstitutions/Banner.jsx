@@ -32,8 +32,8 @@ const Banner = () => {
       </div>
       <Image
         unoptimized
-        width={0}
-        height={0}
+        width={1200}
+        height={800}
         sizes="100vw"
         src={Bussiness}
         alt="Bussiness"

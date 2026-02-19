@@ -7,7 +7,6 @@ import Testimonials from '@/components/home/Testimonials.jsx';
 const Human = '/images/ui/Human.svg';
 const bgArrow = '/images/ui/bgArrow.svg';
 import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
 import Reviews from '@/components/home/Reviews.jsx';
 const Bhavesh = '/images/home/Bhavesh .jpg';
 const Mansi = '/images/home/Mansi .jpg';

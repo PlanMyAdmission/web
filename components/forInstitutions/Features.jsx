@@ -9,7 +9,7 @@ const Features = () => {
   const [show, setShow] = useState('firstCard');
   return (
     <div>
-      <div className="bg-light md:max-w-5xl md:mx-auto flex justify-safe rounded-md overflow-x-auto  hide-scroll-bar whitespace-nowrap snap-x ">
+      <div className="bg-light md:max-w-5xl md:mx-auto flex justify-start rounded-md overflow-x-auto  hide-scroll-bar whitespace-nowrap snap-x ">
         <button
           autoFocus={true}
           className={style}

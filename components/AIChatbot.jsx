@@ -1,7 +1,13 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import '@/components/AIChatbot.css';
+import styles from '@/components/AIChatbot.module.css';
+const cx = (...classNames) =>
+  classNames
+    .flatMap((value) => `${value || ''}`.split(/\s+/))
+    .map((name) => styles[name])
+    .filter(Boolean)
+    .join(' ');
 import {
   buildSessionUrl,
   buildWebSocketUrl,
@@ -426,10 +432,10 @@ const AIChatbot = () => {
     e.target.style.height = Math.min(e.target.scrollHeight, 140) + 'px';
   };
   return (
-    <div className="pma-chatbot-widget">
+    <div className={cx('pma-chatbot-widget')}>
       {}
       <button
-        className={`pma-chatbot-bubble ${!isOpen ? 'pma-chatbot-pulse' : ''}`}
+        className={cx('pma-chatbot-bubble', !isOpen ? 'pma-chatbot-pulse' : '')}
         onClick={toggleChat}
         style={{
           display: isOpen ? 'none' : 'flex',
@@ -441,17 +447,17 @@ const AIChatbot = () => {
 
       {}
       {isOpen && (
-        <div className="pma-chatbot-chat pma-chatbot-active">
-          <div className="pma-chatbot-header">
-            <div className="pma-chatbot-header-info">
-              <div className="pma-chatbot-header-avatar">AI</div>
-              <div className="pma-chatbot-header-text">
+        <div className={cx('pma-chatbot-chat', 'pma-chatbot-active')}>
+          <div className={cx('pma-chatbot-header')}>
+            <div className={cx('pma-chatbot-header-info')}>
+              <div className={cx('pma-chatbot-header-avatar')}>AI</div>
+              <div className={cx('pma-chatbot-header-text')}>
                 <h3>Plan My Admission AI</h3>
                 <p>Study Abroad Expert</p>
               </div>
             </div>
             <button
-              className="pma-chatbot-close"
+              className={cx('pma-chatbot-close')}
               onClick={toggleChat}
               type="button"
             >
@@ -459,32 +465,32 @@ const AIChatbot = () => {
             </button>
           </div>
 
-          <div className="pma-chatbot-messages" ref={messagesRef}>
+          <div className={cx('pma-chatbot-messages')} ref={messagesRef}>
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`pma-chatbot-message pma-chatbot-${message.type}`}
+                className={cx('pma-chatbot-message', `pma-chatbot-${message.type}`)}
               >
-                <div className="pma-chatbot-avatar">
+                <div className={cx('pma-chatbot-avatar')}>
                   {message.type === 'bot' ? 'AI' : 'U'}
                 </div>
-                <div className="pma-chatbot-content">
+                <div className={cx('pma-chatbot-content')}>
                   {message.isUniversityCard && message.universityData ? (
-                    <div className="pma-chatbot-university-card">
-                      <div className="pma-chatbot-university-header">
-                        <div className="pma-chatbot-rank">
+                    <div className={cx('pma-chatbot-university-card')}>
+                      <div className={cx('pma-chatbot-university-header')}>
+                        <div className={cx('pma-chatbot-rank')}>
                           {message.universityData.ranking}
                         </div>
                         <div>
-                          <h4 className="pma-chatbot-uni-name">
+                          <h4 className={cx('pma-chatbot-uni-name')}>
                             {message.universityData.name}
                           </h4>
-                          <p className="pma-chatbot-location">
+                          <p className={cx('pma-chatbot-location')}>
                             {message.universityData.location}
                           </p>
                         </div>
                       </div>
-                      <div className="pma-chatbot-details">
+                      <div className={cx('pma-chatbot-details')}>
                         <strong>Acceptance Rate:</strong>{' '}
                         {message.universityData.acceptance_rate}
                         <br />
@@ -506,15 +512,15 @@ const AIChatbot = () => {
             ))}
 
             {isTyping && (
-              <div className="pma-chatbot-message pma-chatbot-bot">
-                <div className="pma-chatbot-avatar">AI</div>
-                <div className="pma-chatbot-content">
-                  <div className="pma-chatbot-typing">
+              <div className={cx('pma-chatbot-message', 'pma-chatbot-bot')}>
+                <div className={cx('pma-chatbot-avatar')}>AI</div>
+                <div className={cx('pma-chatbot-content')}>
+                  <div className={cx('pma-chatbot-typing')}>
                     <span>AI is thinking...</span>
-                    <div className="pma-chatbot-dots">
-                      <div className="pma-chatbot-dot"></div>
-                      <div className="pma-chatbot-dot"></div>
-                      <div className="pma-chatbot-dot"></div>
+                    <div className={cx('pma-chatbot-dots')}>
+                      <div className={cx('pma-chatbot-dot')}></div>
+                      <div className={cx('pma-chatbot-dot')}></div>
+                      <div className={cx('pma-chatbot-dot')}></div>
                     </div>
                   </div>
                 </div>
@@ -522,10 +528,10 @@ const AIChatbot = () => {
             )}
           </div>
 
-          <div className="pma-chatbot-input-area">
-            <div className="pma-chatbot-input-wrapper">
+          <div className={cx('pma-chatbot-input-area')}>
+            <div className={cx('pma-chatbot-input-wrapper')}>
               <textarea
-                className="pma-chatbot-input"
+                className={cx('pma-chatbot-input')}
                 value={inputValue}
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
@@ -534,20 +540,23 @@ const AIChatbot = () => {
                 maxLength="500"
               />
               {isListening && (
-                <div className="pma-chatbot-voice-status pma-chatbot-show">
+                <div className={cx('pma-chatbot-voice-status', 'pma-chatbot-show')}>
                   Listening...
                 </div>
               )}
             </div>
             <button
-              className={`pma-chatbot-voice-btn ${isListening ? 'pma-chatbot-listening' : ''}`}
+              className={cx(
+                'pma-chatbot-voice-btn',
+                isListening ? 'pma-chatbot-listening' : '',
+              )}
               onClick={toggleVoice}
               type="button"
             >
               {isListening ? 'STOP' : 'MIC'}
             </button>
             <button
-              className="pma-chatbot-send-btn"
+              className={cx('pma-chatbot-send-btn')}
               onClick={() => handleSendMessage()}
               type="button"
             >

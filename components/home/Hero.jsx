@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-
 import React, { useState, useEffect } from 'react';
 const human = '/images/ui/Human.svg';
 const Arrow = '/images/home/Arrow.svg';
@@ -37,47 +36,47 @@ const Hero = () => {
     router.push(`/explore?topic=${topic}`);
   };
   return (
-    <div className="flex md:flex-row flex-col max-w-7xl mx-auto gap-6 md:items-center md:my-10 my-8 xl:px-0 sm:px-8 px-4">
-      <div className="md:w-[52%] w-full grow flex-1">
+    <div className="flex md:flex-row flex-col max-w-7xl lg:mx-auto gap-5 md:items-center md:my-10 my-10 xl:px-2 sm:px-10 px-5">
+      <div className="md:w-[60%] w-full grow flex-1">
         <Image
           unoptimized
-          width={0}
-          height={0}
-          sizes="100vw"
+          width={500}
+          height={170}
+          sizes="(max-width: 900px) 100vw, 500px"
           src={Plane}
           alt="/"
           className="md:hidden block "
         />
         <div className="relative flex flex-row">
-          <h1 className="xl:text-[96px] xl:leading-[92px] lg:text-[84px] lg:leading-[80px] md:text-6xl text-5xl leading-tight uppercase font-bold">
+          <h1 className="lg:text-7xl md:text-5xl text-4xl uppercase font-bold">
             BRING YOUR OVERSEAS EDUCATION
             <br />
             <span className="text-main">dreams to life!!</span>
           </h1>
           <Image
             unoptimized
-            width={0}
-            height={0}
-            sizes="100vw"
+            width={230}
+            height={230}
+            sizes="230px"
             src={Arrow}
             alt="img"
-            className="absolute hidden lg:right-2 lg:w-1/3 lg:block"
+            className="absolute hidden lg:right-0 lg:w-1/4 lg:block"
           />
         </div>
-        <p className="font-bold text-[18px] md:w-3/4 py-4 leading-[22px]">
+        <p className="font-bold text-[18px] md:w-1/2 py-4 leading-[20px]">
           Put the power of AI & Industry experts to work for you
         </p>
         <JoinUsForm />
       </div>
-      <div className="md:w-[48%] flex justify-end">
+      <div className="">
         <Image
           unoptimized
-          width={0}
-          height={0}
-          sizes="100vw"
+          width={700}
+          height={700}
+          sizes="(max-width: 900px) 100vw, 700px"
           src={human}
           alt="human"
-          className="md:block md:h-[620px] xl:h-[700px] w-auto hidden lg:scale-100"
+          className="md:block md:h-[400px] xl:h-full hidden lg:scale-105"
         />
       </div>
     </div>

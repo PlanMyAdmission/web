@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { GoogleGenAI } from '@google/genai';
-import '@/components/ai-admission/AIAdmissionTool.css';
+import styles from '@/components/ai-admission/AIAdmissionTool.module.css';
 import { buildAdmissionReportHtml } from '@/components/ai-admission/pdfReport.js';
 import StartStep from '@/components/ai-admission/steps/StartStep.jsx';
 import CourseStep from '@/components/ai-admission/steps/CourseStep.jsx';
@@ -19,6 +19,12 @@ import {
   buildPrompt,
 } from '@/components/ai-admission/lib/prompt.js';
 import useProfileStorage from '@/components/ai-admission/hooks/useProfileStorage.js';
+const cx = (...classNames) =>
+  classNames
+    .flatMap((value) => `${value || ''}`.split(/\s+/))
+    .map((name) => styles[name])
+    .filter(Boolean)
+    .join(' ');
 const AIAdmissionTool = () => {
   const [mode, setMode] = useState('form');
   const [flow, setFlow] = useState('start');
@@ -213,12 +219,12 @@ const AIAdmissionTool = () => {
     };
   };
   return (
-    <div className="pma-ai-tool">
-      <div className="pma-ai-tool-header">
+    <div className={cx('pma-ai-tool')}>
+      <div className={cx('pma-ai-tool-header')}>
         <div>
-          <p className="pma-ai-tool-eyebrow">Plan My Admission</p>
+          <p className={cx('pma-ai-tool-eyebrow')}>Plan My Admission</p>
           <h2>AI Admission Evaluation</h2>
-          <p className="pma-ai-tool-subtitle">
+          <p className={cx('pma-ai-tool-subtitle')}>
             Upload a profile PDF or enter key details. We will generate a
             college evaluation report and let you download it as a PDF.
           </p>
@@ -289,7 +295,7 @@ const AIAdmissionTool = () => {
       )}
 
       {status.message && status.type !== 'loading' && (
-        <div className={`pma-ai-status ${status.type}`}>{status.message}</div>
+        <div className={cx('pma-ai-status', status.type)}>{status.message}</div>
       )}
 
       {flow === 'result' && (

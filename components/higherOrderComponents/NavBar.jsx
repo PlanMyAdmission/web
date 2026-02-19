@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-
 import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -63,34 +62,34 @@ const NavBar = () => {
     closeMobileNav();
   };
   return (
-    <div>
-      <div className="flex flex-row justify-between max-w-7xl border-b-2 border-main mx-auto items-center py-3 px-4 md:px-6 xl:px-0">
+    <div className="">
+      <div className="flex flex-row justify-between  max-w-7xl border-b-2 border-main mx-auto items-end py-2 sm:px-4 xl:px-0">
         <Link href="/">
           <Image
             unoptimized
-            width={0}
-            height={0}
-            sizes="100vw"
+            width={220}
+            height={80}
+            sizes="220px"
             src={logo}
             alt="logo"
-            className="hidden md:block h-12 w-auto"
+            className="hidden md:block relative md:-translate-x-6  md:h-12 h-10 md:scale-150 scale-110 md:top-4 top-2 w-auto mx-2 md:px-4"
             onClick={() => localStorage.removeItem('button')}
           />
           <Image
             unoptimized
-            width={0}
-            height={0}
-            sizes="100vw"
+            width={140}
+            height={40}
+            sizes="140px"
             src={mobile_logo}
             alt="logo"
-            className="md:hidden block h-10 w-auto"
+            className="md:hidden block relative h-10 scale-110 w-auto mx-2 md:px-4"
           />
         </Link>
-        <ul className="hidden md:flex items-center gap-7 text-main text-[18px]">
+        <ul className="hidden md:flex text-main text-[18px] space-x-5 md:items-center md:text-[15px] lg:text-[18px] ">
           {navLinks.map((item) => (
             <li
               key={item.href}
-              className={`hover:underline whitespace-nowrap ${pathname === item.href ? 'font-bold' : ''}`}
+              className={`hover:underline ${pathname === item.href ? 'font-bold' : ''}`}
               onClick={() => localStorage.removeItem('button')}
             >
               <Link href={item.href}>{item.label}</Link>
@@ -101,9 +100,9 @@ const NavBar = () => {
           <div className="relative">
             <Image
               unoptimized
-              width={0}
-              height={0}
-              sizes="100vw"
+              width={40}
+              height={40}
+              sizes="40px"
               src={photoURL}
               alt="profile"
               onClick={() =>
@@ -131,13 +130,13 @@ const NavBar = () => {
             )}
           </div>
         ) : (
-          <div className="space-x-2 hidden md:block">
+          <div className="space-x-2">
             <a
               href="https://portal.planmyadmission.com/login"
               rel="noreferrer"
               target="_blank"
             >
-              <button className="bg-main border border-main text-white px-5 py-1.5 rounded-sm hover:bg-main/80 transition">
+              <button className="bg-main border border-main text-white px-4 py-1 rounded-sm hover:bg-main/80 transition">
                 Login
               </button>
             </a>
@@ -146,7 +145,7 @@ const NavBar = () => {
               rel="noreferrer"
               target="_blank"
             >
-              <button className="bg-white border border-main text-main px-5 py-1.5 rounded-sm hover:bg-main hover:text-white transition">
+              <button className="bg-white border border-main text-main px-4 py-1 rounded-sm hover:bg-main hover:text-white transition">
                 Register
               </button>
             </a>
@@ -162,20 +161,20 @@ const NavBar = () => {
         <div
           className={
             nav
-              ? 'bg-white fixed left-0 top-0 w-[60%] h-full border-r border-r-black-900 duration-700 ease-in-out z-50'
-              : 'bg-white duration-10 h-0 ease-in border-none fixed left-[-100%]'
+              ? 'bg-white fixed left-0 top-0 w-[60%] h-full border-r border-r-black duration-700 ease-in-out z-50'
+              : 'bg-white duration-100 h-0 ease-in border-none fixed left-[-100%]'
           }
         >
           <div className="flex items-center justify-between px-5 py-4 border-b border-main">
             <Link href="/" onClick={handleNavItemClick}>
               <Image
                 unoptimized
-                width={0}
-                height={0}
-                sizes="100vw"
+                width={220}
+                height={80}
+                sizes="220px"
                 src={logo}
                 alt="logo"
-                className="h-10"
+                className="h-10 w-auto"
               />
             </Link>
             <button className="text-main" onClick={handleNavToggle}>

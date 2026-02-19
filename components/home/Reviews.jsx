@@ -7,7 +7,6 @@ const person3 = '/images/home/virensood.jpeg';
 const person4 = '/images/home/Ritikasingh.jpeg';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
 const Girl2 = '/images/home/Girl2.svg';
 class Content extends React.Component {
   render() {

@@ -25,12 +25,12 @@ const Section = () => {
       </p>
       <Image
         unoptimized
-        width={0}
-        height={0}
-        sizes="100vw"
+        width={350}
+        height={250}
+        sizes="350px"
         src={ArticleImage}
         alt="image"
-        className="h-[250px] object-cover object-center"
+        className="h-[250px] w-auto object-cover object-center"
       />
     </div>
   );

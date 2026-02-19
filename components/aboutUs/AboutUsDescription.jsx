@@ -8,12 +8,12 @@ const AboutUsDescription = () => {
       <div className="md:w-1/2 w-full">
         <Image
           unoptimized
-          width={0}
-          height={0}
+          width={1200}
+          height={800}
           sizes="100vw"
           src={aboutusTeam}
           alt=""
-          className=""
+          className="w-full h-auto"
         />
       </div>
       <div className="md:w-1/2 md:px-10">

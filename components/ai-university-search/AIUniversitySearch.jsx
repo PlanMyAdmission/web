@@ -2,11 +2,17 @@
 
 import React, { useMemo, useState } from 'react';
 import { GoogleGenAI } from '@google/genai';
-import '@/components/ai-admission/AIAdmissionTool.css';
-import '@/components/ai-university-search/AIUniversitySearch.css';
+import aiStyles from '@/components/ai-admission/AIAdmissionTool.module.css';
+import uniStyles from '@/components/ai-university-search/AIUniversitySearch.module.css';
 import SearchHeader from '@/components/ai-university-search/SearchHeader.jsx';
 import ProfileUpload from '@/components/ai-university-search/ProfileUpload.jsx';
 import ResultsPanel from '@/components/ai-university-search/ResultsPanel.jsx';
+const cx = (...classNames) =>
+  classNames
+    .flatMap((value) => `${value || ''}`.split(/\s+/))
+    .map((name) => aiStyles[name] || uniStyles[name])
+    .filter(Boolean)
+    .join(' ');
 const extractJson = (raw) => {
   if (!raw) return null;
   let trimmed = raw.trim();
@@ -237,12 +243,12 @@ const AIUniversitySearch = () => {
     setCourseQuery('');
   };
   return (
-    <div className="pma-ai-tool pma-uni-tool pma-uni-page">
-      <div className="pma-ai-tool-header">
+    <div className={cx('pma-ai-tool', 'pma-uni-tool', 'pma-uni-page')}>
+      <div className={cx('pma-ai-tool-header')}>
         <div>
-          <p className="pma-ai-tool-eyebrow">Plan My Admission</p>
+          <p className={cx('pma-ai-tool-eyebrow')}>Plan My Admission</p>
           <h2>AI University Search</h2>
-          <p className="pma-ai-tool-subtitle">
+          <p className={cx('pma-ai-tool-subtitle')}>
             Provide a profile PDF or enter your details. We will suggest
             universities and programs that fit your goals.
           </p>
@@ -258,19 +264,19 @@ const AIUniversitySearch = () => {
       <ProfileUpload pdfFile={pdfFile} onFileChange={handleFile} />
 
       {status.message && (
-        <div className={`pma-ai-status ${status.type}`}>{status.message}</div>
+        <div className={cx('pma-ai-status', status.type)}>{status.message}</div>
       )}
 
-      <div className="pma-ai-actions">
+      <div className={cx('pma-ai-actions')}>
         <button
-          className="pma-ai-primary"
+          className={cx('pma-ai-primary')}
           onClick={generateRecommendations}
           type="button"
           disabled={status.type === 'loading'}
         >
           {status.type === 'loading' ? 'Generating...' : 'Get Recommendations'}
         </button>
-        <button className="pma-ai-secondary" onClick={resetAll} type="button">
+        <button className={cx('pma-ai-secondary')} onClick={resetAll} type="button">
           Reset
         </button>
       </div>

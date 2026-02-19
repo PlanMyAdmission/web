@@ -1,7 +1,13 @@
 'use client';
 
 import React, { Suspense, lazy, useState, useEffect } from 'react';
-import '@/components/AISuiteLauncher.css';
+import styles from '@/components/AISuiteLauncher.module.css';
+const cx = (...classNames) =>
+  classNames
+    .flatMap((value) => `${value || ''}`.split(/\s+/))
+    .map((name) => styles[name])
+    .filter(Boolean)
+    .join(' ');
 const AIAdmissionTool = lazy(
   () => import('@components/ai-admission/AIAdmissionTool'),
 );
@@ -47,28 +53,28 @@ const AISuiteLauncher = () => {
       {}
       <div
         id="pmaAISuiteLauncher"
-        className={`pma-launcher ${SUITE_CONFIG.buttonPosition}`}
+        className={cx('pma-launcher', SUITE_CONFIG.buttonPosition)}
         onClick={launchAISuite}
       >
-        <div className="pma-launcher-button">
-          <div className="pma-launcher-icon">🎓</div>
-          <div className="pma-launcher-text">{SUITE_CONFIG.buttonText}</div>
-          <div className="pma-launcher-pulse"></div>
+        <div className={cx('pma-launcher-button')}>
+          <div className={cx('pma-launcher-icon')}>🎓</div>
+          <div className={cx('pma-launcher-text')}>{SUITE_CONFIG.buttonText}</div>
+          <div className={cx('pma-launcher-pulse')}></div>
         </div>
       </div>
 
       {}
       {isModalOpen && (
-        <div className="pma-suite-modal active">
+        <div className={cx('pma-suite-modal', 'active')}>
           <button
-            className="pma-close-button"
+            className={cx('pma-close-button')}
             onClick={closePMASuite}
             aria-label="Close AI Suite"
           >
             ×
           </button>
           <Suspense
-            fallback={<div className="pma-suite-loading">Loading...</div>}
+            fallback={<div className={cx('pma-suite-loading')}>Loading...</div>}
           >
             <AIAdmissionTool />
           </Suspense>

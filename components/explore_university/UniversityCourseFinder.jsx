@@ -1,7 +1,13 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import '@/components/explore_university/UniversityCourseFinder.css';
+import styles from '@/components/explore_university/UniversityCourseFinder.module.css';
+const cx = (...classNames) =>
+  classNames
+    .flatMap((value) => `${value || ''}`.split(/\s+/))
+    .map((name) => styles[name])
+    .filter(Boolean)
+    .join(' ');
 const UniversityCourseFinder = () => {
   const [formData, setFormData] = useState({
     university: '',
@@ -1004,27 +1010,27 @@ const UniversityCourseFinder = () => {
     }));
   };
   return (
-    <div className="university-finder-container">
-      <header className="header">
+    <div className={cx('university-finder-container')}>
+      <header className={cx('header')}>
         <h1>University Course Finder</h1>
-        <p className="header__subtitle">
+        <p className={cx('header__subtitle')}>
           Search from 200+ universities worldwide with comprehensive global
           database coverage
         </p>
       </header>
 
-      <main className="main">
-        <form className="course-finder-form" onSubmit={handleSubmit}>
+      <main className={cx('main')}>
+        <form className={cx('course-finder-form')} onSubmit={handleSubmit}>
           {}
-          <div className="form-group">
-            <label htmlFor="university" className="form-label">
+          <div className={cx("form-group")}>
+            <label htmlFor="university" className={cx("form-label")}>
               Search University
             </label>
-            <div className="search-container">
+            <div className={cx("search-container")}>
               <input
                 type="text"
                 id="university"
-                className="form-control university-search"
+                className={cx("form-control university-search")}
                 placeholder="Start typing university name (e.g., Oxford, Cambridge, Harvard, MIT)..."
                 value={formData.university}
                 onChange={(e) =>
@@ -1034,31 +1040,31 @@ const UniversityCourseFinder = () => {
                 required
               />
               {isSearching && (
-                <div className="search-loading">
-                  <span className="loading-spinner"></span>
+                <div className={cx("search-loading")}>
+                  <span className={cx("loading-spinner")}></span>
                 </div>
               )}
               {showDropdown && searchResults.length > 0 && (
-                <div className="search-dropdown">
-                  <div className="search-results">
+                <div className={cx("search-dropdown")}>
+                  <div className={cx("search-results")}>
                     {searchResults.map((uni, index) => (
                       <div
                         key={index}
-                        className="search-result-item"
+                        className={cx("search-result-item")}
                         onClick={() => handleUniversitySelect(uni)}
                       >
-                        <div className="search-result-name">{uni.name}</div>
-                        <div className="search-result-country">
+                        <div className={cx("search-result-name")}>{uni.name}</div>
+                        <div className={cx("search-result-country")}>
                           {uni.country}
                           {uni.city ? `, ${uni.city}` : ''}
                         </div>
                         {uni.domains && uni.domains.length > 0 && (
-                          <div className="search-result-domain">
+                          <div className={cx("search-result-domain")}>
                             {uni.domains[0]}
                           </div>
                         )}
                         {uni.ranking && (
-                          <div className="search-result-ranking">
+                          <div className={cx("search-result-ranking")}>
                             World Ranking: #{uni.ranking}
                           </div>
                         )}
@@ -1069,24 +1075,24 @@ const UniversityCourseFinder = () => {
               )}
             </div>
             {validationMessages.university && (
-              <div className="validation-message error">
+              <div className={cx("validation-message error")}>
                 {validationMessages.university}
               </div>
             )}
           </div>
 
           {}
-          <div className="academic-profile">
+          <div className={cx("academic-profile")}>
             <h3>Academic Profile</h3>
 
             {}
-            <div className="form-group">
-              <label htmlFor="studyLevel" className="form-label">
+            <div className={cx("form-group")}>
+              <label htmlFor="studyLevel" className={cx("form-label")}>
                 Study Level
               </label>
               <select
                 id="studyLevel"
-                className="form-control"
+                className={cx("form-control")}
                 value={formData.studyLevel}
                 onChange={(e) =>
                   handleInputChange('studyLevel', e.target.value)
@@ -1101,21 +1107,21 @@ const UniversityCourseFinder = () => {
                 ))}
               </select>
               {validationMessages.studyLevel && (
-                <div className="validation-message error">
+                <div className={cx("validation-message error")}>
                   {validationMessages.studyLevel}
                 </div>
               )}
             </div>
 
             {}
-            <div className="form-group">
-              <label htmlFor="gpa" className="form-label">
+            <div className={cx("form-group")}>
+              <label htmlFor="gpa" className={cx("form-label")}>
                 GPA (0.0 - 4.0)
               </label>
               <input
                 type="number"
                 id="gpa"
-                className="form-control"
+                className={cx("form-control")}
                 min="0"
                 max="4"
                 step="0.1"
@@ -1125,18 +1131,18 @@ const UniversityCourseFinder = () => {
                 required
               />
               {validationMessages.gpa && (
-                <div className="validation-message error">
+                <div className={cx("validation-message error")}>
                   {validationMessages.gpa}
                 </div>
               )}
             </div>
 
             {}
-            <div className="form-group">
-              <label className="form-label">English Test Score</label>
-              <div className="test-selection">
-                <div className="radio-group">
-                  <label className="radio-label">
+            <div className={cx("form-group")}>
+              <label className={cx("form-label")}>English Test Score</label>
+              <div className={cx("test-selection")}>
+                <div className={cx("radio-group")}>
+                  <label className={cx("radio-label")}>
                     <input
                       type="radio"
                       name="testType"
@@ -1144,12 +1150,12 @@ const UniversityCourseFinder = () => {
                       checked={formData.testType === 'ielts'}
                       onChange={(e) => handleTestTypeChange(e.target.value)}
                     />
-                    <span className="radio-custom"></span>
+                    <span className={cx("radio-custom")}></span>
                     IELTS (0.0 - 9.0)
                   </label>
                   <input
                     type="number"
-                    className="form-control test-input"
+                    className={cx("form-control test-input")}
                     min="0"
                     max="9"
                     step="0.5"
@@ -1161,8 +1167,8 @@ const UniversityCourseFinder = () => {
                     disabled={formData.testType !== 'ielts'}
                   />
                 </div>
-                <div className="radio-group">
-                  <label className="radio-label">
+                <div className={cx("radio-group")}>
+                  <label className={cx("radio-label")}>
                     <input
                       type="radio"
                       name="testType"
@@ -1170,12 +1176,12 @@ const UniversityCourseFinder = () => {
                       checked={formData.testType === 'toefl'}
                       onChange={(e) => handleTestTypeChange(e.target.value)}
                     />
-                    <span className="radio-custom"></span>
+                    <span className={cx("radio-custom")}></span>
                     TOEFL (0 - 120)
                   </label>
                   <input
                     type="number"
-                    className="form-control test-input"
+                    className={cx("form-control test-input")}
                     min="0"
                     max="120"
                     step="1"
@@ -1189,12 +1195,12 @@ const UniversityCourseFinder = () => {
                 </div>
               </div>
               {validationMessages.testType && (
-                <div className="validation-message error">
+                <div className={cx("validation-message error")}>
                   {validationMessages.testType}
                 </div>
               )}
               {validationMessages.testScore && (
-                <div className="validation-message error">
+                <div className={cx("validation-message error")}>
                   {validationMessages.testScore}
                 </div>
               )}
@@ -1202,17 +1208,17 @@ const UniversityCourseFinder = () => {
           </div>
 
           {}
-          <div className="budget-planning">
+          <div className={cx("budget-planning")}>
             <h3>Budget Planning</h3>
-            <div className="form-group">
-              <label htmlFor="budget" className="form-label">
+            <div className={cx("form-group")}>
+              <label htmlFor="budget" className={cx("form-label")}>
                 Annual Tuition Budget
               </label>
-              <div className="budget-container">
+              <div className={cx("budget-container")}>
                 <input
                   type="range"
                   id="budget"
-                  className="budget-slider"
+                  className={cx("budget-slider")}
                   min="0"
                   max="100000"
                   value={formData.budget}
@@ -1221,11 +1227,11 @@ const UniversityCourseFinder = () => {
                     handleInputChange('budget', parseInt(e.target.value))
                   }
                 />
-                <div className="budget-display">
-                  <span className="budget-value">
+                <div className={cx("budget-display")}>
+                  <span className={cx("budget-value")}>
                     ${formData.budget.toLocaleString()}
                   </span>
-                  <span className="budget-inr">
+                  <span className={cx("budget-inr")}>
                     ({formatINR(convertUSDToINR(formData.budget))})
                   </span>
                 </div>
@@ -1236,7 +1242,7 @@ const UniversityCourseFinder = () => {
           {}
           <button
             type="submit"
-            className="btn btn--primary btn--full-width btn--lg"
+            className={cx("btn btn--primary btn--full-width btn--lg")}
           >
             Find University Match
           </button>
@@ -1244,7 +1250,7 @@ const UniversityCourseFinder = () => {
           {}
           <button
             type="button"
-            className="btn btn--outline btn--full-width btn--lg btn--reset"
+            className={cx("btn btn--outline btn--full-width btn--lg btn--reset")}
             onClick={resetForm}
           >
             Reset Form
@@ -1252,18 +1258,18 @@ const UniversityCourseFinder = () => {
         </form>
 
         {}
-        <div className="api-indicator">
-          <div className="api-sources">
-            <div className={`api-source ${apiStatus.openalex}`}>
-              <span className="api-dot"></span>
+        <div className={cx("api-indicator")}>
+          <div className={cx("api-sources")}>
+            <div className={cx('api-source', apiStatus.openalex)}>
+              <span className={cx('api-dot')}></span>
               <span>OpenAlex API</span>
             </div>
-            <div className={`api-source ${apiStatus.hipolabs}`}>
-              <span className="api-dot"></span>
+            <div className={cx('api-source', apiStatus.hipolabs)}>
+              <span className={cx('api-dot')}></span>
               <span>Hipolabs API</span>
             </div>
-            <div className={`api-source ${apiStatus.fallback}`}>
-              <span className="api-dot"></span>
+            <div className={cx('api-source', apiStatus.fallback)}>
+              <span className={cx('api-dot')}></span>
               <span>Comprehensive Database (200+ Universities)</span>
             </div>
           </div>
@@ -1271,34 +1277,34 @@ const UniversityCourseFinder = () => {
 
         {}
         {showResults && selectedUniversity && (
-          <div className="results-section" id="resultsSection">
+          <div className={cx("results-section")} id="resultsSection">
             {}
-            <div className="card university-details-card">
-              <div className="card__body">
+            <div className={cx("card university-details-card")}>
+              <div className={cx("card__body")}>
                 <h3>Selected University</h3>
-                <div className="university-details">
-                  <div className="university-name">
+                <div className={cx("university-details")}>
+                  <div className={cx("university-name")}>
                     {selectedUniversity.name}
                   </div>
-                  <div className="university-location">
+                  <div className={cx("university-location")}>
                     {selectedUniversity.city}, {selectedUniversity.country}
                   </div>
-                  <div className="university-stats">
-                    <div className="university-stat">
-                      <div className="stat-label">World Ranking</div>
-                      <div className="stat-value">
+                  <div className={cx("university-stats")}>
+                    <div className={cx("university-stat")}>
+                      <div className={cx("stat-label")}>World Ranking</div>
+                      <div className={cx("stat-value")}>
                         #{selectedUniversity.ranking || 'N/A'}
                       </div>
                     </div>
-                    <div className="university-stat">
-                      <div className="stat-label">Estimated Annual Tuition</div>
-                      <div className="stat-value">
+                    <div className={cx("university-stat")}>
+                      <div className={cx("stat-label")}>Estimated Annual Tuition</div>
+                      <div className={cx("stat-value")}>
                         $
                         {(
                           selectedUniversity.tuition ||
                           estimateTuitionByCountry(selectedUniversity.country)
                         ).toLocaleString()}
-                        <div className="stat-value-inr">
+                        <div className={cx("stat-value-inr")}>
                           {formatINR(
                             convertUSDToINR(
                               selectedUniversity.tuition ||
@@ -1310,9 +1316,9 @@ const UniversityCourseFinder = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="university-stat">
-                      <div className="stat-label">Website</div>
-                      <div className="stat-value">
+                    <div className={cx("university-stat")}>
+                      <div className={cx("stat-label")}>Website</div>
+                      <div className={cx("stat-value")}>
                         <a
                           href={selectedUniversity.web_pages[0]}
                           target="_blank"
@@ -1331,10 +1337,10 @@ const UniversityCourseFinder = () => {
             </div>
 
             {}
-            <div className="card eligibility-card">
-              <div className="card__body">
+            <div className={cx("card eligibility-card")}>
+              <div className={cx("card__body")}>
                 <h3>Eligibility Assessment</h3>
-                <div className="eligibility-result">
+                <div className={cx("eligibility-result")}>
                   {(() => {
                     const assessment = getEligibilityAssessment();
                     if (!assessment) return null;
@@ -1356,7 +1362,7 @@ const UniversityCourseFinder = () => {
                     }
                     return (
                       <>
-                        <div className={`status ${statusClass}`}>
+                        <div className={cx('status', statusClass)}>
                           {statusText}
                         </div>
                         <p>{message}</p>
@@ -1368,10 +1374,10 @@ const UniversityCourseFinder = () => {
             </div>
 
             {}
-            <div className="card recommendations-card">
-              <div className="card__body">
+            <div className={cx("card recommendations-card")}>
+              <div className={cx("card__body")}>
                 <h3>Top 3 University Recommendations</h3>
-                <div className="recommendations-list">
+                <div className={cx("recommendations-list")}>
                   {getRecommendations().map((uni, index) => {
                     const tuitionEstimate =
                       uni.tuition || estimateTuitionByCountry(uni.country);
@@ -1380,16 +1386,19 @@ const UniversityCourseFinder = () => {
                       formData.budget >= tuitionEstimate ||
                       formData.budget === 0;
                     return (
-                      <div key={index} className="recommendation-item">
-                        <div className="recommendation-header">
+                      <div key={index} className={cx("recommendation-item")}>
+                        <div className={cx("recommendation-header")}>
                           <div>
-                            <h4 className="recommendation-name">{uni.name}</h4>
-                            <div className="recommendation-location">
+                            <h4 className={cx("recommendation-name")}>{uni.name}</h4>
+                            <div className={cx("recommendation-location")}>
                               {uni.city}, {uni.country}
                             </div>
-                            <div className="recommendation-details">
+                            <div className={cx("recommendation-details")}>
                               <div
-                                className={`recommendation-cost ${isAffordable ? 'affordable' : 'expensive'}`}
+                                className={cx(
+                                  'recommendation-cost',
+                                  isAffordable ? 'affordable' : 'expensive',
+                                )}
                               >
                                 Estimated Cost: $
                                 {tuitionEstimate.toLocaleString()} per year
@@ -1398,13 +1407,13 @@ const UniversityCourseFinder = () => {
                                   : formData.budget > 0
                                     ? ' (Within budget)'
                                     : ''}
-                                <div className="recommendation-cost-inr">
+                                <div className={cx("recommendation-cost-inr")}>
                                   {formatINR(tuitionINR)} per year
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div className="recommendation-match">
+                          <div className={cx("recommendation-match")}>
                             {uni.matchScore}% Match
                           </div>
                         </div>
@@ -1412,7 +1421,7 @@ const UniversityCourseFinder = () => {
                           href={uni.web_pages[0]}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="recommendation-link"
+                          className={cx("recommendation-link")}
                         >
                           Visit University Website →
                         </a>
@@ -1428,31 +1437,31 @@ const UniversityCourseFinder = () => {
 
       {}
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <div className="modal-header">
+        <div className={cx("modal")}>
+          <div className={cx("modal-content")}>
+            <div className={cx("modal-header")}>
               <h3>Search Information</h3>
               <button
-                className="modal-close"
+                className={cx("modal-close")}
                 onClick={() => setShowModal(false)}
               >
                 &times;
               </button>
             </div>
-            <div className="modal-body">
+            <div className={cx("modal-body")}>
               <p>
                 {modalMessage ||
                   'Searching comprehensive university database...'}
               </p>
-              <div className="modal-actions">
+              <div className={cx("modal-actions")}>
                 <button
-                  className="btn btn--primary"
+                  className={cx("btn btn--primary")}
                   onClick={() => setShowModal(false)}
                 >
                   Continue Searching
                 </button>
                 <button
-                  className="btn btn--outline"
+                  className={cx("btn btn--outline")}
                   onClick={() => {
                     setShowModal(false);
                     const allResults = embeddedUniversities.slice(0, 10);

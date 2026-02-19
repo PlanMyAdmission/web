@@ -21,12 +21,12 @@ const Name = ({ name, desig }) => {
     <div className="m-2 text-white ">
       <Image
         unoptimized
-        width={0}
-        height={0}
-        sizes="100vw"
+        width={320}
+        height={220}
+        sizes="320px"
         src={advisors}
         alt=""
-        className=""
+        className="w-full h-auto"
       />
       <div className="px-3 bg-main w-[90%]  relative -top-5 left-[15px] h-10 flex justify-between items-center ">
         <p className="font-bold ">{name}</p>

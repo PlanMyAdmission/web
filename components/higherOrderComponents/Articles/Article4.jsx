@@ -15,8 +15,8 @@ const Article4 = () => {
       <div className="max-w-5xl mx-auto bg-light mx-auto px-5 p-10 rounded-xl my-5 mt-20 grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-7">
         <Image
           unoptimized
-          width={0}
-          height={0}
+          width={1200}
+          height={800}
           sizes="100vw"
           src={article}
           alt=""
@@ -188,8 +188,8 @@ const Article4 = () => {
             >
               <Image
                 unoptimized
-                width={0}
-                height={0}
+                width={1200}
+                height={800}
                 sizes="100vw"
                 src={article1}
                 alt=""
@@ -210,8 +210,8 @@ const Article4 = () => {
             >
               <Image
                 unoptimized
-                width={0}
-                height={0}
+                width={1200}
+                height={800}
                 sizes="100vw"
                 src={article3}
                 alt=""
@@ -233,8 +233,8 @@ const Article4 = () => {
             >
               <Image
                 unoptimized
-                width={0}
-                height={0}
+                width={1200}
+                height={800}
                 sizes="100vw"
                 src={article2}
                 alt=""

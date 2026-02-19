@@ -16,19 +16,19 @@ const JoinUs = () => {
           </p>
           <Image
             unoptimized
-            width={0}
-            height={0}
+            width={1200}
+            height={800}
             sizes="100vw"
             src={joinUs}
             alt="joinUs"
-            className="relative top-14 -z-10 overflow-hidden sm:left-20"
+            className="w-full h-auto relative top-14 -z-10 overflow-hidden sm:left-20"
           />
         </div>
         <div className="md:w-[400px] w-[90%] flex items-center justify-center mt-10 md:mt-0">
           <Image
             unoptimized
-            width={0}
-            height={0}
+            width={1200}
+            height={800}
             sizes="100vw"
             src={'/images/qr/register-qr.jpeg'}
             alt="Join Us Illustration"

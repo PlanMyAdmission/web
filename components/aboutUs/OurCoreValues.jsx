@@ -27,9 +27,9 @@ function Card() {
     <div className={`py-10 flex flex-col w-full`}>
       <Image
         unoptimized
-        width={0}
-        height={0}
-        sizes="100vw"
+        width={44}
+        height={44}
+        sizes="44px"
         src={icon}
         className="w-[44px] h-[44px]"
         alt="icon"
@@ -53,9 +53,9 @@ function Card1() {
     <div className={`py-10 flex flex-col w-full`}>
       <Image
         unoptimized
-        width={0}
-        height={0}
-        sizes="100vw"
+        width={44}
+        height={44}
+        sizes="44px"
         src={icon}
         className="w-[44px] h-[44px]"
         alt="icon"
@@ -79,9 +79,9 @@ function Card2() {
     <div className={`py-10 flex flex-col w-full`}>
       <Image
         unoptimized
-        width={0}
-        height={0}
-        sizes="100vw"
+        width={44}
+        height={44}
+        sizes="44px"
         src={icon}
         className="w-[44px] h-[44px]"
         alt="icon"
@@ -105,9 +105,9 @@ function Card3() {
     <div className={`py-10 flex flex-col w-full`}>
       <Image
         unoptimized
-        width={0}
-        height={0}
-        sizes="100vw"
+        width={44}
+        height={44}
+        sizes="44px"
         src={icon}
         className="w-[44px] h-[44px]"
         alt="icon"
@@ -132,9 +132,9 @@ function Card4() {
     <div className={`py-10 flex flex-col w-full`}>
       <Image
         unoptimized
-        width={0}
-        height={0}
-        sizes="100vw"
+        width={44}
+        height={44}
+        sizes="44px"
         src={icon}
         className="w-[44px] h-[44px]"
         alt="icon"

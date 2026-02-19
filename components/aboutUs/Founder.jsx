@@ -11,21 +11,21 @@ const Founder = () => {
       <div className="md:ml-[200px]  bg-light flex flex-col md:flex-row md:rounded-2xl relative right-0 items-center">
         <Image
           unoptimized
-          width={0}
-          height={0}
-          sizes="100vw"
+          width={90}
+          height={90}
+          sizes="90px"
           src={quote}
           alt=""
           className="absolute md:ml-20 -top-5 left-5"
         />
         <Image
           unoptimized
-          width={0}
-          height={0}
-          sizes="100vw"
+          width={260}
+          height={260}
+          sizes="260px"
           src={advisors}
           alt=""
-          className="block md:hidden [clip-path:circle()] object-cover object-center"
+          className="block md:hidden w-[260px] h-[260px] [clip-path:circle()] object-cover object-center"
         />
         <div className="md:pl-10 md:w-2/3 w-full md:py-10 p-5">
           <p className="font-bold text-xl md:pt-5">Ram Nivas</p>
@@ -52,9 +52,9 @@ const Founder = () => {
         </div>
         <Image
           unoptimized
-          width={0}
-          height={0}
-          sizes="100vw"
+          width={430}
+          height={520}
+          sizes="430px"
           src={advisors}
           alt=""
           className="maskFounder md:w-[430px] hidden md:block absolute right-0 translate-x-14 lg:-translate-x-5 "

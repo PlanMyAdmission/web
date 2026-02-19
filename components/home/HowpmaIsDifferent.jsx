@@ -65,8 +65,8 @@ const SectionBlock = ({ title, description, image, reverse }) => {
       <div className="md:w-1/2 flex justify-center">
         <Image
           unoptimized
-          width={0}
-          height={0}
+          width={1200}
+          height={800}
           sizes="100vw"
           src={image}
           alt="Section"
