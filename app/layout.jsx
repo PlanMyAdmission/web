@@ -1,12 +1,10 @@
-import './globals.css';
-import Shell from './shell';
-import AppProviders from './providers';
-
+import '@/app/globals.css';
+import Shell from '@/app/shell.jsx';
+import AppProviders from '@/app/providers.jsx';
 const BASE_URL = 'https://planmyadmission.com';
 const DEFAULT_TITLE = 'Plan My Admission | Study Abroad & Admissions Guidance';
 const DEFAULT_DESCRIPTION =
   'Plan My Admission offers expert overseas education consulting with personalized university admissions guidance, student visa support, and AI-powered tools to simplify your study abroad journey.';
-
 export const metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
@@ -47,7 +45,6 @@ export const metadata = {
     google: 'FJWAYoMaL14W-xl4VRI_KboMHvMJBICmO47pcxI3tms',
   },
 };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

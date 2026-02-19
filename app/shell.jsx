@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import NavBar from '../src/higherOrderComponents/NavBar';
-import Footer from '../src/higherOrderComponents/Footer';
-import GoToTop from '../src/higherOrderComponents/GoToTop';
-import AISuiteLauncher from '../src/components/AISuiteLauncher';
-import AIChatbot from '../src/components/AIChatbot';
-
+import 'react-toastify/ReactToastify.css';
+import NavBar from '@components/higherOrderComponents/NavBar';
+import Footer from '@components/higherOrderComponents/Footer';
+import GoToTop from '@components/higherOrderComponents/GoToTop';
+import AISuiteLauncher from '@components/AISuiteLauncher';
+import AIChatbot from '@components/AIChatbot';
 const Shell = ({ children }) => {
   return (
     <>
@@ -31,5 +30,4 @@ const Shell = ({ children }) => {
     </>
   );
 };
-
 export default Shell;

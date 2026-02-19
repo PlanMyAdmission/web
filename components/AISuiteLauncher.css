@@ -1,0 +1,186 @@
+#pmaAISuiteLauncher * {
+  box-sizing: border-box;
+}
+
+.pma-launcher {
+  position: fixed;
+  z-index: 1000;
+  cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.pma-launcher.top-right {
+  top: 90px;
+  right: 20px;
+}
+
+.pma-launcher.top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.pma-launcher.bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.pma-launcher.bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+.pma-launcher-button {
+  background: linear-gradient(135deg, #f40076, #840844);
+  color: #ffffff;
+  padding: 15px 25px;
+  border-radius: 50px;
+  box-shadow: 0 8px 24px rgba(244, 0, 118, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+}
+
+.pma-launcher-button:hover {
+  background: linear-gradient(135deg, #e6006b, #6d0639);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(244, 0, 118, 0.35);
+}
+
+.pma-launcher-icon {
+  font-size: 24px;
+  animation: bounce 2s infinite;
+}
+
+.pma-launcher-pulse {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 12px;
+  height: 12px;
+  background: #ff6bb3;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .pma-launcher-button {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .pma-launcher-text {
+    display: none;
+  }
+
+  .pma-launcher-icon {
+    font-size: 28px;
+  }
+
+  .pma-launcher.bottom-right {
+    bottom: 80px;
+  }
+}
+
+.pma-suite-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(244, 0, 118, 0.15),
+      rgba(132, 8, 68, 0.4)
+    ),
+    rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.pma-suite-modal.active {
+  display: flex;
+}
+
+.pma-close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #ffffff;
+  color: #f40076;
+  border: 1px solid rgba(244, 0, 118, 0.2);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.pma-close-button:hover {
+  background: linear-gradient(135deg, #f40076, #840844);
+  color: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(244, 0, 118, 0.3);
+}
+
+.pma-close-button:focus {
+  outline: 2px solid #f40076;
+  outline-offset: 2px;
+}
+
+.pma-suite-loading {
+  color: #f7f5f0;
+  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+  font-size: 16px;
+}
+
+@media (max-width: 480px) {
+  .pma-close-button {
+    top: 10px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+}

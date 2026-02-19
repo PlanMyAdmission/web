@@ -1,10 +1,8 @@
 'use client';
 
 import React from 'react';
-import { AuthProvider } from '../src/context/AuthProvider';
-
+import { AuthProvider } from '@context/AuthProvider';
 const AppProviders = ({ children }) => {
   return <AuthProvider>{children}</AuthProvider>;
 };
-
 export default AppProviders;
