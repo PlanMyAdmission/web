@@ -120,7 +120,7 @@ const JoinUsForm = ({ className = '' }) => {
                 id="name"
                 value={name}
                 placeholder="Name"
-                className={`py-4 px-3 rounded-md w-full outline-none ${errors.name ? 'border border-red-500' : ''}`}
+                className={`py-4 px-3 rounded-md w-full outline-none bg-white border ${errors.name ? 'border-red-500' : 'border-[#e8dde3]'}`}
                 onChange={(e) => setname(e.target.value)}
               />
               {errors.name && (
@@ -135,7 +135,7 @@ const JoinUsForm = ({ className = '' }) => {
                 id="phone"
                 value={phone}
                 placeholder="Phone No. (e.g. +91 9876543210)"
-                className={`py-4 px-3 rounded-md w-full outline-none ${errors.phone ? 'border border-red-500' : ''}`}
+                className={`py-4 px-3 rounded-md w-full outline-none bg-white border ${errors.phone ? 'border-red-500' : 'border-[#e8dde3]'}`}
                 pattern="^\+?\d{10,15}$"
                 maxLength={15}
                 autoComplete="tel"
@@ -156,7 +156,7 @@ const JoinUsForm = ({ className = '' }) => {
                 id="email"
                 value={email}
                 placeholder="Email"
-                className={`py-4 px-3 rounded-md w-full outline-none ${errors.email ? 'border border-red-500' : ''}`}
+                className={`py-4 px-3 rounded-md w-full outline-none bg-white border ${errors.email ? 'border-red-500' : 'border-[#e8dde3]'}`}
                 onChange={(e) => setemail(e.target.value)}
               />
               {errors.email && (
