@@ -1,15 +1,19 @@
 import '@/app/globals.css';
 import Shell from '@/app/shell.jsx';
 import AppProviders from '@/app/providers.jsx';
-const BASE_URL = 'https://planmyadmission.com';
-const DEFAULT_TITLE = 'Plan My Admission | Study Abroad & Admissions Guidance';
-const DEFAULT_DESCRIPTION =
-  'Plan My Admission offers expert overseas education consulting with personalized university admissions guidance, student visa support, and AI-powered tools to simplify your study abroad journey.';
+import {
+  BASE_URL,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_OG_IMAGE,
+  DEFAULT_TITLE,
+  SITE_NAME,
+} from '@lib/seo';
+
 export const metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
     default: DEFAULT_TITLE,
-    template: '%s | Plan My Admission',
+    template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
   keywords: [
@@ -25,10 +29,10 @@ export const metadata = {
     description: DEFAULT_DESCRIPTION,
     url: BASE_URL,
     type: 'website',
-    siteName: 'Plan My Admission',
+    siteName: SITE_NAME,
     images: [
       {
-        url: BASE_URL,
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
         alt: DEFAULT_TITLE,
@@ -39,7 +43,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [BASE_URL],
+    images: [DEFAULT_OG_IMAGE],
   },
   verification: {
     google: 'FJWAYoMaL14W-xl4VRI_KboMHvMJBICmO47pcxI3tms',

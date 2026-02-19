@@ -97,6 +97,7 @@ const AIAdmissionTool = () => {
         type: 'error',
         message: 'AI service is not configured yet.',
       });
+      setFlow('start');
       return;
     }
     if (mode === 'form') {
@@ -106,6 +107,7 @@ const AIAdmissionTool = () => {
           type: 'error',
           message: 'Please add your first and last name to continue.',
         });
+        setFlow('start');
         return;
       }
     } else if (!pdfFile) {
@@ -113,12 +115,14 @@ const AIAdmissionTool = () => {
         type: 'error',
         message: 'Please upload a PDF profile to continue.',
       });
+      setFlow('start');
       return;
     }
     setStatus({
       type: 'loading',
       message: 'Analyzing your profile...',
     });
+    setLoadingMessageIndex(0);
     setReportData(null);
     setReportHtml('');
     if (mode === 'form') {

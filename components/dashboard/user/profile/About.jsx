@@ -140,7 +140,9 @@ const About = () => {
               {fields.map(([name, label, disabled, type = 'text']) => (
                 <div
                   key={name}
-                  className={`col-span-6 sm:col-span-${type === 'textarea' ? '6' : '3'}`}
+                  className={
+                    type === 'textarea' ? 'col-span-6 sm:col-span-6' : 'col-span-6 sm:col-span-3'
+                  }
                 >
                   <label
                     htmlFor={name}
@@ -201,7 +203,6 @@ const About = () => {
                 </select>
               </div>
 
-              {}
               <div className="md:col-span-2 col-span-6">
                 <label
                   htmlFor="state"
@@ -225,7 +226,6 @@ const About = () => {
                 </select>
               </div>
 
-              {}
               <div className="md:col-span-1 col-span-6">
                 <label
                   htmlFor="city"
@@ -249,7 +249,6 @@ const About = () => {
                 </select>
               </div>
 
-              {}
               <div className="md:col-span-1 col-span-6">
                 <label
                   htmlFor="zipCode"

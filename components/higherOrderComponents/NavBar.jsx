@@ -63,8 +63,8 @@ const NavBar = () => {
     closeMobileNav();
   };
   return (
-    <div className="">
-      <div className="flex flex-row justify-between  max-w-7xl border-b-2 border-main mx-auto items-end py-2 sm:px-4 xl:px-0">
+    <div>
+      <div className="flex flex-row justify-between max-w-7xl border-b-2 border-main mx-auto items-center py-3 px-4 md:px-6 xl:px-0">
         <Link href="/">
           <Image
             unoptimized
@@ -73,7 +73,7 @@ const NavBar = () => {
             sizes="100vw"
             src={logo}
             alt="logo"
-            className="hidden md:block relative md:-translate-x-6  md:h-12 h-10 md:scale-150 scale-110 md:top-4 top-2 w-100 mx-2 md:px-4"
+            className="hidden md:block h-12 w-auto"
             onClick={() => localStorage.removeItem('button')}
           />
           <Image
@@ -83,14 +83,14 @@ const NavBar = () => {
             sizes="100vw"
             src={mobile_logo}
             alt="logo"
-            className="md:hidden block relative h-10 scale-110 w-100 mx-2 md:px-4"
+            className="md:hidden block h-10 w-auto"
           />
         </Link>
-        <ul className="hidden md:flex text-main text-[18px] space-x-5 md:items-center md:text-[15px] lg:text-[18px] ">
+        <ul className="hidden md:flex items-center gap-7 text-main text-[18px]">
           {navLinks.map((item) => (
             <li
               key={item.href}
-              className={`hover:underline ${pathname === item.href ? 'font-bold' : ''}`}
+              className={`hover:underline whitespace-nowrap ${pathname === item.href ? 'font-bold' : ''}`}
               onClick={() => localStorage.removeItem('button')}
             >
               <Link href={item.href}>{item.label}</Link>
@@ -131,13 +131,13 @@ const NavBar = () => {
             )}
           </div>
         ) : (
-          <div className="space-x-2">
+          <div className="space-x-2 hidden md:block">
             <a
               href="https://portal.planmyadmission.com/login"
               rel="noreferrer"
               target="_blank"
             >
-              <button className="bg-main border border-main text-white px-4 py-1 rounded-sm hover:bg-main/80 transition">
+              <button className="bg-main border border-main text-white px-5 py-1.5 rounded-sm hover:bg-main/80 transition">
                 Login
               </button>
             </a>
@@ -146,7 +146,7 @@ const NavBar = () => {
               rel="noreferrer"
               target="_blank"
             >
-              <button className="bg-white border border-main text-main px-4 py-1 rounded-sm hover:bg-main hover:text-white transition">
+              <button className="bg-white border border-main text-main px-5 py-1.5 rounded-sm hover:bg-main hover:text-white transition">
                 Register
               </button>
             </a>

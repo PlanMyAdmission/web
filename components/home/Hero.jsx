@@ -37,8 +37,8 @@ const Hero = () => {
     router.push(`/explore?topic=${topic}`);
   };
   return (
-    <div className="flex md:flex-row flex-col max-w-7xl lg:mx-auto gap-5 md:items-center md:my-10 my-10 xl:px-2 sm:px-10 px-5">
-      <div className="md:w-[60%] w-full grow flex-1">
+    <div className="flex md:flex-row flex-col max-w-7xl mx-auto gap-6 md:items-center md:my-10 my-8 xl:px-0 sm:px-8 px-4">
+      <div className="md:w-[52%] w-full grow flex-1">
         <Image
           unoptimized
           width={0}
@@ -49,7 +49,7 @@ const Hero = () => {
           className="md:hidden block "
         />
         <div className="relative flex flex-row">
-          <h1 className="lg:text-7xl md:text-5xl text-4xl uppercase font-bold">
+          <h1 className="xl:text-[96px] xl:leading-[92px] lg:text-[84px] lg:leading-[80px] md:text-6xl text-5xl leading-tight uppercase font-bold">
             BRING YOUR OVERSEAS EDUCATION
             <br />
             <span className="text-main">dreams to life!!</span>
@@ -61,16 +61,15 @@ const Hero = () => {
             sizes="100vw"
             src={Arrow}
             alt="img"
-            className="absolute hidden lg:right-0 lg:w-1/4 lg:block"
+            className="absolute hidden lg:right-2 lg:w-1/3 lg:block"
           />
         </div>
-        <p className="font-bold text-[18px] md:w-1/2 py-4 leading-[20px]">
+        <p className="font-bold text-[18px] md:w-3/4 py-4 leading-[22px]">
           Put the power of AI & Industry experts to work for you
         </p>
-        {}
         <JoinUsForm />
       </div>
-      <div className="">
+      <div className="md:w-[48%] flex justify-end">
         <Image
           unoptimized
           width={0}
@@ -78,7 +77,7 @@ const Hero = () => {
           sizes="100vw"
           src={human}
           alt="human"
-          className="md:block md:h-[400px] xl:h-full hidden lg:scale-105"
+          className="md:block md:h-[620px] xl:h-[700px] w-auto hidden lg:scale-100"
         />
       </div>
     </div>

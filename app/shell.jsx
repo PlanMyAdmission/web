@@ -8,9 +8,11 @@ import Footer from '@components/higherOrderComponents/Footer';
 import GoToTop from '@components/higherOrderComponents/GoToTop';
 import AISuiteLauncher from '@components/AISuiteLauncher';
 import AIChatbot from '@components/AIChatbot';
+import SchemaOrg from '@components/seo/SchemaOrg.jsx';
 const Shell = ({ children }) => {
   return (
     <>
+      <SchemaOrg />
       <ToastContainer
         position="top-center"
         autoClose={3000}

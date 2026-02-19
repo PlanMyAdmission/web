@@ -103,6 +103,7 @@ module.exports = {
         white: '#FFFFFF',
         blurpink: '#840844',
         grey: 'rgb(87, 87, 87)',
+        darkBlue: '#1E3A8A',
       },
       animation: {
         carousel: 'carousel 10s infinite linear',
