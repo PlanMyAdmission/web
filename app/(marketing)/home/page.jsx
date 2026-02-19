@@ -1,6 +1,5 @@
-import Home from '@components/home/Home';
-import { buildPageMetadata } from '@lib/seo';
-export const metadata = buildPageMetadata('/home');
+import { redirect } from 'next/navigation';
 export default function SecondaryHomePage() {
-  return <Home />;
+  redirect('/');
+  return null;
 }
