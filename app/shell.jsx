@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import { ToastContainer } from 'react-toastify';
 import NavBar from '@components/higherOrderComponents/NavBar';
 import Footer from '@components/higherOrderComponents/Footer';
@@ -9,6 +10,9 @@ import AISuiteLauncher from '@components/AISuiteLauncher';
 import AIChatbot from '@components/AIChatbot';
 import SchemaOrg from '@components/seo/SchemaOrg.jsx';
 const Shell = ({ children }) => {
+  const pathname = usePathname();
+  const isAdminPath = pathname?.startsWith('/admin');
+
   return (
     <>
       <SchemaOrg />
@@ -22,12 +26,12 @@ const Shell = ({ children }) => {
         draggable
         theme="colored"
       />
-      <NavBar />
-      <GoToTop />
+      {!isAdminPath && <NavBar />}
+      {!isAdminPath && <GoToTop />}
       {children}
-      <AISuiteLauncher />
-      <AIChatbot />
-      <Footer />
+      {!isAdminPath && <AISuiteLauncher />}
+      {!isAdminPath && <AIChatbot />}
+      {!isAdminPath && <Footer />}
     </>
   );
 };

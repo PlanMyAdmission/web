@@ -29,6 +29,52 @@ const LOADING_MESSAGES = [
   'Drafting personalized recommendations...',
 ];
 
+const scoreTypeLabels = {
+  PERCENTAGE_100: 'Percentage /100',
+  CGPA_10: 'CGPA /10',
+  GPA_4: 'GPA /4',
+};
+
+const buildLegacyTestSummary = (profile) => {
+  const testParts = [];
+  if (profile.englishTest && profile.englishTest !== 'NOT_TAKEN') {
+    const englishScoreSuffix = profile.englishScore
+      ? ` ${profile.englishScore}`
+      : '';
+    testParts.push(`${profile.englishTest}${englishScoreSuffix}`);
+  }
+  if (profile.aptitudeTest && profile.aptitudeTest !== 'NOT_REQUIRED') {
+    const aptitudeScoreSuffix = profile.aptitudeScore
+      ? ` ${profile.aptitudeScore}`
+      : '';
+    testParts.push(`${profile.aptitudeTest}${aptitudeScoreSuffix}`);
+  }
+  if (!testParts.length) {
+    return 'Not taken yet';
+  }
+  return testParts.join(', ');
+};
+
+const buildProfilePayload = (formData) => {
+  const scoreType = scoreTypeLabels[formData.scoreType] || formData.scoreType;
+  return {
+    ...formData,
+    gpa:
+      formData.scoreValue && scoreType
+        ? `${formData.scoreValue} (${scoreType})`
+        : formData.gpa,
+    testScores: buildLegacyTestSummary(formData),
+    budget:
+      formData.budgetAmount && formData.budgetCurrency
+        ? `${formData.budgetAmount} ${formData.budgetCurrency} (${formData.budgetIncludes || 'tuition + living'})`
+        : formData.budget,
+    timeline:
+      [formData.targetIntake, formData.applicationStage, formData.deadlineUrgency]
+        .filter(Boolean)
+        .join(' | ') || formData.timeline,
+  };
+};
+
 const AIAdmissionTool = () => {
   const [mode, setMode] = useState('form');
   const [flow, setFlow] = useState('start');
@@ -75,9 +121,10 @@ const AIAdmissionTool = () => {
     return () => clearInterval(interval);
   }, [status.type]);
   const buildGeminiParts = async () => {
+    const profilePayload = buildProfilePayload(formData);
     const parts = [
       {
-        text: buildPrompt(formData, mode),
+        text: buildPrompt(profilePayload, mode),
       },
     ];
     if (pdfFile) {
@@ -133,6 +180,7 @@ const AIAdmissionTool = () => {
       persistProfile();
     }
     try {
+      const profilePayload = buildProfilePayload(formData);
       const parts = await buildGeminiParts();
       const client = new GoogleGenAI({
         apiKey: resolvedApiKey,
@@ -163,7 +211,7 @@ const AIAdmissionTool = () => {
       }
       const mergedProfile = {
         ...parsed?.profile,
-        ...formData,
+        ...profilePayload,
       };
       const html = buildAdmissionReportHtml({
         profile: mergedProfile,
@@ -263,7 +311,26 @@ const AIAdmissionTool = () => {
           formData={formData}
           setField={setField}
           onBack={() => setFlow('start')}
-          onNext={() => setFlow('extras')}
+          onNext={() => {
+            const hasRequiredFields =
+              formData.targetCountry &&
+              formData.degreeLevel &&
+              formData.programArea &&
+              formData.scoreValue;
+            if (!hasRequiredFields) {
+              setStatus({
+                type: 'error',
+                message:
+                  'Please complete country, degree level, program area, and academic score.',
+              });
+              return;
+            }
+            setStatus({
+              type: 'idle',
+              message: '',
+            });
+            setFlow('extras');
+          }}
         />
       )}
 
@@ -273,6 +340,13 @@ const AIAdmissionTool = () => {
           setField={setField}
           onBack={() => setFlow('course')}
           onSubmit={() => {
+            if (!formData.targetIntake || !formData.budgetAmount) {
+              setStatus({
+                type: 'error',
+                message: 'Please add target intake and yearly budget amount.',
+              });
+              return;
+            }
             setFlow('processing');
             generateReport();
           }}

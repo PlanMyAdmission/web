@@ -24,6 +24,34 @@ export const buildAdmissionReportHtml = ({
   const recommendations = Array.isArray(evaluation.recommendedPrograms)
     ? evaluation.recommendedPrograms
     : [];
+  const programText =
+    [profile.programArea, profile.fieldOfStudy].filter(Boolean).join(' - ') ||
+    profile.fieldOfStudy ||
+    'Not provided';
+  const academicScoreText =
+    profile.gpa ||
+    [profile.scoreValue, profile.scoreType].filter(Boolean).join(' ') ||
+    'Not provided';
+  const englishTestText =
+    profile.englishTest && profile.englishTest !== 'NOT_TAKEN'
+      ? `${profile.englishTest}${profile.englishScore ? ` ${profile.englishScore}` : ''}`
+      : 'Not taken yet';
+  const aptitudeTestText =
+    profile.aptitudeTest && profile.aptitudeTest !== 'NOT_REQUIRED'
+      ? `${profile.aptitudeTest}${profile.aptitudeScore ? ` ${profile.aptitudeScore}` : ''}`
+      : 'Not required / not taken';
+  const budgetText =
+    profile.budget ||
+    (profile.budgetAmount
+      ? `${profile.budgetAmount} ${profile.budgetCurrency || ''}`.trim()
+      : '') ||
+    'Not provided';
+  const intakeText =
+    [profile.targetIntake, profile.applicationStage, profile.deadlineUrgency]
+      .filter(Boolean)
+      .join(' | ') ||
+    profile.timeline ||
+    'Not provided';
   const recommendationsHtml = recommendations.length
     ? recommendations
         .slice(0, 6)
@@ -137,11 +165,12 @@ export const buildAdmissionReportHtml = ({
               <p><strong>Email:</strong> ${sanitize(profile.email || 'Not provided')}</p>
               <p><strong>Target Country/Region:</strong> ${sanitize(profile.targetCountry || 'Not provided')}</p>
               <p><strong>Degree Level:</strong> ${sanitize(profile.degreeLevel || 'Not provided')}</p>
-              <p><strong>Field of Study:</strong> ${sanitize(profile.fieldOfStudy || 'Not provided')}</p>
-              <p><strong>GPA:</strong> ${sanitize(profile.gpa || 'Not provided')}</p>
-              <p><strong>Test Scores:</strong> ${sanitize(profile.testScores || 'Not provided')}</p>
-              <p><strong>Budget:</strong> ${sanitize(profile.budget || 'Not provided')}</p>
-              <p><strong>Timeline:</strong> ${sanitize(profile.timeline || 'Not provided')}</p>
+              <p><strong>Program:</strong> ${sanitize(programText)}</p>
+              <p><strong>Academic Score:</strong> ${sanitize(academicScoreText)}</p>
+              <p><strong>English Test:</strong> ${sanitize(englishTestText)}</p>
+              <p><strong>Aptitude Test:</strong> ${sanitize(aptitudeTestText)}</p>
+              <p><strong>Budget:</strong> ${sanitize(budgetText)}</p>
+              <p><strong>Timeline:</strong> ${sanitize(intakeText)}</p>
             </div>
             <div class="card">
               <h2>Evaluation Summary</h2>

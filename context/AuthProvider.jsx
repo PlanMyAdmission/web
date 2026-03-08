@@ -2,6 +2,7 @@
 
 import React, { useContext, useState, useEffect, createContext } from 'react';
 import { useRouter } from 'next/navigation';
+import { isAdminEmail } from '@lib/adminAuth.js';
 import { auth, db, storage } from '@lib/firebase.js';
 import {
   createUserWithEmailAndPassword,
@@ -31,6 +32,7 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
   const [currentUser, setCurrentUser] = useState(null);
   const [profileData, setProfileData] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const signup = async (email, password, name, number) => {
     try {
       await setPersistence(auth, browserSessionPersistence);
@@ -99,13 +101,47 @@ export const AuthProvider = ({ children }) => {
       console.error('Google Sign-In Error:', error);
     }
   };
-  const logout = async () => {
+  const adminSignIn = async (email, password) => {
+    try {
+      await setPersistence(auth, browserSessionPersistence);
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      if (!isAdminEmail(result?.user?.email)) {
+        await signOut(auth);
+        throw new Error('This account does not have admin access.');
+      }
+      toast.success('Admin login successful!', {
+        autoClose: 1500,
+      });
+      return result.user;
+    } catch (error) {
+      toast.error(error.message || 'Admin login failed.');
+      throw error;
+    }
+  };
+  const adminGoogleSignIn = async () => {
+    try {
+      await setPersistence(auth, browserSessionPersistence);
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      if (!isAdminEmail(result?.user?.email)) {
+        await signOut(auth);
+        throw new Error('This Google account does not have admin access.');
+      }
+      toast.success('Admin login successful!', {
+        autoClose: 1500,
+      });
+      return result.user;
+    } catch (error) {
+      toast.error(error.message || 'Admin Google login failed.');
+      throw error;
+    }
+  };
+  const logout = async (redirectTo = '/admin/login') => {
     try {
       await signOut(auth);
       localStorage.removeItem('logged');
       toast.info('Logged out successfully');
-      window.location.href =
-        'https://app.coursefinder.ai/student-platform/777d47d0/login';
+      router.push(redirectTo);
     } catch (error) {
       toast.error('Logout failed: ' + error.message);
       console.error('Logout Error:', error);
@@ -114,6 +150,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
+      setAuthLoading(false);
     });
     return unsubscribe;
   }, []);
@@ -241,9 +278,13 @@ export const AuthProvider = ({ children }) => {
   const value = {
     currentUser,
     profileData,
+    authLoading,
+    isAdminUser: isAdminEmail(currentUser?.email),
     signup,
     signIn,
     googleSignIn,
+    adminSignIn,
+    adminGoogleSignIn,
     logout,
     uploadDataToFireStore,
     uploadDataToFireStoreInArray,

@@ -251,9 +251,9 @@ const JoinUsForm = ({ className = '' }) => {
                 textDecoration: 'underline',
                 color: 'blue',
               }}
-              href="/ai-university-search"
+              href="/ai-university-matchmaker"
             >
-              AI University Search
+              AI University Matchmaker
             </Link>
           </p>
           {}

@@ -94,7 +94,7 @@ const ContentSection = ({
               <button
                 className="px-4 py-2 rounded-md border border-blurpink text-blurpink hover:bg-gray-50 sm:w-full"
                 onClick={() => {
-                  router.push('/ai-university-search');
+                  router.push('/ai-university-matchmaker');
                 }}
               >
                 {btn4}

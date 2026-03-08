@@ -96,7 +96,7 @@ const ChatbotWindow = ({
               value={inputValue}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
-              placeholder="Ask me about studying abroad..."
+              placeholder="Try: CGPA 8.2, IELTS 7.5, budget 20L INR, target Canada"
               rows="1"
               maxLength="500"
             />

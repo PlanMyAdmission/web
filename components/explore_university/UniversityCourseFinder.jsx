@@ -23,11 +23,36 @@ const cx = (...classNames) => mapModuleClasses(styles, ...classNames);
 const INITIAL_FORM_DATA = {
   university: '',
   studyLevel: '',
+  scoreType: 'CGPA_10',
   gpa: '',
   testType: '',
   ieltsScore: '',
   toeflScore: '',
   budget: 0,
+};
+
+const scoreTypeRanges = {
+  PERCENTAGE_100: { min: 0, max: 100, label: 'Percentage (0-100)' },
+  CGPA_10: { min: 0, max: 10, label: 'CGPA (0-10)' },
+  GPA_4: { min: 0, max: 4, label: 'GPA (0-4)' },
+};
+
+const normalizeToGpa4 = (scoreType, scoreValue) => {
+  const numericScore = parseFloat(scoreValue);
+  if (Number.isNaN(numericScore)) return NaN;
+  if (scoreType === 'PERCENTAGE_100') return numericScore / 25;
+  if (scoreType === 'CGPA_10') return numericScore * 0.4;
+  return numericScore;
+};
+
+const formatMinScoreForType = (minGpa, scoreType) => {
+  if (scoreType === 'PERCENTAGE_100') {
+    return `${Math.round(minGpa * 25)}%`;
+  }
+  if (scoreType === 'CGPA_10') {
+    return `${(minGpa * 2.5).toFixed(1)}/10`;
+  }
+  return `${minGpa.toFixed(1)}/4`;
 };
 
 const UniversityCourseFinder = () => {
@@ -113,8 +138,18 @@ const UniversityCourseFinder = () => {
     if (!selectedUniversity) errors.university = 'Please select a university from the search results';
     if (!formData.studyLevel) errors.studyLevel = 'Please select a study level';
 
-    if (!formData.gpa || isNaN(formData.gpa) || formData.gpa < 0 || formData.gpa > 4) {
-      errors.gpa = 'GPA must be between 0.0 and 4.0';
+    const scoreConfig = scoreTypeRanges[formData.scoreType] || scoreTypeRanges.CGPA_10;
+    const normalizedScore = normalizeToGpa4(formData.scoreType, formData.gpa);
+    if (
+      !formData.gpa ||
+      Number.isNaN(parseFloat(formData.gpa)) ||
+      parseFloat(formData.gpa) < scoreConfig.min ||
+      parseFloat(formData.gpa) > scoreConfig.max ||
+      Number.isNaN(normalizedScore) ||
+      normalizedScore < 0 ||
+      normalizedScore > 4
+    ) {
+      errors.gpa = `${scoreConfig.label} is required`;
     }
 
     if (!formData.testType) {
@@ -166,10 +201,13 @@ const UniversityCourseFinder = () => {
     let score = 0;
     const feedback = [];
 
-    if (parseFloat(formData.gpa) >= requirements.minGpa) {
+    const normalizedAcademicScore = normalizeToGpa4(formData.scoreType, formData.gpa);
+    if (normalizedAcademicScore >= requirements.minGpa) {
       score += 1;
     } else {
-      feedback.push(`GPA should be at least ${requirements.minGpa} for ${formData.studyLevel}`);
+      feedback.push(
+        `Academic score should be at least ${formatMinScoreForType(requirements.minGpa, formData.scoreType)} for ${formData.studyLevel}`,
+      );
     }
 
     const testScore =

@@ -8,7 +8,7 @@ const Band = ({
   btn1 = 'Register Now',
   btn2 = 'Book Your Free Consultation',
   btn3 = 'AI Personal Admission Coach',
-  btn4 = 'AI University Search',
+  btn4 = 'AI University Matchmaker',
   forInstitutions = false,
 }) => {
   const router = useRouter();
@@ -77,7 +77,7 @@ const Band = ({
           <button
             className="px-4 py-3 rounded-md border border-blurpink text-blurpink hover:bg-gray-50 font-semibold"
             onClick={() => {
-              router.push('/ai-university-search');
+              router.push('/ai-university-matchmaker');
             }}
           >
             {btn4}

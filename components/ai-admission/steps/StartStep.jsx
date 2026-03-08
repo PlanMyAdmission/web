@@ -67,15 +67,31 @@ const StartStep = ({
         <div className={cx('pma-ai-form')}>
           <div className={cx('pma-ai-field')}>
             <label>First Name</label>
-            <input value={formData.fullName} onChange={setField('fullName')} />
+            <input
+              value={formData.fullName}
+              onChange={setField('fullName')}
+              placeholder="Arnav"
+              autoComplete="given-name"
+            />
           </div>
           <div className={cx('pma-ai-field')}>
             <label>Last Name</label>
-            <input value={formData.lastName} onChange={setField('lastName')} />
+            <input
+              value={formData.lastName}
+              onChange={setField('lastName')}
+              placeholder="Gupta"
+              autoComplete="family-name"
+            />
           </div>
           <div className={cx('pma-ai-field')}>
             <label>Email</label>
-            <input value={formData.email} onChange={setField('email')} />
+            <input
+              type="email"
+              value={formData.email}
+              onChange={setField('email')}
+              placeholder="name@email.com"
+              autoComplete="email"
+            />
           </div>
           <div className={cx('pma-ai-step-actions')}>
             <button

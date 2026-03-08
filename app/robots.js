@@ -8,7 +8,7 @@ export default function robots() {
       ? {
           userAgent: '*',
           allow: '/',
-          disallow: ['/dashboard', '/dashboard/*'],
+          disallow: ['/dashboard', '/dashboard/*', '/admin', '/admin/*'],
         }
       : {
           userAgent: '*',

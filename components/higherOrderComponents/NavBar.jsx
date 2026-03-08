@@ -6,17 +6,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-const logo = '/images/home/logo.svg';
-const mobile_logo = '/images/home/logo_mobile.svg';
 import { useAuth } from '@context/AuthProvider';
+
+const logo = '/images/home/logo.svg';
+const mobileLogo = '/images/home/logo_mobile.svg';
+
 const navLinks = [
   {
     href: '/',
     label: 'Home',
   },
   {
-    href: '/ai-university-search',
-    label: 'AI University Search',
+    href: '/ai-university-matchmaker',
+    label: 'AI University Matchmaker',
   },
   {
     href: '/pricing',
@@ -35,35 +37,63 @@ const navLinks = [
     label: 'Contact Us',
   },
 ];
-const DEFAULT_PHOTO_URL =
-  'https://imgs.search.brave.com/IfCu-rlEANrldypDGTbEYE4_XyiekbuS1xeWWgBNJ7M/rs:fit:1000:1080:1/g:ce/aHR0cHM6Ly9jZG4x/LnZlY3RvcnN0b2Nr/LmNvbS9pLzEwMDB4/MTAwMC83MS84NS9t/YWxlLWF2YXRhci1w/cm9maWxlLWljb24t/cm91bmQtbWFuLWZh/Y2UtdmVjdG9yLTE4/MzA3MTg1LmpwZw';
+
+const portalLoginUrl = 'https://portal.planmyadmission.com/login';
+const portalSignupUrl = 'https://portal.planmyadmission.com/sign-up';
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
-  const [dropdownUserId, setDropdownUserId] = useState(null);
   const pathname = usePathname();
   const router = useRouter();
-  const { currentUser, logout } = useAuth();
+  const { currentUser, isAdminUser, logout } = useAuth();
 
-  const photoURL = currentUser?.photoURL || DEFAULT_PHOTO_URL;
-  const currentUserId = currentUser?.uid || null;
-  const showDropdown =
-    Boolean(currentUserId) && dropdownUserId === currentUserId;
-
-  const handleNavToggle = () => setNav((prev) => !prev);
   const closeMobileNav = () => setNav(false);
-  const handleDashboardNavigate = () => {
-    setDropdownUserId(null);
-    closeMobileNav();
-    router.push('/dashboard/profile#about');
-  };
+
   const handleNavItemClick = () => {
     localStorage.removeItem('button');
     closeMobileNav();
   };
+
+  const handleAdminNavigate = () => {
+    closeMobileNav();
+    router.push('/admin/leads');
+  };
+
+  const handleAdminLogout = () => {
+    closeMobileNav();
+    logout('/admin/login');
+  };
+
+  const renderStudentAuthButtons = (isMobile = false) => (
+    <>
+      <a href={portalLoginUrl} rel="noreferrer" target="_blank">
+        <button
+          className={
+            isMobile
+              ? 'w-full px-4 py-2 text-main bg-main text-white rounded-sm text-center'
+              : 'bg-main border border-main text-white px-4 py-1 rounded-sm hover:bg-main/80 transition'
+          }
+        >
+          Login
+        </button>
+      </a>
+      <a href={portalSignupUrl} rel="noreferrer" target="_blank">
+        <button
+          className={
+            isMobile
+              ? 'w-full px-4 py-2 border border-main text-main rounded-sm text-center mt-2 hover:bg-main hover:text-white transition'
+              : 'bg-white border border-main text-main px-4 py-1 rounded-sm hover:bg-main hover:text-white transition'
+          }
+        >
+          Register
+        </button>
+      </a>
+    </>
+  );
+
   return (
-    <div className="">
-      <div className="flex flex-row justify-between  max-w-7xl border-b-2 border-main mx-auto items-end py-2 sm:px-4 xl:px-0">
+    <div>
+      <div className="flex flex-row justify-between max-w-7xl border-b-2 border-main mx-auto items-end py-2 sm:px-4 xl:px-0">
         <Link href="/">
           <Image
             unoptimized
@@ -72,7 +102,7 @@ const NavBar = () => {
             sizes="220px"
             src={logo}
             alt="logo"
-            className="hidden md:block relative md:-translate-x-6  md:h-12 h-10 md:scale-150 scale-110 md:top-4 top-2 w-auto mx-2 md:px-4"
+            className="hidden md:block relative md:-translate-x-6 md:h-12 h-10 md:scale-150 scale-110 md:top-4 top-2 w-auto mx-2 md:px-4"
             onClick={() => localStorage.removeItem('button')}
           />
           <Image
@@ -80,12 +110,13 @@ const NavBar = () => {
             width={140}
             height={40}
             sizes="140px"
-            src={mobile_logo}
+            src={mobileLogo}
             alt="logo"
             className="md:hidden block relative h-10 scale-110 w-auto mx-2 md:px-4"
           />
         </Link>
-        <ul className="hidden md:flex text-main text-[18px] space-x-5 md:items-center md:text-[15px] lg:text-[18px] ">
+
+        <ul className="hidden md:flex text-main text-[18px] space-x-5 md:items-center md:text-[15px] lg:text-[18px]">
           {navLinks.map((item) => (
             <li
               key={item.href}
@@ -96,65 +127,28 @@ const NavBar = () => {
             </li>
           ))}
         </ul>
-        {currentUser ? (
-          <div className="relative">
-            <Image
-              unoptimized
-              width={40}
-              height={40}
-              sizes="40px"
-              src={photoURL}
-              alt="profile"
-              onClick={() =>
-                setDropdownUserId((prev) =>
-                  prev === currentUserId ? null : currentUserId,
-                )
-              }
-              className="w-10 h-10 rounded-full cursor-pointer border-2 border-main"
-            />
-            {showDropdown && (
-              <div className="absolute right-0 mt-2 w-40 bg-white border border-main rounded shadow-md z-50 text-sm">
-                <button
-                  className="block w-full text-left px-4 py-2 hover:bg-light"
-                  onClick={handleDashboardNavigate}
-                >
-                  Dashboard
-                </button>
-                <button
-                  className="block w-full text-left px-4 py-2 hover:bg-light"
-                  onClick={logout}
-                >
-                  Sign Out
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="space-x-2">
-            <a
-              href="https://portal.planmyadmission.com/login"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <button className="bg-main border border-main text-white px-4 py-1 rounded-sm hover:bg-main/80 transition">
-                Login
+
+        <div className="hidden md:flex items-center gap-2">
+          {renderStudentAuthButtons()}
+          {currentUser && isAdminUser && (
+            <>
+              <button
+                className="border border-blurpink text-blurpink px-4 py-1 rounded-sm hover:bg-gray-50 transition"
+                onClick={handleAdminNavigate}
+              >
+                Admin
               </button>
-            </a>
-            <a
-              href="https://portal.planmyadmission.com/sign-up"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <button className="bg-white border border-main text-main px-4 py-1 rounded-sm hover:bg-main hover:text-white transition">
-                Register
+              <button
+                className="border border-main text-main px-4 py-1 rounded-sm hover:bg-light transition"
+                onClick={handleAdminLogout}
+              >
+                Sign Out
               </button>
-            </a>
-          </div>
-        )}
-        <div
-          onClick={handleNavToggle}
-          className="block md:hidden px-4 text-main"
-        >
+            </>
+          )}
+        </div>
+
+        <div onClick={() => setNav((prev) => !prev)} className="block md:hidden px-4 text-main">
           {!nav ? <MenuIcon /> : <CloseIcon />}
         </div>
 
@@ -177,11 +171,12 @@ const NavBar = () => {
                 className="h-10 w-auto"
               />
             </Link>
-            <button className="text-main" onClick={handleNavToggle}>
+            <button className="text-main" onClick={() => setNav(false)}>
               <CloseIcon />
             </button>
           </div>
-          <ul className="mt-5" onClick={handleNavToggle}>
+
+          <ul className="mt-5" onClick={closeMobileNav}>
             {navLinks.map((item) => (
               <li
                 key={`mobile-${item.href}`}
@@ -192,42 +187,23 @@ const NavBar = () => {
               </li>
             ))}
           </ul>
+
           <div className="mt-6 border-t border-main pt-4 px-5">
-            {currentUser ? (
+            {renderStudentAuthButtons(true)}
+            {currentUser && isAdminUser && (
               <>
                 <button
-                  className="block w-full text-left px-4 py-2 text-main hover:bg-light"
-                  onClick={handleDashboardNavigate}
+                  className="block w-full text-left px-4 py-2 text-main hover:bg-light mt-3"
+                  onClick={handleAdminNavigate}
                 >
-                  Dashboard
+                  Admin Dashboard
                 </button>
                 <button
                   className="block w-full text-left px-4 py-2 text-main hover:bg-light"
-                  onClick={logout}
+                  onClick={handleAdminLogout}
                 >
-                  Sign Out
+                  Admin Sign Out
                 </button>
-              </>
-            ) : (
-              <>
-                <a
-                  href="https://portal.planmyadmission.com/login"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <p className="px-4 py-2 text-main bg-main text-white rounded-sm text-center">
-                    Login
-                  </p>
-                </a>
-                <a
-                  href="https://portal.planmyadmission.com/sign-up"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <p className="px-4 py-2 border border-main text-main rounded-sm text-center mt-2 hover:bg-main hover:text-white transition">
-                    Register
-                  </p>
-                </a>
               </>
             )}
           </div>
@@ -236,4 +212,5 @@ const NavBar = () => {
     </div>
   );
 };
+
 export default NavBar;
