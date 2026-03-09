@@ -8,6 +8,8 @@ import {
   getLeadEmail,
   getLeadName,
   getLeadPhone,
+  getLeadPhoneCountryCode,
+  getLeadPhoneNumber,
   getLeadSourceLabel,
   getLeadStatus,
   LEAD_STATUS_LABELS,
@@ -78,6 +80,8 @@ const LeadDetail = ({ lead, updatingLeadId, onStatusChange }) => {
   const leadName = getLeadName(lead) || 'Unnamed lead';
   const leadEmail = getLeadEmail(lead) || 'Anonymous session';
   const leadPhone = getLeadPhone(lead);
+  const leadPhoneCountryCode = getLeadPhoneCountryCode(lead);
+  const leadPhoneNumber = getLeadPhoneNumber(lead);
   const sourceLabel = getLeadSourceLabel(lead);
   const hasStudyPlan = [
     lead?.profile?.degreeLevel,
@@ -149,6 +153,8 @@ const LeadDetail = ({ lead, updatingLeadId, onStatusChange }) => {
           <DetailRow label="Name" value={leadName} />
           <DetailRow label="Email" value={leadEmail} />
           <DetailRow label="Phone" value={leadPhone} />
+          <DetailRow label="Country Code" value={leadPhoneCountryCode} />
+          <DetailRow label="Phone Number" value={leadPhoneNumber} />
           <DetailRow label="Preferred Contact" value={lead?.profile?.contactPreferences || lead?.contact?.preferredChannels} />
           <DetailRow label="Filled By" value={lead?.profile?.filledBy} />
           <DetailRow label="Destination / Phone" value={getLeadDestinationSummary(lead)} />

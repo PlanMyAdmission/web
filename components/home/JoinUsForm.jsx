@@ -4,25 +4,22 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { trackEvent } from '@lib/analytics.js';
 import { reportError } from '@lib/logger.js';
-
-const STORAGE_KEY = 'joinUsSubmissions';
-const SUBMISSION_COOLDOWN_MS = 5 * 60 * 1000;
-
-const readRecentSubmission = () => {
-  try {
-    const submissions = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    const lastSubmission = submissions[submissions.length - 1];
-    return lastSubmission?.timestamp ? new Date(lastSubmission.timestamp).getTime() : 0;
-  } catch {
-    return 0;
-  }
-};
+import {
+  buildFullPhoneNumber,
+  COUNTRY_DIAL_CODE_OPTIONS,
+  normalizeCountryDialCode,
+  normalizePhoneNumber,
+  persistSubmission,
+  readRecentSubmission,
+  SUBMISSION_COOLDOWN_MS,
+} from '@components/contact/joinUsFormHelpers.js';
 
 const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    phoneCountryCode: '+91',
+    phoneNumber: '',
     honeypot: '',
   });
   const [agreed, setAgreed] = useState(false);
@@ -37,11 +34,12 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
       setIsSubmitted(true);
     }
   }, []);
+
   const validateForm = () => {
     const nextErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^\+?\d{10,15}$/;
-    const normalizedPhone = formData.phone.replace(/\s/g, '');
+    const normalizedCountryDialCode = normalizeCountryDialCode(formData.phoneCountryCode);
+    const normalizedPhoneNumber = normalizePhoneNumber(formData.phoneNumber);
 
     if (!formData.name.trim()) {
       nextErrors.name = 'Name is required';
@@ -55,10 +53,16 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
       nextErrors.email = 'Please enter a valid email';
     }
 
-    if (!normalizedPhone) {
-      nextErrors.phone = 'Phone number is required';
-    } else if (!phoneRegex.test(normalizedPhone)) {
-      nextErrors.phone = 'Please enter a valid phone number (10-15 digits)';
+    if (!normalizedCountryDialCode) {
+      nextErrors.phoneCountryCode = 'Country code is required';
+    } else if (!/^\+\d{1,4}$/.test(normalizedCountryDialCode)) {
+      nextErrors.phoneCountryCode = 'Please choose a valid country code';
+    }
+
+    if (!normalizedPhoneNumber) {
+      nextErrors.phoneNumber = 'Phone number is required';
+    } else if (!/^\d{6,15}$/.test(normalizedPhoneNumber)) {
+      nextErrors.phoneNumber = 'Please enter a valid phone number';
     }
 
     if (!agreed) {
@@ -67,30 +71,20 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
 
     return nextErrors;
   };
-  const persistSubmission = (payload) => {
-    try {
-      const submissions = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      submissions.push({
-        ...payload,
-        timestamp: new Date().toISOString(),
-        id: Date.now(),
-      });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions));
-    } catch {
-      return;
-    }
-  };
+
   const resetForm = () => {
     setFormData({
       name: '',
       email: '',
-      phone: '',
+      phoneCountryCode: '+91',
+      phoneNumber: '',
       honeypot: '',
     });
     setAgreed(false);
     setErrors({});
     setFormStartedAt(Date.now());
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -119,7 +113,8 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
           sourcePage,
           name: formData.name,
           email: formData.email,
-          phone: formData.phone,
+          phoneCountryCode: formData.phoneCountryCode,
+          phoneNumber: formData.phoneNumber,
           leadContext: {
             honeypot: formData.honeypot,
             formStartedAt,
@@ -137,7 +132,7 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
         sourcePage,
         name: formData.name,
         email: formData.email,
-        phone: formData.phone,
+        phone: buildFullPhoneNumber(formData.phoneCountryCode, formData.phoneNumber),
       });
       trackEvent('lead_submit', {
         source: 'join_us',
@@ -160,6 +155,7 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
       setIsLoading(false);
     }
   };
+
   return (
     <div className={`py-8 bg-light rounded-lg mb-2 ${className}`}>
       {!isSubmitted ? (
@@ -177,23 +173,53 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
             />
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
           </div>
-          <div className="w-[90%]">
-            <input
-              type="tel"
-              id="phone"
-              value={formData.phone}
-              placeholder="Phone No. (e.g. +91 9876543210)"
-              className={`py-4 px-3 rounded-md w-full outline-none bg-white border ${errors.phone ? 'border-red-500' : 'border-[#e8dde3]'}`}
-              pattern="^\\+?\\d{10,15}$"
-              maxLength={15}
-              autoComplete="tel"
-              onChange={(event) => {
-                const cleaned = event.target.value.replace(/[^\d+ ]/g, '');
-                setFormData((current) => ({ ...current, phone: cleaned }));
-              }}
-            />
-            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+
+          <div className="w-[90%] grid gap-3 sm:grid-cols-[180px_minmax(0,1fr)]">
+            <div>
+              <select
+                id="phone-country-code"
+                value={formData.phoneCountryCode}
+                className={`py-4 px-3 rounded-md w-full outline-none bg-white border ${errors.phoneCountryCode ? 'border-red-500' : 'border-[#e8dde3]'}`}
+                onChange={(event) =>
+                  setFormData((current) => ({
+                    ...current,
+                    phoneCountryCode: event.target.value,
+                  }))
+                }
+              >
+                {COUNTRY_DIAL_CODE_OPTIONS.map((option) => (
+                  <option key={`${option.label}-${option.value}`} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {errors.phoneCountryCode && (
+                <p className="text-red-500 text-xs mt-1">{errors.phoneCountryCode}</p>
+              )}
+            </div>
+            <div>
+              <input
+                type="tel"
+                id="phone-number"
+                value={formData.phoneNumber}
+                placeholder="Phone number"
+                className={`py-4 px-3 rounded-md w-full outline-none bg-white border ${errors.phoneNumber ? 'border-red-500' : 'border-[#e8dde3]'}`}
+                inputMode="numeric"
+                maxLength={15}
+                autoComplete="tel-national"
+                onChange={(event) =>
+                  setFormData((current) => ({
+                    ...current,
+                    phoneNumber: normalizePhoneNumber(event.target.value),
+                  }))
+                }
+              />
+              {errors.phoneNumber && (
+                <p className="text-red-500 text-xs mt-1">{errors.phoneNumber}</p>
+              )}
+            </div>
           </div>
+
           <div className="w-[90%]">
             <input
               type="email"
@@ -207,6 +233,7 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
+
           <div className="hidden" aria-hidden="true">
             <input
               type="text"
@@ -218,6 +245,7 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
               }
             />
           </div>
+
           <div className="w-[90%]">
             <div className="flex items-start space-x-3">
               <input
@@ -233,7 +261,9 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
             </div>
             {errors.agreed && <p className="text-red-500 text-xs mt-1">{errors.agreed}</p>}
           </div>
+
           {errors.submit && <p className="text-red-500 text-sm">{errors.submit}</p>}
+
           <button
             type="submit"
             className={`bg-main px-4 py-4 rounded-md text-white w-[90%] transition-colors flex items-center justify-center ${isLoading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-main/90'}`}

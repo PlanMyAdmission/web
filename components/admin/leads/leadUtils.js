@@ -121,7 +121,18 @@ export const getLeadName = (lead) =>
 export const getLeadEmail = (lead) =>
   lead?.email || lead?.contact?.email || lead?.user?.email || '';
 
-export const getLeadPhone = (lead) => lead?.phone || lead?.contact?.phone || '';
+export const getLeadPhoneCountryCode = (lead) =>
+  lead?.phoneCountryCode || lead?.contact?.phoneCountryCode || '';
+
+export const getLeadPhoneNumber = (lead) =>
+  lead?.phoneNumber || lead?.contact?.phoneNumber || '';
+
+export const getLeadPhone = (lead) =>
+  lead?.phone ||
+  lead?.contact?.phone ||
+  [getLeadPhoneCountryCode(lead), getLeadPhoneNumber(lead)]
+    .filter(Boolean)
+    .join(' ');
 
 export const getLeadSourceLabel = (lead) => getSourceLabel(lead?.source || '');
 

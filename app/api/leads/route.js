@@ -30,8 +30,16 @@ export async function POST(request) {
       );
     }
 
-    const { source, sourcePage, name, email, phone, leadContext } =
-      await request.json();
+    const {
+      source,
+      sourcePage,
+      name,
+      email,
+      phone,
+      phoneCountryCode,
+      phoneNumber,
+      leadContext,
+    } = await request.json();
 
     if (source !== 'join_us') {
       return NextResponse.json(
@@ -49,6 +57,8 @@ export async function POST(request) {
       name,
       email,
       phone,
+      phoneCountryCode,
+      phoneNumber,
       sourcePage,
     });
     if (leadValidationError) {
@@ -65,7 +75,14 @@ export async function POST(request) {
     const db = getFirebaseAdminDb();
     await createLeadRecord({
       db,
-      payload: buildJoinUsLead({ name, email, phone, sourcePage }),
+      payload: buildJoinUsLead({
+        name,
+        email,
+        phone,
+        phoneCountryCode,
+        phoneNumber,
+        sourcePage,
+      }),
     });
 
     return NextResponse.json({ ok: true });
