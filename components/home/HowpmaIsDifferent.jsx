@@ -4,7 +4,7 @@ import React from 'react';
 const image1 = '/images/home/diff11.jpg';
 const image2 = '/images/home/diff2.jpg';
 const image3 = '/images/home/diff3.jpg';
-const contentSections = [
+const defaultSections = [
   {
     title:
       'Get Personalized Course Recommendations from 300,000+ Global Programs',
@@ -26,19 +26,22 @@ const contentSections = [
     image: image2,
   },
 ];
-const HowpmaIsDifferent = () => {
+const HowpmaIsDifferent = ({
+  heading = 'How PMA is Different',
+  sections = defaultSections,
+}) => {
   return (
     <section className="py-12 px-4">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-center text-3xl md:text-4xl font-bold mb-8">
-          How PMA is Different
+          {heading}
           <div className="mx-auto mt-2 h-1 w-16 bg-main"></div>
         </h1>
 
         <div className="space-y-12">
-          {contentSections.map((section, idx) => (
+          {sections.map((section, idx) => (
             <SectionBlock
-              key={idx}
+              key={`${section.title}-${idx}`}
               title={section.title}
               description={section.description}
               image={section.image}
@@ -55,13 +58,11 @@ const SectionBlock = ({ title, description, image, reverse }) => {
     <div
       className={`flex flex-col-reverse md:flex-row ${reverse ? 'md:flex-row-reverse' : ''} items-center gap-8`}
     >
-      {}
       <div className="md:w-1/2">
         <h2 className="text-xl md:text-2xl font-semibold mb-3">{title}</h2>
         <p className="text-gray-700 text-base">{description}</p>
       </div>
 
-      {}
       <div className="md:w-1/2 flex justify-center">
         <Image
           unoptimized

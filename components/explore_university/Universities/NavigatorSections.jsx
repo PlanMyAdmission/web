@@ -214,7 +214,11 @@ const HighlightsInfoSection = ({ highlightRef, infoRef, university }) => (
             <div className="flex flex-row justify-between border-b-2 border-solid border-main my-3 p-1">
               <label>Website URL</label>
               <label>
-                <a href={university?.primary_url || '#'} target="_blank" rel="noreferrer">
+                <a
+                  href={university?.primary_url || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {university?.primary_url}
                 </a>
               </label>

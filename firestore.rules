@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+
+    match /admin_users/{userId} {
+      allow read: if isOwner(userId);
+      allow write: if false;
+    }
+
+    match /users/{userId} {
+      allow read, create, update, delete: if isOwner(userId);
+    }
+
+    match /blog_posts/{postId} {
+      allow read: if resource.data.status == 'published';
+      allow create, update, delete: if false;
+    }
+
+    match /ai_matchmaker_leads/{leadId} {
+      allow read, create, update, delete: if false;
+    }
+
+    match /location/{docId} {
+      allow read: if true;
+    }
+
+    match /degrees/{docId} {
+      allow read: if true;
+    }
+
+    match /disciplines/{docId} {
+      allow read: if true;
+    }
+
+    match /countries_state/{docId} {
+      allow read: if true;
+    }
+
+    match /explore_university/{docId} {
+      allow read: if true;
+    }
+
+    match /university_info/{docId} {
+      allow read: if true;
+    }
+
+    match /university_desc/{docId} {
+      allow read: if true;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

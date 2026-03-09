@@ -9,6 +9,7 @@ import {
   HighlightsInfoSection,
   StatsSection,
 } from '@/components/explore_university/Universities/NavigatorSections.jsx';
+import { reportError } from '@lib/logger.js';
 
 const NAV_BUTTON_CLASS =
   'py-2 px-4 focus:bg-white focus:font-bold active:font-bold active:bg-white focus:outline-none outline-none mx-2 my-2 rounded-md transition-all duration-100 ease-in-out';
@@ -62,7 +63,7 @@ const Navigator = ({ props }) => {
         );
         setCoursesList(docs);
       } catch (error) {
-        console.error('Failed to fetch university courses', error);
+        reportError('Failed to fetch university courses', error);
         if (!isCancelled) {
           setCoursesList([]);
         }

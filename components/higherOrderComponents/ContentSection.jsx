@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { dispatchOpenAiChatbot } from '@lib/clientUtils.js';
+import { portalSignupUrl } from '@lib/publicLinks.js';
 const ContentSection = ({
   id,
   content,
@@ -32,7 +34,6 @@ const ContentSection = ({
   return (
     <section id={id} className="w-full bg-light py-10 md:py-14">
       <div className="flex flex-col md:flex-row justify-between max-w-7xl mx-auto px-5 md:px-0 gap-10">
-        {}
         <div className="flex-1">
           <p className="text-gray-800 text-sm md:text-base leading-relaxed mb-4">
             {content}
@@ -54,8 +55,7 @@ const ContentSection = ({
               className={`px-4 py-2 rounded-md text-white sm:w-full ${forInstitutions ? 'bg-main cursor-not-allowed opacity-70' : 'bg-main hover:bg-opacity-90'}`}
               onClick={() => {
                 if (!forInstitutions)
-                  window.location.href =
-                    'https://portal.planmyadmission.com/sign-up';
+                  window.location.href = portalSignupUrl;
               }}
             >
               {btn1}
@@ -70,21 +70,9 @@ const ContentSection = ({
               <button
                 className="px-4 py-2 rounded-md bg-blurpink text-white hover:bg-opacity-90 sm:w-full"
                 onClick={(e) => {
-                  try {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const event = new CustomEvent('openAIChatbot', {
-                      detail: {
-                        source: 'admission-coach-button',
-                      },
-                    });
-                    window.dispatchEvent(event);
-                  } catch (error) {
-                    console.error(
-                      '🎯 ContentSection: Error dispatching event',
-                      error,
-                    );
-                  }
+                  e.preventDefault();
+                  e.stopPropagation();
+                  dispatchOpenAiChatbot('admission-coach-button');
                 }}
               >
                 {btn3}
@@ -103,7 +91,6 @@ const ContentSection = ({
           </div>
         </div>
 
-        {}
         {video && (
           <div className="flex-1">
             <div className="aspect-w-16 aspect-h-9 rounded-md overflow-hidden shadow-sm">

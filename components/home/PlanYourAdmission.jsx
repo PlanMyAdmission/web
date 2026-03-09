@@ -1,16 +1,7 @@
 import React from 'react';
 import Heading from '@components/higherOrderComponents/Heading';
 import ContentSection from '@components/higherOrderComponents/ContentSection';
-const PlanYourAdmission = ({ props }) => {
-  return (
-    <div className="bg-light py-8">
-      {}
-      <Heading heading="Plan Your Overseas Admission with us" />
-      <ContentSection {...data} props={props} />
-    </div>
-  );
-};
-const data = {
+const defaultData = {
   id: 1,
   content:
     'At Plan My Admission (PMA), our foundation is built on deep experience—our mentors and counselors bring over a decade of hands-on expertise helping students achieve their global education dreams.',
@@ -25,5 +16,16 @@ const data = {
   btn2: 'Book Your Free Consultation',
   video: 'https://www.youtube.com/embed/0Qoct60N6lY',
   forInstitutions: false,
+};
+
+const PlanYourAdmission = ({ contentData = defaultData }) => {
+  return (
+    <div className="bg-light py-8">
+      <Heading
+        heading={contentData.heading || 'Plan Your Overseas Admission with us'}
+      />
+      <ContentSection {...contentData} />
+    </div>
+  );
 };
 export default PlanYourAdmission;

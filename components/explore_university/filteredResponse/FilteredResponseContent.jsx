@@ -109,7 +109,7 @@ const FilteredResponseContent = ({
             const logoUrl = imageByUniversityId[data?.UniversityId] || '/images/seo/og-default.svg';
             return (
               <div
-                key={data?.id}
+                key={data?.recordId || data?.id}
                 className="grid grid-cols-2 gap-4 sm:grid-cols-7 items-center bg-white m-2 rounded-lg py-2 px-5 ring-main ring-1 ring-offset-1 my-5"
               >
                 <Image
@@ -143,7 +143,7 @@ const FilteredResponseContent = ({
                   <button
                     type="button"
                     className="block text-main w-full uppercase bg-transparent p-1 font-bold text-lg mb-0"
-                    onClick={() => handleEnroll(data, logoUrl)}
+                    onClick={() => handleEnroll(data)}
                   >
                     Enroll
                   </button>

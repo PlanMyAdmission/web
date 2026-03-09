@@ -9,7 +9,6 @@ const OurPartners = () => {
           In collaboration with:
         </p>
 
-        {}
 
         <p className="text-sm sm:text-base font-semibold text-main mt-1 sm:mt-0">
           Coursefinder.ai

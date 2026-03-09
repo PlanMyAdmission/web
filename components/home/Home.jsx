@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useRef } from 'react';
+import React from 'react';
 import ArticlesSection from '@/components/home/ArticlesSection.jsx';
 import FAQ from '@/components/home/FAQ.jsx';
 import Hero from '@/components/home/Hero.jsx';
@@ -12,22 +10,28 @@ import PlanYourAdmission from '@/components/home/PlanYourAdmission.jsx';
 import SuccessStories from '@/components/home/SuccessStories.jsx';
 import TechnologyPoweredBy from '@/components/home/TechnologyPoweredBy.jsx';
 import ScrollDown from '@components/higherOrderComponents/ScrollDown';
-const Home = () => {
-  const myRef = useRef();
+const Home = ({ content = {}, articles = [] }) => {
   return (
     <>
-      <Hero />
-      <TechnologyPoweredBy />
-      <PlanYourAdmission props={myRef} />
-      <HowpmaIsDifferent />
+      <Hero content={content.hero} />
+      <TechnologyPoweredBy items={content.technologyPoweredBy?.items} />
+      <PlanYourAdmission contentData={content.planYourAdmission} />
+      <HowpmaIsDifferent
+        heading={content.howDifferent?.heading}
+        sections={content.howDifferent?.sections}
+      />
       <OurPartners />
 
       <SuccessStories />
-      {}
-      <ArticlesSection />
+      <ArticlesSection articles={articles} />
 
       <FAQ />
-      <HowItWorksSection />
+      <HowItWorksSection
+        heading={content.howItWorks?.heading}
+        sectionText={content.howItWorks?.sectionText}
+        startHeading={content.howItWorks?.startHeading}
+        timeline={content.howItWorks?.timeline}
+      />
       <JoinUs />
       <ScrollDown />
     </>

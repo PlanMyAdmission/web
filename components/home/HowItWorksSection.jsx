@@ -3,25 +3,54 @@ import Image from 'next/image';
 import React from 'react';
 import Heading from '@components/higherOrderComponents/Heading';
 const ArticleImage = '/images/home/ArticleImage.svg';
-const HowItWorksSection = () => {
+const defaultTimeline = [
+  {
+    id: '01',
+    title: 'Create your account',
+    detatils:
+      'Hey there! Take the first step towards studying abroad by creating an account on our website.',
+  },
+  {
+    id: '02',
+    title: 'Shortlist University',
+    detatils:
+      'Fill up your profile information and our AI technology provides recommendation and saves you time and money at every step of the application process.',
+  },
+  {
+    id: '03',
+    title: 'Consult your expert',
+    detatils:
+      'Schedule a one-on-one session with our in-house experts to get guidance on factors like- SOP, LOR, Scholarships, Visa application, and more!',
+  },
+  {
+    id: '04',
+    title: 'Apply',
+    detatils:
+      'We will help you apply to multiple programs and universities around the world. Then, you wait for your university acceptance and get ready to fly!',
+  },
+];
+
+const HowItWorksSection = ({
+  heading = 'How it works',
+  sectionText,
+  startHeading = 'How to get Started',
+  timeline = defaultTimeline,
+}) => {
   return (
     <div className="py-12">
-      <Heading heading="How it works" />
-      <Section />
-      <Heading heading="How to get Started" />
-      <Timeline />
+      <Heading heading={heading} />
+      <Section sectionText={sectionText} />
+      <Heading heading={startHeading} />
+      <Timeline items={timeline} />
     </div>
   );
 };
-const Section = () => {
+const Section = ({ sectionText }) => {
   return (
     <div className="flex flex-col-reverse md:flex-row items-center justify-evenly max-w-6xl px-2 sm:px-5 md:mx-auto md:mb-20 mb-5 mx-5">
       <p className="md:px-10 md:mx-10 w-full py-5 ">
-        Studying at a prestigious university abroad is something that thousands
-        of students from all over the world dream about. Researching and
-        applying to these universities is a complicated and time-consuming
-        hassle. But it doesn&apos;t have to be. Plan My Admission is the simple
-        one stop shop for all your higher education requirements.
+        {sectionText ||
+          "Studying at a prestigious university abroad is something that thousands of students from all over the world dream about. Researching and applying to these universities is a complicated and time-consuming hassle. But it doesn't have to be. Plan My Admission is the simple one stop shop for all your higher education requirements."}
       </p>
       <Image
         unoptimized
@@ -35,11 +64,11 @@ const Section = () => {
     </div>
   );
 };
-const Timeline = () => {
+const Timeline = ({ items = defaultTimeline }) => {
   return (
     <div className="flex flex-col mx-auto max-w-3xl mb-20">
       <ul className="">
-        {data.map((item) => {
+        {items.map((item) => {
           return (
             <div
               key={item.id}
@@ -68,30 +97,4 @@ const Timeline = () => {
     </div>
   );
 };
-const data = [
-  {
-    id: '01',
-    title: 'Create your account',
-    detatils:
-      'Hey there! Take the first step towards studying abroad by creating an account on our website.',
-  },
-  {
-    id: '02',
-    title: 'Shortlist University',
-    detatils:
-      'Fill up your profile information and our AI technology provides recommendation and saves you time and money at every step of the application process.',
-  },
-  {
-    id: '03',
-    title: 'Consult your expert',
-    detatils:
-      'Schedule a one-on-one session with our in-house experts to get guidance on factors like- SOP, LOR, Scholarships, Visa application, and more!',
-  },
-  {
-    id: '04',
-    title: 'Apply',
-    detatils:
-      'We will help you apply to multiple programs and universities around the world. Then, you wait for your university acceptance and get ready to fly!',
-  },
-];
 export default HowItWorksSection;

@@ -50,7 +50,6 @@ class Content extends React.Component {
           onShowLeft={handelLeft}
           onShowRight={handelRight}
         />
-        {}
       </Carousel>
     );
   }
@@ -59,7 +58,6 @@ const Reviews = ({ gyan, author, university, onShowRight, onShowLeft }) => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-10">
       <article className="flex flex-wrap items-start pb-24 sm:pb-32">
-        {}
         <div className="bg-white basis-80 grow-[5] relative -mb-32 mt-10 -ml-4 sm:-ml-20 p-6 sm:p-8 lg:p-10 rounded-lg sm:[clip-path:polygon(0_theme(spacing.2),100%_0,calc(100%-theme(spacing.8))_calc(100%-theme(spacing.4)),theme(spacing.8)_94%)] shadow-md">
           <p className="text-main flex">
             {[...Array(5)].map((_, i) => (

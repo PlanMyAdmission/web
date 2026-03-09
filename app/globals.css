@@ -107,6 +107,26 @@ button.rec.rec-arrow:focus {
 }
 
 @layer utilities {
+  .pma-skeleton {
+    position: relative;
+    overflow: hidden;
+    background: #f1dfe8;
+  }
+
+  .pma-skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.72) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    animation: pma-skeleton-shimmer 1.5s ease-in-out infinite;
+  }
+
   .clip-review {
     clip-path: polygon(
       0 theme(spacing.14),
@@ -125,6 +145,12 @@ button.rec.rec-arrow:focus {
   .clip-image {
     -webkit-clip-path: polygon(0 2%, 100% 0, 87% 68%, 16% 68%);
     clip-path: polygon(0 2%, 100% 0, 87% 68%, 16% 68%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pma-skeleton::after {
+    animation: none;
   }
 }
 
@@ -182,5 +208,11 @@ button.rec.rec-arrow:focus {
   100% {
     transform: translateY(20%) rotate(45deg);
     opacity: 0.7;
+  }
+}
+
+@keyframes pma-skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
   }
 }

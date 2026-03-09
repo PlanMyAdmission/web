@@ -1,4 +1,5 @@
 import '@/app/globals.css';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Shell from '@/app/shell.jsx';
 import AppProviders from '@/app/providers.jsx';
 import {
@@ -49,6 +50,9 @@ export const metadata = {
     google: 'FJWAYoMaL14W-xl4VRI_KboMHvMJBICmO47pcxI3tms',
   },
 };
+
+const GA_MEASUREMENT_ID = 'G-ZD60CSSVN6';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -56,6 +60,7 @@ export default function RootLayout({ children }) {
         <AppProviders>
           <Shell>{children}</Shell>
         </AppProviders>
+        <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
       </body>
     </html>
   );

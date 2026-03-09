@@ -1,14 +1,14 @@
 import { BASE_URL, isProductionCrawlAllowed } from '@lib/seo';
 
-export default function robots() {
-  const allowCrawl = isProductionCrawlAllowed();
+export default async function robots() {
+  const disallow = ['/dashboard', '/dashboard/*', '/admin', '/admin/*'];
 
   return {
-    rules: allowCrawl
+    rules: isProductionCrawlAllowed()
       ? {
           userAgent: '*',
           allow: '/',
-          disallow: ['/dashboard', '/dashboard/*', '/admin', '/admin/*'],
+          disallow,
         }
       : {
           userAgent: '*',

@@ -6,7 +6,7 @@ import { collection, getFirestore } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { setRouteState, ROUTE_STATE_KEYS } from '@/lib/routeState.js';
+import { reportError } from '@lib/logger.js';
 import fetchFilteredDocs from '@/components/explore_university/filteredResponse/fetchFilteredDocs.js';
 import {
   FilteredResponseEmptyState,
@@ -24,7 +24,6 @@ const FilteredResponse = ({ props }) => {
   const db = getFirestore(app);
   const storage = getStorage();
   const router = useRouter();
-
   const [docs, setDocs] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
@@ -61,11 +60,16 @@ const FilteredResponse = ({ props }) => {
         });
 
         if (!isCancelled) {
-          setDocs(snapshotDocs.map((snapDoc) => snapDoc.data()));
+          setDocs(
+            snapshotDocs.map((snapDoc) => ({
+              recordId: snapDoc.id,
+              ...snapDoc.data(),
+            })),
+          );
           setShowLoader(false);
         }
       } catch (error) {
-        console.error('Failed to fetch explore university docs', error);
+        reportError('Failed to fetch explore university docs', error);
         if (!isCancelled) {
           setShowLoader(false);
         }
@@ -151,12 +155,12 @@ const FilteredResponse = ({ props }) => {
     setSelectedCountries((prev) => [...prev, value]);
   };
 
-  const handleEnroll = (data, logoUrl) => {
-    setRouteState(ROUTE_STATE_KEYS.exploreUniversity, {
-      udata: data,
-      url: logoUrl,
-    });
-    router.push('/explore/university');
+  const handleEnroll = (data) => {
+    if (!data?.recordId) {
+      return;
+    }
+
+    router.push(`/explore/university/${data.recordId}`);
   };
 
   if (filteredDocs.length === 0 || countries.length === 0) {

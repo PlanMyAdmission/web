@@ -5,6 +5,23 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Heading from '@components/higherOrderComponents/Heading';
 import { defaultFAQ } from '@/components/pricing/data.js';
+
+const renderAnswer = (answer) => {
+  if (!answer) {
+    return null;
+  }
+
+  return answer
+    .split(/<br\s*\/?>/i)
+    .map((segment) => segment.trim())
+    .filter(Boolean)
+    .map((segment, index) => (
+      <p key={`${segment}-${index}`} className={index > 0 ? 'mt-2' : ''}>
+        {segment}
+      </p>
+    ));
+};
+
 const AccordionItem = ({ item, isOpen, onToggle }) => {
   return (
     <div className="flex justify-center mx-2">
@@ -24,13 +41,7 @@ const AccordionItem = ({ item, isOpen, onToggle }) => {
         </h2>
         {isOpen && (
           <div className="mt-2 px-2 md:px-0 text-sm transition-all ease-in duration-300">
-            {item.answer && (
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: item.answer,
-                }}
-              />
-            )}
+            {renderAnswer(item.answer)}
             {item.points && (
               <ul className="list-decimal list-inside mt-2 space-y-1">
                 {item.points.map((point, idx) => (

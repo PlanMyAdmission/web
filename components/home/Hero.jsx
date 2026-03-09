@@ -10,7 +10,7 @@ import Autosuggest from 'react-autosuggest';
 import { matchSorter } from 'match-sorter';
 import { useRouter } from 'next/navigation';
 import JoinUsForm from '@/components/home/JoinUsForm.jsx';
-const Hero = () => {
+const Hero = ({ content }) => {
   const [search, setSearch] = useState('');
   const router = useRouter();
   const searchClient = algoliasearch(
@@ -49,9 +49,11 @@ const Hero = () => {
         />
         <div className="relative flex flex-row">
           <h1 className="lg:text-7xl md:text-5xl text-4xl uppercase font-bold">
-            BRING YOUR OVERSEAS EDUCATION
+            {content?.heading || 'BRING YOUR OVERSEAS EDUCATION'}
             <br />
-            <span className="text-main">dreams to life!!</span>
+            <span className="text-main">
+              {content?.accent || 'dreams to life!!'}
+            </span>
           </h1>
           <Image
             unoptimized
@@ -64,7 +66,7 @@ const Hero = () => {
           />
         </div>
         <p className="font-bold text-[18px] md:w-1/2 py-4 leading-[20px]">
-          Put the power of AI & Industry experts to work for you
+          {content?.subtext || 'Put the power of AI & Industry experts to work for you'}
         </p>
         <JoinUsForm />
       </div>

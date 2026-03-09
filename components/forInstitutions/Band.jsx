@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { dispatchOpenAiChatbot } from '@lib/clientUtils.js';
+import { portalSignupUrl } from '@lib/publicLinks.js';
 const Band = ({
   line,
   cta,
@@ -27,22 +29,18 @@ const Band = ({
           </h1>
         </div>
 
-        {}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {}
           <button
             disabled={forInstitutions}
             className={`px-4 py-3 rounded-md text-white font-semibold ${forInstitutions ? 'bg-main cursor-not-allowed opacity-70' : 'bg-main hover:bg-opacity-90'}`}
             onClick={() => {
               if (!forInstitutions)
-                window.location.href =
-                  'https://portal.planmyadmission.com/sign-up';
+                window.location.href = portalSignupUrl;
             }}
           >
             {btn1}
           </button>
 
-          {}
           <button
             className="px-4 py-3 rounded-md border border-main text-main hover:bg-gray-50 font-semibold"
             onClick={() => {
@@ -52,28 +50,17 @@ const Band = ({
             {btn2}
           </button>
 
-          {}
           <button
             className="px-4 py-3 rounded-md bg-blurpink text-white hover:bg-opacity-90 font-semibold"
             onClick={(e) => {
-              try {
-                e.preventDefault();
-                e.stopPropagation();
-                const event = new CustomEvent('openAIChatbot', {
-                  detail: {
-                    source: 'band-admission-coach-button',
-                  },
-                });
-                window.dispatchEvent(event);
-              } catch (error) {
-                console.error('🎯 Band: Error dispatching event', error);
-              }
+              e.preventDefault();
+              e.stopPropagation();
+              dispatchOpenAiChatbot('band-admission-coach-button');
             }}
           >
             {btn3}
           </button>
 
-          {}
           <button
             className="px-4 py-3 rounded-md border border-blurpink text-blurpink hover:bg-gray-50 font-semibold"
             onClick={() => {

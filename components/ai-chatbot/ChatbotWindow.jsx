@@ -1,10 +1,37 @@
 import React from 'react';
 
-const renderMessageHtml = (content) => ({
-  __html: `${content || ''}`
-    .replace(/\n/g, '<br>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'),
-});
+const BOLD_PATTERN = /\*\*(.*?)\*\*/g;
+
+const renderMessageContent = (content = '') =>
+  `${content || ''}`.split('\n').map((line, lineIndex) => {
+    const parts = [];
+    let match;
+    let lastIndex = 0;
+
+    while ((match = BOLD_PATTERN.exec(line)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(line.slice(lastIndex, match.index));
+      }
+
+      parts.push(
+        <strong key={`bold-${lineIndex}-${match.index}`}>{match[1]}</strong>,
+      );
+      lastIndex = match.index + match[0].length;
+    }
+
+    if (lastIndex < line.length) {
+      parts.push(line.slice(lastIndex));
+    }
+
+    BOLD_PATTERN.lastIndex = 0;
+
+    return (
+      <React.Fragment key={`line-${lineIndex}`}>
+        {parts.length > 0 ? parts : line}
+        {lineIndex < `${content || ''}`.split('\n').length - 1 ? <br /> : null}
+      </React.Fragment>
+    );
+  });
 
 const ChatbotWindow = ({
   cx,
@@ -66,7 +93,7 @@ const ChatbotWindow = ({
                     </div>
                   </div>
                 ) : (
-                  <div dangerouslySetInnerHTML={renderMessageHtml(message.content)} />
+                  <div>{renderMessageContent(message.content)}</div>
                 )}
               </div>
             </div>

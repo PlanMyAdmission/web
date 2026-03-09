@@ -1,6 +1,7 @@
 'use client';
 
 import React, { Suspense, lazy, useState, useEffect } from 'react';
+import { trackAiToolEvent } from '@lib/analytics.js';
 import styles from '@/components/AISuiteLauncher.module.css';
 const cx = (...classNames) =>
   classNames
@@ -20,16 +21,22 @@ const AISuiteLauncher = () => {
   const launchAISuite = () => {
     setIsModalOpen(true);
     document.body.style.overflow = 'hidden';
-    if (typeof window.gtag !== 'undefined') {
-      window.gtag('event', 'ai_suite_launched', {
-        event_category: 'engagement',
-        event_label: 'floating_button',
-      });
-    }
+    trackAiToolEvent({
+      toolName: 'admission_suite',
+      action: 'launch',
+      status: 'opened',
+      surface: 'floating_button',
+    });
   };
   const closePMASuite = () => {
     setIsModalOpen(false);
     document.body.style.overflow = 'auto';
+    trackAiToolEvent({
+      toolName: 'admission_suite',
+      action: 'close',
+      status: 'dismissed',
+      surface: 'modal',
+    });
   };
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -50,7 +57,6 @@ const AISuiteLauncher = () => {
   }, []);
   return (
     <>
-      {}
       <div
         id="pmaAISuiteLauncher"
         className={cx('pma-launcher', SUITE_CONFIG.buttonPosition)}
@@ -63,7 +69,6 @@ const AISuiteLauncher = () => {
         </div>
       </div>
 
-      {}
       {isModalOpen && (
         <div className={cx('pma-suite-modal', 'active')}>
           <button

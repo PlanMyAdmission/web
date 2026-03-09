@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useAuth } from '@/context/AuthProvider.jsx';
 import RecommandationsMain from '@/components/dashboard/user/profile/RecommandationsMain.jsx';
+
 const Recommendations = () => {
   const [show, setShow] = useState(false);
-  const [univShow, setUnivShow] = useState(false);
+
   return (
     <div>
       {!show && (

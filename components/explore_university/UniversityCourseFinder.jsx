@@ -9,51 +9,22 @@ import {
   embeddedUniversities,
 } from '@/components/explore_university/universityFinder/constants.js';
 import {
-  convertUSDToINR,
-  estimateTuitionByCountry,
-  formatINR,
-  getRecommendations,
+  formatMinScoreForType,
+  INITIAL_FORM_DATA,
+  normalizeToGpa4,
+  scoreTypeRanges,
+} from '@/components/explore_university/universityFinder/finderConfig.js';
+import {
   searchUniversities,
+  getRecommendations,
+  estimateTuitionByCountry,
+  convertUSDToINR,
+  formatINR,
 } from '@/components/explore_university/universityFinder/utils.js';
 import UniversitySearchForm from '@/components/explore_university/universityFinder/UniversitySearchForm.jsx';
 import UniversityFinderResults from '@/components/explore_university/universityFinder/UniversityFinderResults.jsx';
 
 const cx = (...classNames) => mapModuleClasses(styles, ...classNames);
-
-const INITIAL_FORM_DATA = {
-  university: '',
-  studyLevel: '',
-  scoreType: 'CGPA_10',
-  gpa: '',
-  testType: '',
-  ieltsScore: '',
-  toeflScore: '',
-  budget: 0,
-};
-
-const scoreTypeRanges = {
-  PERCENTAGE_100: { min: 0, max: 100, label: 'Percentage (0-100)' },
-  CGPA_10: { min: 0, max: 10, label: 'CGPA (0-10)' },
-  GPA_4: { min: 0, max: 4, label: 'GPA (0-4)' },
-};
-
-const normalizeToGpa4 = (scoreType, scoreValue) => {
-  const numericScore = parseFloat(scoreValue);
-  if (Number.isNaN(numericScore)) return NaN;
-  if (scoreType === 'PERCENTAGE_100') return numericScore / 25;
-  if (scoreType === 'CGPA_10') return numericScore * 0.4;
-  return numericScore;
-};
-
-const formatMinScoreForType = (minGpa, scoreType) => {
-  if (scoreType === 'PERCENTAGE_100') {
-    return `${Math.round(minGpa * 25)}%`;
-  }
-  if (scoreType === 'CGPA_10') {
-    return `${(minGpa * 2.5).toFixed(1)}/10`;
-  }
-  return `${minGpa.toFixed(1)}/4`;
-};
 
 const UniversityCourseFinder = () => {
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
@@ -62,14 +33,14 @@ const UniversityCourseFinder = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [validationMessages, setValidationMessages] = useState({});
   const [apiStatus, setApiStatus] = useState({
     openalex: 'inactive',
     hipolabs: 'inactive',
     fallback: 'active',
   });
-  const [validationMessages, setValidationMessages] = useState({});
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
 
   const searchTimeoutRef = useRef(null);
 
@@ -105,7 +76,7 @@ const UniversityCourseFinder = () => {
   }, [formData.university]);
 
   const onInputChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((previous) => ({ ...previous, [field]: value }));
 
     if (field === 'university' && `${value}`.length < 2) {
       setSearchResults([]);
@@ -113,33 +84,37 @@ const UniversityCourseFinder = () => {
     }
 
     if (validationMessages[field]) {
-      setValidationMessages((prev) => ({ ...prev, [field]: '' }));
+      setValidationMessages((previous) => ({ ...previous, [field]: '' }));
     }
   };
 
   const onUniversitySelect = (university) => {
     setSelectedUniversity(university);
-    setFormData((prev) => ({ ...prev, university: university.name }));
+    setFormData((previous) => ({ ...previous, university: university.name }));
     setShowDropdown(false);
   };
 
   const onTestTypeChange = (testType) => {
-    setFormData((prev) => ({
-      ...prev,
+    setFormData((previous) => ({
+      ...previous,
       testType,
-      ieltsScore: testType === 'ielts' ? prev.ieltsScore : '',
-      toeflScore: testType === 'toefl' ? prev.toeflScore : '',
+      ieltsScore: testType === 'ielts' ? previous.ieltsScore : '',
+      toeflScore: testType === 'toefl' ? previous.toeflScore : '',
     }));
   };
 
   const validateForm = () => {
     const errors = {};
-
-    if (!selectedUniversity) errors.university = 'Please select a university from the search results';
-    if (!formData.studyLevel) errors.studyLevel = 'Please select a study level';
-
     const scoreConfig = scoreTypeRanges[formData.scoreType] || scoreTypeRanges.CGPA_10;
     const normalizedScore = normalizeToGpa4(formData.scoreType, formData.gpa);
+
+    if (!selectedUniversity) {
+      errors.university = 'Please select a university from the search results';
+    }
+    if (!formData.studyLevel) {
+      errors.studyLevel = 'Please select a study level';
+    }
+
     if (
       !formData.gpa ||
       Number.isNaN(parseFloat(formData.gpa)) ||
@@ -157,7 +132,7 @@ const UniversityCourseFinder = () => {
     } else if (formData.testType === 'ielts') {
       if (
         !formData.ieltsScore ||
-        isNaN(formData.ieltsScore) ||
+        Number.isNaN(formData.ieltsScore) ||
         formData.ieltsScore < 0 ||
         formData.ieltsScore > 9
       ) {
@@ -165,7 +140,7 @@ const UniversityCourseFinder = () => {
       }
     } else if (
       !formData.toeflScore ||
-      isNaN(formData.toeflScore) ||
+      Number.isNaN(formData.toeflScore) ||
       formData.toeflScore < 0 ||
       formData.toeflScore > 120
     ) {
@@ -194,14 +169,24 @@ const UniversityCourseFinder = () => {
     setValidationMessages({});
   };
 
+  const onCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const onUseFallbackList = () => {
+    setSearchResults(embeddedUniversities.slice(0, 20));
+    setShowDropdown(true);
+    setShowModal(false);
+  };
+
   const eligibility = useMemo(() => {
     if (!selectedUniversity || !formData.studyLevel) return null;
 
     const requirements = eligibilityRequirements[formData.studyLevel];
-    let score = 0;
-    const feedback = [];
-
     const normalizedAcademicScore = normalizeToGpa4(formData.scoreType, formData.gpa);
+    const feedback = [];
+    let score = 0;
+
     if (normalizedAcademicScore >= requirements.minGpa) {
       score += 1;
     } else {
@@ -221,52 +206,36 @@ const UniversityCourseFinder = () => {
       score += 1;
     } else {
       feedback.push(
-        `${formData.testType.toUpperCase()} score should be at least ${minTestScore} for ${formData.studyLevel}`,
+        `${formData.testType.toUpperCase()} score should be at least ${minTestScore}`,
       );
     }
 
-    const tuitionEstimate =
-      selectedUniversity.tuition || estimateTuitionByCountry(selectedUniversity.country);
-
-    if (formData.budget >= tuitionEstimate || formData.budget === 0) {
-      score += 1;
-    } else {
-      feedback.push(
-        `Consider budget of at least $${tuitionEstimate.toLocaleString()} (${formatINR(convertUSDToINR(tuitionEstimate))}) for ${selectedUniversity.name}`,
-      );
-    }
-
-    if (score === 3) {
-      return {
-        statusClass: 'status--success',
-        statusText: 'High Eligibility',
-        message: `Excellent! You meet all basic requirements for ${formData.studyLevel} programs at ${selectedUniversity.name}.`,
-      };
-    }
-
-    if (score === 2) {
-      return {
-        statusClass: 'status--warning',
-        statusText: 'Medium Eligibility',
-        message: `Good potential! You meet most requirements. Consider: ${feedback.join('; ')}.`,
-      };
-    }
-
+    const isEligible = score === 2;
     return {
-      statusClass: 'status--error',
-      statusText: 'Needs Improvement',
-      message: `Work needed. Areas to improve: ${feedback.join('; ')}.`,
+      statusClass: isEligible ? cx('status-eligible') : cx('status-review'),
+      statusText: isEligible ? 'Likely Eligible' : 'Needs Review',
+      message: isEligible
+        ? 'Your academic and test profile meets the baseline requirement for this search.'
+        : feedback.join('. '),
     };
-  }, [formData, selectedUniversity]);
+  }, [formData.gpa, formData.ieltsScore, formData.scoreType, formData.studyLevel, formData.testType, formData.toeflScore, selectedUniversity]);
+
+  const recommendations = useMemo(() => {
+    if (!selectedUniversity) {
+      return [];
+    }
+
+    return getRecommendations(selectedUniversity);
+  }, [selectedUniversity]);
 
   return (
-    <div className={cx('university-finder-container')}>
+    <div className={cx('finder-root')}>
       <UniversitySearchForm
         cx={cx}
         formData={formData}
-        isSearching={isSearching}
-        showDropdown={showDropdown}
         searchResults={searchResults}
+        showDropdown={showDropdown}
+        isSearching={isSearching}
         validationMessages={validationMessages}
         apiStatus={apiStatus}
         formatINR={formatINR}
@@ -280,22 +249,18 @@ const UniversityCourseFinder = () => {
 
       <UniversityFinderResults
         cx={cx}
-        formData={formData}
-        selectedUniversity={selectedUniversity}
         showResults={showResults}
+        selectedUniversity={selectedUniversity}
+        formData={formData}
+        eligibility={eligibility}
+        recommendations={recommendations}
         showModal={showModal}
         modalMessage={modalMessage}
-        recommendations={getRecommendations(selectedUniversity)}
-        eligibility={eligibility}
         estimateTuitionByCountry={estimateTuitionByCountry}
         convertUSDToINR={convertUSDToINR}
         formatINR={formatINR}
-        onCloseModal={() => setShowModal(false)}
-        onUseFallbackList={() => {
-          setShowModal(false);
-          setSearchResults(embeddedUniversities.slice(0, 10));
-          setShowDropdown(true);
-        }}
+        onCloseModal={onCloseModal}
+        onUseFallbackList={onUseFallbackList}
       />
     </div>
   );

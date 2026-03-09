@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { reportError } from '@lib/logger.js';
 const JoinUsForm = ({ className = '' }) => {
   const [name, setname] = useState('');
   const [email, setemail] = useState('');
@@ -93,7 +94,7 @@ const JoinUsForm = ({ className = '' }) => {
       setAgreed(false);
       setIsSubmitted(true);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      reportError('Error submitting form:', error);
       setErrors({
         submit: 'Something went wrong. Please try again.',
       });
@@ -256,7 +257,6 @@ const JoinUsForm = ({ className = '' }) => {
               AI University Matchmaker
             </Link>
           </p>
-          {}
         </div>
       )}
     </div>

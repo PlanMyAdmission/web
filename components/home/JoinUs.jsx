@@ -35,7 +35,6 @@ const JoinUs = () => {
             className="w-full h-auto rounded-lg shadow-md"
           />
         </div>
-        {}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 const Course = (udata) => {
   const [isOpen, setOpen] = useState(false);
   const [readMore, setReadMore] = useState(false);
@@ -10,12 +10,9 @@ const Course = (udata) => {
   const handleDropDown = () => {
     setOpen(!isOpen);
   };
-  useEffect(() => {}, [isOpen]);
   return (
     <div id={udata.id} className="bg-light mt-8 mb-5 rounded-lg p-3 px-7">
       <div className="grid grid-cols-3 gap-4 sm:grid-cols-5 border-b-2 border-main pb-4">
-        {}
-        {}
         <div className="col-span-2 sm:col-span-4 self-center">
           <div className="flex flex-col flex-wrap" data-accordion="open">
             <button
@@ -71,7 +68,12 @@ const Course = (udata) => {
             </div>
           </div>
         </div>
-        <a href={udata?.url} target="_blank" className="cursor-pointer">
+        <a
+          href={udata?.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cursor-pointer"
+        >
           <div className="col-span-2 sm:col-span-1 flex flex-col justify-center">
             <button
               type="submit"

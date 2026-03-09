@@ -3,53 +3,29 @@
 import React, { useState } from 'react';
 import ContentSection from '@components/higherOrderComponents/ContentSection';
 import data from '@/components/forInstitutions/featureData.js';
-const Features = () => {
+const Features = ({ sections = data }) => {
   const style =
     'py-2 px-2 font-semibold focus:bg-white active:bg-white  focus:outline-none outline-none mx-2 my-1 w-full rounded-md transition-all duration-500 ease-in-out  ';
-  const [show, setShow] = useState('firstCard');
+  const [show, setShow] = useState(0);
   return (
     <div>
       <div className="bg-light md:max-w-5xl md:mx-auto flex justify-start rounded-md overflow-x-auto  hide-scroll-bar whitespace-nowrap snap-x ">
-        <button
-          autoFocus={true}
-          className={style}
-          onClick={() => setShow('firstCard')}
-        >
-          Enrollment Suite
-        </button>
-        <button className={style} onClick={() => setShow('secondCard')}>
-          Employment Suite
-        </button>
-        <button className={style} onClick={() => setShow('thirdCard')}>
-          Graduation Suite
-        </button>
-        <button className={style} onClick={() => setShow('fourthCard')}>
-          AI Tools and 24/7 Support
-        </button>
+        {sections.map((section, index) => (
+          <button
+            key={`${section.tabLabel || section.id || index}`}
+            autoFocus={index === 0}
+            className={style}
+            onClick={() => setShow(index)}
+          >
+            {section.tabLabel || `Section ${index + 1}`}
+          </button>
+        ))}
       </div>
       <div className="my-20">
-        {show === 'firstCard' && (
+        {sections[show] && (
           <ContentSection
             className=" transition-all duration-1000 ease-in"
-            {...data[0]}
-          />
-        )}
-        {show === 'secondCard' && (
-          <ContentSection
-            className=" transition-all duration-1000 ease-in"
-            {...data[1]}
-          />
-        )}
-        {show === 'thirdCard' && (
-          <ContentSection
-            className=" transition-all duration-1000 ease-in"
-            {...data[2]}
-          />
-        )}
-        {show === 'fourthCard' && (
-          <ContentSection
-            className=" transition-all duration-1000 ease-in"
-            {...data[3]}
+            {...sections[show]}
           />
         )}
       </div>

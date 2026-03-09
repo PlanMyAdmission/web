@@ -37,19 +37,12 @@ const AcceptanceBadge = ({ acceptanceLabel }) => (
       />
       <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z" />
     </svg>
-    <label className="text-bold text-main font-bold text-2xs">
-      {acceptanceLabel}
-    </label>
+    <label className="text-bold text-main font-bold text-2xs">{acceptanceLabel}</label>
     <label className="text text-2.5xs sm:ml-2">Acceptance Rate</label>
   </li>
 );
 
-const UniversityCourseCard = ({
-  course,
-  universityInfo,
-  onShortlistChange,
-  onEnroll,
-}) => {
+const UniversityCourseCard = ({ course, universityInfo, onEnroll }) => {
   const logo = universityInfo?.logo || '';
   const university = universityInfo?.name || 'University';
   const fee = universityInfo?.tuition_value || 0;
@@ -92,16 +85,7 @@ const UniversityCourseCard = ({
           <AcceptanceBadge acceptanceLabel={acceptanceLabel} />
         </ul>
       </div>
-      <div className="col-span-2 sm:col-span-1 flex flex-col justify-between">
-        <div className="mb-10 top-0">
-          <label className="text text-sm mx-1">Shortlist</label>
-          <input
-            type="checkbox"
-            className="mt-2 ml-2"
-            value={course.id}
-            onChange={onShortlistChange}
-          />
-        </div>
+      <div className="col-span-2 sm:col-span-1 flex flex-col justify-end">
         <button
           type="button"
           className="block text-main w-full uppercase bg-transparent p-1 font-bold text-lg mb-0 mt-5"

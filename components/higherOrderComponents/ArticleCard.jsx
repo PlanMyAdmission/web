@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { trackContentClick } from '@lib/analytics.js';
 const ArticleCard = ({ props }) => {
   const router = useRouter();
   return (
@@ -24,6 +25,11 @@ const ArticleCard = ({ props }) => {
           <button
             className="text-main p-3"
             onClick={() => {
+              trackContentClick({
+                contentType: 'blog_post',
+                slug: props.link?.replace('/blogs/', ''),
+                location: 'home_articles',
+              });
               router.push(props.link);
             }}
           >

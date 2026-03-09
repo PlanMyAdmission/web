@@ -5,8 +5,9 @@ import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useAuth } from '@context/AuthProvider';
+import { usePathname } from 'next/navigation';
+import { trackNavigationClick } from '@lib/analytics.js';
+import { portalLoginUrl, portalSignupUrl } from '@lib/publicLinks.js';
 
 const logo = '/images/home/logo.svg';
 const mobileLogo = '/images/home/logo_mobile.svg';
@@ -38,14 +39,9 @@ const navLinks = [
   },
 ];
 
-const portalLoginUrl = 'https://portal.planmyadmission.com/login';
-const portalSignupUrl = 'https://portal.planmyadmission.com/sign-up';
-
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
-  const { currentUser, isAdminUser, logout } = useAuth();
 
   const closeMobileNav = () => setNav(false);
 
@@ -54,19 +50,20 @@ const NavBar = () => {
     closeMobileNav();
   };
 
-  const handleAdminNavigate = () => {
-    closeMobileNav();
-    router.push('/admin/leads');
-  };
-
-  const handleAdminLogout = () => {
-    closeMobileNav();
-    logout('/admin/login');
-  };
-
   const renderStudentAuthButtons = (isMobile = false) => (
     <>
-      <a href={portalLoginUrl} rel="noreferrer" target="_blank">
+      <a
+        href={portalLoginUrl}
+        rel="noopener noreferrer"
+        target="_blank"
+        onClick={() =>
+          trackNavigationClick({
+            location: isMobile ? 'navbar_mobile' : 'navbar_desktop',
+            label: 'login',
+            destination: 'portal_login',
+          })
+        }
+      >
         <button
           className={
             isMobile
@@ -77,7 +74,18 @@ const NavBar = () => {
           Login
         </button>
       </a>
-      <a href={portalSignupUrl} rel="noreferrer" target="_blank">
+      <a
+        href={portalSignupUrl}
+        rel="noopener noreferrer"
+        target="_blank"
+        onClick={() =>
+          trackNavigationClick({
+            location: isMobile ? 'navbar_mobile' : 'navbar_desktop',
+            label: 'register',
+            destination: 'portal_signup',
+          })
+        }
+      >
         <button
           className={
             isMobile
@@ -130,22 +138,6 @@ const NavBar = () => {
 
         <div className="hidden md:flex items-center gap-2">
           {renderStudentAuthButtons()}
-          {currentUser && isAdminUser && (
-            <>
-              <button
-                className="border border-blurpink text-blurpink px-4 py-1 rounded-sm hover:bg-gray-50 transition"
-                onClick={handleAdminNavigate}
-              >
-                Admin
-              </button>
-              <button
-                className="border border-main text-main px-4 py-1 rounded-sm hover:bg-light transition"
-                onClick={handleAdminLogout}
-              >
-                Sign Out
-              </button>
-            </>
-          )}
         </div>
 
         <div onClick={() => setNav((prev) => !prev)} className="block md:hidden px-4 text-main">
@@ -190,22 +182,6 @@ const NavBar = () => {
 
           <div className="mt-6 border-t border-main pt-4 px-5">
             {renderStudentAuthButtons(true)}
-            {currentUser && isAdminUser && (
-              <>
-                <button
-                  className="block w-full text-left px-4 py-2 text-main hover:bg-light mt-3"
-                  onClick={handleAdminNavigate}
-                >
-                  Admin Dashboard
-                </button>
-                <button
-                  className="block w-full text-left px-4 py-2 text-main hover:bg-light"
-                  onClick={handleAdminLogout}
-                >
-                  Admin Sign Out
-                </button>
-              </>
-            )}
           </div>
         </div>
       </div>

@@ -5,15 +5,14 @@ import Header from '@components/higherOrderComponents/Header';
 const contactus = '/images/about/contactus.svg';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import JoinUsForm from '@/components/home/JoinUsForm.jsx';
+
 const Contact = () => {
   return (
     <div>
       <Header heading={'Contact Us'} />
       <div className="grid md:grid-cols-2 items-center justify-center mx-w-7xl mx-auto">
-        {}
         <div className="-mt-24 flex items-center justify-center">
           <Image
             unoptimized
@@ -24,8 +23,6 @@ const Contact = () => {
             height={500}
           />
         </div>
-
-        {}
 
         <div className="hidden md:block select-none text-white">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ut illo
@@ -45,8 +42,6 @@ const Contact = () => {
           Perspiciatis!
         </div>
       </div>
-
-      {}
 
       <div className="grid md:grid-cols-2 grid-cols-1 gap-10  max-w-7xl mx-auto bg-light rounded-lg  md:mb-20 mb-10  ">
         <div className="md:space-x-10 px-5">
@@ -73,24 +68,22 @@ const Contact = () => {
             PlanMyAdmission - Horizon, Datta Mandir Road, Bhandup West, Mumbai -
             400078
             <br />
-            {}
           </p>
-          {}
           <div className="pb-10 flex cursor-pointer justify-start md:w-[75%] mt-3 text-main">
             <a
               href="https://instagram.com/planmyadmission?igshid=OGQ5ZDc2ODk2ZA"
               target={'_blank'}
+              rel="noopener noreferrer"
             >
               <InstagramIcon
                 fontSize="large"
                 className="mr-3 cursor-pointer  opacity-50 hover:opacity-100"
               />
             </a>
-
-            {}
             <a
               href="https://www.facebook.com/profile.php?id=61552697291311"
               target={'_blank'}
+              rel="noopener noreferrer"
             >
               <FacebookIcon
                 fontSize="large"
@@ -100,6 +93,7 @@ const Contact = () => {
             <a
               href="https://www.youtube.com/channel/UCU5motLLs6TlH79FbnLBANg"
               target={'_blank'}
+              rel="noopener noreferrer"
             >
               <YouTubeIcon
                 fontSize="large"
@@ -114,17 +108,9 @@ const Contact = () => {
   );
 };
 const Form = () => {
-  let style =
-    'outline-none focus:outline-none bg-light px-2 py-2 my-2 form-control rounded-sm focus:border focus:border-main transition ease-in-out duration-900 form-control';
-  let check_for = "after:absolute after:text-main after:content-['*']";
   return (
     <div className="relative ">
-      <div
-        className="flex  flex-col md:w-2/3 w-[90vw] border border-main rounded-xl md:px-8 px-3 py-5 md:-translate-y-[200px] bg-white mx-auto"
-        target="_blank"
-        action="https://formsubmit.co/7d15bde2f29f8a6c5a261986268d68a7"
-        method="POST"
-      >
+      <div className="flex  flex-col md:w-2/3 w-[90vw] border border-main rounded-xl md:px-8 px-3 py-5 md:-translate-y-[200px] bg-white mx-auto">
         <JoinUsForm className={' w-[100%]'} />
       </div>
       <iframe
@@ -134,7 +120,6 @@ const Form = () => {
         referrerPolicy="no-referrer-when-downgrade"
         className="hidden md:block absolute w-full bottom-10 h-[250px] px-5"
       ></iframe>
-      {}
     </div>
   );
 };

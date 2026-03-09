@@ -126,7 +126,6 @@ const SuccessStories = () => {
                 dataTestimo.map((item) => {
                   return <Item key={item.id} props={item} />;
                 })}
-              {}
             </Carousel>
           </section>
         </div>
@@ -149,8 +148,6 @@ const SuccessStories = () => {
           </section>
         </div>
 
-        {}
-        {}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto lg:py-20 py-10 sm:px-20 px-4 z-20">
           {dataYT &&
             dataYT.map((item) => {
@@ -175,7 +172,6 @@ const YouTube = ({ props }) => {
         />
       ) : (
         <>
-          {}
           <Image
             src={props.thumbnail}
             alt="Video Thumbnail"
@@ -184,7 +180,6 @@ const YouTube = ({ props }) => {
             unoptimized
           />
 
-          {}
           <div className="absolute inset-0 flex items-center justify-center">
             <button
               onClick={() => setPlay(true)}

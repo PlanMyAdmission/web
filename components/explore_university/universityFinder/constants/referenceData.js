@@ -1,0 +1,61 @@
+export const universityAbbreviations = {
+  mit: 'massachusetts institute of technology',
+  jhu: 'johns hopkins university',
+  nyu: 'new york university',
+  ucla: 'university of california los angeles',
+  'uc berkeley': 'university of california berkeley',
+  berkeley: 'university of california berkeley',
+  caltech: 'california institute of technology',
+  cmu: 'carnegie mellon university',
+  harvard: 'harvard university',
+  stanford: 'stanford university',
+  yale: 'yale university',
+  princeton: 'princeton university',
+  oxford: 'university of oxford',
+  cambridge: 'university of cambridge',
+  imperial: 'imperial college london',
+  ucl: 'university college london',
+  kcl: 'kings college london',
+  lse: 'london school of economics',
+  toronto: 'university of toronto',
+  ubc: 'university of british columbia',
+  mcgill: 'mcgill university',
+  anu: 'australian national university',
+  unsw: 'university of new south wales',
+  nus: 'national university of singapore',
+  ntu: 'nanyang technological university',
+  eth: 'eth zurich',
+  tum: 'technical university of munich',
+};
+
+export const commonMisspellings = {
+  'john hopkins': 'johns hopkins',
+  massachusets: 'massachusetts',
+  pennsylvannia: 'pennsylvania',
+  berkley: 'berkeley',
+  californa: 'california',
+  washingon: 'washington',
+  universtiy: 'university',
+  univeristy: 'university',
+  colege: 'college',
+  insitute: 'institute',
+  tecnology: 'technology',
+  standford: 'stanford',
+  havard: 'harvard',
+  oxfort: 'oxford',
+  cambrige: 'cambridge',
+};
+
+export const studyLevels = [
+  { value: "Bachelor's", label: "Bachelor's Degree" },
+  { value: "Master's", label: "Master's Degree" },
+  { value: 'PhD', label: 'PhD/Doctorate' },
+  { value: 'Certificate', label: 'Certificate Program' },
+];
+
+export const eligibilityRequirements = {
+  "Bachelor's": { minGpa: 2.5, minIelts: 6.0, minToefl: 80 },
+  "Master's": { minGpa: 3.0, minIelts: 6.5, minToefl: 90 },
+  PhD: { minGpa: 3.3, minIelts: 7.0, minToefl: 100 },
+  Certificate: { minGpa: 2.0, minIelts: 5.5, minToefl: 70 },
+};

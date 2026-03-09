@@ -2,11 +2,18 @@
 
 import React, { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { openExternalWindow } from '@lib/clientUtils.js';
+import {
+  portalSignupUrl,
+  supportEmail,
+  supportPhone,
+  whatsappSupportUrl,
+} from '@lib/publicLinks.js';
 const Card = (plan) => {
   const [showModal, setShowModal] = useState(false);
   const handleEnrollClick = () => {
     if (plan.price === 0) {
-      window.location.href = 'https://portal.planmyadmission.com/sign-up';
+      window.location.href = portalSignupUrl;
       return;
     }
     setShowModal(true);
@@ -16,11 +23,9 @@ const Card = (plan) => {
   };
   return (
     <>
-      {}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto mx-4 sm:mx-0">
-            {}
             <div className="flex justify-between items-center p-6 border-b">
               <h2 className="text-2xl font-bold text-gray-800">Enroll Now!</h2>
               <button
@@ -31,9 +36,7 @@ const Card = (plan) => {
               </button>
             </div>
 
-            {}
             <div className="p-6 space-y-6">
-              {}
               <div className="text-center">
                 <h3 className="text-lg font-semibold mb-4 text-gray-800">
                   Scan QR Code to Pay
@@ -56,7 +59,6 @@ const Card = (plan) => {
                 </div>
               </div>
 
-              {}
               <div className="border-t pt-6">
                 <h3 className="text-lg font-semibold mb-4 text-gray-800">
                   Contact Information
@@ -72,7 +74,7 @@ const Card = (plan) => {
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
                     <span className="text-gray-700 text-sm sm:text-base break-all">
-                      support@planmyadmission.com
+                      {supportEmail}
                     </span>
                   </div>
                   <div className="flex items-center space-x-3">
@@ -84,7 +86,7 @@ const Card = (plan) => {
                       <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                     </svg>
                     <span className="text-gray-700 text-sm sm:text-base">
-                      +91 88280 99194
+                      {supportPhone}
                     </span>
                   </div>
                   <div className="flex items-center space-x-3">
@@ -100,13 +102,12 @@ const Card = (plan) => {
                       />
                     </svg>
                     <span className="text-gray-700 text-sm sm:text-base">
-                      WhatsApp: +91 88280 99194
+                      WhatsApp: {supportPhone}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {}
               <div className="border-t pt-6">
                 <h3 className="text-lg font-semibold mb-3 text-gray-800">
                   Need Help?
@@ -117,20 +118,13 @@ const Card = (plan) => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
-                    onClick={() =>
-                      window.open(
-                        'mailto:support@planmyadmission.com',
-                        '_blank',
-                      )
-                    }
+                    onClick={() => openExternalWindow(`mailto:${supportEmail}`)}
                     className="flex-1 bg-main text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                   >
                     Email Support
                   </button>
                   <button
-                    onClick={() =>
-                      window.open('https://wa.me/8828099194', '_blank')
-                    }
+                    onClick={() => openExternalWindow(whatsappSupportUrl)}
                     className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
                   >
                     WhatsApp
@@ -153,8 +147,6 @@ const Card = (plan) => {
           </h3>
           <p className="py-4 font-bold">{plan.description}</p>
         </div>
-
-        {}
 
         <ul className="mt-6 space-y-4 px-8 flex-1">
           {plan.features.map((feature) => {

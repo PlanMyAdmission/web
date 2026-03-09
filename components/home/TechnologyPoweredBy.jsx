@@ -3,7 +3,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import PublicIcon from '@mui/icons-material/Public';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
-const content = [
+const defaultContent = [
   {
     icon: <SchoolIcon className="text-main" fontSize="large" />,
     heading: '10+ Years of Expertise',
@@ -28,16 +28,23 @@ const content = [
     subtext: 'Empower your admissions journey with our intuitive AI platform.',
   },
 ];
-const TechnologyPoweredBy = () => {
+const iconMap = [
+  <SchoolIcon key="school" className="text-main" fontSize="large" />,
+  <PublicIcon key="public" className="text-main" fontSize="large" />,
+  <PsychologyIcon key="psychology" className="text-main" fontSize="large" />,
+  <VerifiedUserIcon key="verified" className="text-main" fontSize="large" />,
+];
+
+const TechnologyPoweredBy = ({ items = defaultContent }) => {
   return (
     <div className="w-full bg-white border-t border-gray-200 py-8 px-4 md:py-12">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-7xl mx-auto">
-        {content.map((item, idx) => (
+        {items.map((item, idx) => (
           <div
-            key={idx}
+            key={`${item.heading}-${idx}`}
             className="bg-light rounded-lg p-4 shadow-sm hover:shadow-md transition duration-200 flex flex-col items-center text-center"
           >
-            <div className="mb-2">{item.icon}</div>
+            <div className="mb-2">{item.icon || iconMap[idx] || iconMap[0]}</div>
             <h3 className="text-sm md:text-base font-semibold text-main">
               {item.heading}
             </h3>
