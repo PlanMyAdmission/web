@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import JoinUs from '@/components/home/JoinUs.jsx';
-import Header from '@components/higherOrderComponents/Header';
+import Header from '@components/common/Header';
+import BlogCardLink from '@components/blog/BlogCardLink.jsx';
 import { getPublishedBlogPosts } from '@lib/blogs.server.js';
 import { buildPageMetadata } from '@lib/seo';
 
@@ -24,9 +24,7 @@ const BlogCard = ({ post }) => (
     <div className="py-3">
       <p className="md:text-2xl text-xl font-semibold leading-tight">{post.title}</p>
       <p className="py-2">{post.excerpt || 'Read the full article.'}</p>
-      <Link className="text-main p-3 inline-block" href={`/blogs/${post.slug}`}>
-        Read More {'>>'}
-      </Link>
+      <BlogCardLink slug={post.slug} />
     </div>
   </div>
 );

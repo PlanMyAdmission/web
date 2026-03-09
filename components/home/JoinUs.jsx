@@ -2,8 +2,7 @@ import Image from 'next/image';
 
 import React from 'react';
 const joinUs = '/images/home/JoinUs.svg';
-import Heading from '@components/higherOrderComponents/Heading';
-import JoinUsForm from '@/components/home/JoinUsForm.jsx';
+import Heading from '@components/common/Heading';
 const JoinUs = () => {
   return (
     <div>

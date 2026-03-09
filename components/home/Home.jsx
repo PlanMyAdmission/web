@@ -9,7 +9,7 @@ import OurPartners from '@/components/home/OurPartners.jsx';
 import PlanYourAdmission from '@/components/home/PlanYourAdmission.jsx';
 import SuccessStories from '@/components/home/SuccessStories.jsx';
 import TechnologyPoweredBy from '@/components/home/TechnologyPoweredBy.jsx';
-import ScrollDown from '@components/higherOrderComponents/ScrollDown';
+import ScrollDown from '@components/common/ScrollDown';
 const Home = ({ content = {}, articles = [] }) => {
   return (
     <>

@@ -23,7 +23,7 @@ service cloud.firestore {
       allow create, update, delete: if false;
     }
 
-    match /ai_matchmaker_leads/{leadId} {
+    match /leads/{leadId} {
       allow read, create, update, delete: if false;
     }
 

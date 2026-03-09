@@ -1,3 +1,5 @@
+import { getLeadSourceLabel as getSourceLabel } from '@lib/leads.js';
+
 export const LEAD_STATUS_OPTIONS = [
   'new',
   'contacted',
@@ -109,18 +111,70 @@ export const formatLeadScore = (type, value) => {
 export const getLeadStatus = (lead) =>
   `${lead?.leadStatus || 'new'}`.toLowerCase();
 
+export const getLeadName = (lead) =>
+  lead?.name ||
+  lead?.contact?.name ||
+  lead?.profile?.studentName ||
+  lead?.user?.displayName ||
+  '';
+
+export const getLeadEmail = (lead) =>
+  lead?.email || lead?.contact?.email || lead?.user?.email || '';
+
+export const getLeadPhone = (lead) => lead?.phone || lead?.contact?.phone || '';
+
+export const getLeadSourceLabel = (lead) => getSourceLabel(lead?.source || '');
+
+export const getLeadStudySummary = (lead) => {
+  const degreeLevel = lead?.profile?.degreeLevel || '';
+  const programArea = lead?.profile?.programArea || '';
+  const specialization = lead?.profile?.specialization || '';
+
+  if ([degreeLevel, programArea, specialization].some(Boolean)) {
+    return [degreeLevel, programArea, specialization]
+      .filter(Boolean)
+      .join(' • ');
+  }
+
+  if (lead?.leadSummary) {
+    return lead.leadSummary;
+  }
+
+  return lead?.leadType === 'general_inquiry'
+    ? 'General counseling enquiry'
+    : '—';
+};
+
+export const getLeadDestinationSummary = (lead) => {
+  const countries = formatLeadList(lead?.profile?.targetCountries);
+  if (countries !== '—') {
+    return countries;
+  }
+
+  const phone = getLeadPhone(lead);
+  if (phone) {
+    return phone;
+  }
+
+  return '—';
+};
+
 export const buildLeadSearchText = (lead) => {
   const topUniversity = lead?.aiResult?.universities?.[0]?.name || '';
 
   return [
-    lead?.profile?.studentName,
-    lead?.user?.email,
+    getLeadName(lead),
+    getLeadEmail(lead),
+    getLeadPhone(lead),
+    getLeadSourceLabel(lead),
+    lead?.sourcePage,
     lead?.profile?.degreeLevel,
     lead?.profile?.programArea,
     lead?.profile?.specialization,
     formatLeadList(lead?.profile?.targetCountries),
     lead?.profile?.boardOrUniversity,
     lead?.profile?.careerGoal,
+    lead?.leadSummary,
     topUniversity,
   ]
     .join(' ')

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 import React from 'react';
-import Heading from '@components/higherOrderComponents/Heading';
+import Heading from '@components/common/Heading';
 const ArticleImage = '/images/home/ArticleImage.svg';
 const defaultTimeline = [
   {

@@ -150,7 +150,7 @@ const LeadsAdminPanel = () => {
           <input
             type="text"
             className="w-full rounded-md border border-main/12 bg-white px-3 py-2 text-sm text-[#442337] outline-none transition focus:border-main/28"
-            placeholder="Search by student, email, program, destination"
+            placeholder="Search by name, email, phone, source, or study plan"
             value={searchText}
             onChange={(event) => setSearchText(event.target.value)}
           />

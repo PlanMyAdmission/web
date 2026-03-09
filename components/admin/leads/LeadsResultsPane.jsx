@@ -1,11 +1,13 @@
 import React from 'react';
 import LeadDetail, { StatusBadge, StatusSelect } from '@/components/admin/leads/LeadDetail.jsx';
 import {
-  formatLeadBudget,
   formatLeadDate,
-  formatLeadList,
+  getLeadDestinationSummary,
+  getLeadEmail,
+  getLeadName,
+  getLeadSourceLabel,
+  getLeadStudySummary,
   getLeadStatus,
-  LEAD_STATUS_LABELS,
 } from '@/components/admin/leads/leadUtils.js';
 
 const LeadsResultsPane = ({
@@ -34,8 +36,8 @@ const LeadsResultsPane = ({
             <thead className="sticky top-0 z-10 bg-[#faf7f9]">
               <tr className="text-left text-[11px] font-semibold uppercase tracking-[0.16em] text-main/48">
                 <th className="px-4 py-3">Lead</th>
-                <th className="px-4 py-3">Study Plan</th>
-                <th className="px-4 py-3">Destination</th>
+                <th className="px-4 py-3">Source</th>
+                <th className="px-4 py-3">Interest</th>
                 <th className="px-4 py-3">Status</th>
                 <th className="px-4 py-3">Updated</th>
               </tr>
@@ -55,29 +57,21 @@ const LeadsResultsPane = ({
                   >
                     <td className="px-4 py-3 align-top">
                       <p className="font-medium text-[#3f1831]">
-                        {lead?.profile?.studentName || 'Unnamed lead'}
+                        {getLeadName(lead) || 'Unnamed lead'}
                       </p>
                       <p className="mt-1 text-xs text-[#8a7385]">
-                        {lead?.user?.email || 'Anonymous session'}
+                        {getLeadEmail(lead) || 'Anonymous session'}
                       </p>
                     </td>
                     <td className="px-4 py-3 align-top">
-                      <p>{lead?.profile?.degreeLevel || '—'}</p>
+                      <p>{getLeadSourceLabel(lead)}</p>
                       <p className="mt-1 text-xs text-[#8a7385]">
-                        {lead?.profile?.programArea || '—'}
-                        {lead?.profile?.specialization
-                          ? ` • ${lead.profile.specialization}`
-                          : ''}
+                        {lead?.sourcePage || '—'}
                       </p>
                     </td>
                     <td className="px-4 py-3 align-top">
-                      <p>{formatLeadList(lead?.profile?.targetCountries)}</p>
-                      <p className="mt-1 text-xs text-[#8a7385]">
-                        {formatLeadBudget(
-                          lead?.profile?.budgetAmount,
-                          lead?.profile?.budgetCurrency,
-                        )}
-                      </p>
+                      <p>{getLeadStudySummary(lead)}</p>
+                      <p className="mt-1 text-xs text-[#8a7385]">{getLeadDestinationSummary(lead)}</p>
                     </td>
                     <td
                       className="px-4 py-3 align-top"
@@ -121,19 +115,19 @@ const LeadsResultsPane = ({
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium text-[#3f1831]">
-                      {lead?.profile?.studentName || 'Unnamed lead'}
+                      {getLeadName(lead) || 'Unnamed lead'}
                     </p>
                     <p className="mt-1 truncate text-xs text-[#8a7385]">
-                      {lead?.user?.email || 'Anonymous session'}
+                      {getLeadEmail(lead) || 'Anonymous session'}
                     </p>
                   </div>
                   <StatusBadge status={leadStatus} />
                 </div>
                 <p className="mt-3 text-sm text-[#4d394a]">
-                  {lead?.profile?.degreeLevel || '—'} • {lead?.profile?.programArea || '—'}
+                  {getLeadSourceLabel(lead)} • {getLeadStudySummary(lead)}
                 </p>
                 <p className="mt-1 text-xs text-[#8a7385]">
-                  {formatLeadList(lead?.profile?.targetCountries)}
+                  {getLeadDestinationSummary(lead)}
                 </p>
               </button>
             );
@@ -164,7 +158,7 @@ const LeadsResultsPane = ({
                   Lead Detail
                 </p>
                 <p className="mt-1 text-sm font-medium text-[#3f1831]">
-                  {selectedLead?.profile?.studentName || 'Lead'}
+                  {getLeadName(selectedLead) || 'Lead'}
                 </p>
               </div>
               <button

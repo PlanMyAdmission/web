@@ -1,8 +1,7 @@
-import { FieldValue } from 'firebase-admin/firestore';
 import { NextResponse } from 'next/server';
 import { getGeminiClient, extractJson, getGeminiText } from '@lib/ai/gemini.js';
 import {
-  enforceAiRequestPolicy,
+  enforceRequestRateLimit,
   validateLeadCaptureContext,
   validatePdfPayload,
   validateUniversityMatchRequest,
@@ -15,12 +14,13 @@ import {
   getFirebaseAdminDb,
   isFirebaseAdminConfigured,
 } from '@lib/firebaseAdmin.js';
-import { buildLeadPayload } from '@lib/leadPayload.js';
+import { buildAiMatchmakerLead } from '@lib/leads.js';
+import { createLeadRecord } from '@lib/leads.server.js';
 import { reportError } from '@lib/logger.js';
 
 export async function POST(request) {
   try {
-    const requestPolicyError = await enforceAiRequestPolicy({
+    const requestPolicyError = await enforceRequestRateLimit({
       request,
       routeKey: 'ai:university-match',
       limit: 6,
@@ -118,15 +118,14 @@ export async function POST(request) {
     if (isFirebaseAdminConfigured) {
       try {
         const db = getFirebaseAdminDb();
-        await db.collection('ai_matchmaker_leads').add({
-          ...buildLeadPayload({
+        await createLeadRecord({
+          db,
+          payload: buildAiMatchmakerLead({
             currentUser: leadContext?.currentUser || null,
             searchProfile,
             parsedResults: parsed,
             hasProfilePdf: Boolean(pdfBase64),
           }),
-          createdAt: FieldValue.serverTimestamp(),
-          updatedAt: FieldValue.serverTimestamp(),
         });
       } catch (leadError) {
         reportError('Failed to save AI matchmaker lead:', leadError);

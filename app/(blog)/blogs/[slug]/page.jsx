@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPublishedBlogPost, getPublishedBlogPosts } from '@lib/blogs.server.js';
 import { buildCmsMetadata } from '@lib/cmsMetadata.js';
+import BlogPostSchema from '@components/seo/BlogPostSchema.jsx';
 
 const buildParagraphs = (content = '') =>
   `${content || ''}`
@@ -122,6 +123,7 @@ export default async function BlogPostPage({ params }) {
 
   return (
     <>
+      <BlogPostSchema post={post} />
       <div className="max-w-5xl mx-auto bg-light px-5 p-10 rounded-xl my-5 mt-20 grid grid-cols-1 sm:grid-cols-2 justify-center items-center gap-7">
         {post.coverImageUrl ? (
           <Image

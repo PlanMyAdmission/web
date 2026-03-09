@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
 import React from 'react';
-import Header from '@components/higherOrderComponents/Header';
-import Heading from '@components/higherOrderComponents/Heading';
+import Header from '@components/common/Header';
+import Heading from '@components/common/Heading';
 const ArticleImage = '/images/home/ArticleImage.svg';
 import Timeline from '@/components/how-it-works/Timeline.jsx';
 const HowItWorks = ({ content }) => {

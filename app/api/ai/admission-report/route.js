@@ -6,14 +6,14 @@ import {
 import { buildProfilePayload } from '@components/ai-admission/lib/profilePayload.js';
 import { getGeminiClient, extractJson, getGeminiText } from '@lib/ai/gemini.js';
 import {
-  enforceAiRequestPolicy,
+  enforceRequestRateLimit,
   validateAdmissionReportRequest,
   validatePdfPayload,
 } from '@lib/ai/requestGuards.js';
 
 export async function POST(request) {
   try {
-    const requestPolicyError = await enforceAiRequestPolicy({
+    const requestPolicyError = await enforceRequestRateLimit({
       request,
       routeKey: 'ai:admission-report',
       limit: 6,

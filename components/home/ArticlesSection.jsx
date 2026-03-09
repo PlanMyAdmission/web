@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useMemo, useRef, useState } from 'react';
-import ArticleCard from '@components/higherOrderComponents/ArticleCard';
+import ArticleCard from '@components/common/ArticleCard';
 import { useRouter } from 'next/navigation';
 import { trackNavigationClick } from '@lib/analytics.js';
 
