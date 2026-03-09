@@ -1,18 +1,17 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { trackEvent } from '@lib/analytics.js';
 import { reportError } from '@lib/logger.js';
 import {
   buildFullPhoneNumber,
-  COUNTRY_DIAL_CODE_OPTIONS,
   normalizeCountryDialCode,
-  normalizePhoneNumber,
   persistSubmission,
   readRecentSubmission,
   SUBMISSION_COOLDOWN_MS,
 } from '@components/contact/joinUsFormHelpers.js';
+import JoinUsPhoneFields from '@components/contact/JoinUsPhoneFields.jsx';
+import JoinUsSuccess from '@components/contact/JoinUsSuccess.jsx';
 
 const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
   const [formData, setFormData] = useState({
@@ -39,7 +38,6 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
     const nextErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const normalizedCountryDialCode = normalizeCountryDialCode(formData.phoneCountryCode);
-    const normalizedPhoneNumber = normalizePhoneNumber(formData.phoneNumber);
 
     if (!formData.name.trim()) {
       nextErrors.name = 'Name is required';
@@ -59,9 +57,9 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
       nextErrors.phoneCountryCode = 'Please choose a valid country code';
     }
 
-    if (!normalizedPhoneNumber) {
+    if (!formData.phoneNumber) {
       nextErrors.phoneNumber = 'Phone number is required';
-    } else if (!/^\d{6,15}$/.test(normalizedPhoneNumber)) {
+    } else if (!/^\d{6,15}$/.test(formData.phoneNumber)) {
       nextErrors.phoneNumber = 'Please enter a valid phone number';
     }
 
@@ -174,51 +172,13 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
           </div>
 
-          <div className="w-[90%] grid gap-3 sm:grid-cols-[180px_minmax(0,1fr)]">
-            <div>
-              <select
-                id="phone-country-code"
-                value={formData.phoneCountryCode}
-                className={`py-4 px-3 rounded-md w-full outline-none bg-white border ${errors.phoneCountryCode ? 'border-red-500' : 'border-[#e8dde3]'}`}
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    phoneCountryCode: event.target.value,
-                  }))
-                }
-              >
-                {COUNTRY_DIAL_CODE_OPTIONS.map((option) => (
-                  <option key={`${option.label}-${option.value}`} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-              {errors.phoneCountryCode && (
-                <p className="text-red-500 text-xs mt-1">{errors.phoneCountryCode}</p>
-              )}
-            </div>
-            <div>
-              <input
-                type="tel"
-                id="phone-number"
-                value={formData.phoneNumber}
-                placeholder="Phone number"
-                className={`py-4 px-3 rounded-md w-full outline-none bg-white border ${errors.phoneNumber ? 'border-red-500' : 'border-[#e8dde3]'}`}
-                inputMode="numeric"
-                maxLength={15}
-                autoComplete="tel-national"
-                onChange={(event) =>
-                  setFormData((current) => ({
-                    ...current,
-                    phoneNumber: normalizePhoneNumber(event.target.value),
-                  }))
-                }
-              />
-              {errors.phoneNumber && (
-                <p className="text-red-500 text-xs mt-1">{errors.phoneNumber}</p>
-              )}
-            </div>
-          </div>
+          <JoinUsPhoneFields
+            formData={formData}
+            errors={errors}
+            onChange={(field, value) =>
+              setFormData((current) => ({ ...current, [field]: value }))
+            }
+          />
 
           <div className="w-[90%]">
             <input
@@ -299,25 +259,7 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
           </button>
         </form>
       ) : (
-        <div className="flex flex-col justify-center items-center text-center py-8">
-          <div className="mb-4">
-            <svg className="w-16 h-16 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <h3 className="text-xl font-semibold text-main mb-2">Thank You!</h3>
-          <p className="text-gray-700 text-sm px-4 mb-4">
-            Thanks for submitting your interest. Our team will connect with you shortly.
-            <br /> In the meantime explore our{' '}
-            <Link style={{ textDecoration: 'underline', color: 'blue' }} href="/ai-university-matchmaker">
-              AI University Matchmaker
-            </Link>
-          </p>
-        </div>
+        <JoinUsSuccess />
       )}
     </div>
   );
