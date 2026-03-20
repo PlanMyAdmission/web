@@ -1,7 +1,7 @@
 import '@/app/globals.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import Shell from '@/app/shell.jsx';
 import AppProviders from '@/app/providers.jsx';
+import GlobalClientUI from '@/components/common/GlobalClientUI.jsx';
 import {
   BASE_URL,
   DEFAULT_DESCRIPTION,
@@ -56,9 +56,10 @@ const GA_MEASUREMENT_ID = 'G-ZD60CSSVN6';
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-white text-[#3f1831] antialiased">
         <AppProviders>
-          <Shell>{children}</Shell>
+          <GlobalClientUI />
+          {children}
         </AppProviders>
         <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
       </body>
