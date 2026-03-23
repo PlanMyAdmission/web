@@ -20,14 +20,16 @@ const FilteredResponseContent = ({
     <div className="grid grid-cols-2 gap-5 sm:grid-cols-6">
       <div className="col-span-5 sm:col-span-6 w-full mx-auto bg-light px-5 py-2 rounded mb-5 mt-4">
         <label className="text-main">
-          You found <label className="font-bold">{uniqueUniversities.length}</label> institutes and{' '}
-          <label className="font-bold">{docs.length}</label> courses
+          You found{' '}
+          <label className="font-bold">{uniqueUniversities.length}</label>{' '}
+          institutes and <label className="font-bold">{docs.length}</label>{' '}
+          courses
         </label>
       </div>
     </div>
 
     <div className="col-span-5 sm:col-span-4 mb-4">
-      <label className="text font-bold">Filter By</label>
+      <label className="font-bold text-[#3f1831]">Filter By</label>
     </div>
 
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -80,7 +82,11 @@ const FilteredResponseContent = ({
               <label className="text-main text-3xs pl-1 pr-1">{value}</label>
               <button
                 type="button"
-                onClick={() => setSelectedCountries((prev) => prev.filter((item) => item !== value))}
+                onClick={() =>
+                  setSelectedCountries((prev) =>
+                    prev.filter((item) => item !== value),
+                  )
+                }
               >
                 <svg
                   aria-hidden="true"
@@ -106,7 +112,9 @@ const FilteredResponseContent = ({
       <div className="col-span-2 sm:col-span-3">
         <div className="max-w-6xl mx-auto bg-light px-5 py-3 rounded mb-5 ml-7">
           {filteredDocs.slice(0, visibleCount).map((data) => {
-            const logoUrl = imageByUniversityId[data?.UniversityId] || '/images/seo/og-default.svg';
+            const logoUrl =
+              imageByUniversityId[data?.UniversityId] ||
+              '/images/seo/og-default.svg';
             return (
               <div
                 key={data?.recordId || data?.id}
@@ -124,17 +132,25 @@ const FilteredResponseContent = ({
                 <div className="col-span-2 sm:col-span-5">
                   <h1 className="text-lr font-bold px-5">{data?.Name}</h1>
                   <ul className="text-2xs px-5 mt-3">
-                    <li className="text-main flex flex-row items-center">{data?.Country}</li>
+                    <li className="text-main flex flex-row items-center">
+                      {data?.Country}
+                    </li>
                     <li className="mt-1">
-                      <label className="text font-bold">University: </label>
+                      <label className="font-bold text-[#3f1831]">
+                        University:{' '}
+                      </label>
                       {data?.University}
                     </li>
                     <li>
-                      <label className="text font-bold">Duration: </label>
+                      <label className="font-bold text-[#3f1831]">
+                        Duration:{' '}
+                      </label>
                       {data?.Duration}
                     </li>
                     <li>
-                      <label className="text font-bold">Yearly Tuition Fee: </label>
+                      <label className="font-bold text-[#3f1831]">
+                        Yearly Tuition Fee:{' '}
+                      </label>
                       {data?.TutionFee}
                     </li>
                   </ul>
@@ -155,7 +171,7 @@ const FilteredResponseContent = ({
           <div className="mb-10">
             <button
               type="button"
-              className="block text-white align-center justify-center bg-main text-1.5lr p-3 text-lg mb-0 mt-5 items-center rounded-lg self-center"
+              className="block text-white bg-main text-1.5lr p-3 text-lg mb-0 mt-5 items-center rounded-lg self-center mx-auto"
               onClick={() => setVisibleCount((prev) => prev + 10)}
             >
               Show More

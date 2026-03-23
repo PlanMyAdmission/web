@@ -16,12 +16,12 @@ const Course = (udata) => {
         <div className="col-span-2 sm:col-span-4 self-center">
           <div className="flex flex-col flex-wrap" data-accordion="open">
             <button
-              className="focus:outline-none bg-transparent p-0 text font-bold text-1.9lr inline-flex"
+              className="focus:outline-none bg-transparent p-0 font-bold text-[#3f1831] text-1.9lr inline-flex"
               onClick={handleDropDown}
             >
               {udata.course}
             </button>
-            <div className="flex flex-col justify-left sm:flex-row mb-2">
+            <div className="flex flex-col justify-start sm:flex-row mb-2">
               <div className="flex flex-row items-center text-main">
                 <svg
                   aria-hidden="true"
@@ -55,14 +55,14 @@ const Course = (udata) => {
                 {udata?.country}
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row items-left justify-left text">
+            <div className="flex flex-col sm:flex-row items-start justify-start text-[#3f1831]">
               <div className="flex flex-row sm:mr-10 items-center">
-                <label className="text-bold text text-2xs">Degree</label>
+                <label className="font-bold text-2xs">Degree</label>
                 <label className="text-main ml-2">{udata?.degree}</label>
               </div>
 
               <div className="flex flex-row items-center">
-                <label className="text-bold text text-2xs">Format</label>{' '}
+                <label className="font-bold text-2xs">Format</label>{' '}
                 <label className="text-main ml-2">{udata?.format}</label>
               </div>
             </div>
@@ -104,9 +104,9 @@ const Course = (udata) => {
       <div className={` pt-5 ${isOpen ? 'block' : 'hidden'}`}>
         <div className="grid grid-cols-2 sm:grid-cols-4 mb-4">
           <div className="col-span-2 sm:col-span-3">
-            <label className="block text text-lr font-bold mb-0">About</label>
+            <label className="block text-lr font-bold mb-0">About</label>
             <div className="mb-3 inline-block">
-              <span className="text text-xs">
+              <span className="text-xs">
                 {!readMore ? dis_cont : `${dis_cont}${extraContent}`}
               </span>
             </div>
@@ -122,28 +122,26 @@ const Course = (udata) => {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="col-span-2 sm:col-span-1">
-            <label className="text text-xs text-main block">Discipline</label>
-            <label className="text text-xs font-bold block">
+            <label className="text-xs text-main block">Discipline</label>
+            <label className="text-xs font-bold block">
               {udata?.discipline}
             </label>
           </div>
           <div className="col-span-2 sm:col-span-1">
-            <label className="text text-xs text-main block">
-              Sub-Discipline
-            </label>
-            <label className="text text-xs font-bold block">
+            <label className="text-xs text-main block">Sub-Discipline</label>
+            <label className="text-xs font-bold block">
               {udata?.sub_discipline}
             </label>
           </div>
           <div className="col-span-2 sm:col-span-1">
-            <label className="text text-xs text-main block">Sub-Degree</label>
-            <label className="text text-xs font-bold block">
+            <label className="text-xs text-main block">Sub-Degree</label>
+            <label className="text-xs font-bold block">
               {udata?.sub_degree}
             </label>
           </div>
         </div>
         <div className="flex flex-col sm:flex-row bg-light justify-between mt-4 mb-5 rounded-lg p-3">
-          <div className="w-full px-1 md:w-1/2 md:px-2 text text-2xs">
+          <div className="w-full px-1 md:w-1/2 md:px-2 text-2xs">
             <div className="flex flex-row justify-between border-b-2 border-solid border-main my-3 p-1">
               <label>Tuition Fee</label>
               <label>{udata.fee}</label>

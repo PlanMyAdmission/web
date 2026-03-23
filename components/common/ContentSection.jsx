@@ -16,21 +16,7 @@ const ContentSection = ({
   forInstitutions = false,
 }) => {
   const router = useRouter();
-  const scrollToBottom = () => {
-    window.scrollTo({
-      top: Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-      ),
-      behavior: 'smooth',
-    });
-  };
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
+
   return (
     <section id={id} className="w-full bg-light py-10 md:py-14">
       <div className="flex flex-col md:flex-row justify-between max-w-7xl mx-auto px-5 md:px-0 gap-10">
@@ -54,15 +40,16 @@ const ContentSection = ({
               disabled={forInstitutions}
               className={`px-4 py-2 rounded-md text-white sm:w-full ${forInstitutions ? 'bg-main cursor-not-allowed opacity-70' : 'bg-main hover:bg-opacity-90'}`}
               onClick={() => {
-                if (!forInstitutions)
-                  window.location.href = portalSignupUrl;
+                if (!forInstitutions) window.location.href = portalSignupUrl;
               }}
             >
               {btn1}
             </button>
             <button
               className="px-4 py-2 rounded-md border border-main text-main hover:bg-light sm:w-full"
-              onClick={scrollToTop}
+              onClick={() => {
+                router.push('/contact');
+              }}
             >
               {btn2}
             </button>

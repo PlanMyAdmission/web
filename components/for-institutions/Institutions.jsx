@@ -9,8 +9,10 @@ const Institutions = ({ content }) => {
   return (
     <>
       <Banner content={content?.banner} />
-      <Heading heading={content?.featuresHeading || 'Features'} />
-      <Features sections={content?.featuresSections} />
+      <section id="institution-features" className="scroll-mt-28">
+        <Heading heading={content?.featuresHeading || 'Features'} />
+        <Features sections={content?.featuresSections} />
+      </section>
       <Universities usedFor="institutions" />
       <Heading heading={content?.plansHeading || 'Flexible Plans'} />
       <div className="container relative grid lg:grid-cols-3 grid-cols-1 lg:gap-8 gap-10 max-w-6xl mx-auto mt-10 p-10 ">

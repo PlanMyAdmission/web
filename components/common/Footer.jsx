@@ -5,6 +5,34 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import Link from 'next/link';
 
+const footerSections = [
+  {
+    title: 'Important Links',
+    items: [
+      { href: '/pricing', label: 'Pricing' },
+      { href: '/how-it-works', label: 'How It Works' },
+      { href: '/blogs', label: 'Blogs' },
+      { href: '/contact', label: 'Contact Us' },
+    ],
+  },
+  {
+    title: 'Company',
+    items: [
+      { href: '/about', label: 'About Us' },
+      { href: '/privacy-policy', label: 'Privacy Policy' },
+      { href: '/terms-and-conditions', label: 'Terms and Conditions' },
+    ],
+  },
+  {
+    title: 'Tools',
+    items: [
+      { href: '/explore', label: 'Explore Universities' },
+      { href: '/ai-university-matchmaker', label: 'AI University Matchmaker' },
+      { href: '/recommendations', label: 'Recommendations' },
+    ],
+  },
+];
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -60,53 +88,25 @@ const Footer = () => {
             </a>
           </div>
         </div>
-        <div className="lg:col-span-2 grid grid-cols-2 sm:flex sm:grid-none gap-5  md:justify-evenly justify-between md:mt-6 md:text-right text-left">
-          <div className="">
-            <h6 className="font-bold uppercase">Important links</h6>
-            <ul className="cursor-pointer font-medium">
-              <li className="py-2 text-sm">
-                <Link href="/pricing">Pricing</Link>
-              </li>
-              <li className="py-2 text-sm">
-                <Link href="/how-it-works">How It Works</Link>
-              </li>
-              <li className="py-2 text-sm">
-                <Link href="/terms-and-conditions">Terms and conditions</Link>
-              </li>
-              <li className="py-2 text-sm">
-                <Link href="/privacy-policy">Privacy Policy</Link>
-              </li>
-            </ul>
-          </div>
-          <div className="">
-            <h6 className="font-bold uppercase">Contact Details</h6>
-            <ul className="cursor-pointer font-medium">
-              <li className="py-2 text-sm">About</li>
-              <li className="py-2 text-sm">
-                <Link href="/blogs">Blog</Link>
-              </li>
-            </ul>
-          </div>
-          <div className="">
-            <h6 className="font-bold uppercase">Others</h6>
-            <ul className="cursor-pointer font-medium">
-              <li className="py-2 text-sm">
-                <Link href="/explore">Explore University</Link>
-              </li>
-              <li className="py-2 text-sm">
-                <Link href="/explore">Courses</Link>
-              </li>
-            </ul>
-          </div>
+        <div className="lg:col-span-2 grid grid-cols-2 gap-5 sm:flex sm:flex-wrap md:justify-evenly justify-between md:mt-6 md:text-right text-left">
+          {footerSections.map((section) => (
+            <div key={section.title}>
+              <h6 className="font-bold uppercase">{section.title}</h6>
+              <ul className="cursor-pointer font-medium">
+                {section.items.map((item) => (
+                  <li key={item.href} className="py-2 text-sm">
+                    <Link href={item.href}>{item.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
       <hr className="md:max-w-7xl w-full text-main mx-auto" />
       <p className="text-sm self-center text-center text-main p-5">
         © {`${currentYear} `}
-        <a
-          href="https://planmyadmission.com"
-          className="hover:underline"
-        >
+        <a href="https://planmyadmission.com" className="hover:underline">
           planmyadmission™
         </a>
         . All Rights Reserved.

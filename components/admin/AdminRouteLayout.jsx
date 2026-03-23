@@ -36,7 +36,9 @@ const SidebarLinks = ({ pathname, onNavigate, collapsed = false }) => (
           } ${collapsed ? 'lg:px-2 lg:py-2 lg:text-xs' : ''}`}
         >
           <span className={collapsed ? 'lg:mx-auto' : ''}>{item.label}</span>
-          {!collapsed && isActive && <span className="h-2 w-2 rounded-full bg-main" />}
+          {!collapsed && isActive && (
+            <span className="h-2 w-2 rounded-full bg-main" />
+          )}
         </Link>
       );
     })}
@@ -97,7 +99,9 @@ const SidebarInner = ({
         collapsed={collapsed && !isMobile}
       />
 
-      <div className={`mt-5 border-t border-main/10 pt-4 ${collapsed && !isMobile ? 'lg:hidden' : ''}`}>
+      <div
+        className={`mt-5 border-t border-main/10 pt-4 ${collapsed && !isMobile ? 'lg:hidden' : ''}`}
+      >
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-main/45">
           Account
         </p>
@@ -109,7 +113,9 @@ const SidebarInner = ({
     </div>
 
     <div className="border-t border-main/10 px-3 py-3">
-      <div className={`flex gap-2 ${collapsed && !isMobile ? 'lg:flex-col' : 'flex-col'}`}>
+      <div
+        className={`flex gap-2 ${collapsed && !isMobile ? 'lg:flex-col' : 'flex-col'}`}
+      >
         <Link
           href="/"
           onClick={onNavigate}
@@ -132,8 +138,10 @@ const SidebarInner = ({
 const AdminRouteLayout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const { authLoading, adminLoading, currentUser, isAdminUser, logout } = useAuth();
+  const { authLoading, adminLoading, currentUser, isAdminUser, logout } =
+    useAuth();
   const isLoginPage = pathname === '/admin/login';
+  const loginHref = `/admin/login?next=${encodeURIComponent(pathname || '/admin')}`;
   const activeItem =
     navItems.find(
       (item) => pathname === item.href || pathname?.startsWith(`${item.href}/`),
@@ -146,8 +154,8 @@ const AdminRouteLayout = ({ children }) => {
       return;
     }
 
-    router.replace(`/admin/login?next=${encodeURIComponent(pathname || '/admin')}`);
-  }, [authLoading, currentUser, isLoginPage, pathname, router]);
+    router.replace(loginHref);
+  }, [authLoading, currentUser, isLoginPage, loginHref, router]);
 
   useEffect(() => {
     if (!mobileSidebarOpen) {
@@ -168,9 +176,13 @@ const AdminRouteLayout = ({ children }) => {
 
   if (authLoading || adminLoading) {
     return (
-      <div className={`min-h-screen ${shellBg} flex items-center justify-center px-4`}>
+      <div
+        className={`min-h-screen ${shellBg} flex items-center justify-center px-4`}
+      >
         <div className="rounded-lg border border-main/10 bg-white px-6 py-5 text-center">
-          <p className="text-sm font-medium text-[#3f1831]">Restoring admin session...</p>
+          <p className="text-sm font-medium text-[#3f1831]">
+            Restoring admin session...
+          </p>
         </div>
       </div>
     );
@@ -178,9 +190,35 @@ const AdminRouteLayout = ({ children }) => {
 
   if (!currentUser) {
     return (
-      <div className={`min-h-screen ${shellBg} flex items-center justify-center px-4`}>
-        <div className="rounded-lg border border-main/10 bg-white px-6 py-5 text-center">
-          <p className="text-sm font-medium text-[#3f1831]">Redirecting to login...</p>
+      <div
+        className={`min-h-screen ${shellBg} flex items-center justify-center px-4`}
+      >
+        <div className="w-full max-w-lg rounded-[24px] border border-main/10 bg-white p-6 shadow-[0_12px_36px_rgba(157,19,95,0.06)]">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-main/45">
+            Admin Access
+          </p>
+          <h1 className="mt-2 text-xl font-semibold text-[#3f1831]">
+            Sign in to continue
+          </h1>
+          <p className="mt-3 text-sm leading-7 text-[#6f556f]">
+            You need an approved admin Google account to access this workspace.
+            You should be redirected automatically, but the direct login link is
+            available below if that handoff stalls.
+          </p>
+          <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+            <Link
+              href={loginHref}
+              className="rounded-md bg-[#3f1831] px-4 py-2 text-center text-sm font-medium text-white transition hover:bg-[#2c1022]"
+            >
+              Continue to Login
+            </Link>
+            <Link
+              href="/"
+              className="rounded-md border border-main/12 px-4 py-2 text-center text-sm font-medium text-main transition hover:bg-[#fff7fb]"
+            >
+              Back to Site
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -188,7 +226,9 @@ const AdminRouteLayout = ({ children }) => {
 
   if (!isAdminUser) {
     return (
-      <div className={`min-h-screen ${shellBg} flex items-center justify-center px-4`}>
+      <div
+        className={`min-h-screen ${shellBg} flex items-center justify-center px-4`}
+      >
         <div className="w-full max-w-lg rounded-lg border border-main/10 bg-white p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-main/45">
             Access Denied
@@ -279,7 +319,9 @@ const AdminRouteLayout = ({ children }) => {
                   </p>
                 </div>
               </div>
-              <p className="hidden text-xs text-[#8a7385] md:block">{currentUser.email}</p>
+              <p className="hidden text-xs text-[#8a7385] md:block">
+                {currentUser.email}
+              </p>
             </div>
           </header>
 

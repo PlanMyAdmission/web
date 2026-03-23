@@ -21,14 +21,19 @@ const ExploreUniversityData = ({ records = [], imageUrl = '' }) => {
                 unoptimized
               />
             ) : (
-              <div className="w-full h-full bg-light rounded-md" aria-hidden="true" />
+              <div
+                className="w-full h-full bg-light rounded-md"
+                aria-hidden="true"
+              />
             )}
           </div>
           <div className="col-span-2 sm:col-span-3 self-center">
             <div className="flex flex-col flex-wrap">
-              <label className="text font-bold text-1.9lr">{data?.Name}</label>
-              <div className="flex flex-col justify-left sm:flex-col">
-                <div className="flex flex-row items-center text-main font-bold text-1.3lr">
+              <label className="font-bold text-[#3f1831] text-1.9lr">
+                {data?.Name}
+              </label>
+              <div className="flex flex-col justify-start sm:flex-col">
+                <div className="flex flex-row items-center text-main font-bold text-[1.3rem]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="10"

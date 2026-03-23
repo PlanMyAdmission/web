@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { dispatchOpenAiChatbot } from '@lib/clientUtils.js';
 import { portalSignupUrl } from '@lib/publicLinks.js';
 const Band = ({
-  line,
+  line = 'Fast Track your journey',
   cta,
   btn1 = 'Register Now',
   btn2 = 'Book Your Free Consultation',
@@ -14,12 +14,8 @@ const Band = ({
   forInstitutions = false,
 }) => {
   const router = useRouter();
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
+  const primaryCta = cta || btn1;
+
   return (
     <div className="w-full bg-light py-5 md:my-20 my-10">
       <div className="max-w-7xl mx-auto px-5">
@@ -34,17 +30,16 @@ const Band = ({
             disabled={forInstitutions}
             className={`px-4 py-3 rounded-md text-white font-semibold ${forInstitutions ? 'bg-main cursor-not-allowed opacity-70' : 'bg-main hover:bg-opacity-90'}`}
             onClick={() => {
-              if (!forInstitutions)
-                window.location.href = portalSignupUrl;
+              if (!forInstitutions) window.location.href = portalSignupUrl;
             }}
           >
-            {btn1}
+            {primaryCta}
           </button>
 
           <button
             className="px-4 py-3 rounded-md border border-main text-main hover:bg-gray-50 font-semibold"
             onClick={() => {
-              router.push('/');
+              router.push('/contact');
             }}
           >
             {btn2}

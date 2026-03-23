@@ -1,7 +1,10 @@
 'use client';
 
 import React from 'react';
-import { year, month } from '@/components/recommendations/recommendationData.js';
+import {
+  year,
+  month,
+} from '@/components/recommendations/recommendationData.js';
 
 export const StepOne = ({
   countries,
@@ -13,7 +16,7 @@ export const StepOne = ({
 }) => (
   <div className="m-5 grid gap-4 grid-cols-1 sm:grid-cols-6 justify-center">
     <div className="col-span-1 sm:col-span-2">
-      <p className="text-md">
+      <p className="text-base">
         Choose your prefered Country<label className="text-main">*</label>
       </p>
       <select
@@ -108,7 +111,10 @@ export const StepOne = ({
         Year:{' '}
         <span className="flex flex-col sm:flex-row">
           {year.map((value) => (
-            <label key={value} className="flex flex-row mr-3 items-center gap-1">
+            <label
+              key={value}
+              className="flex flex-row mr-3 items-center gap-1"
+            >
               <input
                 type="radio"
                 name="year"

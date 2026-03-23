@@ -39,6 +39,18 @@ const navLinks = [
   },
 ];
 
+const isNavLinkActive = (pathname, href) => {
+  if (!pathname) {
+    return false;
+  }
+
+  if (href === '/') {
+    return pathname === href;
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+};
+
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const pathname = usePathname();
@@ -128,7 +140,7 @@ const NavBar = () => {
           {navLinks.map((item) => (
             <li
               key={item.href}
-              className={`hover:underline ${pathname === item.href ? 'font-bold' : ''}`}
+              className={`hover:underline ${isNavLinkActive(pathname, item.href) ? 'font-bold' : ''}`}
               onClick={() => localStorage.removeItem('button')}
             >
               <Link href={item.href}>{item.label}</Link>
@@ -140,7 +152,10 @@ const NavBar = () => {
           {renderStudentAuthButtons()}
         </div>
 
-        <div onClick={() => setNav((prev) => !prev)} className="block md:hidden px-4 text-main">
+        <div
+          onClick={() => setNav((prev) => !prev)}
+          className="block md:hidden px-4 text-main"
+        >
           {!nav ? <MenuIcon /> : <CloseIcon />}
         </div>
 
@@ -172,7 +187,7 @@ const NavBar = () => {
             {navLinks.map((item) => (
               <li
                 key={`mobile-${item.href}`}
-                className={`p-2 pl-5 text-[18px] ${pathname === item.href ? 'font-bold' : ''}`}
+                className={`p-2 pl-5 text-[18px] ${isNavLinkActive(pathname, item.href) ? 'font-bold' : ''}`}
                 onClick={handleNavItemClick}
               >
                 <Link href={item.href}>{item.label}</Link>

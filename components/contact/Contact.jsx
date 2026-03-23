@@ -1,126 +1,287 @@
+'use client';
+
 import Image from 'next/image';
 
 import React from 'react';
 import Header from '@components/common/Header';
-const contactus = '/images/about/contactus.svg';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import PhoneInTalkOutlinedIcon from '@mui/icons-material/PhoneInTalkOutlined';
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import JoinUsForm from '@/components/home/JoinUsForm.jsx';
+import {
+  supportEmail,
+  supportPhone,
+  whatsappSupportUrl,
+} from '@lib/publicLinks.js';
+
+const contactus = '/images/about/contactus.svg';
+const officeAddress =
+  'PlanMyAdmission - Horizon, Datta Mandir Road, Bhandup West, Mumbai - 400078';
+const officeMapUrl =
+  'https://www.google.com/maps/search/?api=1&query=Atul+Projects+Horizon+Bhandup+West+Mumbai';
+const supportPhoneHref = supportPhone.replace(/\s+/g, '');
+const socialLinks = [
+  {
+    href: 'https://instagram.com/planmyadmission?igshid=OGQ5ZDc2ODk2ZA',
+    label: 'Instagram',
+    Icon: InstagramIcon,
+  },
+  {
+    href: 'https://www.facebook.com/profile.php?id=61552697291311',
+    label: 'Facebook',
+    Icon: FacebookIcon,
+  },
+  {
+    href: 'https://www.youtube.com/channel/UCU5motLLs6TlH79FbnLBANg',
+    label: 'YouTube',
+    Icon: YouTubeIcon,
+  },
+];
+const quickActions = [
+  {
+    label: 'Email us',
+    value: supportEmail,
+    href: `mailto:${supportEmail}`,
+    Icon: EmailOutlinedIcon,
+  },
+  {
+    label: 'Call us',
+    value: supportPhone,
+    href: `tel:${supportPhoneHref}`,
+    Icon: PhoneInTalkOutlinedIcon,
+  },
+  {
+    label: 'WhatsApp',
+    value: 'Chat with our team',
+    href: whatsappSupportUrl,
+    Icon: WhatsAppIcon,
+    external: true,
+  },
+  {
+    label: 'Visit office',
+    value: 'Open Google Maps',
+    href: officeMapUrl,
+    Icon: LocationOnOutlinedIcon,
+    external: true,
+  },
+];
 
 const Contact = () => {
   return (
-    <div>
+    <main className="pb-10 md:pb-14">
       <Header heading={'Contact Us'} />
-      <div className="grid md:grid-cols-2 items-center justify-center mx-w-7xl mx-auto">
-        <div className="-mt-24 flex items-center justify-center">
-          <Image
-            unoptimized
-            src={contactus}
-            alt="contactus"
-            className="w-[500px] h-auto"
-            width={500}
-            height={500}
-          />
-        </div>
+      <section className="max-w-7xl mx-auto px-5 md:px-6 grid gap-8 lg:grid-cols-[1.08fr_0.92fr]">
+        <div className="rounded-[32px] bg-light px-6 py-8 md:px-8 md:py-10">
+          <div className="grid gap-8 md:grid-cols-[0.95fr_1.05fr] md:items-center">
+            <div className="flex justify-center">
+              <Image
+                unoptimized
+                src={contactus}
+                alt="Contact Plan My Admission"
+                className="w-full max-w-[360px] h-auto"
+                width={500}
+                height={500}
+              />
+            </div>
 
-        <div className="hidden md:block select-none text-white">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio ut illo
-          fuga voluptatum quidem eveniet ipsa ratione at ad maxime? Nesciunt
-          quaerat voluptatum ducimus ipsam quasi officiis inventore asperiores
-          harum at fugiat eligendi, impedit unde deserunt eveniet tenetur
-          maiores hic deleniti blanditiis ipsa nostrum dolorum ut debitis itaque
-          amet! Perspiciatis! Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Odio ut illo fuga voluptatum quidem eveniet ipsa ratione at ad
-          maxime? Nesciunt quaerat voluptatum ducimus ipsam quasi officiis
-          inventore asperiores harum at fugiat eligendi, impedit unde deserunt
-          eveniet tenetur maiores hic deleniti blanditiis ipsa nostrum dolorum
-          ut debitis itaque amet! Perspiciatis! maxime? Nesciunt quaerat
-          voluptatum ducimus ipsam quasi officiis inventore asperiores harum at
-          fugiat eligendi, impedit unde deserunt eveniet tenetur maiores hic
-          deleniti blanditiis ipsa nostrum dolorum ut debitis itaque amet!
-          Perspiciatis!
-        </div>
-      </div>
+            <div>
+              <p className="text-sm uppercase tracking-[0.18em] text-main/80">
+                Let&apos;s Talk
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold leading-tight text-[#4b2740] md:text-4xl">
+                Start planning your overseas admission with a real counsellor.
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-[#5f4a5a] md:text-base">
+                Whether you are shortlisting universities, planning your tests,
+                or preparing for applications, our team can help you turn the
+                next step into a concrete plan.
+              </p>
 
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-10  max-w-7xl mx-auto bg-light rounded-lg  md:mb-20 mb-10  ">
-        <div className="md:space-x-10 px-5">
-          <h1 className="sm:text-5xl text-3xl font-bold sm:px-10 py-5">
-            Contact Details
-          </h1>
-          <p className="py-5">
-            Thank you for considering Planmyadmission as your trusted partner
-            for your overseas education journey. Our team of dedicated
-            professionals is here to provide you with unparalleled support and
-            guidance to help you achieve your dream of studying abroad.<br></br>
-            We understand that the decision to study in a foreign country can be
-            overwhelming and we are here to make the process easier for you. Our
-            AI/ML solution is designed to personalize your experience and
-            provide you with tailored recommendations based on your academic
-            background and preferences.
-          </p>
-          <label className="font-bold py-2">Email</label>
-          <p className="md:pb-5 pb-2">support@planmyadmission.com</p>
-          <label className="font-bold py-2">Phone</label>
-          <p className="md:pb-5 pb-2">+91 8828099194</p>
-          <label className="font-bold py-2">Location</label>
-          <p className="pb-5">
-            PlanMyAdmission - Horizon, Datta Mandir Road, Bhandup West, Mumbai -
-            400078
-            <br />
-          </p>
-          <div className="pb-10 flex cursor-pointer justify-start md:w-[75%] mt-3 text-main">
-            <a
-              href="https://instagram.com/planmyadmission?igshid=OGQ5ZDc2ODk2ZA"
-              target={'_blank'}
-              rel="noopener noreferrer"
-            >
-              <InstagramIcon
-                fontSize="large"
-                className="mr-3 cursor-pointer  opacity-50 hover:opacity-100"
-              />
-            </a>
-            <a
-              href="https://www.facebook.com/profile.php?id=61552697291311"
-              target={'_blank'}
-              rel="noopener noreferrer"
-            >
-              <FacebookIcon
-                fontSize="large"
-                className="mr-3 cursor-pointer  opacity-50 hover:opacity-100"
-              />
-            </a>
-            <a
-              href="https://www.youtube.com/channel/UCU5motLLs6TlH79FbnLBANg"
-              target={'_blank'}
-              rel="noopener noreferrer"
-            >
-              <YouTubeIcon
-                fontSize="large"
-                className="mr-3 cursor-pointer  opacity-50 hover:opacity-100"
-              />
-            </a>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                {quickActions.map(({ label, value, href, Icon, external }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={external ? '_blank' : undefined}
+                    rel={external ? 'noopener noreferrer' : undefined}
+                    className="rounded-2xl border border-main/15 bg-white px-4 py-4 transition hover:-translate-y-0.5 hover:border-main/40"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-main/10 text-main">
+                        <Icon fontSize="small" />
+                      </span>
+                      <div>
+                        <p className="text-sm font-semibold text-[#4b2740]">
+                          {label}
+                        </p>
+                        <p className="text-sm text-[#6f5566]">{value}</p>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-        <Form />
-      </div>
-    </div>
+
+        <div className="rounded-[32px] border border-main/15 bg-white p-4 shadow-sm md:p-6">
+          <p className="text-sm uppercase tracking-[0.18em] text-main/80">
+            Free Consultation
+          </p>
+          <h2 className="mt-2 text-2xl font-semibold text-[#4b2740] md:text-3xl">
+            Tell us where you want to study.
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-[#5f4a5a]">
+            Share your details and our team will reach out to guide you on
+            universities, applications, and the next best move for your profile.
+          </p>
+          <div className="mt-6">
+            <JoinUsForm className="w-full mb-0" sourcePage="contact_page" />
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-5 md:px-6 mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="rounded-[32px] bg-light px-6 py-8 md:px-8">
+          <h2 className="text-3xl font-semibold text-[#4b2740]">
+            Contact Details
+          </h2>
+          <p className="mt-4 text-sm leading-7 text-[#5f4a5a] md:text-base">
+            Thank you for considering PlanMyAdmission as your trusted partner
+            for your overseas education journey. Our team combines expert human
+            guidance with AI-assisted workflows so you can make confident
+            decisions faster.
+          </p>
+
+          <div className="mt-8 space-y-5">
+            <DetailRow
+              label="Email"
+              value={supportEmail}
+              href={`mailto:${supportEmail}`}
+            />
+            <DetailRow
+              label="Phone"
+              value={supportPhone}
+              href={`tel:${supportPhoneHref}`}
+            />
+            <DetailRow
+              label="Location"
+              value={officeAddress}
+              href={officeMapUrl}
+              external
+            />
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center gap-4 text-main">
+            {socialLinks.map(({ href, label, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="rounded-full border border-main/20 bg-white p-3 transition hover:-translate-y-0.5 hover:border-main/40"
+              >
+                <Icon />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-[32px] bg-gradient-to-br from-main to-[#ff8ab3] px-6 py-8 text-white md:px-8">
+          <div className="flex items-center gap-3">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/15">
+              <LocationOnOutlinedIcon />
+            </span>
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-white/80">
+                Mumbai Office
+              </p>
+              <p className="text-sm text-white/85">
+                Prefer an in-person consultation? Visit the team in Bhandup.
+              </p>
+            </div>
+          </div>
+
+          <h2 className="mt-8 text-3xl font-semibold leading-tight">
+            Meet us offline and move faster on your shortlist, applications, and
+            next steps.
+          </h2>
+          <p className="mt-4 text-sm leading-7 text-white/85 md:text-base">
+            Bring your profile, target countries, or current application
+            questions and we will help you structure the next phase clearly.
+          </p>
+
+          <div className="mt-6 rounded-[24px] border border-white/20 bg-white/10 p-5 backdrop-blur-sm">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-white/80">
+              Address
+            </p>
+            <p className="mt-2 text-lg font-medium leading-7">
+              {officeAddress}
+            </p>
+          </div>
+
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            <a
+              href={officeMapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-main transition hover:bg-[#fff3f8]"
+            >
+              Open in Google Maps
+              <OpenInNewIcon fontSize="small" />
+            </a>
+            <a
+              href={whatsappSupportUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+            >
+              WhatsApp the Team
+              <WhatsAppIcon fontSize="small" />
+            </a>
+          </div>
+
+          <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <InfoChip label="Shortlisting" />
+            <InfoChip label="Applications" />
+            <InfoChip label="Visa & SOP" />
+          </div>
+        </div>
+      </section>
+    </main>
   );
 };
-const Form = () => {
+
+const DetailRow = ({ label, value, href, external = false }) => {
   return (
-    <div className="relative ">
-      <div className="flex  flex-col md:w-2/3 w-[90vw] border border-main rounded-xl md:px-8 px-3 py-5 md:-translate-y-[200px] bg-white mx-auto">
-        <JoinUsForm className={' w-[100%]'} sourcePage="contact_page" />
-      </div>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.9193094843877!2d72.93874407598106!3d19.15500904948591!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b8615c9625ed%3A0x3c4edf53b3cb7ec4!2sAtul%20projects%20horizon!5e0!3m2!1sen!2sin!4v1759326710531!5m2!1sen!2sin"
-        allowFullScreen=""
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        className="hidden md:block absolute w-full bottom-10 h-[250px] px-5"
-      ></iframe>
+    <div className="rounded-2xl border border-white/60 bg-white/70 px-4 py-4">
+      <p className="text-sm font-semibold uppercase tracking-[0.16em] text-main/80">
+        {label}
+      </p>
+      <a
+        href={href}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noopener noreferrer' : undefined}
+        className="mt-2 inline-flex text-sm leading-6 text-[#4b2740] transition hover:text-main"
+      >
+        {value}
+      </a>
     </div>
   );
 };
+
+const InfoChip = ({ label }) => {
+  return (
+    <div className="rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-center text-sm font-medium text-white backdrop-blur-sm">
+      {label}
+    </div>
+  );
+};
+
 export default Contact;

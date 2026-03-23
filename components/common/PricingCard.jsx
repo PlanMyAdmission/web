@@ -11,6 +11,7 @@ import {
 } from '@lib/publicLinks.js';
 const Card = (plan) => {
   const [showModal, setShowModal] = useState(false);
+  const currencySymbol = plan.currency === 'USD' ? '$' : '₹';
   const handleEnrollClick = () => {
     if (plan.price === 0) {
       window.location.href = portalSignupUrl;
@@ -53,7 +54,8 @@ const Card = (plan) => {
                 </p>
                 <div className="bg-gray-50 rounded-lg p-4 mb-4">
                   <p className="text-lg font-semibold text-gray-800">
-                    Amount: ₹{plan.price}
+                    Amount: {currencySymbol}
+                    {plan.price}
                   </p>
                   <p className="text-sm text-gray-600">{plan.title}</p>
                 </div>
@@ -142,8 +144,9 @@ const Card = (plan) => {
         >
           <h3 className="text-5xl font-bold py-2 text-main">{plan.title}</h3>
           <h3 className="text-4xl font-bold py-2 ">
-            ₹{plan.price}
-            <span className="text-[15px] text-grey">{plan.frequency}</span>
+            {currencySymbol}
+            {plan.price}
+            <span className="text-[15px] text-gray-500">{plan.frequency}</span>
           </h3>
           <p className="py-4 font-bold">{plan.description}</p>
         </div>

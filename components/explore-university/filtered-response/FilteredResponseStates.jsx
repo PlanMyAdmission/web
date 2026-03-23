@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const FilteredResponseLoadingState = () => (
-  <div role="status" className="flex align-items-center justify-center">
+  <div role="status" className="flex items-center justify-center">
     <svg
       aria-hidden="true"
       className="w-12 h-12 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 text-main"
@@ -22,7 +22,7 @@ export const FilteredResponseLoadingState = () => (
 );
 
 export const FilteredResponseEmptyState = () => (
-  <div className="flex align-items-center justify-center items-center">
+  <div className="flex items-center justify-center">
     <label className="text-main text-2xl">No Results Found...</label>
   </div>
 );

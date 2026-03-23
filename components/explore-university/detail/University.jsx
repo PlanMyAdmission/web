@@ -20,13 +20,18 @@ const University = ({ universities = [] }) => {
                 unoptimized
               />
             ) : (
-              <div className="w-full h-full rounded-md bg-light" aria-hidden="true" />
+              <div
+                className="w-full h-full rounded-md bg-light"
+                aria-hidden="true"
+              />
             )}
           </div>
           <div className="col-span-2 sm:col-span-3 self-center">
             <div className="flex flex-col flex-wrap">
-              <label className="text font-bold text-1.9lr">{data?.name}</label>
-              <div className="flex flex-col justify-left sm:flex-row">
+              <label className="font-bold text-[#3f1831] text-1.9lr">
+                {data?.name}
+              </label>
+              <div className="flex flex-col justify-start sm:flex-row">
                 <div className="flex flex-row items-center text-main">
                   <svg
                     aria-hidden="true"
@@ -59,7 +64,7 @@ const University = ({ universities = [] }) => {
                   {data?.addr_country}
                 </div>
               </div>
-              <div className="flex flex-row items-center text">
+              <div className="flex flex-row items-center text-[#3f1831]">
                 <svg
                   aria-hidden="true"
                   className="w-4 h-4 text-main mt-1"
@@ -74,10 +79,10 @@ const University = ({ universities = [] }) => {
                   />
                   <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z" />
                 </svg>
-                <label className="text-bold text-main font-bold text-2xs">
+                <label className="text-main font-bold text-2xs">
                   {data?.acceptance_rate}
                 </label>
-                <label className="text text-2xs sm:ml-2">Acceptance Rate</label>
+                <label className="text-2xs sm:ml-2">Acceptance Rate</label>
               </div>
             </div>
           </div>

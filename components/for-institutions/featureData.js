@@ -1,6 +1,7 @@
 const data = [
   {
     id: 2,
+    tabLabel: 'Recruitment',
     content:
       'Find student prospects at the top of the funnel and drive them to campus with your own fully-branded virtual experiences, all in the same platform',
     features: [
@@ -16,6 +17,7 @@ const data = [
   },
   {
     id: 3,
+    tabLabel: 'Engagement',
     content:
       'Optimize the relationship between you and your prospects by allowing them to directly book a time with you, instantly. Scale your ability to recruit without losing the personal touch.',
     features: [
@@ -31,6 +33,7 @@ const data = [
   },
   {
     id: 4,
+    tabLabel: 'Analytics',
     content:
       'Turn prospective students into enrolled students by customizing your messaging utilizing our holistic analytics.',
     features: [
@@ -46,6 +49,7 @@ const data = [
   },
   {
     id: 5,
+    tabLabel: 'Support',
     content:
       'Provide personalized support via 360 degree interactions for better engagement',
     features: [

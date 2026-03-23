@@ -53,7 +53,10 @@ const UniversityCourseFinder = () => {
     if (formData.university && formData.university.length >= 2) {
       searchTimeoutRef.current = setTimeout(async () => {
         setIsSearching(true);
-        const results = await searchUniversities(formData.university, setApiStatus);
+        const results = await searchUniversities(
+          formData.university,
+          setApiStatus,
+        );
         setIsSearching(false);
 
         if (!results.length) {
@@ -62,7 +65,9 @@ const UniversityCourseFinder = () => {
           trackEvent('university_finder_search', {
             status: 'no_results',
           });
-          setModalMessage('No universities found. Try different search terms or check spelling.');
+          setModalMessage(
+            'No universities found. Try different search terms or check spelling.',
+          );
           setShowModal(true);
           return;
         }
@@ -117,7 +122,8 @@ const UniversityCourseFinder = () => {
 
   const validateForm = () => {
     const errors = {};
-    const scoreConfig = scoreTypeRanges[formData.scoreType] || scoreTypeRanges.CGPA_10;
+    const scoreConfig =
+      scoreTypeRanges[formData.scoreType] || scoreTypeRanges.CGPA_10;
     const normalizedScore = normalizeToGpa4(formData.scoreType, formData.gpa);
 
     if (!selectedUniversity) {
@@ -179,7 +185,9 @@ const UniversityCourseFinder = () => {
     });
     setShowResults(true);
     setTimeout(() => {
-      document.getElementById('resultsSection')?.scrollIntoView({ behavior: 'smooth' });
+      document
+        .getElementById('resultsSection')
+        ?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
@@ -212,7 +220,10 @@ const UniversityCourseFinder = () => {
     if (!selectedUniversity || !formData.studyLevel) return null;
 
     const requirements = eligibilityRequirements[formData.studyLevel];
-    const normalizedAcademicScore = normalizeToGpa4(formData.scoreType, formData.gpa);
+    const normalizedAcademicScore = normalizeToGpa4(
+      formData.scoreType,
+      formData.gpa,
+    );
     const feedback = [];
     let score = 0;
 
@@ -229,7 +240,9 @@ const UniversityCourseFinder = () => {
         ? parseFloat(formData.ieltsScore)
         : parseInt(formData.toeflScore, 10);
     const minTestScore =
-      formData.testType === 'ielts' ? requirements.minIelts : requirements.minToefl;
+      formData.testType === 'ielts'
+        ? requirements.minIelts
+        : requirements.minToefl;
 
     if (testScore >= minTestScore) {
       score += 1;
@@ -247,7 +260,15 @@ const UniversityCourseFinder = () => {
         ? 'Your academic and test profile meets the baseline requirement for this search.'
         : feedback.join('. '),
     };
-  }, [formData.gpa, formData.ieltsScore, formData.scoreType, formData.studyLevel, formData.testType, formData.toeflScore, selectedUniversity]);
+  }, [
+    formData.gpa,
+    formData.ieltsScore,
+    formData.scoreType,
+    formData.studyLevel,
+    formData.testType,
+    formData.toeflScore,
+    selectedUniversity,
+  ]);
 
   const recommendations = useMemo(() => {
     if (!selectedUniversity) {
@@ -258,7 +279,7 @@ const UniversityCourseFinder = () => {
   }, [selectedUniversity]);
 
   return (
-    <div className={cx('finder-root')}>
+    <div className={cx('university-finder-container')}>
       <UniversitySearchForm
         cx={cx}
         formData={formData}

@@ -37,8 +37,8 @@ const AcceptanceBadge = ({ acceptanceLabel }) => (
       />
       <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z" />
     </svg>
-    <label className="text-bold text-main font-bold text-2xs">{acceptanceLabel}</label>
-    <label className="text text-2.5xs sm:ml-2">Acceptance Rate</label>
+    <label className="text-main font-bold text-2xs">{acceptanceLabel}</label>
+    <label className="text-2.5xs sm:ml-2">Acceptance Rate</label>
   </li>
 );
 
@@ -62,7 +62,10 @@ const UniversityCourseCard = ({ course, universityInfo, onEnroll }) => {
             sizes="80px"
           />
         ) : (
-          <div className="w-full h-full bg-light rounded-md" aria-hidden="true" />
+          <div
+            className="w-full h-full bg-light rounded-md"
+            aria-hidden="true"
+          />
         )}
       </div>
       <div className="col-span-2 sm:col-span-5">
@@ -75,11 +78,13 @@ const UniversityCourseCard = ({ course, universityInfo, onEnroll }) => {
             {`${course?.state}, ${course?.country}`}
           </li>
           <li className="mt-1">
-            <label className="text font-bold">University: </label>
+            <label className="font-bold text-[#3f1831]">University: </label>
             {university}
           </li>
           <li>
-            <label className="text font-bold">Yearly Tuition Fee: </label>
+            <label className="font-bold text-[#3f1831]">
+              Yearly Tuition Fee:{' '}
+            </label>
             {curr} {fee}
           </li>
           <AcceptanceBadge acceptanceLabel={acceptanceLabel} />
@@ -99,7 +104,7 @@ const UniversityCourseCard = ({ course, universityInfo, onEnroll }) => {
 };
 
 export const UniversityListSpinner = () => (
-  <div role="status" className="flex align-items-center justify-center ">
+  <div role="status" className="flex items-center justify-center">
     <svg
       aria-hidden="true"
       className="w-12 h-12 mr-2 text-gray-200 animate-spin fill-blue-600 text-main"

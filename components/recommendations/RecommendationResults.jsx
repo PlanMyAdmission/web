@@ -80,7 +80,9 @@ const RecommendationResults = ({ props }) => {
     if (!props.discipline) {
       return courses;
     }
-    return courses.filter((course) => course?.discipline?.includes(props.discipline));
+    return courses.filter((course) =>
+      course?.discipline?.includes(props.discipline),
+    );
   }, [courses, props.discipline]);
 
   const uniqueUniv = useMemo(() => {
@@ -155,7 +157,8 @@ const RecommendationResults = ({ props }) => {
     <div className="flex flex-col items-center">
       <div className="max-w-6xl mx-auto bg-light px-5 py-2 rounded mb-5 mt-4">
         <label className="text-main">
-          You found <label className="font-bold">{filteredCourses.length}</label> courses
+          You found{' '}
+          <label className="font-bold">{filteredCourses.length}</label> courses
         </label>
       </div>
       <div className="max-w-6xl mx-auto bg-light px-5 py-3 rounded mb-5">
@@ -182,7 +185,7 @@ const RecommendationResults = ({ props }) => {
       <div className="mb-10">
         <button
           type="button"
-          className="block text-white bg-main text-1.5lr p-3 text-lg mb-0 mt-5 items-center rounded-lg self-center"
+          className="block text-white bg-main text-1.5lr p-3 text-lg mb-0 mt-5 items-center rounded-lg self-center mx-auto"
           onClick={() => setN((value) => value + 10)}
         >
           Show More

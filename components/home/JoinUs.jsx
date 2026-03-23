@@ -5,7 +5,7 @@ const joinUs = '/images/home/JoinUs.svg';
 import Heading from '@components/common/Heading';
 const JoinUs = () => {
   return (
-    <div>
+    <section id="join-us">
       <Heading heading="Join Us" />
       <div className="flex md:flex-row flex-col md:justify-evenly items-center sm:px-5">
         <div className="md:w-[500px] w-full px-5 items-center justify-center">
@@ -35,7 +35,7 @@ const JoinUs = () => {
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 export default JoinUs;

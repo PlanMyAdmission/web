@@ -1,11 +1,13 @@
 import React from 'react';
 import Course from '@/components/explore-university/detail/Course.jsx';
 
-const SECTION_TITLE_CLASS = 'text text-1.7lr font-bold';
+const SECTION_TITLE_CLASS = 'text-[#3f1831] text-1.7lr font-bold';
 
 const SectionTitle = ({ prefix, suffix }) => (
   <label className={SECTION_TITLE_CLASS}>
-    <span className="underline underline-offset-8 decoration-main">{prefix}</span>
+    <span className="underline underline-offset-8 decoration-main">
+      {prefix}
+    </span>
     {suffix}
   </label>
 );
@@ -18,10 +20,13 @@ const StatRow = ({ label, value }) => (
 );
 
 const AboutSection = ({ aboutRef, description }) => (
-  <div ref={aboutRef} className="max-w-5xl mx-auto bg-transparent rounded my-5 ml-8">
-    <div className="flex flex-col jsutify-left">
+  <div
+    ref={aboutRef}
+    className="max-w-5xl mx-auto bg-transparent rounded my-5 ml-8"
+  >
+    <div className="flex flex-col justify-start">
       <SectionTitle prefix="Abo" suffix="ut" />
-      <p className="text text-lr my-5">{description}</p>
+      <p className="text-lr my-5">{description}</p>
     </div>
   </div>
 );
@@ -30,7 +35,7 @@ const StatsSection = ({ statRef, university }) => (
   <div ref={statRef} className="mt-5 ml-8 mb-8">
     <SectionTitle prefix="Sta" suffix="ts" />
     <div className="flex flex-col sm:flex-row bg-light justify-between mt-8 mb-5 rounded-lg p-3">
-      <div className="w-full px-1 md:w-1/2 md:px-2 text text-2xs">
+      <div className="w-full px-1 md:w-1/2 md:px-2 text-2xs">
         <StatRow
           label="Tuition Value"
           value={`${university?.tuition_value} ${university?.tuition_currency}`}
@@ -48,7 +53,7 @@ const StatsSection = ({ statRef, university }) => (
           value={`${university?.mandatory_value} ${university?.mandatory_currency}`}
         />
       </div>
-      <div className="w-full px-1 md:w-1/2 md:px-2 text text-2xs">
+      <div className="w-full px-1 md:w-1/2 md:px-2 text-2xs">
         <StatRow
           label="Average Salary"
           value={`${university?.avg_salary_value} ${university?.avg_salary_currency}`}
@@ -69,8 +74,8 @@ const StatsSection = ({ statRef, university }) => (
     </div>
 
     <div className="bg-light px-3 py-2 rounded-lg w-full">
-      <label className="text text-2xs font-bold">Student Gender Distribution</label>
-      <div className="grid grid-cols-1 sm:grid-cols-4 text text-2xs">
+      <label className="text-2xs font-bold">Student Gender Distribution</label>
+      <div className="grid grid-cols-1 sm:grid-cols-4 text-2xs">
         <div className="col-span-1 sm:col-span-1 border-b-2 sm:border-r-2 sm:border-b-0 border-solid border-main">
           <div className="flex flex-col items-center my-3 px-8">
             <label>Male</label>
@@ -91,7 +96,8 @@ const StatsSection = ({ statRef, university }) => (
           <div className="flex flex-col items-center my-3 px-8">
             <label>Student</label>
             <label className="text-main text-lr font-bold">
-              {university?.student_faculty_ratio?.toString().split('.')[0] || '-'}
+              {university?.student_faculty_ratio?.toString().split('.')[0] ||
+                '-'}
             </label>
           </div>
         </div>
@@ -99,7 +105,8 @@ const StatsSection = ({ statRef, university }) => (
           <div className="flex flex-col items-center my-3 px-8">
             <label>Teacher</label>
             <label className="text-main text-lr font-bold">
-              {university?.student_faculty_ratio?.toString().split('.')[1] || '-'}
+              {university?.student_faculty_ratio?.toString().split('.')[1] ||
+                '-'}
             </label>
           </div>
         </div>
@@ -117,7 +124,7 @@ const CoursesSection = ({
   onShowMore,
 }) => (
   <div ref={courseRef} className="my-5 ml-8">
-    <label className="text text-1.7lr font-bold mb-10">
+    <label className="text-[#3f1831] text-1.7lr font-bold mb-10">
       <span className="underline underline-offset-8 decoration-main">Cou</span>
       rses
     </label>
@@ -127,7 +134,7 @@ const CoursesSection = ({
           id="year"
           name="year"
           autoComplete="off"
-          className="block bg-light self-auto justify-left p-1 pr-10 w-90% text text-2xs focus:outline-none mt-8 rounded-md"
+          className="block bg-light self-auto p-1 pr-10 w-[90%] text-2xs focus:outline-none mt-8 rounded-md"
           onChange={onDisciplineChange}
           value={selected}
         >
@@ -175,17 +182,20 @@ const CoursesSection = ({
 const HighlightsInfoSection = ({ highlightRef, infoRef, university }) => (
   <div className="my-8 ml-8">
     <div className="flex flex-col items-stretch sm:flex-row bg-transparent justify-between mt-8 mb-5 rounded-lg p-3">
-      <div ref={highlightRef} className="w-full px-1 md:w-1/2 md:px-2 text text-2xs">
-        <label className="text text-1.7lr font-bold mb-10">
-          <span className="underline underline-offset-8 decoration-main">Hig</span>
+      <div ref={highlightRef} className="w-full px-1 md:w-1/2 md:px-2 text-2xs">
+        <label className="text-[#3f1831] text-1.7lr font-bold mb-10">
+          <span className="underline underline-offset-8 decoration-main">
+            Hig
+          </span>
           hlights
         </label>
         <div className="bg-light mt-5 p-2 rounded-md">
-          <p className="text text-xs">
-            Find miscellaneous information about students, campus and faculty of {`${university?.name}`} below.
+          <p className="text-xs">
+            Find miscellaneous information about students, campus and faculty of{' '}
+            {`${university?.name}`} below.
           </p>
           <br />
-          <div className="w-full text text-2xs">
+          <div className="w-full text-2xs">
             <StatRow label="Population" value={university?.population} />
             <StatRow
               label="International Student Package"
@@ -199,16 +209,20 @@ const HighlightsInfoSection = ({ highlightRef, infoRef, university }) => (
         </div>
       </div>
 
-      <div ref={infoRef} className="w-full px-1 md:w-1/2 md:px-2 text text-2xs">
-        <label className="text text-1.7lr font-bold mb-10">
-          <span className="underline underline-offset-8 decoration-main">Add</span>
+      <div ref={infoRef} className="w-full px-1 md:w-1/2 md:px-2 text-2xs">
+        <label className="text-[#3f1831] text-1.7lr font-bold mb-10">
+          <span className="underline underline-offset-8 decoration-main">
+            Add
+          </span>
           itional Info
         </label>
         <div className="bg-light mt-5 p-2 rounded-md">
-          <p className="text text-xs">{university?.addr_line_1}</p>
-          <p className="text text-xs">{university?.addr_city}</p>
-          <p className="text text-xs">{university?.addr_state}, {university?.addr_country}</p>
-          <div className="w-full text text-2xs">
+          <p className="text-xs">{university?.addr_line_1}</p>
+          <p className="text-xs">{university?.addr_city}</p>
+          <p className="text-xs">
+            {university?.addr_state}, {university?.addr_country}
+          </p>
+          <div className="w-full text-2xs">
             <StatRow label="Email" value={university?.email} />
             <StatRow label="Phone" value={university?.phone} />
             <div className="flex flex-row justify-between border-b-2 border-solid border-main my-3 p-1">

@@ -14,7 +14,10 @@ const About = ({ content }) => {
         items={content?.coreValues?.items}
       />
       <Founder content={content?.founder} />
-      <Band {...content?.band} />
+      <Band
+        line={content?.band?.line || 'Fast Track your journey'}
+        {...content?.band}
+      />
     </>
   );
 };
