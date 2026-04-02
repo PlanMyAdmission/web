@@ -38,11 +38,12 @@ const Hero = ({ content }) => {
           />
         </div>
         <p className="font-bold text-[18px] md:w-1/2 py-4 leading-[20px]">
-          {content?.subtext || 'Put the power of AI & Industry experts to work for you'}
+          {content?.subtext ||
+            'Put the power of AI & Industry experts to work for you'}
         </p>
         <JoinUsForm sourcePage="home_hero" />
       </div>
-      <div className="">
+      <div className="flex-1">
         <Image
           unoptimized
           width={700}
