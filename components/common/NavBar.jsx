@@ -22,6 +22,10 @@ const navLinks = [
     label: 'AI University Matchmaker',
   },
   {
+    href: '/essay-review',
+    label: 'Essay Reviewer',
+  },
+  {
     href: '/pricing',
     label: 'Pricing',
   },

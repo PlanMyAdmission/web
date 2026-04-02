@@ -28,6 +28,7 @@ const footerSections = [
     items: [
       { href: '/explore', label: 'Explore Universities' },
       { href: '/ai-university-matchmaker', label: 'AI University Matchmaker' },
+      { href: '/essay-review', label: 'AI SOP & Essay Reviewer' },
       { href: '/recommendations', label: 'Recommendations' },
     ],
   },
