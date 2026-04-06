@@ -104,7 +104,8 @@ const AdminLogin = ({ nextPath = '/admin/leads', loginError = '' }) => {
         </p>
         <h1 className="mt-3 text-2xl font-semibold text-[#3f1831]">Admin Login</h1>
         <p className="mt-2 text-sm leading-7 text-[#6f556f]">
-          Sign in with a Google account that has an active record in
+          Sign in with a Google account that is either listed in the admin email
+          allowlist or has an active record in
           <code className="mx-1 rounded bg-[#f6eff3] px-1.5 py-0.5 text-xs">admin_users</code>
           to access the admin dashboard.
         </p>

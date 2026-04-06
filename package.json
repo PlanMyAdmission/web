@@ -37,6 +37,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "admin:grant": "node scripts/grant-admin.mjs",
     "prepare": "husky install",
     "format": "prettier --write .",
     "precommit": "lint-staged"
