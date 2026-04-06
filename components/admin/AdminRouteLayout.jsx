@@ -9,144 +9,129 @@ const navItems = [
   {
     href: '/admin/leads',
     label: 'Leads',
+    eyebrow: 'Admissions',
+    description: 'Manage captured student enquiries and follow-up status.',
+  },
+  {
+    href: '/admin/conversations',
+    label: 'Chats',
+    eyebrow: 'Chatbot',
+    description: 'Review saved conversations and inspect transcripts.',
   },
   {
     href: '/admin/blogs',
     label: 'Blogs',
+    eyebrow: 'Editorial',
+    description: 'Edit and publish study abroad content.',
   },
 ];
 
-const shellBg = 'bg-[#f7f5f6]';
-
-const SidebarLinks = ({ pathname, onNavigate, collapsed = false }) => (
-  <nav className="mt-5 space-y-1">
+const SidebarLinks = ({ pathname, onNavigate }) => (
+  <nav className="flex gap-2 overflow-x-auto px-3 py-3 md:flex-1 md:flex-col md:px-4 md:py-6 md:space-y-2">
     {navItems.map((item) => {
-      const isActive =
-        pathname === item.href || pathname?.startsWith(`${item.href}/`);
+      const isActive = pathname === item.href || pathname?.startsWith(`${item.href}/`);
 
       return (
-        <Link
-          key={item.href}
-          href={item.href}
-          onClick={onNavigate}
-          className={`flex items-center justify-between rounded-md px-3 py-2 text-sm transition ${
-            isActive
-              ? 'bg-[#fff3f9] font-medium text-main'
-              : 'text-[#5f4a5b] hover:bg-[#f4f1f3]'
-          } ${collapsed ? 'lg:px-2 lg:py-2 lg:text-xs' : ''}`}
-        >
-          <span className={collapsed ? 'lg:mx-auto' : ''}>{item.label}</span>
-          {!collapsed && isActive && (
-            <span className="h-2 w-2 rounded-full bg-main" />
-          )}
+        <Link key={item.href} href={item.href} onClick={onNavigate}>
+          <div
+            className={`flex items-center gap-3 whitespace-nowrap rounded-lg px-4 py-2.5 text-sm transition-colors ${
+              isActive
+                ? 'bg-white/10 text-white'
+                : 'text-[#888888] hover:bg-white/5 hover:text-white'
+            }`}
+          >
+            <span className="font-medium">{item.label}</span>
+          </div>
         </Link>
       );
     })}
   </nav>
 );
 
-const SidebarInner = ({
+const SidebarContent = ({
   pathname,
   currentUser,
-  collapsed,
-  onNavigate,
-  onToggleDesktop,
-  onCloseMobile,
   logout,
+  onNavigate,
+  onCloseMobile,
   isMobile = false,
 }) => (
   <>
-    <div className="flex items-center justify-between border-b border-main/10 px-4 py-4">
-      <div className={collapsed ? 'lg:w-full' : ''}>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-main/45">
-          {collapsed && !isMobile ? 'PMA' : 'Plan My Admission'}
-        </p>
-        <p
-          className={`mt-1 font-semibold text-[#3f1831] ${
-            collapsed && !isMobile ? 'lg:hidden' : ''
-          }`}
-        >
-          Admin
-        </p>
-      </div>
+    <div className="border-b border-[#222222] px-4 py-4 md:px-6 md:py-8">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h1 className="flex items-center gap-2 text-lg font-bold text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10">
+              <span className="text-sm font-bold text-white">PM</span>
+            </div>
+            Admin
+          </h1>
+          <p className="mt-2 text-xs leading-5 text-[#888888]">
+            Internal workspace for leads, chats, and content.
+          </p>
+        </div>
 
-      <div className="flex items-center gap-2">
-        {!isMobile && (
-          <button
-            type="button"
-            onClick={onToggleDesktop}
-            className="hidden rounded-md border border-main/12 px-2 py-1 text-xs text-main transition hover:bg-[#fff7fb] lg:block"
-          >
-            {collapsed ? '>' : '<'}
-          </button>
-        )}
-        {isMobile && (
+        {isMobile ? (
           <button
             type="button"
             onClick={onCloseMobile}
-            className="rounded-md border border-main/12 px-2 py-1 text-xs text-main transition hover:bg-[#fff7fb]"
+            className="rounded-lg border border-[#2a2a2a] bg-white/5 px-3 py-2 text-xs font-medium text-[#d0d0d0] hover:bg-white/10 hover:text-white"
           >
             Close
           </button>
-        )}
+        ) : null}
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto px-3 py-3">
-      <SidebarLinks
-        pathname={pathname}
-        onNavigate={onNavigate}
-        collapsed={collapsed && !isMobile}
-      />
+    <SidebarLinks pathname={pathname} onNavigate={onNavigate} />
 
-      <div
-        className={`mt-5 border-t border-main/10 pt-4 ${collapsed && !isMobile ? 'lg:hidden' : ''}`}
-      >
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-main/45">
-          Account
-        </p>
-        <p className="mt-2 text-sm font-medium text-[#3f1831]">
+    <div className="border-t border-[#222222] px-4 py-4 md:space-y-4 md:px-4 md:py-6">
+      <div className="rounded-lg bg-white/5 px-4 py-3">
+        <p className="mb-1 text-xs text-[#888888]">Logged in as</p>
+        <p className="truncate text-sm font-medium text-white">
           {currentUser.displayName || currentUser.email}
         </p>
-        <p className="mt-1 text-xs text-[#7a6173]">{currentUser.email}</p>
+        <p className="mt-1 text-xs text-[#888888]">{currentUser.email}</p>
       </div>
-    </div>
 
-    <div className="border-t border-main/10 px-3 py-3">
-      <div
-        className={`flex gap-2 ${collapsed && !isMobile ? 'lg:flex-col' : 'flex-col'}`}
-      >
+      <div className="grid gap-2">
         <Link
           href="/"
           onClick={onNavigate}
-          className="rounded-md border border-main/12 px-3 py-2 text-center text-xs font-medium text-main transition hover:bg-[#fff7fb]"
+          className="rounded-lg border border-[#2a2a2a] bg-white/5 px-4 py-2.5 text-center text-sm font-medium text-[#d0d0d0] transition-colors hover:bg-white/10 hover:text-white"
         >
-          Home
+          Back to Site
         </Link>
         <button
           type="button"
-          className="rounded-md bg-[#3f1831] px-3 py-2 text-xs font-medium text-white transition hover:bg-[#2c1022]"
           onClick={() => logout('/admin/login')}
+          className="rounded-lg px-4 py-2.5 text-left text-sm font-medium text-[#888888] transition-colors hover:bg-white/5 hover:text-white"
         >
-          Sign Out
+          Logout
         </button>
       </div>
     </div>
   </>
 );
 
+const AccessCard = ({ eyebrow, title, description, children }) => (
+  <div className="w-full max-w-lg rounded-2xl border border-[#e5e5e5] bg-white p-6 shadow-sm">
+    <p className="text-xs font-semibold uppercase tracking-wide text-[#888888]">{eyebrow}</p>
+    <h1 className="mt-2 text-2xl font-bold text-[#111111]">{title}</h1>
+    <p className="mt-3 text-sm leading-7 text-[#666666]">{description}</p>
+    <div className="mt-5">{children}</div>
+  </div>
+);
+
 const AdminRouteLayout = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const { authLoading, adminLoading, currentUser, isAdminUser, logout } =
-    useAuth();
+  const { authLoading, adminLoading, currentUser, isAdminUser, logout } = useAuth();
   const isLoginPage = pathname === '/admin/login';
   const loginHref = `/admin/login?next=${encodeURIComponent(pathname || '/admin')}`;
   const activeItem =
-    navItems.find(
-      (item) => pathname === item.href || pathname?.startsWith(`${item.href}/`),
-    ) || navItems[0];
-  const [desktopCollapsed, setDesktopCollapsed] = useState(false);
+    navItems.find((item) => pathname === item.href || pathname?.startsWith(`${item.href}/`)) ||
+    navItems[0];
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -176,160 +161,136 @@ const AdminRouteLayout = ({ children }) => {
 
   if (authLoading || adminLoading) {
     return (
-      <div
-        className={`min-h-screen ${shellBg} flex items-center justify-center px-4`}
-      >
-        <div className="rounded-lg border border-main/10 bg-white px-6 py-5 text-center">
-          <p className="text-sm font-medium text-[#3f1831]">
-            Restoring admin session...
-          </p>
-        </div>
+      <div className="flex min-h-screen items-center justify-center bg-[#f7f7f7] px-4">
+        <AccessCard
+          eyebrow="Admin Session"
+          title="Restoring workspace"
+          description="Checking authentication and loading your admin access."
+        >
+          <div className="inline-flex rounded-lg border border-[#e5e5e5] bg-[#fafafa] px-4 py-2 text-sm text-[#666666]">
+            Please wait...
+          </div>
+        </AccessCard>
       </div>
     );
   }
 
   if (!currentUser) {
     return (
-      <div
-        className={`min-h-screen ${shellBg} flex items-center justify-center px-4`}
-      >
-        <div className="w-full max-w-lg rounded-[24px] border border-main/10 bg-white p-6 shadow-[0_12px_36px_rgba(157,19,95,0.06)]">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-main/45">
-            Admin Access
-          </p>
-          <h1 className="mt-2 text-xl font-semibold text-[#3f1831]">
-            Sign in to continue
-          </h1>
-          <p className="mt-3 text-sm leading-7 text-[#6f556f]">
-            You need an approved admin Google account to access this workspace.
-            You should be redirected automatically, but the direct login link is
-            available below if that handoff stalls.
-          </p>
-          <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+      <div className="flex min-h-screen items-center justify-center bg-[#f7f7f7] px-4">
+        <AccessCard
+          eyebrow="Admin Access"
+          title="Sign in to continue"
+          description="Use an approved admin Google account to open the internal workspace."
+        >
+          <div className="flex flex-col gap-2 sm:flex-row">
             <Link
               href={loginHref}
-              className="rounded-md bg-[#3f1831] px-4 py-2 text-center text-sm font-medium text-white transition hover:bg-[#2c1022]"
+              className="rounded-lg bg-[#111111] px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-[#222222]"
             >
               Continue to Login
             </Link>
             <Link
               href="/"
-              className="rounded-md border border-main/12 px-4 py-2 text-center text-sm font-medium text-main transition hover:bg-[#fff7fb]"
+              className="rounded-lg border border-[#e5e5e5] bg-white px-4 py-2.5 text-center text-sm font-medium text-[#111111] hover:bg-[#fafafa]"
             >
               Back to Site
             </Link>
           </div>
-        </div>
+        </AccessCard>
       </div>
     );
   }
 
   if (!isAdminUser) {
     return (
-      <div
-        className={`min-h-screen ${shellBg} flex items-center justify-center px-4`}
-      >
-        <div className="w-full max-w-lg rounded-lg border border-main/10 bg-white p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-main/45">
-            Access Denied
-          </p>
-          <h1 className="mt-2 text-xl font-semibold text-[#3f1831]">
-            This account does not have admin access.
-          </h1>
-          <p className="mt-3 text-sm leading-7 text-[#6f556f]">
-            Signed in as {currentUser.email}.
-          </p>
-          <div className="mt-5 flex gap-2">
+      <div className="flex min-h-screen items-center justify-center bg-[#f7f7f7] px-4">
+        <AccessCard
+          eyebrow="Access Denied"
+          title="This account does not have admin access"
+          description={`Signed in as ${currentUser.email}. Use an approved account or update the allowlist first.`}
+        >
+          <div className="flex flex-col gap-2 sm:flex-row">
             <button
-              className="rounded-md bg-[#3f1831] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#2c1022]"
+              type="button"
               onClick={() => logout('/admin/login')}
+              className="rounded-lg bg-[#111111] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#222222]"
             >
-              Sign Out
+              Logout
             </button>
             <Link
               href="/"
-              className="rounded-md border border-main/12 px-3 py-2 text-sm font-medium text-main transition hover:bg-[#fff7fb]"
+              className="rounded-lg border border-[#e5e5e5] bg-white px-4 py-2.5 text-center text-sm font-medium text-[#111111] hover:bg-[#fafafa]"
             >
               Go Home
             </Link>
           </div>
-        </div>
+        </AccessCard>
       </div>
     );
   }
 
   return (
-    <div className={`h-screen overflow-hidden ${shellBg}`}>
-      {mobileSidebarOpen && (
+    <div className="flex h-screen flex-col overflow-hidden bg-white md:flex-row">
+      {mobileSidebarOpen ? (
         <>
           <button
             type="button"
-            className="fixed inset-0 z-40 bg-black/30 lg:hidden"
+            className="fixed inset-0 z-40 bg-black/30 md:hidden"
             onClick={() => setMobileSidebarOpen(false)}
             aria-label="Close sidebar backdrop"
           />
-          <aside className="fixed inset-y-0 left-0 z-50 flex w-full max-w-full flex-col border-r border-main/10 bg-white shadow-[0_10px_30px_rgba(0,0,0,0.08)] sm:max-w-[320px] lg:hidden">
-            <SidebarInner
+          <aside className="fixed inset-y-0 left-0 z-50 flex w-full max-w-[280px] flex-col border-r border-[#222222] bg-[#111111] md:hidden">
+            <SidebarContent
               pathname={pathname}
               currentUser={currentUser}
-              collapsed={false}
-              onNavigate={() => setMobileSidebarOpen(false)}
-              onToggleDesktop={() => {}}
-              onCloseMobile={() => setMobileSidebarOpen(false)}
               logout={logout}
+              onNavigate={() => setMobileSidebarOpen(false)}
+              onCloseMobile={() => setMobileSidebarOpen(false)}
               isMobile
             />
           </aside>
         </>
-      )}
+      ) : null}
 
-      <div
-        className={`mx-auto grid h-screen max-w-[1600px] ${
-          desktopCollapsed
-            ? 'lg:grid-cols-[84px_minmax(0,1fr)]'
-            : 'lg:grid-cols-[232px_minmax(0,1fr)]'
-        }`}
-      >
-        <aside className="hidden min-h-0 border-r border-main/10 bg-white lg:flex lg:h-screen lg:flex-col">
-          <SidebarInner
-            pathname={pathname}
-            currentUser={currentUser}
-            collapsed={desktopCollapsed}
-            onNavigate={() => {}}
-            onToggleDesktop={() => setDesktopCollapsed((value) => !value)}
-            onCloseMobile={() => {}}
-            logout={logout}
-          />
-        </aside>
+      <aside className="hidden w-56 flex-col border-r border-[#222222] bg-[#111111] md:flex">
+        <SidebarContent
+          pathname={pathname}
+          currentUser={currentUser}
+          logout={logout}
+          onNavigate={() => {}}
+          onCloseMobile={() => {}}
+        />
+      </aside>
 
-        <div className="flex min-h-0 min-w-0 flex-col">
-          <header className="sticky top-0 z-20 border-b border-main/10 bg-white/96">
-            <div className="flex items-center justify-between px-4 py-3 md:px-5 lg:px-6">
+      <main className="min-h-0 flex-1 overflow-auto bg-white">
+        <header className="border-b border-[#e5e5e5] px-4 py-4 sm:px-6 lg:px-8">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  className="rounded-md border border-main/12 px-3 py-2 text-xs font-medium text-main transition hover:bg-[#fff7fb] lg:hidden"
                   onClick={() => setMobileSidebarOpen(true)}
+                  className="rounded-lg border border-[#e5e5e5] bg-white px-3 py-2 text-xs font-medium text-[#555555] hover:bg-[#fafafa] md:hidden"
                 >
                   Menu
                 </button>
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-main/45">
-                    {activeItem.label}
+                  <p className="text-xs font-semibold uppercase tracking-wide text-[#888888]">
+                    {activeItem.eyebrow}
                   </p>
+                  <h1 className="mt-1 text-xl font-bold text-[#111111] sm:text-2xl">
+                    {activeItem.label}
+                  </h1>
                 </div>
               </div>
-              <p className="hidden text-xs text-[#8a7385] md:block">
-                {currentUser.email}
-              </p>
+              <p className="mt-2 max-w-2xl text-sm text-[#666666]">{activeItem.description}</p>
             </div>
-          </header>
+          </div>
+        </header>
 
-          <main className="min-h-0 flex-1 overflow-y-auto px-4 py-4 md:px-5 md:py-5 lg:px-6">
-            {children}
-          </main>
-        </div>
-      </div>
+        <div className="min-h-0 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</div>
+      </main>
     </div>
   );
 };

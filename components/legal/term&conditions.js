@@ -9,6 +9,11 @@ const data = {
         'You agree to use the Site and Services only for lawful purposes and in compliance with applicable laws.<br>You certify that all information you provide is truthful, accurate, and complete. False or misleading information may result in denial or termination of services.<br>We reserve the right to refuse service or terminate accounts at our discretion.',
     },
     {
+      title: 'AI Chatbot and Session Storage',
+      description:
+        'If you continue using our AI chatbot, you acknowledge and accept that your chatbot messages may be stored locally in your browser and in our backend systems under a session identifier. This is done to maintain conversation continuity, support service operations, and allow internal review by authorized team members. Your chatbot use is also subject to our Privacy Policy.',
+    },
+    {
       title: 'Intellectual Property Rights',
       description:
         'All content, trademarks, and materials on the Site are owned or licensed by PMS Study Abroad LLP and are protected by law.<br>You may not reproduce or use any content without our prior written consent.',

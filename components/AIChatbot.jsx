@@ -14,10 +14,8 @@ const AIChatbot = () => {
     messages,
     inputValue,
     isTyping,
-    isListening,
     messagesRef,
     toggleChat,
-    toggleVoice,
     handleSendMessage,
     handleInputChange,
     handleKeyPress,
@@ -30,10 +28,8 @@ const AIChatbot = () => {
       messages={messages}
       inputValue={inputValue}
       isTyping={isTyping}
-      isListening={isListening}
       messagesRef={messagesRef}
       toggleChat={toggleChat}
-      toggleVoice={toggleVoice}
       handleSendMessage={handleSendMessage}
       handleInputChange={handleInputChange}
       handleKeyPress={handleKeyPress}

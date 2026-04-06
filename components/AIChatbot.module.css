@@ -299,6 +299,19 @@
   position: relative !important;
 }
 
+.pma-chatbot-legal-note {
+  margin: 10px 8px 0 !important;
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+  color: #7a6173 !important;
+}
+
+.pma-chatbot-legal-note a {
+  color: #3f1831 !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+}
+
 .pma-chatbot-input {
   width: 100% !important;
   min-height: 50px !important;
@@ -326,52 +339,6 @@
 .pma-chatbot-input::placeholder {
   color: #999 !important;
   font-size: 14px !important;
-}
-
-.pma-chatbot-voice-btn {
-  width: 56px !important;
-  height: 56px !important;
-  min-width: 56px !important;
-  min-height: 56px !important;
-  background: linear-gradient(135deg, #4caf50, #388e3c) !important;
-  color: white !important;
-  border: 3px solid rgba(255, 255, 255, 0.9) !important;
-  border-radius: 50% !important;
-  cursor: pointer !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-  transition: all 0.3s !important;
-  flex-shrink: 0 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
-  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4) !important;
-  touch-action: manipulation !important;
-}
-
-.pma-chatbot-voice-btn:hover,
-.pma-chatbot-voice-btn:active,
-.pma-chatbot-voice-btn:focus {
-  transform: scale(1.05) !important;
-  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5) !important;
-}
-
-.pma-chatbot-voice-btn.pma-chatbot-listening {
-  background: linear-gradient(135deg, #f44336, #d32f2f) !important;
-  border-color: rgba(255, 255, 255, 1) !important;
-  animation: pmaChatbotPulseVoice 1.5s infinite !important;
-}
-
-@keyframes pmaChatbotPulseVoice {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7) !important;
-  }
-  50% {
-    box-shadow: 0 0 0 15px rgba(244, 67, 54, 0) !important;
-  }
 }
 
 .pma-chatbot-send-btn {
@@ -476,37 +443,7 @@
   text-decoration: none !important;
 }
 
-.pma-chatbot-voice-status {
-  position: absolute !important;
-  top: -35px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  background: rgba(244, 67, 54, 0.9) !important;
-  color: white !important;
-  padding: 6px 14px !important;
-  border-radius: 16px !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
-  display: none !important;
-}
-
-.pma-chatbot-voice-status.pma-chatbot-show {
-  display: block !important;
-  animation: pmaChatbotFadeInUp 0.3s ease !important;
-}
-
-@keyframes pmaChatbotFadeInUp {
-  from {
-    opacity: 0 !important;
-    transform: translateX(-50%) translateY(8px) !important;
-  }
-  to {
-    opacity: 1 !important;
-    transform: translateX(-50%) translateY(0) !important;
-  }
-}
-
-@media (max-width: 768assspx) {
+@media (max-width: 768px) {
   .pma-chatbot-widget {
     bottom: 20px !important;
     right: 110px !important;
@@ -538,7 +475,6 @@
     gap: 14px !important;
   }
 
-  .pma-chatbot-voice-btn,
   .pma-chatbot-send-btn {
     width: 52px !important;
     height: 52px !important;

@@ -11,9 +11,10 @@ import {
   normalizeBlogSlug,
   sanitizeBlogText,
 } from '@lib/blogsShared.js';
+import AdminPageFrame from '@/components/admin/AdminPageFrame.jsx';
 import BlogEditorForm from '@/components/admin/blog/BlogEditorForm.jsx';
 import BlogPostsList from '@/components/admin/blog/BlogPostsList.jsx';
-import { EMPTY_BLOG_FORM } from '@/components/admin/blog/blogHelpers.js';
+import { BLOG_STATUS_LABELS, EMPTY_BLOG_FORM } from '@/components/admin/blog/blogHelpers.js';
 
 const BlogAdminPanel = () => {
   const { authLoading, adminLoading, currentUser, isAdminUser } = useAuth();
@@ -64,6 +65,22 @@ const BlogAdminPanel = () => {
   const selectedPost = useMemo(
     () => posts.find((post) => post.id === selectedPostId) || null,
     [posts, selectedPostId],
+  );
+
+  const postStats = useMemo(
+    () =>
+      posts.reduce(
+        (totals, post) => {
+          const status = post?.status === 'published' ? 'published' : 'draft';
+          totals[status] += 1;
+          return totals;
+        },
+        {
+          draft: 0,
+          published: 0,
+        },
+      ),
+    [posts],
   );
 
   useEffect(() => {
@@ -187,24 +204,49 @@ const BlogAdminPanel = () => {
   }
 
   return (
-    <section className="flex min-h-full min-w-0 flex-col gap-3">
-      <div className="flex items-center justify-between border border-main/10 bg-white px-4 py-3">
-        <div>
-          <h1 className="text-sm font-semibold text-[#3f1831]">Blogs</h1>
-          <p className="mt-1 text-xs text-[#7a6173]">
-            Manage published blog posts with image, content, and metadata.
-          </p>
+    <AdminPageFrame
+      eyebrow="Editorial Workspace"
+      title="Publishing studio"
+      description="Treat blog management like an editorial desk: keep the post list visible, edit in one clean surface, and make publish status obvious."
+      stats={[
+        {
+          label: 'Posts',
+          value: posts.length,
+          helper: 'All stored articles',
+        },
+        {
+          label: 'Drafts',
+          value: postStats.draft,
+          helper: 'Still being shaped',
+        },
+        {
+          label: 'Published',
+          value: postStats.published,
+          helper: 'Currently live',
+        },
+        {
+          label: 'Current',
+          value: BLOG_STATUS_LABELS[form.status] || BLOG_STATUS_LABELS.draft,
+          helper: selectedPost ? 'Selected article state' : 'Fresh draft',
+        },
+      ]}
+      toolbar={
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="rounded-lg border border-[#e5e5e5] bg-white px-4 py-3 text-sm leading-6 text-[#777777]">
+            Keep titles, slugs, and metadata tight before publishing.
+          </div>
+          <button
+            type="button"
+            className="rounded-lg bg-[#111111] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#222222]"
+            onClick={handleCreateNew}
+          >
+            New Draft
+          </button>
         </div>
-        <button
-          type="button"
-          className="rounded-md border border-main/12 px-3 py-2 text-xs font-medium text-main transition hover:bg-[#fff7fb]"
-          onClick={handleCreateNew}
-        >
-          New Post
-        </button>
-      </div>
-
-      <div className="grid min-h-0 flex-1 gap-3 xl:grid-cols-[320px_minmax(0,1fr)]">
+      }
+      errorMessage={errorMessage}
+    >
+      <div className="grid h-full min-h-0 gap-4 p-3 md:p-4 xl:grid-cols-[360px_minmax(0,1fr)]">
         <BlogPostsList
           isLoading={isLoading}
           posts={posts}
@@ -218,7 +260,7 @@ const BlogAdminPanel = () => {
         <BlogEditorForm
           form={form}
           coverFile={coverFile}
-          errorMessage={errorMessage}
+          errorMessage=""
           isSaving={isSaving}
           onFieldChange={handleFieldChange}
           onCoverChange={(event) => setCoverFile(event.target.files?.[0] || null)}
@@ -229,7 +271,7 @@ const BlogAdminPanel = () => {
           onSave={handleSave}
         />
       </div>
-    </section>
+    </AdminPageFrame>
   );
 };
 

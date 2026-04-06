@@ -8,12 +8,12 @@ const privacy = {
     {
       title: 'Information We Collect',
       description:
-        'We may collect and process the following data about you:<br/><br/><strong>Personal Identification Information:</strong> Name, email address, phone numbers, postal address, date of birth, and other identifiers.<br/><br/><strong>Application and Academic Details:</strong> Education history, documents you provide for university applications, test scores, and counseling sessions details.<br/><br/><strong>Payment Information:</strong> Payment transaction details, QR scan payment confirmations, and billing information.<br/><br/><strong>Usage Data:</strong> Information about how you use our website and services including IP address, browser type, pages visited, access times, and referring URLs.<br/><br/><strong>Cookies and Tracking Technologies:</strong> We use cookies and similar technologies to improve your experience and collect usage data (see section 7).',
+        'We may collect and process the following data about you:<br/><br/><strong>Personal Identification Information:</strong> Name, email address, phone numbers, postal address, date of birth, and other identifiers.<br/><br/><strong>Application and Academic Details:</strong> Education history, documents you provide for university applications, test scores, and counseling sessions details.<br/><br/><strong>Chatbot Session Data:</strong> When you use our AI chatbot, we may store your chatbot messages, browser-generated session identifier, timestamps, page context, and basic device or browser metadata to maintain conversation continuity, review service quality, and support your requests.<br/><br/><strong>Payment Information:</strong> Payment transaction details, QR scan payment confirmations, and billing information.<br/><br/><strong>Usage Data:</strong> Information about how you use our website and services including IP address, browser type, pages visited, access times, and referring URLs.<br/><br/><strong>Cookies and Tracking Technologies:</strong> We use cookies and similar technologies to improve your experience and collect usage data (see section 7).',
     },
     {
       title: 'How We Use Your Information',
       description:
-        'We use your personal information to:<br/><br/>• Provide, operate, and maintain our services<br/>• Process your applications and support your study abroad journey<br/>• Communicate with you regarding your account or services<br/>• Personalize your experience and deliver tailored recommendations (including AI-based tools)<br/>• Manage payments and prevent fraud or unauthorized transactions<br/>• Improve our website, service offerings, and customer support<br/>• Comply with legal obligations and enforce our policies',
+        'We use your personal information to:<br/><br/>• Provide, operate, and maintain our services<br/>• Process your applications and support your study abroad journey<br/>• Communicate with you regarding your account or services<br/>• Personalize your experience and deliver tailored recommendations (including AI-based tools)<br/>• Maintain chatbot session continuity across visits on the same device and review chatbot conversations internally for support, quality control, and product improvement<br/>• Manage payments and prevent fraud or unauthorized transactions<br/>• Improve our website, service offerings, and customer support<br/>• Comply with legal obligations and enforce our policies',
     },
     {
       title: 'Disclosure of Information',
@@ -33,7 +33,7 @@ const privacy = {
     {
       title: 'Data Retention',
       description:
-        'We retain your personal information only for as long as necessary to provide our services, comply with legal requirements, resolve disputes, and enforce agreements.',
+        'We retain your personal information only for as long as necessary to provide our services, comply with legal requirements, resolve disputes, and enforce agreements. Chatbot history may also be stored locally on your device through browser storage and on our backend systems under a session identifier to support conversation continuity and internal review.',
     },
     {
       title: 'Cookies and Tracking',

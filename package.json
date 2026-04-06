@@ -38,6 +38,7 @@
     "start": "next start",
     "lint": "eslint",
     "admin:grant": "node scripts/grant-admin.mjs",
+    "test:ai": "node --test tests/ai-tools.smoke.test.mjs",
     "prepare": "husky install",
     "format": "prettier --write .",
     "precommit": "lint-staged"

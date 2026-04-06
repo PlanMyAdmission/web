@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '@context/AuthProvider';
 import { adminRequest } from '@lib/adminApiClient.js';
 import { trackAdminAction } from '@lib/analytics.js';
+import AdminPageFrame from '@/components/admin/AdminPageFrame.jsx';
 import LeadsResultsPane from '@/components/admin/leads/LeadsResultsPane.jsx';
 import {
   buildLeadSearchText,
@@ -75,6 +76,37 @@ const LeadsAdminPanel = () => {
     });
   }, [leads, searchText, statusFilter]);
 
+  const statusCounts = useMemo(
+    () =>
+      leads.reduce(
+        (totals, lead) => {
+          const status = getLeadStatus(lead);
+          totals[status] = (totals[status] || 0) + 1;
+          return totals;
+        },
+        {
+          new: 0,
+          contacted: 0,
+          interested: 0,
+          qualified: 0,
+          closed: 0,
+        },
+      ),
+    [leads],
+  );
+
+  const emptyMessage = useMemo(() => {
+    if (errorMessage) {
+      return 'Unable to load leads right now.';
+    }
+
+    if (searchText.trim() || statusFilter !== 'all') {
+      return 'No leads match the current filters.';
+    }
+
+    return 'No leads found yet.';
+  }, [errorMessage, searchText, statusFilter]);
+
   const selectedLead = useMemo(
     () => filteredLeads.find((lead) => lead.id === selectedLeadId) || filteredLeads[0] || null,
     [filteredLeads, selectedLeadId],
@@ -144,64 +176,87 @@ const LeadsAdminPanel = () => {
   }
 
   return (
-    <section className="flex min-h-full min-w-0 flex-col gap-3">
-      <div className="flex flex-col gap-3 border border-main/10 bg-white px-4 py-3 lg:flex-row lg:items-center lg:justify-between">
-        <div className="min-w-0 flex-1">
-          <input
-            type="text"
-            className="w-full rounded-md border border-main/12 bg-white px-3 py-2 text-sm text-[#442337] outline-none transition focus:border-main/28"
-            placeholder="Search by name, email, phone, source, or study plan"
-            value={searchText}
-            onChange={(event) => setSearchText(event.target.value)}
-          />
-        </div>
+    <AdminPageFrame
+      eyebrow="Admissions Pipeline"
+      title="Lead command center"
+      description="Work through student intent, qualification, and follow-up from one split workspace instead of jumping between raw tables and detail screens."
+      stats={[
+        {
+          label: 'Visible',
+          value: filteredLeads.length,
+          helper: `${leads.length} total leads`,
+        },
+        {
+          label: 'New',
+          value: statusCounts.new,
+          helper: 'Needs first response',
+        },
+        {
+          label: 'Qualified',
+          value: statusCounts.qualified,
+          helper: 'High-intent students',
+        },
+        {
+          label: 'Closed',
+          value: statusCounts.closed,
+          helper: 'Completed or archived',
+        },
+      ]}
+      toolbar={
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="grid min-w-0 flex-1 gap-3 lg:grid-cols-[minmax(0,1fr)_200px]">
+            <input
+              type="text"
+              className="w-full rounded-lg border border-[#e5e5e5] bg-white px-4 py-3 text-sm text-[#111111] outline-none transition focus:border-[#999999]"
+              placeholder="Search by name, email, phone, country, university, or study plan"
+              value={searchText}
+              onChange={(event) => setSearchText(event.target.value)}
+            />
 
-        <div className="flex items-center gap-3 lg:w-auto">
-          <select
-            className="w-full rounded-md border border-main/12 bg-white px-3 py-2 text-sm text-[#442337] outline-none transition focus:border-main/28 lg:w-[180px]"
-            value={statusFilter}
-            onChange={(event) => setStatusFilter(event.target.value)}
-          >
-            <option value="all">All statuses</option>
-            {LEAD_STATUS_OPTIONS.map((status) => (
-              <option key={status} value={status}>
-                {LEAD_STATUS_LABELS[status]}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {errorMessage && (
-        <div className="border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {errorMessage}
-        </div>
-      )}
-
-      <div className="min-h-0 flex-1 overflow-hidden border border-main/10 bg-white">
-        {isLoading ? (
-          <div className="flex h-full items-center justify-center px-6 text-sm text-[#7a6173]">
-            Loading leads...
+            <select
+              className="w-full rounded-lg border border-[#e5e5e5] bg-white px-4 py-3 text-sm text-[#111111] outline-none transition focus:border-[#999999]"
+              value={statusFilter}
+              onChange={(event) => setStatusFilter(event.target.value)}
+            >
+              <option value="all">All statuses</option>
+              {LEAD_STATUS_OPTIONS.map((status) => (
+                <option key={status} value={status}>
+                  {LEAD_STATUS_LABELS[status]}
+                </option>
+              ))}
+            </select>
           </div>
-        ) : (
-          <LeadsResultsPane
-            filteredLeads={filteredLeads}
-            selectedLead={selectedLead}
-            selectedLeadId={selectedLeadId}
-            mobileDetailOpen={mobileDetailOpen}
-            updatingLeadId={updatingLeadId}
-            onLeadSelect={(leadId, openMobileDetail = false) => {
-              setSelectedLeadId(leadId);
-              if (openMobileDetail) {
-                setMobileDetailOpen(true);
-              }
-            }}
-            onStatusChange={handleStatusChange}
-            onCloseMobileDetail={() => setMobileDetailOpen(false)}
-          />
-        )}
-      </div>
-    </section>
+
+          <div className="rounded-lg border border-[#e5e5e5] bg-white px-4 py-3 text-xs leading-6 text-[#777777]">
+            Prioritize new and qualified leads first.
+          </div>
+        </div>
+      }
+      errorMessage={errorMessage}
+    >
+      {isLoading ? (
+        <div className="flex h-full items-center justify-center px-6 text-sm text-[#7a6173]">
+          Loading leads...
+        </div>
+      ) : (
+        <LeadsResultsPane
+          filteredLeads={filteredLeads}
+          selectedLead={selectedLead}
+          selectedLeadId={selectedLeadId}
+          mobileDetailOpen={mobileDetailOpen}
+          updatingLeadId={updatingLeadId}
+          emptyMessage={emptyMessage}
+          onLeadSelect={(leadId, openMobileDetail = false) => {
+            setSelectedLeadId(leadId);
+            if (openMobileDetail) {
+              setMobileDetailOpen(true);
+            }
+          }}
+          onStatusChange={handleStatusChange}
+          onCloseMobileDetail={() => setMobileDetailOpen(false)}
+        />
+      )}
+    </AdminPageFrame>
   );
 };
 

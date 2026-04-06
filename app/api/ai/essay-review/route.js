@@ -4,7 +4,11 @@ import {
   essayReviewJsonSchema,
   normalizeEssayReviewResult,
 } from '@lib/ai/essayReview.js';
-import { getGeminiClient, extractJson, getGeminiText } from '@lib/ai/gemini.js';
+import {
+  extractJson,
+  generateStructuredGeminiContent,
+  getGeminiText,
+} from '@lib/ai/gemini.js';
 import {
   enforceRequestRateLimit,
   validateEssayReviewRequest,
@@ -79,22 +83,17 @@ export async function POST(request) {
       });
     }
 
-    const client = getGeminiClient();
-    const result = await client.models.generateContent({
-      model: 'gemini-3-pro-preview',
+    const { result } = await generateStructuredGeminiContent({
       contents: [
         {
           role: 'user',
           parts,
         },
       ],
-      config: {
-        responseMimeType: 'application/json',
-        responseJsonSchema: essayReviewJsonSchema,
-      },
+      schema: essayReviewJsonSchema,
     });
 
-    const text = getGeminiText(result);
+    const text = await getGeminiText(result);
     if (result?.candidates?.[0]?.finishReason === 'MAX_TOKENS') {
       return NextResponse.json(
         {

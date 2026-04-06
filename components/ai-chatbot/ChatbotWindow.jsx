@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const BOLD_PATTERN = /\*\*(.*?)\*\*/g;
@@ -39,10 +40,8 @@ const ChatbotWindow = ({
   messages,
   inputValue,
   isTyping,
-  isListening,
   messagesRef,
   toggleChat,
-  toggleVoice,
   handleSendMessage,
   handleInputChange,
   handleKeyPress,
@@ -64,7 +63,7 @@ const ChatbotWindow = ({
             <div className={cx('pma-chatbot-header-avatar')}>AI</div>
             <div className={cx('pma-chatbot-header-text')}>
               <h3>Plan My Admission AI</h3>
-              <p>Study Abroad Expert</p>
+              <p>Text Study Abroad Assistant</p>
             </div>
           </div>
           <button className={cx('pma-chatbot-close')} onClick={toggleChat} type="button">
@@ -74,8 +73,8 @@ const ChatbotWindow = ({
 
         <div className={cx('pma-chatbot-messages')} ref={messagesRef}>
           {messages.map((message) => (
-            <div key={message.id} className={cx('pma-chatbot-message', `pma-chatbot-${message.type}`)}>
-              <div className={cx('pma-chatbot-avatar')}>{message.type === 'bot' ? 'AI' : 'U'}</div>
+            <div key={message.id} className={cx('pma-chatbot-message', `pma-chatbot-${message.role}`)}>
+              <div className={cx('pma-chatbot-avatar')}>{message.role === 'bot' ? 'AI' : 'U'}</div>
               <div className={cx('pma-chatbot-content')}>
                 {message.isUniversityCard && message.universityData ? (
                   <div className={cx('pma-chatbot-university-card')}>
@@ -127,19 +126,25 @@ const ChatbotWindow = ({
               rows="1"
               maxLength="500"
             />
-            {isListening && (
-              <div className={cx('pma-chatbot-voice-status', 'pma-chatbot-show')}>Listening...</div>
-            )}
+            <p className={cx('pma-chatbot-legal-note')}>
+              By continuing, you accept our{' '}
+              <Link href="/privacy-policy" target="_blank" rel="noreferrer">
+                Privacy Policy
+              </Link>{' '}
+              and{' '}
+              <Link href="/terms-and-conditions" target="_blank" rel="noreferrer">
+                Terms &amp; Conditions
+              </Link>
+              .
+            </p>
           </div>
           <button
-            className={cx('pma-chatbot-voice-btn', isListening ? 'pma-chatbot-listening' : '')}
-            onClick={toggleVoice}
+            className={cx('pma-chatbot-send-btn')}
+            onClick={() => handleSendMessage()}
             type="button"
+            disabled={isTyping || !inputValue.trim()}
           >
-            {isListening ? 'STOP' : 'MIC'}
-          </button>
-          <button className={cx('pma-chatbot-send-btn')} onClick={() => handleSendMessage()} type="button">
-            SEND
+            {isTyping ? 'WAIT' : 'SEND'}
           </button>
         </div>
       </div>
