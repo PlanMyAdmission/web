@@ -9,6 +9,19 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'firebasestorage.googleapis.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.planmyadmission.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'staging.api.planmyadmission.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8000',
+      },
     ],
   },
   async redirects() {

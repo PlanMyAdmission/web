@@ -2,83 +2,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { fetchAllBlogSlugs, fetchBlogBySlug, fetchBlogPage } from '@/lib/blog/api.js';
-import { buildCmsMetadata } from '@/lib/cmsMetadata.js';
-import BlogPostSchema from '@/components/seo/BlogPostSchema.jsx';
+import BlogContent from '@/components/blog/BlogContent.jsx';
 import BlogBreadcrumbSchema from '@/components/seo/BlogBreadcrumbSchema.jsx';
-
-const buildParagraphs = (content = '') =>
-  `${content || ''}`
-    .split(/\n\s*\n/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
-
-const isHeadingBlock = (text = '') => {
-  const words = `${text || ''}`.trim().split(/\s+/).filter(Boolean);
-  return (
-    words.length > 0 &&
-    words.length <= 8 &&
-    text.length <= 72 &&
-    !/[.!?]$/.test(text)
-  );
-};
-
-const buildContentModel = (content = '') => {
-  const blocks = buildParagraphs(content);
-  const intro = blocks[0] || '';
-  const remaining = blocks.slice(1);
-  const items = [];
-  let currentSectionOpen = false;
-
-  remaining.forEach((block, index) => {
-    const next = remaining[index + 1];
-    const nextNext = remaining[index + 2];
-
-    if (!isHeadingBlock(block)) {
-      items.push({ type: 'paragraph', text: block });
-      return;
-    }
-
-    const nextHeading = isHeadingBlock(next);
-    const nextNextHeading = !nextHeading && isHeadingBlock(nextNext);
-    const isSection = nextHeading || nextNextHeading || !currentSectionOpen;
-
-    if (isSection) {
-      currentSectionOpen = true;
-      items.push({ type: 'section', text: block });
-      return;
-    }
-
-    items.push({ type: 'subsection', text: block });
-  });
-
-  return {
-    intro,
-    items,
-  };
-};
-
-const buildHeadingId = (text = '', index = 0) => {
-  const slug = `${text || ''}`
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
-  return slug
-    ? `blog-section-${index + 1}-${slug}`
-    : `blog-section-${index + 1}`;
-};
+import BlogPostSchema from '@/components/seo/BlogPostSchema.jsx';
+import {
+  fetchAllBlogSlugs,
+  fetchBlogBySlug,
+  fetchBlogPage,
+} from '@/lib/blog/api.js';
+import { buildCmsMetadata } from '@/lib/cmsMetadata.js';
 
 const formatDisplayDate = (iso = '') => {
-  if (!iso) {
-    return '';
-  }
-
+  if (!iso) return '';
   const value = new Date(iso);
-  if (Number.isNaN(value.getTime())) {
-    return '';
-  }
-
+  if (Number.isNaN(value.getTime())) return '';
   return new Intl.DateTimeFormat('en-US', {
     month: 'long',
     day: 'numeric',
@@ -87,8 +24,10 @@ const formatDisplayDate = (iso = '') => {
   }).format(value);
 };
 
-const PopularPosts = ({ posts }) =>
-  posts.length > 0 && (
+const PopularPosts = ({ posts }) => {
+  if (posts.length === 0) return null;
+
+  return (
     <aside className="flex h-fit flex-col rounded-[28px] border border-main/10 bg-light p-5 shadow-[0_18px_40px_rgba(157,19,95,0.06)] lg:sticky lg:top-24">
       <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-main/55">
         Discover More
@@ -129,67 +68,11 @@ const PopularPosts = ({ posts }) =>
       </div>
     </aside>
   );
-
-const renderContentItem = (postId, item, index) => {
-  if (item.type === 'section') {
-    return (
-      <section key={`${postId}-item-${index}`} className="pt-2 first:pt-0">
-        <h2
-          id={item.anchorId}
-          className="scroll-mt-28 text-2xl font-bold leading-tight text-[#3f1831] md:text-[2rem]"
-        >
-          {item.text}
-        </h2>
-      </section>
-    );
-  }
-
-  if (item.type === 'subsection') {
-    return (
-      <h3
-        key={`${postId}-item-${index}`}
-        className="pt-2 text-xl font-semibold leading-tight text-[#4a2740] md:text-2xl"
-      >
-        {item.text}
-      </h3>
-    );
-  }
-
-  return (
-    <p
-      key={`${postId}-item-${index}`}
-      className="text-base leading-8 text-[#5b4657] md:text-lg"
-    >
-      {item.text}
-    </p>
-  );
 };
-
-const TableOfContents = ({ items }) => (
-  <div className="mt-8 rounded-[24px] bg-light px-5 py-5 md:px-6">
-    <p className="text-xl font-semibold text-[#3f1831] md:text-2xl">
-      Table of Contents
-    </p>
-    <div className="mt-4 space-y-3">
-      {items.map((heading, index) => (
-        <a
-          key={heading.anchorId}
-          href={`#${heading.anchorId}`}
-          className="flex gap-3 text-sm text-main transition hover:opacity-80 md:text-base"
-        >
-          <span className="font-semibold">{index + 1}.</span>
-          <span>{heading.label}</span>
-        </a>
-      ))}
-    </div>
-  </div>
-);
 
 export async function generateMetadata({ params }) {
   const post = await fetchBlogBySlug(params.slug);
-  if (!post) {
-    return {};
-  }
+  if (!post) return {};
 
   return buildCmsMetadata({
     path: `/blogs/${post.slug}`,
@@ -221,51 +104,22 @@ export default async function BlogPostPage({ params }) {
     fetchBlogPage({ limit: 4 }),
   ]);
 
-  if (!post) {
-    notFound();
-  }
+  if (!post) notFound();
 
-  const posts = popularPage.items;
-
-  const { intro, items } = buildContentModel(post.content);
-  const popularPosts = posts
+  const popularPosts = popularPage.items
     .filter((item) => item.slug !== post.slug)
     .slice(0, 3);
-  const sectionEntries = items
-    .map((item, index) =>
-      item.type === 'section'
-        ? {
-            anchorId: buildHeadingId(item.text, index),
-            index,
-            label: item.text.replace(/:$/, ''),
-          }
-        : null,
-    )
-    .filter(Boolean);
-  const sectionAnchorMap = new Map(
-    sectionEntries.map((entry) => [entry.index, entry.anchorId]),
-  );
-  const contentItems = items.map((item, index) =>
-    item.type === 'section'
-      ? {
-          ...item,
-          anchorId: sectionAnchorMap.get(index),
-        }
-      : item,
-  );
-  const tocItems = sectionEntries.map(({ anchorId, label }) => ({
-    anchorId,
-    label,
-  }));
+
   const publishedLabel = formatDisplayDate(
     post.createdAtIso || post.updatedAtIso,
   );
-  const articleSummary = post.excerpt || intro || 'Read the full article.';
+  const articleSummary = post.excerpt || 'Read the full article.';
 
   return (
     <>
       <BlogPostSchema post={post} />
       <BlogBreadcrumbSchema post={post} />
+
       <div className="mx-auto mt-20 max-w-6xl px-4 md:px-5 lg:px-6">
         <section className="overflow-hidden rounded-[28px] bg-light shadow-[0_18px_40px_rgba(157,19,95,0.06)]">
           <div className="grid lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
@@ -316,19 +170,7 @@ export default async function BlogPostPage({ params }) {
       <div className="mx-auto max-w-6xl px-4 pb-16 pt-8 md:px-5 lg:px-6">
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
           <article className="rounded-[28px] border border-main/10 bg-white px-5 py-6 shadow-[0_18px_40px_rgba(157,19,95,0.05)] md:px-8 md:py-8">
-            {intro && (
-              <p className="text-lg leading-8 text-[#5b4657] md:text-xl">
-                {intro}
-              </p>
-            )}
-
-            {tocItems.length > 0 && <TableOfContents items={tocItems} />}
-
-            <div className="mt-8 space-y-4">
-              {contentItems.map((item, index) =>
-                renderContentItem(post.id, item, index),
-              )}
-            </div>
+            <BlogContent html={post.content} />
           </article>
 
           <PopularPosts posts={popularPosts} />
