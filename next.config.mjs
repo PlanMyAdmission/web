@@ -71,26 +71,6 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
-      {
-        source: '/Navigating-the-American-Campus',
-        destination: '/blogs/navigating-the-american-campus',
-        permanent: true,
-      },
-      {
-        source: '/Embarking-on-Excellence',
-        destination: '/blogs/embarking-on-excellence',
-        permanent: true,
-      },
-      {
-        source: '/Pennsylvania-State-University',
-        destination: '/blogs/pennsylvania-state-university',
-        permanent: true,
-      },
-      {
-        source: '/Mastering-the-Art-of-Financial-Planning',
-        destination: '/blogs/mastering-the-art-of-financial-planning',
-        permanent: true,
-      },
     ];
   },
 };
