@@ -11,7 +11,7 @@ const ArticleCard = ({ post }) => {
   const href = `/blogs/${post.slug}`;
 
   return (
-    <article className="snap-center shrink-0 md:max-w-sm w-full mx-auto md:mx-0 mb-3 md:mb-0">
+    <article className="snap-center shrink-0 w-full md:w-72 lg:w-80 mx-auto md:mx-0 mb-3 md:mb-0">
       <Link
         href={href}
         prefetch={false}
