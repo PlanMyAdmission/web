@@ -4,11 +4,7 @@ import {
   generateStructuredGeminiContent,
   getGeminiText,
 } from '@/lib/ai/gemini.js';
-import {
-  enforceRequestRateLimit,
-  validatePdfPayload,
-  validateUniversityMatchRequest,
-} from '@/lib/ai/requestGuards.js';
+
 import {
   buildUniversityPrompt,
   universityJsonSchema,
@@ -16,23 +12,6 @@ import {
 
 export async function POST(request) {
   try {
-    const requestPolicyError = await enforceRequestRateLimit({
-      request,
-      routeKey: 'ai:university-match',
-      limit: 6,
-    });
-    if (requestPolicyError) {
-      return NextResponse.json(
-        { error: requestPolicyError.error },
-        {
-          status: requestPolicyError.status,
-          headers: requestPolicyError.retryAfterSeconds
-            ? { 'Retry-After': `${requestPolicyError.retryAfterSeconds}` }
-            : undefined,
-        },
-      );
-    }
-
     const { searchProfile, pdfBase64, pdfMimeType } = await request.json();
 
     if (!searchProfile || typeof searchProfile !== 'object') {
@@ -40,16 +19,6 @@ export async function POST(request) {
         { error: 'Missing search profile.' },
         { status: 400 },
       );
-    }
-
-    const profileError = validateUniversityMatchRequest(searchProfile);
-    if (profileError) {
-      return NextResponse.json({ error: profileError }, { status: 400 });
-    }
-
-    const pdfError = validatePdfPayload(pdfBase64, pdfMimeType);
-    if (pdfError) {
-      return NextResponse.json({ error: pdfError }, { status: 400 });
     }
 
     const mode = pdfBase64 ? 'pdf' : 'search';

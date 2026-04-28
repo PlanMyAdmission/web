@@ -1,30 +1,35 @@
 import { NextResponse } from 'next/server';
-import {
-  enforceRequestRateLimit,
-  validateLeadCaptureContext,
-} from '@/lib/ai/requestGuards.js';
 import { validateJoinUsLead } from '@/lib/leads.js';
+
+const MIN_LEAD_CAPTURE_MS = 3_000;
+
+const validateLeadCaptureContext = (leadContext = {}) => {
+  if (
+    !leadContext ||
+    typeof leadContext !== 'object' ||
+    Array.isArray(leadContext)
+  ) {
+    return 'Lead context is invalid.';
+  }
+
+  if (`${leadContext.honeypot || ''}`.trim()) {
+    return 'Unable to process this submission.';
+  }
+
+  const formStartedAt = Number(leadContext.formStartedAt || 0);
+  if (!Number.isFinite(formStartedAt) || formStartedAt <= 0) {
+    return 'Submission session is invalid.';
+  }
+
+  if (Date.now() - formStartedAt < MIN_LEAD_CAPTURE_MS) {
+    return 'Please review your details and try again.';
+  }
+
+  return null;
+};
 
 export async function POST(request) {
   try {
-    const requestPolicyError = await enforceRequestRateLimit({
-      request,
-      routeKey: 'lead:public-capture',
-      limit: 4,
-    });
-
-    if (requestPolicyError) {
-      return NextResponse.json(
-        { error: requestPolicyError.error },
-        {
-          status: requestPolicyError.status,
-          headers: requestPolicyError.retryAfterSeconds
-            ? { 'Retry-After': `${requestPolicyError.retryAfterSeconds}` }
-            : undefined,
-        },
-      );
-    }
-
     const {
       source,
       sourcePage,

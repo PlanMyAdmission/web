@@ -9,31 +9,9 @@ import {
   generateStructuredGeminiContent,
   getGeminiText,
 } from '@/lib/ai/gemini.js';
-import {
-  enforceRequestRateLimit,
-  validateAdmissionReportRequest,
-  validatePdfPayload,
-} from '@/lib/ai/requestGuards.js';
 
 export async function POST(request) {
   try {
-    const requestPolicyError = await enforceRequestRateLimit({
-      request,
-      routeKey: 'ai:admission-report',
-      limit: 6,
-    });
-    if (requestPolicyError) {
-      return NextResponse.json(
-        { error: requestPolicyError.error },
-        {
-          status: requestPolicyError.status,
-          headers: requestPolicyError.retryAfterSeconds
-            ? { 'Retry-After': `${requestPolicyError.retryAfterSeconds}` }
-            : undefined,
-        },
-      );
-    }
-
     const { formData, mode, pdfBase64, pdfMimeType } = await request.json();
 
     if (!formData || typeof formData !== 'object') {
@@ -41,16 +19,6 @@ export async function POST(request) {
         { error: 'Missing profile form data.' },
         { status: 400 },
       );
-    }
-
-    const formError = validateAdmissionReportRequest(formData);
-    if (formError) {
-      return NextResponse.json({ error: formError }, { status: 400 });
-    }
-
-    const pdfError = validatePdfPayload(pdfBase64, pdfMimeType);
-    if (pdfError) {
-      return NextResponse.json({ error: pdfError }, { status: 400 });
     }
 
     const profilePayload = buildProfilePayload(formData);

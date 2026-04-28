@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { generateGeminiTextContent, getGeminiText } from '@/lib/ai/gemini.js';
-import { enforceRequestRateLimit } from '@/lib/ai/requestGuards.js';
 import { getChatbotSystemInstruction } from '@/lib/ai/chatbot.js';
 import {
   createChatbotMessage,
@@ -14,24 +13,6 @@ import { reportError } from '@/lib/logger.js';
 
 export async function POST(request) {
   try {
-    const requestPolicyError = await enforceRequestRateLimit({
-      request,
-      routeKey: 'ai:chatbot',
-      limit: 12,
-    });
-
-    if (requestPolicyError) {
-      return NextResponse.json(
-        { error: requestPolicyError.error },
-        {
-          status: requestPolicyError.status,
-          headers: requestPolicyError.retryAfterSeconds
-            ? { 'Retry-After': `${requestPolicyError.retryAfterSeconds}` }
-            : undefined,
-        },
-      );
-    }
-
     const { sessionId, messages, metadata } = await request.json();
     const sessionIdError = validateChatbotSessionId(sessionId);
     if (sessionIdError) {
