@@ -34,8 +34,7 @@ const ArticlesSection = ({ articles = [] }) => {
         </h1>
         <div className="border-b-4 border-main w-1/5 mx-auto md:mx-0 my-4"></div>
         <p className="text-gray-700 text-base md:text-lg">
-          Browse the latest published guides from the blog. These cards now come
-          directly from Firebase blog posts.
+          Browse the latest published guides from our blog.
         </p>
         <button
           className="bg-main text-white font-semibold px-5 py-2 mt-6 rounded-md hidden md:block"
@@ -60,7 +59,7 @@ const ArticlesSection = ({ articles = [] }) => {
               className="hidden md:flex overflow-x-auto space-x-6 scrollbar-hide px-2"
             >
               {articles.map((item) => (
-                <ArticleCard key={item.id} props={item} />
+                <ArticleCard key={item.id} post={item} />
               ))}
             </div>
 
@@ -86,7 +85,7 @@ const ArticlesSection = ({ articles = [] }) => {
 
             <div className="flex flex-col md:hidden gap-6 mt-6">
               {mobileArticles.map((item) => (
-                <ArticleCard key={item.id} props={item} />
+                <ArticleCard key={item.id} post={item} />
               ))}
             </div>
           </>
