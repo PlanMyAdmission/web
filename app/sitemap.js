@@ -1,4 +1,4 @@
-import { getPublishedBlogPosts } from '@/lib/blogs.server.js';
+import { fetchAllBlogSlugs } from '@/lib/blog/api.js';
 import { getCanonicalUrl, getSitemapEntries } from '@/lib/seo';
 
 const toLastModified = (value) => {
@@ -13,14 +13,14 @@ const toLastModified = (value) => {
 export default async function sitemap() {
   const [staticEntries, posts] = await Promise.all([
     Promise.resolve(getSitemapEntries()),
-    getPublishedBlogPosts(),
+    fetchAllBlogSlugs(),
   ]);
 
   return [
     ...staticEntries,
     ...posts.map((post) => ({
       url: getCanonicalUrl(`/blogs/${post.slug}`),
-      lastModified: toLastModified(post.updatedAtIso || post.publishedAtIso),
+      lastModified: toLastModified(post.updatedAtIso || post.createdAtIso),
       changeFrequency: 'monthly',
       priority: 0.7,
     })),

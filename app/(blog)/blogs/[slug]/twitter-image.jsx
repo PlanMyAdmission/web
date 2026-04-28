@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 
-import { getPublishedBlogPost } from '@/lib/blogs.server.js';
+import { fetchBlogBySlug } from '@/lib/blog/api.js';
 import { buildOgImage, contentType, ogImageSize } from '@/lib/og';
 
 export { contentType };
@@ -8,7 +8,7 @@ export const runtime = 'nodejs';
 export const size = ogImageSize;
 
 export default async function BlogTwitterImage({ params }) {
-  const post = await getPublishedBlogPost(params.slug);
+  const post = await fetchBlogBySlug(params.slug);
   if (!post) {
     notFound();
   }

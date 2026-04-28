@@ -32,8 +32,8 @@ const BlogPostSchema = ({ post }) => {
     },
     mainEntityOfPage: canonicalUrl,
     url: canonicalUrl,
-    datePublished: post.publishedAtIso || post.updatedAtIso || undefined,
-    dateModified: post.updatedAtIso || post.publishedAtIso || undefined,
+    datePublished: post.createdAtIso || undefined,
+    dateModified: post.updatedAtIso || post.createdAtIso || undefined,
   };
 
   return (

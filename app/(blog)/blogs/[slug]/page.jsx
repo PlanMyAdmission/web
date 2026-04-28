@@ -1,12 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import {
-  getPublishedBlogPost,
-  getPublishedBlogPosts,
-} from '@/lib/blogs.server.js';
+
+import { fetchAllBlogSlugs, fetchBlogBySlug, fetchBlogPage } from '@/lib/blog/api.js';
 import { buildCmsMetadata } from '@/lib/cmsMetadata.js';
 import BlogPostSchema from '@/components/seo/BlogPostSchema.jsx';
+import BlogBreadcrumbSchema from '@/components/seo/BlogBreadcrumbSchema.jsx';
 
 const buildParagraphs = (content = '') =>
   `${content || ''}`
@@ -187,7 +186,7 @@ const TableOfContents = ({ items }) => (
 );
 
 export async function generateMetadata({ params }) {
-  const post = await getPublishedBlogPost(params.slug);
+  const post = await fetchBlogBySlug(params.slug);
   if (!post) {
     return {};
   }
@@ -199,18 +198,34 @@ export async function generateMetadata({ params }) {
     type: 'article',
     image: null,
     twitterImage: null,
+    keywords: post.keywords,
+    publishedTime: post.createdAtIso,
+    modifiedTime: post.updatedAtIso || post.createdAtIso,
   });
 }
 
+export async function generateStaticParams() {
+  try {
+    const slugs = await fetchAllBlogSlugs();
+    return slugs
+      .filter((post) => Boolean(post.slug))
+      .map((post) => ({ slug: post.slug }));
+  } catch {
+    return [];
+  }
+}
+
 export default async function BlogPostPage({ params }) {
-  const [post, posts] = await Promise.all([
-    getPublishedBlogPost(params.slug),
-    getPublishedBlogPosts(),
+  const [post, popularPage] = await Promise.all([
+    fetchBlogBySlug(params.slug),
+    fetchBlogPage({ limit: 4 }),
   ]);
 
   if (!post) {
     notFound();
   }
+
+  const posts = popularPage.items;
 
   const { intro, items } = buildContentModel(post.content);
   const popularPosts = posts
@@ -243,13 +258,14 @@ export default async function BlogPostPage({ params }) {
     label,
   }));
   const publishedLabel = formatDisplayDate(
-    post.publishedAtIso || post.updatedAtIso || post.createdAtIso,
+    post.createdAtIso || post.updatedAtIso,
   );
   const articleSummary = post.excerpt || intro || 'Read the full article.';
 
   return (
     <>
       <BlogPostSchema post={post} />
+      <BlogBreadcrumbSchema post={post} />
       <div className="mx-auto mt-20 max-w-6xl px-4 md:px-5 lg:px-6">
         <section className="overflow-hidden rounded-[28px] bg-light shadow-[0_18px_40px_rgba(157,19,95,0.06)]">
           <div className="grid lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
