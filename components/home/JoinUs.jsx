@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import React from 'react';
 const joinUs = '/images/home/JoinUs.svg';
-import Heading from '@components/common/Heading';
+import Heading from '@/components/common/Heading';
 const JoinUs = () => {
   return (
     <section id="join-us">

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import Heading from '@components/common/Heading';
+import Heading from '@/components/common/Heading';
 import UniversityCard from '@/components/home/UniversityCard.jsx';
 const harvard = '/images/home/harvard.png';
 const oxford = '/images/home/oxford.png';

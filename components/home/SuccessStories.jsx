@@ -2,7 +2,7 @@
 
 import { React, useState } from 'react';
 import Image from 'next/image';
-import Heading from '@components/common/Heading';
+import Heading from '@/components/common/Heading';
 import Testimonials from '@/components/home/Testimonials.jsx';
 const Human = '/images/ui/Human.svg';
 const bgArrow = '/images/ui/bgArrow.svg';

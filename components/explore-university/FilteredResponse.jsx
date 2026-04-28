@@ -1,13 +1,10 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
-import app from '@lib/firebase.js';
-import { collection, getFirestore } from 'firebase/firestore';
-import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import React, { useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { trackContentClick } from '@lib/analytics.js';
-import { reportError } from '@lib/logger.js';
+import { trackContentClick } from '@/lib/analytics.js';
+import { reportError } from '@/lib/logger.js';
 import fetchFilteredDocs from '@/components/explore-university/filtered-response/fetchFilteredDocs.js';
 import {
   FilteredResponseEmptyState,
@@ -18,71 +15,18 @@ import FilteredResponseContent from '@/components/explore-university/filtered-re
 const arrayUniqueByField = (items, fieldName) =>
   items.filter(
     (item, index, list) =>
-      index === list.findIndex((candidate) => candidate?.[fieldName] === item?.[fieldName]),
+      index ===
+      list.findIndex(
+        (candidate) => candidate?.[fieldName] === item?.[fieldName],
+      ),
   );
 
 const FilteredResponse = ({ props }) => {
-  const db = getFirestore(app);
-  const storage = getStorage();
   const router = useRouter();
-  const [docs, setDocs] = useState([]);
+  const docs = [];
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
   const [sortByRank, setSortByRank] = useState(false);
-  const [showLoader, setShowLoader] = useState(true);
-  const [imageByUniversityId, setImageByUniversityId] = useState({});
-
-  const docref = useMemo(() => collection(db, 'explore_university'), [db]);
-
-  useEffect(() => {
-    let isCancelled = false;
-    const timer = setTimeout(() => {
-      if (!isCancelled) {
-        setShowLoader(false);
-      }
-    }, 8000);
-
-    const load = async () => {
-      setDocs([]);
-      setVisibleCount(10);
-      setSelectedCountries([]);
-      setSortByRank(false);
-      setImageByUniversityId({});
-      setShowLoader(true);
-
-      try {
-        const snapshotDocs = await fetchFilteredDocs({
-          docref,
-          intake: props.intake,
-          country: props.country,
-          duration: props.duration,
-          level: props.level,
-          course: props.course,
-        });
-
-        if (!isCancelled) {
-          setDocs(
-            snapshotDocs.map((snapDoc) => ({
-              recordId: snapDoc.id,
-              ...snapDoc.data(),
-            })),
-          );
-          setShowLoader(false);
-        }
-      } catch (error) {
-        reportError('Failed to fetch explore university docs', error);
-        if (!isCancelled) {
-          setShowLoader(false);
-        }
-      }
-    };
-
-    load();
-    return () => {
-      isCancelled = true;
-      clearTimeout(timer);
-    };
-  }, [docref, props.country, props.course, props.duration, props.intake, props.level]);
 
   const uniqueDocs = useMemo(() => arrayUniqueByField(docs, 'id'), [docs]);
 
@@ -92,37 +36,11 @@ const FilteredResponse = ({ props }) => {
   );
 
   const uniqueUniversities = useMemo(
-    () => [...new Set(uniqueDocs.map((item) => item?.UniversityId).filter(Boolean))],
+    () => [
+      ...new Set(uniqueDocs.map((item) => item?.UniversityId).filter(Boolean)),
+    ],
     [uniqueDocs],
   );
-
-  useEffect(() => {
-    if (!uniqueUniversities.length) return;
-    let isCancelled = false;
-
-    const loadImages = async () => {
-      const entries = await Promise.all(
-        uniqueUniversities.map(async (universityId) => {
-          try {
-            const fileRef = ref(storage, `logos/${universityId}.png`);
-            const imageUrl = await getDownloadURL(fileRef);
-            return [universityId, imageUrl];
-          } catch (_error) {
-            return [universityId, ''];
-          }
-        }),
-      );
-
-      if (!isCancelled) {
-        setImageByUniversityId(Object.fromEntries(entries));
-      }
-    };
-
-    loadImages();
-    return () => {
-      isCancelled = true;
-    };
-  }, [storage, uniqueUniversities]);
 
   const filteredDocs = useMemo(() => {
     const byCountry = selectedCountries.length
@@ -131,7 +49,9 @@ const FilteredResponse = ({ props }) => {
 
     const sortedDocs = [...byCountry];
     if (sortByRank) {
-      sortedDocs.sort((a, b) => (b?.UniversityOrder || 0) - (a?.UniversityOrder || 0));
+      sortedDocs.sort(
+        (a, b) => (b?.UniversityOrder || 0) - (a?.UniversityOrder || 0),
+      );
     }
     return sortedDocs;
   }, [selectedCountries, sortByRank, uniqueDocs]);
@@ -170,7 +90,6 @@ const FilteredResponse = ({ props }) => {
   };
 
   if (filteredDocs.length === 0 || countries.length === 0) {
-    if (showLoader) return <FilteredResponseLoadingState />;
     return <FilteredResponseEmptyState />;
   }
 
@@ -187,7 +106,7 @@ const FilteredResponse = ({ props }) => {
       filteredDocs={filteredDocs}
       visibleCount={visibleCount}
       setVisibleCount={setVisibleCount}
-      imageByUniversityId={imageByUniversityId}
+      imageByUniversityId={{}}
       handleEnroll={handleEnroll}
     />
   );

@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { trackContentClick } from '@lib/analytics.js';
+import { trackContentClick } from '@/lib/analytics.js';
 const ArticleCard = ({ props }) => {
   const router = useRouter();
   return (

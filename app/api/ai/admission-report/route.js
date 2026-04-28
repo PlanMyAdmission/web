@@ -2,18 +2,18 @@ import { NextResponse } from 'next/server';
 import {
   admissionJsonSchema,
   buildPrompt,
-} from '@components/ai-admission/lib/prompt.js';
-import { buildProfilePayload } from '@components/ai-admission/lib/profilePayload.js';
+} from '@/components/ai-admission/lib/prompt.js';
+import { buildProfilePayload } from '@/components/ai-admission/lib/profilePayload.js';
 import {
   extractJson,
   generateStructuredGeminiContent,
   getGeminiText,
-} from '@lib/ai/gemini.js';
+} from '@/lib/ai/gemini.js';
 import {
   enforceRequestRateLimit,
   validateAdmissionReportRequest,
   validatePdfPayload,
-} from '@lib/ai/requestGuards.js';
+} from '@/lib/ai/requestGuards.js';
 
 export async function POST(request) {
   try {

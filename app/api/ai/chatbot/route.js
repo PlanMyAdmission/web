@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import { generateGeminiTextContent, getGeminiText } from '@lib/ai/gemini.js';
-import { enforceRequestRateLimit } from '@lib/ai/requestGuards.js';
-import { getChatbotSystemInstruction } from '@lib/ai/chatbot.js';
+import { generateGeminiTextContent, getGeminiText } from '@/lib/ai/gemini.js';
+import { enforceRequestRateLimit } from '@/lib/ai/requestGuards.js';
+import { getChatbotSystemInstruction } from '@/lib/ai/chatbot.js';
 import {
   createChatbotMessage,
   getChatbotMessagesForModel,
@@ -9,13 +9,8 @@ import {
   sanitizeChatbotMessages,
   validateChatbotMessages,
   validateChatbotSessionId,
-} from '@lib/chatbotSessions.js';
-import { upsertChatbotSession } from '@lib/chatbotSessions.server.js';
-import {
-  getFirebaseAdminDb,
-  isFirebaseAdminConfigured,
-} from '@lib/firebaseAdmin.js';
-import { reportError } from '@lib/logger.js';
+} from '@/lib/chatbotSessions.js';
+import { reportError } from '@/lib/logger.js';
 
 export async function POST(request) {
   try {
@@ -74,25 +69,6 @@ export async function POST(request) {
       role: 'bot',
       content: text,
     });
-    const persistedMessages = sanitizeChatbotMessages([
-      ...safeMessages,
-      assistantMessage,
-    ]);
-
-    if (isFirebaseAdminConfigured) {
-      try {
-        const db = getFirebaseAdminDb();
-        await upsertChatbotSession({
-          db,
-          sessionId: safeSessionId,
-          messages: persistedMessages,
-          metadata,
-        });
-      } catch (persistError) {
-        reportError('Failed to persist chatbot session:', persistError);
-      }
-    }
-
     return NextResponse.json({
       data: {
         sessionId: safeSessionId,

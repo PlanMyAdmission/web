@@ -1,5 +1,5 @@
-import Pricing from '@components/pricing/Pricing';
-import { buildPageMetadata } from '@lib/seo';
+import Pricing from '@/components/pricing/Pricing';
+import { buildPageMetadata } from '@/lib/seo';
 export const metadata = buildPageMetadata('/pricing');
 export default function PricingPage() {
   return <Pricing />;

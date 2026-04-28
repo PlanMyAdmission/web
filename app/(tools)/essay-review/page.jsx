@@ -1,5 +1,5 @@
-import EssayReviewTool from '@components/essay-review/EssayReviewTool.jsx';
-import { buildPageMetadata } from '@lib/seo';
+import EssayReviewTool from '@/components/essay-review/EssayReviewTool.jsx';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata = buildPageMetadata('/essay-review');
 

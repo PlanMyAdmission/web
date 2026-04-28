@@ -3,24 +3,16 @@ import {
   extractJson,
   generateStructuredGeminiContent,
   getGeminiText,
-} from '@lib/ai/gemini.js';
+} from '@/lib/ai/gemini.js';
 import {
   enforceRequestRateLimit,
-  validateLeadCaptureContext,
   validatePdfPayload,
   validateUniversityMatchRequest,
-} from '@lib/ai/requestGuards.js';
+} from '@/lib/ai/requestGuards.js';
 import {
   buildUniversityPrompt,
   universityJsonSchema,
-} from '@lib/ai/universityMatch.js';
-import {
-  getFirebaseAdminDb,
-  isFirebaseAdminConfigured,
-} from '@lib/firebaseAdmin.js';
-import { buildAiMatchmakerLead } from '@lib/leads.js';
-import { createLeadRecord } from '@lib/leads.server.js';
-import { reportError } from '@lib/logger.js';
+} from '@/lib/ai/universityMatch.js';
 
 export async function POST(request) {
   try {
@@ -41,8 +33,7 @@ export async function POST(request) {
       );
     }
 
-    const { searchProfile, pdfBase64, pdfMimeType, leadContext } =
-      await request.json();
+    const { searchProfile, pdfBase64, pdfMimeType } = await request.json();
 
     if (!searchProfile || typeof searchProfile !== 'object') {
       return NextResponse.json(
@@ -59,11 +50,6 @@ export async function POST(request) {
     const pdfError = validatePdfPayload(pdfBase64, pdfMimeType);
     if (pdfError) {
       return NextResponse.json({ error: pdfError }, { status: 400 });
-    }
-
-    const leadContextError = validateLeadCaptureContext(leadContext);
-    if (leadContextError) {
-      return NextResponse.json({ error: leadContextError }, { status: 400 });
     }
 
     const mode = pdfBase64 ? 'pdf' : 'search';
@@ -112,23 +98,6 @@ export async function POST(request) {
         { error: 'Unable to parse AI response. Please retry.' },
         { status: 502 },
       );
-    }
-
-    if (isFirebaseAdminConfigured) {
-      try {
-        const db = getFirebaseAdminDb();
-        await createLeadRecord({
-          db,
-          payload: buildAiMatchmakerLead({
-            currentUser: leadContext?.currentUser || null,
-            searchProfile,
-            parsedResults: parsed,
-            hasProfilePdf: Boolean(pdfBase64),
-          }),
-        });
-      } catch (leadError) {
-        reportError('Failed to save AI matchmaker lead:', leadError);
-      }
     }
 
     return NextResponse.json({ data: parsed });

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Heading from '@components/common/Heading';
+import Heading from '@/components/common/Heading';
 import { defaultFAQ } from '@/components/pricing/data.js';
 
 const renderAnswer = (answer) => {

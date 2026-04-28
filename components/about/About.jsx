@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '@components/common/Header';
+import Header from '@/components/common/Header';
 import AboutUsDescription from '@/components/about/AboutUsDescription.jsx';
 import OurCoreValues from '@/components/about/OurCoreValues.jsx';
 import Founder from '@/components/about/Founder.jsx';

@@ -1,16 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import ReviewResults from '@components/essay-review/ReviewResults.jsx';
+import ReviewResults from '@/components/essay-review/ReviewResults.jsx';
 import {
   DOCUMENT_TYPE_OPTIONS,
   REVIEW_FOCUS_OPTIONS,
   INITIAL_REVIEW_FORM,
   getDraftWordCount,
   validateReviewForm,
-} from '@components/essay-review/lib/reviewForm.js';
-import { trackAiToolEvent } from '@lib/analytics.js';
-import { fileToBase64 } from '@lib/clientUtils.js';
+} from '@/components/essay-review/lib/reviewForm.js';
+import { trackAiToolEvent } from '@/lib/analytics.js';
+import { fileToBase64 } from '@/lib/clientUtils.js';
 
 const inputClassName =
   'w-full rounded-[22px] border border-[#ddcfda] bg-white px-4 py-3 text-sm text-[#341338] shadow-[0_10px_30px_rgba(58,23,52,0.05)] outline-none transition placeholder:text-[#9a8a9d] focus:border-[#f40076] focus:ring-4 focus:ring-[#f9dbe8]';

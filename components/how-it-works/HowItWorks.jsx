@@ -1,15 +1,17 @@
 import Image from 'next/image';
 
 import React from 'react';
-import Header from '@components/common/Header';
-import Heading from '@components/common/Heading';
+import Header from '@/components/common/Header';
+import Heading from '@/components/common/Heading';
 const ArticleImage = '/images/home/ArticleImage.svg';
 import Timeline from '@/components/how-it-works/Timeline.jsx';
 const HowItWorks = ({ content }) => {
   return (
     <div>
       <Header heading={content?.headerHeading || 'How it works'} />
-      <Heading heading={content?.introHeading || 'Simplifying Application Process'} />
+      <Heading
+        heading={content?.introHeading || 'Simplifying Application Process'}
+      />
       <Section sectionText={content?.introText} />
       <Heading heading={content?.startHeading || 'How to get Started'} />
       <Timeline items={content?.timeline} />

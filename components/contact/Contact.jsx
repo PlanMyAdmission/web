@@ -3,7 +3,7 @@
 import Image from 'next/image';
 
 import React from 'react';
-import Header from '@components/common/Header';
+import Header from '@/components/common/Header';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -17,7 +17,7 @@ import {
   supportEmail,
   supportPhone,
   whatsappSupportUrl,
-} from '@lib/publicLinks.js';
+} from '@/lib/publicLinks.js';
 
 const contactus = '/images/about/contactus.svg';
 const officeAddress =

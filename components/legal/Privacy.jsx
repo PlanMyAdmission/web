@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '@components/common/Header';
+import Header from '@/components/common/Header';
 import data from '@/components/legal/privacy-policy.js';
 import SimpleRichText from '@/components/shared/SimpleRichText.jsx';
 const Content = (data) => {

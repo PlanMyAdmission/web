@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import ContentSection from '@components/common/ContentSection';
+import ContentSection from '@/components/common/ContentSection';
 import data from '@/components/for-institutions/featureData.js';
 const Features = ({ sections = data }) => {
   const style =

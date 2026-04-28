@@ -8,7 +8,7 @@ import {
   DEFAULT_OG_IMAGE,
   DEFAULT_TITLE,
   SITE_NAME,
-} from '@lib/seo';
+} from '@/lib/seo';
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),

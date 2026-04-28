@@ -1,5 +1,5 @@
-import AIUniversitySearch from '@components/ai-university-search/AIUniversitySearch';
-import { buildPageMetadata } from '@lib/seo';
+import AIUniversitySearch from '@/components/ai-university-search/AIUniversitySearch';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata = buildPageMetadata('/ai-university-matchmaker');
 

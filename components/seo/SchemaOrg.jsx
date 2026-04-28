@@ -10,7 +10,7 @@ import {
   SITE_NAME,
   getCanonicalUrl,
   getRouteMeta,
-} from '@lib/seo';
+} from '@/lib/seo';
 
 const SchemaOrg = () => {
   const pathname = usePathname() || '/';

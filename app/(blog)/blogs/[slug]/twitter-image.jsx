@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 
-import { getPublishedBlogPost } from '@lib/blogs.server.js';
-import { buildOgImage, contentType, ogImageSize } from '@lib/og';
+import { getPublishedBlogPost } from '@/lib/blogs.server.js';
+import { buildOgImage, contentType, ogImageSize } from '@/lib/og';
 
 export { contentType };
 export const runtime = 'nodejs';
@@ -16,6 +16,9 @@ export default async function BlogTwitterImage({ params }) {
   return buildOgImage({
     eyebrow: 'Plan My Admission Blog',
     title: post.metaTitle || post.title,
-    description: post.metaDescription || post.excerpt || 'Read the full article on Plan My Admission.',
+    description:
+      post.metaDescription ||
+      post.excerpt ||
+      'Read the full article on Plan My Admission.',
   });
 }

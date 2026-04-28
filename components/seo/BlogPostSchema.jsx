@@ -1,4 +1,4 @@
-import { BASE_URL, SITE_NAME } from '@lib/seo';
+import { BASE_URL, SITE_NAME } from '@/lib/seo';
 
 const BlogPostSchema = ({ post }) => {
   if (!post?.slug || !post?.title) {

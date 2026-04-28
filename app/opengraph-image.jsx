@@ -1,5 +1,5 @@
-import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '@lib/seo';
-import { buildOgImage, contentType, ogImageSize } from '@lib/og';
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE } from '@/lib/seo';
+import { buildOgImage, contentType, ogImageSize } from '@/lib/og';
 
 export { contentType };
 export const runtime = 'nodejs';

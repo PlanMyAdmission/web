@@ -4,9 +4,9 @@ import { notFound } from 'next/navigation';
 import {
   getPublishedBlogPost,
   getPublishedBlogPosts,
-} from '@lib/blogs.server.js';
-import { buildCmsMetadata } from '@lib/cmsMetadata.js';
-import BlogPostSchema from '@components/seo/BlogPostSchema.jsx';
+} from '@/lib/blogs.server.js';
+import { buildCmsMetadata } from '@/lib/cmsMetadata.js';
+import BlogPostSchema from '@/components/seo/BlogPostSchema.jsx';
 
 const buildParagraphs = (content = '') =>
   `${content || ''}`

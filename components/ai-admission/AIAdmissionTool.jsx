@@ -19,8 +19,8 @@ import {
   LOADING_MESSAGES,
   openReportPrintWindow,
 } from '@/components/ai-admission/lib/admissionToolHelpers.js';
-import { trackAiToolEvent } from '@lib/analytics.js';
-import { fileToBase64 } from '@lib/clientUtils.js';
+import { trackAiToolEvent } from '@/lib/analytics.js';
+import { fileToBase64 } from '@/lib/clientUtils.js';
 import { mapModuleClasses } from '@/lib/cx.js';
 const cx = (...classNames) => mapModuleClasses(styles, ...classNames);
 
@@ -68,7 +68,9 @@ const AIAdmissionTool = () => {
       return undefined;
     }
     const interval = setInterval(() => {
-      setLoadingMessageIndex((previous) => (previous + 1) % LOADING_MESSAGES.length);
+      setLoadingMessageIndex(
+        (previous) => (previous + 1) % LOADING_MESSAGES.length,
+      );
     }, 1600);
     return () => clearInterval(interval);
   }, [status.type]);
@@ -83,7 +85,10 @@ const AIAdmissionTool = () => {
           mode,
           hasPdf: Boolean(pdfFile),
         });
-        setStatus({ type: 'error', message: 'Please add your first and last name to continue.' });
+        setStatus({
+          type: 'error',
+          message: 'Please add your first and last name to continue.',
+        });
         setFlow('start');
         return;
       }
@@ -95,7 +100,10 @@ const AIAdmissionTool = () => {
         mode,
         hasPdf: false,
       });
-      setStatus({ type: 'error', message: 'Please upload a PDF profile to continue.' });
+      setStatus({
+        type: 'error',
+        message: 'Please upload a PDF profile to continue.',
+      });
       setFlow('start');
       return;
     }
@@ -131,7 +139,9 @@ const AIAdmissionTool = () => {
       const payload = await response.json();
 
       if (!response.ok) {
-        throw new Error(payload?.error || 'Something went wrong while generating the report.');
+        throw new Error(
+          payload?.error || 'Something went wrong while generating the report.',
+        );
       }
 
       const parsed = payload?.data;
@@ -167,7 +177,8 @@ const AIAdmissionTool = () => {
       });
       setStatus({
         type: 'error',
-        message: error?.message || 'Something went wrong while generating the report.',
+        message:
+          error?.message || 'Something went wrong while generating the report.',
       });
       setFlow('start');
     }
@@ -230,7 +241,10 @@ const AIAdmissionTool = () => {
           setField={setField}
           onContinue={() => {
             if (!canContinueFromStart(formData)) {
-              setStatus({ type: 'error', message: 'Please enter first and last name to continue.' });
+              setStatus({
+                type: 'error',
+                message: 'Please enter first and last name to continue.',
+              });
               return;
             }
             setStatus({ type: 'idle', message: '' });
@@ -252,7 +266,8 @@ const AIAdmissionTool = () => {
             if (!canContinueFromCourse(formData)) {
               setStatus({
                 type: 'error',
-                message: 'Please complete country, degree level, program area, and academic score.',
+                message:
+                  'Please complete country, degree level, program area, and academic score.',
               });
               return;
             }
@@ -281,14 +296,20 @@ const AIAdmissionTool = () => {
         />
       )}
 
-      {flow === 'processing' && <ProcessingStep message={LOADING_MESSAGES[loadingMessageIndex]} />}
+      {flow === 'processing' && (
+        <ProcessingStep message={LOADING_MESSAGES[loadingMessageIndex]} />
+      )}
 
       {status.message && status.type !== 'loading' && (
         <div className={cx('pma-ai-status', status.type)}>{status.message}</div>
       )}
 
       {flow === 'result' && (
-        <ResultStep reportData={reportData} onDownload={handlePrint} onReset={resetAll} />
+        <ResultStep
+          reportData={reportData}
+          onDownload={handlePrint}
+          onReset={resetAll}
+        />
       )}
     </div>
   );

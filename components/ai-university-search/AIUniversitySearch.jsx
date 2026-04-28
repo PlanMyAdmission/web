@@ -2,9 +2,8 @@
 
 import React, { useState } from 'react';
 import uniStyles from '@/components/ai-university-search/AIUniversitySearch.module.css';
-import { useAuth } from '@context/AuthProvider';
-import { trackAiToolEvent } from '@lib/analytics.js';
-import { fileToBase64 } from '@lib/clientUtils.js';
+import { trackAiToolEvent } from '@/lib/analytics.js';
+import { fileToBase64 } from '@/lib/clientUtils.js';
 import SearchHeader from '@/components/ai-university-search/SearchHeader.jsx';
 import ProfileUpload from '@/components/ai-university-search/ProfileUpload.jsx';
 import ResultsPanel from '@/components/ai-university-search/ResultsPanel.jsx';
@@ -23,14 +22,13 @@ const cx = (...classNames) =>
     .join(' ');
 
 const AIUniversitySearch = () => {
-  const { currentUser } = useAuth();
-  const [pdfFile, setPdfFile] = useState(null);
+  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
   const [results, setResults] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
   const [activeStep, setActiveStep] = useState(0);
   const [searchProfile, setSearchProfile] = useState(INITIAL_SEARCH_PROFILE);
   const [status, setStatus] = useState({ type: 'idle', message: '' });
-  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
+  const [pdfFile, setPdfFile] = useState(null);
 
   const setSearchField = (field, value) => {
     setSearchProfile((previous) => {
@@ -98,7 +96,8 @@ const AIUniversitySearch = () => {
       setActiveStep(STEP_BY_FIELD[firstErrorField] ?? 0);
       setStatus({
         type: 'error',
-        message: 'Please complete the required fields to generate reliable matches.',
+        message:
+          'Please complete the required fields to generate reliable matches.',
       });
       return;
     }
@@ -125,21 +124,14 @@ const AIUniversitySearch = () => {
           searchProfile,
           pdfBase64: pdfFile ? await fileToBase64(pdfFile) : '',
           pdfMimeType: pdfFile?.type || '',
-          leadContext: {
-            currentUser: {
-              uid: currentUser?.uid || null,
-              email: currentUser?.email || null,
-              displayName: currentUser?.displayName || null,
-            },
-            formStartedAt,
-            honeypot: '',
-          },
         }),
       });
       const payload = await response.json();
 
       if (!response.ok) {
-        throw new Error(payload?.error || 'Something went wrong while generating results.');
+        throw new Error(
+          payload?.error || 'Something went wrong while generating results.',
+        );
       }
 
       const parsed = payload?.data;
@@ -155,7 +147,10 @@ const AIUniversitySearch = () => {
         mode: pdfFile ? 'pdf' : 'search',
         hasPdf: Boolean(pdfFile),
       });
-      setStatus({ type: 'success', message: 'Your parent and student friendly matches are ready.' });
+      setStatus({
+        type: 'success',
+        message: 'Your parent and student friendly matches are ready.',
+      });
     } catch (error) {
       trackAiToolEvent({
         toolName: 'university_matchmaker',
@@ -166,7 +161,8 @@ const AIUniversitySearch = () => {
       });
       setStatus({
         type: 'error',
-        message: error?.message || 'Something went wrong while generating results.',
+        message:
+          error?.message || 'Something went wrong while generating results.',
       });
     }
   };
@@ -195,8 +191,9 @@ const AIUniversitySearch = () => {
           <p className={cx('pma-uni-eyebrow')}>Plan My Admission</p>
           <h2>AI University Matchmaker</h2>
           <p className={cx('pma-uni-subtitle')}>
-            Build a clear shortlist that both students and parents can trust. This guided
-            flow captures academics, budget, and family priorities before generating matches.
+            Build a clear shortlist that both students and parents can trust.
+            This guided flow captures academics, budget, and family priorities
+            before generating matches.
           </p>
           <div className={cx('pma-uni-chip-row')}>
             {HERO_CHIPS.map((chip) => (
@@ -222,7 +219,9 @@ const AIUniversitySearch = () => {
       <ProfileUpload pdfFile={pdfFile} onFileChange={handleFile} />
 
       {status.message && (
-        <div className={cx('pma-uni-status', `pma-uni-status-${status.type}`)}>{status.message}</div>
+        <div className={cx('pma-uni-status', `pma-uni-status-${status.type}`)}>
+          {status.message}
+        </div>
       )}
 
       <ResultsPanel results={results} />

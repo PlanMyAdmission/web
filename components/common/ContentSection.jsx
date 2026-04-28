@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { dispatchOpenAiChatbot } from '@lib/clientUtils.js';
-import { portalSignupUrl } from '@lib/publicLinks.js';
+import { dispatchOpenAiChatbot } from '@/lib/clientUtils.js';
+import { portalSignupUrl } from '@/lib/publicLinks.js';
 const ContentSection = ({
   id,
   content,

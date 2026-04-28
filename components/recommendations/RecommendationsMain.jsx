@@ -1,22 +1,18 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import RecommendationResults from '@/components/recommendations/RecommendationResults.jsx';
 import {
   StepOne,
   StepThree,
   StepTwo,
 } from '@/components/recommendations/RecommendationSteps.jsx';
-import app from '@lib/firebase.js';
-import { trackEvent } from '@lib/analytics.js';
-import { getFirestore, collection, getDocs, query } from 'firebase/firestore';
-import { toast } from 'react-toastify';
+import { trackEvent } from '@/lib/analytics.js';
 
 const RecommendationsMain = () => {
-  const db = getFirestore(app);
-  const [degrees, setDegrees] = useState([]);
-  const [disciplines, setDisciplines] = useState([]);
-  const [countries, setCountries] = useState([]);
+  const [degrees] = useState([]);
+  const [disciplines] = useState([]);
+  const [countries] = useState([]);
   const [show, setShow] = useState(false);
   const [filterData, setFilterData] = useState({
     country: '',
@@ -32,21 +28,6 @@ const RecommendationsMain = () => {
     budget: '',
   });
 
-  useEffect(() => {
-    const fetchOptions = async () => {
-      const [countriesSnap, degreesSnap, disciplinesSnap] = await Promise.all([
-        getDocs(query(collection(db, 'countries_state'))),
-        getDocs(query(collection(db, 'degrees'))),
-        getDocs(query(collection(db, 'disciplines'))),
-      ]);
-
-      setCountries(countriesSnap.docs.map((doc) => doc.data()));
-      setDegrees(degreesSnap.docs.map((doc) => doc.data()));
-      setDisciplines(disciplinesSnap.docs.map((doc) => doc.data()));
-    };
-
-    fetchOptions();
-  }, [db]);
 
   const handleFilterChange = (event) => {
     const value = event.target.value;

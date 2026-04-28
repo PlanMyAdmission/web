@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import JoinUs from '@/components/home/JoinUs.jsx';
-import Header from '@components/common/Header';
-import BlogCardLink from '@components/blog/BlogCardLink.jsx';
-import { getPublishedBlogPosts } from '@lib/blogs.server.js';
-import { buildPageMetadata } from '@lib/seo';
+import Header from '@/components/common/Header';
+import BlogCardLink from '@/components/blog/BlogCardLink.jsx';
+import { getPublishedBlogPosts } from '@/lib/blogs.server.js';
+import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata = buildPageMetadata('/blogs');
 
@@ -22,7 +22,9 @@ const BlogCard = ({ post }) => (
       <div className="h-[220px] w-full rounded-lg bg-white"></div>
     )}
     <div className="py-3">
-      <p className="md:text-2xl text-xl font-semibold leading-tight">{post.title}</p>
+      <p className="md:text-2xl text-xl font-semibold leading-tight">
+        {post.title}
+      </p>
       <p className="py-2">{post.excerpt || 'Read the full article.'}</p>
       <BlogCardLink slug={post.slug} />
     </div>
@@ -40,7 +42,8 @@ export default async function BlogsPage() {
           posts.map((post) => <BlogCard key={post.id} post={post} />)
         ) : (
           <div className="sm:col-span-2 rounded-xl bg-white px-6 py-10 text-center text-[#6f556f]">
-            No published blog posts yet. Publish from admin and they will appear here.
+            No published blog posts yet. Publish from admin and they will appear
+            here.
           </div>
         )}
       </div>

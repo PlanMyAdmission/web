@@ -1,6 +1,6 @@
 import React from 'react';
-import Heading from '@components/common/Heading';
-import ContentSection from '@components/common/ContentSection';
+import Heading from '@/components/common/Heading';
+import ContentSection from '@/components/common/ContentSection';
 const defaultData = {
   id: 1,
   content:

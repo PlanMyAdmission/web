@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from '@/components/explore-university/UniversityCourseFinder.module.css';
-import { trackEvent } from '@lib/analytics.js';
+import { trackEvent } from '@/lib/analytics.js';
 import { mapModuleClasses } from '@/lib/cx.js';
 import {
   apiConfig,

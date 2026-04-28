@@ -6,7 +6,7 @@ import {
   loadStoredChatbotSession,
   sanitizeChatbotMessages,
   saveStoredChatbotSession,
-} from '@lib/chatbotSessions.js';
+} from '@/lib/chatbotSessions.js';
 
 const createInitialMessages = () =>
   sanitizeChatbotMessages([

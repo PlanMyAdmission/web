@@ -1,8 +1,8 @@
 import React from 'react';
 import { pricingPlans } from '@/components/pricing/data.js';
-import Card from '@components/common/PricingCard';
+import Card from '@/components/common/PricingCard';
 import FAQ from '@/components/home/FAQ.jsx';
-import Header from '@components/common/Header';
+import Header from '@/components/common/Header';
 import { pricingFAQ } from '@/components/pricing/data.js';
 const Pricing = ({ content }) => {
   return (

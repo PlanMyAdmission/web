@@ -3,17 +3,17 @@ import {
   buildEssayReviewPrompt,
   essayReviewJsonSchema,
   normalizeEssayReviewResult,
-} from '@lib/ai/essayReview.js';
+} from '@/lib/ai/essayReview.js';
 import {
   extractJson,
   generateStructuredGeminiContent,
   getGeminiText,
-} from '@lib/ai/gemini.js';
+} from '@/lib/ai/gemini.js';
 import {
   enforceRequestRateLimit,
   validateEssayReviewRequest,
   validatePdfPayload,
-} from '@lib/ai/requestGuards.js';
+} from '@/lib/ai/requestGuards.js';
 
 export async function POST(request) {
   try {

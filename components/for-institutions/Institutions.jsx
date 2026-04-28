@@ -1,7 +1,7 @@
 import React from 'react';
-import Heading from '@components/common/Heading';
+import Heading from '@/components/common/Heading';
 import Universities from '@/components/home/Universities.jsx';
-import Card from '@components/common/PricingCard';
+import Card from '@/components/common/PricingCard';
 import Banner from '@/components/for-institutions/Banner.jsx';
 import Features from '@/components/for-institutions/Features.jsx';
 import { pricingPlans } from '@/components/for-institutions/pricingData.js';

@@ -3,12 +3,14 @@ import Image from 'next/image';
 import React from 'react';
 const quote = '/images/about/quote.svg';
 const advisors = '/images/about/Ram.jpg';
-import Heading from '@components/common/Heading';
+import Heading from '@/components/common/Heading';
 const defaultQuote =
-  '"The overseas education industry hasn\'t seen real innovation in decades. Students deserve better than slow, expensive, and generic advice that treats them like just another number. That\'s why we built Plan My Admission—to democratize access to world-class education consulting through artificial intelligence and human experts working together.\nOur leadership brings together deep expertise in education, technology, and student success. With years of experience understanding the challenges students face when pursuing international studies, we\'ve shaped Plan My Admission into India\'s topmost AI-powered overseas education platform with AI innovation at its core, building on the industry\'s learning over the last few decades. We strongly believe in empowering every student with personalized, data-driven guidance and the right technological tools to achieve their academic dreams, regardless of their background or budget."';
+  "\"The overseas education industry hasn't seen real innovation in decades. Students deserve better than slow, expensive, and generic advice that treats them like just another number. That's why we built Plan My Admission—to democratize access to world-class education consulting through artificial intelligence and human experts working together.\nOur leadership brings together deep expertise in education, technology, and student success. With years of experience understanding the challenges students face when pursuing international studies, we've shaped Plan My Admission into India's topmost AI-powered overseas education platform with AI innovation at its core, building on the industry's learning over the last few decades. We strongly believe in empowering every student with personalized, data-driven guidance and the right technological tools to achieve their academic dreams, regardless of their background or budget.\"";
 
 const Founder = ({ content }) => {
-  const quoteLines = `${content?.quote || defaultQuote}`.split('\n').filter(Boolean);
+  const quoteLines = `${content?.quote || defaultQuote}`
+    .split('\n')
+    .filter(Boolean);
 
   return (
     <div className="my-20">
@@ -33,7 +35,9 @@ const Founder = ({ content }) => {
           className="block md:hidden w-[260px] h-[260px] [clip-path:circle()] object-cover object-center"
         />
         <div className="md:pl-10 md:w-2/3 w-full md:py-10 p-5">
-          <p className="font-bold text-xl md:pt-5">{content?.name || 'Ram Nivas'}</p>
+          <p className="font-bold text-xl md:pt-5">
+            {content?.name || 'Ram Nivas'}
+          </p>
           <p className="text-main ">{content?.role || 'Founder'}</p>
           <p className="pt-5 md:pr-10 md:mr-20">
             {quoteLines.length > 0

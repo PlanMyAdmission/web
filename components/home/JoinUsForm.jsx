@@ -1,17 +1,17 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { trackEvent } from '@lib/analytics.js';
-import { reportError } from '@lib/logger.js';
+import { trackEvent } from '@/lib/analytics.js';
+import { reportError } from '@/lib/logger.js';
 import {
   buildFullPhoneNumber,
   normalizeCountryDialCode,
   persistSubmission,
   readRecentSubmission,
   SUBMISSION_COOLDOWN_MS,
-} from '@components/contact/joinUsFormHelpers.js';
-import JoinUsPhoneFields from '@components/contact/JoinUsPhoneFields.jsx';
-import JoinUsSuccess from '@components/contact/JoinUsSuccess.jsx';
+} from '@/components/contact/joinUsFormHelpers.js';
+import JoinUsPhoneFields from '@/components/contact/JoinUsPhoneFields.jsx';
+import JoinUsSuccess from '@/components/contact/JoinUsSuccess.jsx';
 
 const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
   const [formData, setFormData] = useState({
@@ -29,7 +29,10 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
 
   useEffect(() => {
     const lastSubmissionAt = readRecentSubmission();
-    if (lastSubmissionAt && Date.now() - lastSubmissionAt < SUBMISSION_COOLDOWN_MS) {
+    if (
+      lastSubmissionAt &&
+      Date.now() - lastSubmissionAt < SUBMISSION_COOLDOWN_MS
+    ) {
       setIsSubmitted(true);
     }
   }, []);
@@ -37,7 +40,9 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
   const validateForm = () => {
     const nextErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const normalizedCountryDialCode = normalizeCountryDialCode(formData.phoneCountryCode);
+    const normalizedCountryDialCode = normalizeCountryDialCode(
+      formData.phoneCountryCode,
+    );
 
     if (!formData.name.trim()) {
       nextErrors.name = 'Name is required';
@@ -122,7 +127,9 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
       const payload = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(payload?.error || 'Something went wrong. Please try again.');
+        throw new Error(
+          payload?.error || 'Something went wrong. Please try again.',
+        );
       }
 
       persistSubmission({
@@ -130,7 +137,10 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
         sourcePage,
         name: formData.name,
         email: formData.email,
-        phone: buildFullPhoneNumber(formData.phoneCountryCode, formData.phoneNumber),
+        phone: buildFullPhoneNumber(
+          formData.phoneCountryCode,
+          formData.phoneNumber,
+        ),
       });
       trackEvent('lead_submit', {
         source: 'join_us',
@@ -157,7 +167,10 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
   return (
     <div className={`py-8 bg-light rounded-lg mb-2 ${className}`}>
       {!isSubmitted ? (
-        <form className="flex flex-col justify-center items-center space-y-5" onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col justify-center items-center space-y-5"
+          onSubmit={handleSubmit}
+        >
           <div className="w-[90%]">
             <input
               type="text"
@@ -166,10 +179,15 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
               placeholder="Name"
               className={`py-4 px-3 rounded-md w-full outline-none bg-white border ${errors.name ? 'border-red-500' : 'border-[#e8dde3]'}`}
               onChange={(event) =>
-                setFormData((current) => ({ ...current, name: event.target.value }))
+                setFormData((current) => ({
+                  ...current,
+                  name: event.target.value,
+                }))
               }
             />
-            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+            )}
           </div>
 
           <JoinUsPhoneFields
@@ -188,10 +206,15 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
               placeholder="Email"
               className={`py-4 px-3 rounded-md w-full outline-none bg-white border ${errors.email ? 'border-red-500' : 'border-[#e8dde3]'}`}
               onChange={(event) =>
-                setFormData((current) => ({ ...current, email: event.target.value }))
+                setFormData((current) => ({
+                  ...current,
+                  email: event.target.value,
+                }))
               }
             />
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
           </div>
 
           <div className="hidden" aria-hidden="true">
@@ -201,7 +224,10 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
               autoComplete="off"
               value={formData.honeypot}
               onChange={(event) =>
-                setFormData((current) => ({ ...current, honeypot: event.target.value }))
+                setFormData((current) => ({
+                  ...current,
+                  honeypot: event.target.value,
+                }))
               }
             />
           </div>
@@ -215,14 +241,22 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
                 onChange={(event) => setAgreed(event.target.checked)}
                 className={`mt-1 w-4 h-4 text-main bg-white border-gray-300 rounded focus:ring-main focus:ring-2 ${errors.agreed ? 'border-red-500' : ''}`}
               />
-              <label htmlFor="agreement" className="text-gray-700 text-sm leading-tight">
-                I authorize PlanMyAdmission to contact me via Email/SMS/WhatsApp/Call.
+              <label
+                htmlFor="agreement"
+                className="text-gray-700 text-sm leading-tight"
+              >
+                I authorize PlanMyAdmission to contact me via
+                Email/SMS/WhatsApp/Call.
               </label>
             </div>
-            {errors.agreed && <p className="text-red-500 text-xs mt-1">{errors.agreed}</p>}
+            {errors.agreed && (
+              <p className="text-red-500 text-xs mt-1">{errors.agreed}</p>
+            )}
           </div>
 
-          {errors.submit && <p className="text-red-500 text-sm">{errors.submit}</p>}
+          {errors.submit && (
+            <p className="text-red-500 text-sm">{errors.submit}</p>
+          )}
 
           <button
             type="submit"

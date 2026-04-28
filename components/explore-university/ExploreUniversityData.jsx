@@ -1,6 +1,6 @@
 import ExploreMainPage from '@/components/explore-university/ExploreMainPage.jsx';
 import Image from 'next/image';
-import { trackNavigationClick } from '@lib/analytics.js';
+import { trackNavigationClick } from '@/lib/analytics.js';
 
 const ExploreUniversityData = ({ records = [], imageUrl = '' }) => {
   return (

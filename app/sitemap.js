@@ -1,5 +1,5 @@
-import { getPublishedBlogPosts } from '@lib/blogs.server.js';
-import { getCanonicalUrl, getSitemapEntries } from '@lib/seo';
+import { getPublishedBlogPosts } from '@/lib/blogs.server.js';
+import { getCanonicalUrl, getSitemapEntries } from '@/lib/seo';
 
 const toLastModified = (value) => {
   if (!value) {

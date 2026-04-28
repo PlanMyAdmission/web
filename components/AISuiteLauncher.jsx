@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Suspense, lazy, useState, useEffect } from 'react';
-import { trackAiToolEvent } from '@lib/analytics.js';
+import { trackAiToolEvent } from '@/lib/analytics.js';
 import styles from '@/components/AISuiteLauncher.module.css';
 const cx = (...classNames) =>
   classNames
@@ -10,7 +10,7 @@ const cx = (...classNames) =>
     .filter(Boolean)
     .join(' ');
 const AIAdmissionTool = lazy(
-  () => import('@components/ai-admission/AIAdmissionTool'),
+  () => import('@/components/ai-admission/AIAdmissionTool'),
 );
 const AISuiteLauncher = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,7 +64,9 @@ const AISuiteLauncher = () => {
       >
         <div className={cx('pma-launcher-button')}>
           <div className={cx('pma-launcher-icon')}>🎓</div>
-          <div className={cx('pma-launcher-text')}>{SUITE_CONFIG.buttonText}</div>
+          <div className={cx('pma-launcher-text')}>
+            {SUITE_CONFIG.buttonText}
+          </div>
           <div className={cx('pma-launcher-pulse')}></div>
         </div>
       </div>

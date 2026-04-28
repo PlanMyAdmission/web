@@ -1,7 +1,10 @@
 import { notFound } from 'next/navigation';
-import ExploreUniversityData from '@components/explore-university/ExploreUniversityData';
-import { buildCmsMetadata } from '@lib/cmsMetadata.js';
-import { getExploreRecordById, getExploreRecordImageUrl } from '@lib/explore.server.js';
+import ExploreUniversityData from '@/components/explore-university/ExploreUniversityData';
+import { buildCmsMetadata } from '@/lib/cmsMetadata.js';
+import {
+  getExploreRecordById,
+  getExploreRecordImageUrl,
+} from '@/lib/explore.server.js';
 
 export async function generateMetadata({ params }) {
   const record = await getExploreRecordById(params.recordId);
@@ -23,7 +26,9 @@ export async function generateMetadata({ params }) {
   return buildCmsMetadata({
     path: `/explore/university/${params.recordId}`,
     title: title || 'University Program | Plan My Admission',
-    description: description || 'Explore university program details, destination, and admissions information.',
+    description:
+      description ||
+      'Explore university program details, destination, and admissions information.',
     image: getExploreRecordImageUrl(record) || undefined,
   });
 }
@@ -34,5 +39,10 @@ export default async function ExploreUniversityRecordPage({ params }) {
     notFound();
   }
 
-  return <ExploreUniversityData records={[record]} imageUrl={getExploreRecordImageUrl(record)} />;
+  return (
+    <ExploreUniversityData
+      records={[record]}
+      imageUrl={getExploreRecordImageUrl(record)}
+    />
+  );
 }

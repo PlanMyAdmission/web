@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useMemo, useRef, useState } from 'react';
-import ArticleCard from '@components/common/ArticleCard';
+import ArticleCard from '@/components/common/ArticleCard';
 import { useRouter } from 'next/navigation';
-import { trackNavigationClick } from '@lib/analytics.js';
+import { trackNavigationClick } from '@/lib/analytics.js';
 
 const ArticlesSection = ({ articles = [] }) => {
   const router = useRouter();
@@ -34,8 +34,8 @@ const ArticlesSection = ({ articles = [] }) => {
         </h1>
         <div className="border-b-4 border-main w-1/5 mx-auto md:mx-0 my-4"></div>
         <p className="text-gray-700 text-base md:text-lg">
-          Browse the latest published guides from the blog. These cards now come directly
-          from Firebase blog posts.
+          Browse the latest published guides from the blog. These cards now come
+          directly from Firebase blog posts.
         </p>
         <button
           className="bg-main text-white font-semibold px-5 py-2 mt-6 rounded-md hidden md:block"
@@ -92,7 +92,8 @@ const ArticlesSection = ({ articles = [] }) => {
           </>
         ) : (
           <div className="bg-light rounded-xl px-6 py-8 text-center text-[#6f556f]">
-            Published blog posts will appear here once added from the admin panel.
+            Published blog posts will appear here once added from the admin
+            panel.
           </div>
         )}
 

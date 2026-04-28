@@ -2,13 +2,8 @@ import { NextResponse } from 'next/server';
 import {
   enforceRequestRateLimit,
   validateLeadCaptureContext,
-} from '@lib/ai/requestGuards.js';
-import {
-  getFirebaseAdminDb,
-  isFirebaseAdminConfigured,
-} from '@lib/firebaseAdmin.js';
-import { buildJoinUsLead, validateJoinUsLead } from '@lib/leads.js';
-import { createLeadRecord } from '@lib/leads.server.js';
+} from '@/lib/ai/requestGuards.js';
+import { validateJoinUsLead } from '@/lib/leads.js';
 
 export async function POST(request) {
   try {
@@ -64,26 +59,6 @@ export async function POST(request) {
     if (leadValidationError) {
       return NextResponse.json({ error: leadValidationError }, { status: 400 });
     }
-
-    if (!isFirebaseAdminConfigured) {
-      return NextResponse.json(
-        { error: 'Lead capture is not configured on the server.' },
-        { status: 503 },
-      );
-    }
-
-    const db = getFirebaseAdminDb();
-    await createLeadRecord({
-      db,
-      payload: buildJoinUsLead({
-        name,
-        email,
-        phone,
-        phoneCountryCode,
-        phoneNumber,
-        sourcePage,
-      }),
-    });
 
     return NextResponse.json({ ok: true });
   } catch (error) {

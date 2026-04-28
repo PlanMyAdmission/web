@@ -1,4 +1,4 @@
-import { SITE_NAME } from '@lib/seo';
+import { SITE_NAME } from '@/lib/seo';
 
 export default function manifest() {
   return {

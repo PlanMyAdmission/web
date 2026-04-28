@@ -6,9 +6,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { trackNavigationClick } from '@lib/analytics.js';
-import { portalLoginUrl, portalSignupUrl } from '@lib/publicLinks.js';
-
 const logo = '/images/home/logo.svg';
 const mobileLogo = '/images/home/logo_mobile.svg';
 
@@ -66,55 +63,6 @@ const NavBar = () => {
     closeMobileNav();
   };
 
-  const renderStudentAuthButtons = (isMobile = false) => (
-    <>
-      <a
-        href={portalLoginUrl}
-        rel="noopener noreferrer"
-        target="_blank"
-        onClick={() =>
-          trackNavigationClick({
-            location: isMobile ? 'navbar_mobile' : 'navbar_desktop',
-            label: 'login',
-            destination: 'portal_login',
-          })
-        }
-      >
-        <button
-          className={
-            isMobile
-              ? 'w-full px-4 py-2 text-main bg-main text-white rounded-sm text-center'
-              : 'bg-main border border-main text-white px-4 py-1 rounded-sm hover:bg-main/80 transition'
-          }
-        >
-          Login
-        </button>
-      </a>
-      <a
-        href={portalSignupUrl}
-        rel="noopener noreferrer"
-        target="_blank"
-        onClick={() =>
-          trackNavigationClick({
-            location: isMobile ? 'navbar_mobile' : 'navbar_desktop',
-            label: 'register',
-            destination: 'portal_signup',
-          })
-        }
-      >
-        <button
-          className={
-            isMobile
-              ? 'w-full px-4 py-2 border border-main text-main rounded-sm text-center mt-2 hover:bg-main hover:text-white transition'
-              : 'bg-white border border-main text-main px-4 py-1 rounded-sm hover:bg-main hover:text-white transition'
-          }
-        >
-          Register
-        </button>
-      </a>
-    </>
-  );
-
   return (
     <div>
       <div className="flex flex-row justify-between max-w-7xl border-b-2 border-main mx-auto items-end py-2 sm:px-4 xl:px-0">
@@ -151,10 +99,6 @@ const NavBar = () => {
             </li>
           ))}
         </ul>
-
-        <div className="hidden md:flex items-center gap-2">
-          {renderStudentAuthButtons()}
-        </div>
 
         <div
           onClick={() => setNav((prev) => !prev)}
@@ -198,10 +142,6 @@ const NavBar = () => {
               </li>
             ))}
           </ul>
-
-          <div className="mt-6 border-t border-main pt-4 px-5">
-            {renderStudentAuthButtons(true)}
-          </div>
         </div>
       </div>
     </div>
