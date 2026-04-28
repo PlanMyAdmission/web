@@ -2,13 +2,13 @@
 
 import React, { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { openExternalWindow } from '@/lib/clientUtils.js';
+import { openExternalWindow } from '@/lib/browser/client.js';
 import {
   portalSignupUrl,
   supportEmail,
   supportPhone,
   whatsappSupportUrl,
-} from '@/lib/publicLinks.js';
+} from '@/lib/config/publicLinks.js';
 const Card = (plan) => {
   const [showModal, setShowModal] = useState(false);
   const currencySymbol = plan.currency === 'USD' ? '$' : '₹';

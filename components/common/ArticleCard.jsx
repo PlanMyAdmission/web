@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { trackContentClick } from '@/lib/analytics.js';
+import { trackContentClick } from '@/lib/analytics/events.js';
 
 const ArticleCard = ({ post }) => {
   if (!post) return null;

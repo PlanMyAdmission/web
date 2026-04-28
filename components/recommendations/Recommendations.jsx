@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 import RecommendationsMain from '@/components/recommendations/RecommendationsMain.jsx';
-import { trackEvent } from '@/lib/analytics.js';
+import { trackEvent } from '@/lib/analytics/events.js';
 
 const Recommendations = () => {
   const builderRef = useRef(null);

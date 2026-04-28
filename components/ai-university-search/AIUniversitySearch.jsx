@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import uniStyles from '@/components/ai-university-search/AIUniversitySearch.module.css';
-import { trackAiToolEvent } from '@/lib/analytics.js';
-import { fileToBase64 } from '@/lib/clientUtils.js';
+import { trackAiToolEvent } from '@/lib/analytics/events.js';
+import { fileToBase64 } from '@/lib/browser/client.js';
 import SearchHeader from '@/components/ai-university-search/SearchHeader.jsx';
 import ProfileUpload from '@/components/ai-university-search/ProfileUpload.jsx';
 import ResultsPanel from '@/components/ai-university-search/ResultsPanel.jsx';

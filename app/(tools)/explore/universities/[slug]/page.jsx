@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import UniversityView from '@/components/explore-university/detail/University.jsx';
-import { buildCmsMetadata } from '@/lib/cmsMetadata.js';
-import { getUniversityBySlug } from '@/lib/explore.server.js';
+import { buildCmsMetadata } from '@/lib/seo/cmsMetadata.js';
+import { getUniversityBySlug } from '@/lib/explore/server.js';
 
 export async function generateMetadata({ params }) {
   const university = await getUniversityBySlug(params.slug);

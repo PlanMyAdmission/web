@@ -3,8 +3,8 @@
 import React, { useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { trackContentClick } from '@/lib/analytics.js';
-import { reportError } from '@/lib/logger.js';
+import { trackContentClick } from '@/lib/analytics/events.js';
+import { reportError } from '@/lib/observability/logger.js';
 import fetchFilteredDocs from '@/components/explore-university/filtered-response/fetchFilteredDocs.js';
 import {
   FilteredResponseEmptyState,

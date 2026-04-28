@@ -10,7 +10,7 @@ import {
   fetchBlogBySlug,
   fetchBlogPage,
 } from '@/lib/blog/api.js';
-import { buildCmsMetadata } from '@/lib/cmsMetadata.js';
+import { buildCmsMetadata } from '@/lib/seo/cmsMetadata.js';
 
 const formatDisplayDate = (iso = '') => {
   if (!iso) return '';

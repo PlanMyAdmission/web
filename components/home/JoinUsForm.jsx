@@ -1,15 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { trackEvent } from '@/lib/analytics.js';
-import { reportError } from '@/lib/logger.js';
+import { trackEvent } from '@/lib/analytics/events.js';
+import { reportError } from '@/lib/observability/logger.js';
+import { submitLead } from '@/lib/leads/actions.js';
 import {
   buildFullPhoneNumber,
   normalizeCountryDialCode,
   persistSubmission,
   readRecentSubmission,
   SUBMISSION_COOLDOWN_MS,
-} from '@/components/contact/joinUsFormHelpers.js';
+} from '@/lib/leads/form.js';
 import JoinUsPhoneFields from '@/components/contact/JoinUsPhoneFields.jsx';
 import JoinUsSuccess from '@/components/contact/JoinUsSuccess.jsx';
 
@@ -106,30 +107,21 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
     });
 
     try {
-      const response = await fetch('/api/leads', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const result = await submitLead({
+        source: 'join_us',
+        sourcePage,
+        name: formData.name,
+        email: formData.email,
+        phoneCountryCode: formData.phoneCountryCode,
+        phoneNumber: formData.phoneNumber,
+        leadContext: {
+          honeypot: formData.honeypot,
+          formStartedAt,
         },
-        body: JSON.stringify({
-          source: 'join_us',
-          sourcePage,
-          name: formData.name,
-          email: formData.email,
-          phoneCountryCode: formData.phoneCountryCode,
-          phoneNumber: formData.phoneNumber,
-          leadContext: {
-            honeypot: formData.honeypot,
-            formStartedAt,
-          },
-        }),
       });
-      const payload = await response.json().catch(() => ({}));
 
-      if (!response.ok) {
-        throw new Error(
-          payload?.error || 'Something went wrong. Please try again.',
-        );
+      if (result?.error) {
+        throw new Error(result.error);
       }
 
       persistSubmission({

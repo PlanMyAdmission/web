@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation';
 import ExploreUniversityData from '@/components/explore-university/ExploreUniversityData';
-import { buildCmsMetadata } from '@/lib/cmsMetadata.js';
+import { buildCmsMetadata } from '@/lib/seo/cmsMetadata.js';
 import {
   getExploreRecordById,
   getExploreRecordImageUrl,
-} from '@/lib/explore.server.js';
+} from '@/lib/explore/server.js';
 
 export async function generateMetadata({ params }) {
   const record = await getExploreRecordById(params.recordId);

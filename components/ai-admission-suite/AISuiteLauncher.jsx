@@ -1,8 +1,8 @@
 'use client';
 
 import React, { Suspense, lazy, useState, useEffect } from 'react';
-import { trackAiToolEvent } from '@/lib/analytics.js';
-import styles from '@/components/AISuiteLauncher.module.css';
+import { trackAiToolEvent } from '@/lib/analytics/events.js';
+import styles from './AISuiteLauncher.module.css';
 const cx = (...classNames) =>
   classNames
     .flatMap((value) => `${value || ''}`.split(/\s+/))

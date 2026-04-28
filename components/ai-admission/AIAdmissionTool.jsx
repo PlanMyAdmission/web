@@ -19,9 +19,9 @@ import {
   LOADING_MESSAGES,
   openReportPrintWindow,
 } from '@/components/ai-admission/lib/admissionToolHelpers.js';
-import { trackAiToolEvent } from '@/lib/analytics.js';
-import { fileToBase64 } from '@/lib/clientUtils.js';
-import { mapModuleClasses } from '@/lib/cx.js';
+import { trackAiToolEvent } from '@/lib/analytics/events.js';
+import { fileToBase64 } from '@/lib/browser/client.js';
+import { mapModuleClasses } from '@/lib/styles/classNames.js';
 const cx = (...classNames) => mapModuleClasses(styles, ...classNames);
 
 const AIAdmissionTool = () => {

@@ -109,33 +109,6 @@ button.rec.rec-arrow:focus {
 }
 
 @layer utilities {
-  .pma-admin-scroll {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(115, 82, 101, 0.58) rgba(240, 232, 237, 0.92);
-    overscroll-behavior: contain;
-    scrollbar-gutter: stable;
-  }
-
-  .pma-admin-scroll::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-
-  .pma-admin-scroll::-webkit-scrollbar-track {
-    background: rgba(240, 232, 237, 0.92);
-    border-radius: 999px;
-  }
-
-  .pma-admin-scroll::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, rgba(131, 97, 117, 0.72), rgba(78, 54, 70, 0.82));
-    border-radius: 999px;
-    border: 2px solid rgba(240, 232, 237, 0.92);
-  }
-
-  .pma-admin-scroll::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, rgba(147, 108, 131, 0.88), rgba(88, 58, 78, 0.9));
-  }
-
   .pma-skeleton {
     position: relative;
     overflow: hidden;

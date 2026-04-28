@@ -17,7 +17,7 @@ import {
   supportEmail,
   supportPhone,
   whatsappSupportUrl,
-} from '@/lib/publicLinks.js';
+} from '@/lib/config/publicLinks.js';
 
 const contactus = '/images/about/contactus.svg';
 const officeAddress =

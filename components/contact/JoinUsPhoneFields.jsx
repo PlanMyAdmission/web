@@ -2,7 +2,7 @@ import React from 'react';
 import {
   COUNTRY_DIAL_CODE_OPTIONS,
   normalizePhoneNumber,
-} from '@/components/contact/joinUsFormHelpers.js';
+} from '@/lib/leads/form.js';
 
 const JoinUsPhoneFields = ({ formData, errors, onChange }) => (
   <div className="w-[90%] grid gap-3 sm:grid-cols-[180px_minmax(0,1fr)]">

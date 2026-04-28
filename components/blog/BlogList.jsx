@@ -3,7 +3,7 @@ import { fetchBlogPage } from '@/lib/blog/api.js';
 
 const EmptyState = () => (
   <div className="rounded-xl bg-white px-6 py-10 text-center text-[#6f556f]">
-    No published blog posts yet. Publish from admin and they will appear here.
+    No published blog posts yet. New posts will appear here once available.
   </div>
 );
 

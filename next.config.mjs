@@ -57,16 +57,6 @@ const nextConfig = {
         permanent: false,
       },
       {
-        source: '/admin/cms',
-        destination: '/admin/blogs',
-        permanent: true,
-      },
-      {
-        source: '/admin/content',
-        destination: '/admin/blogs',
-        permanent: true,
-      },
-      {
         source: '/ai-university-search',
         destination: '/ai-university-matchmaker',
         permanent: true,

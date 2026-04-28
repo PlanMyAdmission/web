@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import styles from '@/components/AIChatbot.module.css';
-import { mapModuleClasses } from '@/lib/cx.js';
+import styles from './AIChatbot.module.css';
+import { mapModuleClasses } from '@/lib/styles/classNames.js';
 import useChatbotSession from '@/components/ai-chatbot/hooks/useChatbotSession.js';
 import ChatbotWindow from '@/components/ai-chatbot/ChatbotWindow.jsx';
 

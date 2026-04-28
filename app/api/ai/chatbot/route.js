@@ -8,8 +8,8 @@ import {
   sanitizeChatbotMessages,
   validateChatbotMessages,
   validateChatbotSessionId,
-} from '@/lib/chatbotSessions.js';
-import { reportError } from '@/lib/logger.js';
+} from '@/lib/chatbot/sessions.js';
+import { reportError } from '@/lib/observability/logger.js';
 
 export async function POST(request) {
   try {

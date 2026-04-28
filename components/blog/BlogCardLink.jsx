@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { trackContentClick } from '@/lib/analytics.js';
+import { trackContentClick } from '@/lib/analytics/events.js';
 
 const BlogCardLink = ({ slug }) => {
   const href = `/blogs/${slug}`;

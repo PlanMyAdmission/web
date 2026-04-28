@@ -7,7 +7,7 @@ import {
   StepThree,
   StepTwo,
 } from '@/components/recommendations/RecommendationSteps.jsx';
-import { trackEvent } from '@/lib/analytics.js';
+import { trackEvent } from '@/lib/analytics/events.js';
 
 const RecommendationsMain = () => {
   const [degrees] = useState([]);

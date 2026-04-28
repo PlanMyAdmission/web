@@ -1,5 +1,5 @@
 import '@/app/globals.css';
-import { GoogleAnalytics } from '@next/third-parties/google';
+import Analytics from '@/components/analytics/Analytics.jsx';
 import AppProviders from '@/app/providers.jsx';
 import GlobalClientUI from '@/components/common/GlobalClientUI.jsx';
 import {
@@ -51,8 +51,6 @@ export const metadata = {
   },
 };
 
-const GA_MEASUREMENT_ID = 'G-ZD60CSSVN6';
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -61,7 +59,7 @@ export default function RootLayout({ children }) {
           <GlobalClientUI />
           {children}
         </AppProviders>
-        <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
+        <Analytics />
       </body>
     </html>
   );

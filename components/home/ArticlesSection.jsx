@@ -3,7 +3,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import ArticleCard from '@/components/common/ArticleCard';
 import { useRouter } from 'next/navigation';
-import { trackNavigationClick } from '@/lib/analytics.js';
+import { trackNavigationClick } from '@/lib/analytics/events.js';
 
 const ArticlesSection = ({ articles = [] }) => {
   const router = useRouter();
@@ -91,8 +91,7 @@ const ArticlesSection = ({ articles = [] }) => {
           </>
         ) : (
           <div className="bg-light rounded-xl px-6 py-8 text-center text-[#6f556f]">
-            Published blog posts will appear here once added from the admin
-            panel.
+            Published blog posts will appear here once available.
           </div>
         )}
 
