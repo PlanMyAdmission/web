@@ -56,7 +56,7 @@ const ArticlesSection = ({ articles = [] }) => {
           <>
             <div
               ref={elementRef}
-              className="hidden md:flex overflow-x-auto space-x-6 scrollbar-hide px-2"
+              className="hidden md:flex overflow-x-auto gap-5 scrollbar-hide px-2 pb-2"
             >
               {articles.map((item) => (
                 <ArticleCard key={item.id} post={item} />

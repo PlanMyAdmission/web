@@ -11,11 +11,11 @@ const ArticleCard = ({ post }) => {
   const href = `/blogs/${post.slug}`;
 
   return (
-    <article className="snap-center shrink-0 w-full md:w-72 lg:w-80 mx-auto md:mx-0 mb-3 md:mb-0">
+    <article className="snap-center shrink-0 w-[280px] lg:w-[300px] mx-auto md:mx-0">
       <Link
         href={href}
         prefetch={false}
-        className="group block transition duration-500 ease-in-out border-b-4 border-white"
+        className="group flex flex-col h-full rounded-2xl overflow-hidden border border-main/10 bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
         onClick={() =>
           trackContentClick({
             contentType: 'blog_post',
@@ -26,25 +26,25 @@ const ArticleCard = ({ post }) => {
       >
         {post.coverImageUrl ? (
           <Image
-            className="w-full h-[220px] object-cover rounded-md"
+            className="w-full h-[180px] object-cover"
             src={post.coverImageUrl}
             alt={post.title}
             width={640}
             height={360}
-            sizes="(max-width: 768px) 100vw, 380px"
+            sizes="300px"
           />
         ) : (
-          <div className="w-full h-[220px] rounded-md bg-light" />
+          <div className="w-full h-[180px] bg-light" />
         )}
 
-        <div className="py-3">
-          <h3 className="md:text-2xl text-xl font-semibold leading-tight line-clamp-2 group-hover:text-main transition">
+        <div className="flex flex-col flex-1 p-4">
+          <h3 className="text-base font-semibold leading-snug line-clamp-2 group-hover:text-main transition">
             {post.title}
           </h3>
           {post.excerpt && (
-            <p className="py-2 text-[#5b4657] line-clamp-3">{post.excerpt}</p>
+            <p className="mt-2 text-sm text-[#5b4657] line-clamp-3 flex-1">{post.excerpt}</p>
           )}
-          <span className="text-main p-3 inline-block font-semibold">
+          <span className="mt-3 text-sm text-main font-semibold">
             Read More {'>>'}
           </span>
         </div>
