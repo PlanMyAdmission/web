@@ -14,6 +14,7 @@ const AIChatbot = () => {
     messages,
     inputValue,
     isTyping,
+    connectionState,
     messagesRef,
     toggleChat,
     handleSendMessage,
@@ -28,6 +29,7 @@ const AIChatbot = () => {
       messages={messages}
       inputValue={inputValue}
       isTyping={isTyping}
+      connectionState={connectionState}
       messagesRef={messagesRef}
       toggleChat={toggleChat}
       handleSendMessage={handleSendMessage}

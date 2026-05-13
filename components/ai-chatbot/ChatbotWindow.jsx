@@ -40,12 +40,24 @@ const ChatbotWindow = ({
   messages,
   inputValue,
   isTyping,
+  connectionState,
   messagesRef,
   toggleChat,
   handleSendMessage,
   handleInputChange,
   handleKeyPress,
-}) => (
+}) => {
+  const isConnecting = connectionState === 'connecting';
+  const isClosed = connectionState === 'closed';
+  const inputDisabled = isConnecting || isClosed;
+  const placeholder = isConnecting
+    ? 'Connecting…'
+    : isClosed
+      ? 'Disconnected — refresh to retry'
+      : 'Try: CGPA 8.2, IELTS 7.5, budget 20L INR, target Canada';
+  const sendLabel = isTyping ? 'WAIT' : isConnecting ? '…' : 'SEND';
+
+  return (
   <div className={cx('pma-chatbot-widget')}>
     <button
       className={cx('pma-chatbot-bubble', !isOpen ? 'pma-chatbot-pulse' : '')}
@@ -105,9 +117,10 @@ const ChatbotWindow = ({
               value={inputValue}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
-              placeholder="Try: CGPA 8.2, IELTS 7.5, budget 20L INR, target Canada"
+              placeholder={placeholder}
               rows="1"
               maxLength="500"
+              disabled={inputDisabled}
             />
             <p className={cx('pma-chatbot-legal-note')}>
               By continuing, you accept our{' '}
@@ -125,14 +138,15 @@ const ChatbotWindow = ({
             className={cx('pma-chatbot-send-btn')}
             onClick={() => handleSendMessage()}
             type="button"
-            disabled={isTyping || !inputValue.trim()}
+            disabled={isTyping || inputDisabled || !inputValue.trim()}
           >
-            {isTyping ? 'WAIT' : 'SEND'}
+            {sendLabel}
           </button>
         </div>
       </div>
     )}
   </div>
-);
+  );
+};
 
 export default ChatbotWindow;

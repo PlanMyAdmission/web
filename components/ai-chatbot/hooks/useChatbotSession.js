@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createChatClient } from '@/lib/chat/client.js';
-import { CHATBOT_SESSION_ID_STORAGE_KEY } from '@/lib/chat/constants.js';
+import {
+  CHAT_WS_URL,
+  CHATBOT_SESSION_ID_STORAGE_KEY,
+} from '@/lib/chat/constants.js';
 import { createMessage, mapServerItem } from '@/lib/chat/util.js';
 
 const readStoredSessionId = () => {
@@ -24,6 +27,9 @@ const useChatbotSession = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [connectionState, setConnectionState] = useState(() =>
+    CHAT_WS_URL ? 'connecting' : 'closed',
+  );
   const messagesRef = useRef(null);
   const clientRef = useRef(null);
   const activeStreamIdRef = useRef(null);
@@ -50,6 +56,7 @@ const useChatbotSession = () => {
         writeStoredSessionId(sessionId);
         const history = (items || []).map(mapServerItem).filter(Boolean);
         setMessages(history);
+        setConnectionState('open');
       },
       onChunkStart: ({ id }) => {
         activeStreamIdRef.current = id;
@@ -90,6 +97,7 @@ const useChatbotSession = () => {
       },
       onClose: () => {
         setIsTyping(false);
+        setConnectionState('closed');
       },
     });
 
@@ -105,28 +113,18 @@ const useChatbotSession = () => {
   const handleSendMessage = useCallback(
     (messageText = null) => {
       const text = `${messageText || inputValue}`.trim();
-      if (!text || isTyping || !clientRef.current) return;
+      if (!text || isTyping || connectionState !== 'open') return;
 
       const userMessage = createMessage({ role: 'user', content: text });
       if (!userMessage) return;
 
-      const sent = clientRef.current.sendMessage(text);
-      if (!sent) {
-        const errMsg = createMessage({
-          role: 'bot',
-          content: 'Connecting… please try again in a moment.',
-        });
-        setMessages((prev) =>
-          errMsg ? [...prev, userMessage, errMsg] : [...prev, userMessage],
-        );
-        return;
-      }
+      if (!clientRef.current?.sendMessage(text)) return;
 
       setMessages((prev) => [...prev, userMessage]);
       setInputValue('');
       setIsTyping(true);
     },
-    [inputValue, isTyping],
+    [inputValue, isTyping, connectionState],
   );
 
   const handleInputChange = (event) => {
@@ -147,6 +145,7 @@ const useChatbotSession = () => {
     messages,
     inputValue,
     isTyping,
+    connectionState,
     messagesRef,
     toggleChat,
     handleSendMessage,
