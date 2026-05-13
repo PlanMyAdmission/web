@@ -95,7 +95,7 @@ const useChatbotSession = () => {
 
     clientRef.current = client;
     return () => {
-      client.close();
+      client?.close();
       clientRef.current = null;
     };
   }, []);
