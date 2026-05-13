@@ -76,24 +76,7 @@ const ChatbotWindow = ({
             <div key={message.id} className={cx('pma-chatbot-message', `pma-chatbot-${message.role}`)}>
               <div className={cx('pma-chatbot-avatar')}>{message.role === 'bot' ? 'AI' : 'U'}</div>
               <div className={cx('pma-chatbot-content')}>
-                {message.isUniversityCard && message.universityData ? (
-                  <div className={cx('pma-chatbot-university-card')}>
-                    <div className={cx('pma-chatbot-university-header')}>
-                      <div className={cx('pma-chatbot-rank')}>{message.universityData.ranking}</div>
-                      <div>
-                        <h4 className={cx('pma-chatbot-uni-name')}>{message.universityData.name}</h4>
-                        <p className={cx('pma-chatbot-location')}>{message.universityData.location}</p>
-                      </div>
-                    </div>
-                    <div className={cx('pma-chatbot-details')}>
-                      <strong>Acceptance Rate:</strong> {message.universityData.acceptance_rate}
-                      <br />
-                      <strong>Annual Tuition:</strong> {message.universityData.tuition}
-                    </div>
-                  </div>
-                ) : (
-                  <div>{renderMessageContent(message.content)}</div>
-                )}
+                <div>{renderMessageContent(message.content)}</div>
               </div>
             </div>
           ))}

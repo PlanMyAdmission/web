@@ -1,65 +1,40 @@
-import { useEffect, useRef, useState } from 'react';
-import {
-  CHATBOT_WELCOME_MESSAGE,
-  createChatbotMessage,
-  createChatbotSessionId,
-  loadStoredChatbotSession,
-  sanitizeChatbotMessages,
-  saveStoredChatbotSession,
-} from '@/lib/chatbot/sessions.js';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { createChatClient } from '@/lib/chat/client.js';
+import { CHATBOT_SESSION_ID_STORAGE_KEY } from '@/lib/chat/constants.js';
+import { createMessage, mapServerItem } from '@/lib/chat/util.js';
 
-const createInitialMessages = () =>
-  sanitizeChatbotMessages([
-    createChatbotMessage({
-      role: 'bot',
-      content: CHATBOT_WELCOME_MESSAGE,
-    }),
-  ]);
+const readStoredSessionId = () => {
+  try {
+    return window.localStorage.getItem(CHATBOT_SESSION_ID_STORAGE_KEY) || '';
+  } catch {
+    return '';
+  }
+};
+
+const writeStoredSessionId = (id) => {
+  try {
+    if (id) window.localStorage.setItem(CHATBOT_SESSION_ID_STORAGE_KEY, id);
+  } catch {
+    // ignore
+  }
+};
 
 const useChatbotSession = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [sessionId, setSessionId] = useState('');
-  const [messages, setMessages] = useState(createInitialMessages);
+  const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [hasLoadedSession, setHasLoadedSession] = useState(false);
   const messagesRef = useRef(null);
+  const clientRef = useRef(null);
+  const activeStreamIdRef = useRef(null);
 
   useEffect(() => {
     if (!messagesRef.current) return;
+    const node = messagesRef.current;
     setTimeout(() => {
-      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+      node.scrollTop = node.scrollHeight;
     }, 100);
   }, [messages, isTyping]);
-
-  useEffect(() => {
-    const storedSession = loadStoredChatbotSession(window.localStorage);
-
-    if (storedSession?.sessionId) {
-      setSessionId(storedSession.sessionId);
-      setMessages(
-        storedSession.messages.length
-          ? storedSession.messages
-          : createInitialMessages(),
-      );
-    } else {
-      setSessionId(createChatbotSessionId());
-      setMessages(createInitialMessages());
-    }
-
-    setHasLoadedSession(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hasLoadedSession || !sessionId) {
-      return;
-    }
-
-    saveStoredChatbotSession(window.localStorage, {
-      sessionId,
-      messages,
-    });
-  }, [hasLoadedSession, messages, sessionId]);
 
   useEffect(() => {
     const handleOpenChatbot = () => setIsOpen(true);
@@ -67,103 +42,106 @@ const useChatbotSession = () => {
     return () => window.removeEventListener('openAIChatbot', handleOpenChatbot);
   }, []);
 
-  const toggleChat = () => setIsOpen((prev) => !prev);
-
-  const handleSendMessage = async (messageText = null) => {
-    const text = `${messageText || inputValue}`.trim();
-    if (!text || isTyping || !sessionId) return;
-
-    const userMessage = createChatbotMessage({
-      role: 'user',
-      content: text,
+  useEffect(() => {
+    const client = createChatClient({
+      sessionId: readStoredSessionId(),
+      visitorId: undefined,
+      onSessionReady: ({ sessionId, items }) => {
+        writeStoredSessionId(sessionId);
+        const history = (items || []).map(mapServerItem).filter(Boolean);
+        setMessages(history);
+      },
+      onChunkStart: ({ id }) => {
+        activeStreamIdRef.current = id;
+        const placeholder = createMessage({
+          id,
+          role: 'bot',
+          content: '',
+          streaming: true,
+        });
+        if (placeholder) {
+          setMessages((prev) => [...prev, placeholder]);
+        }
+        setIsTyping(false);
+      },
+      onChunk: ({ id, content }) => {
+        if (!content) return;
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === id ? { ...m, content: m.content + content } : m,
+          ),
+        );
+      },
+      onChunkEnd: ({ id }) => {
+        setMessages((prev) =>
+          prev.map((m) => (m.id === id ? { ...m, streaming: false } : m)),
+        );
+        if (activeStreamIdRef.current === id) {
+          activeStreamIdRef.current = null;
+        }
+      },
+      onError: (message) => {
+        setIsTyping(false);
+        const errMsg = createMessage({
+          role: 'bot',
+          content: message || 'Something went wrong. Please try again.',
+        });
+        if (errMsg) setMessages((prev) => [...prev, errMsg]);
+      },
+      onClose: () => {
+        setIsTyping(false);
+      },
     });
 
-    if (!userMessage) {
-      return;
-    }
+    clientRef.current = client;
+    return () => {
+      client.close();
+      clientRef.current = null;
+    };
+  }, []);
 
-    const nextMessages = sanitizeChatbotMessages([...messages, userMessage]);
-    setMessages(nextMessages);
-    setInputValue('');
-    setIsTyping(true);
+  const toggleChat = () => setIsOpen((prev) => !prev);
 
-    try {
-      const response = await fetch('/api/ai/chatbot', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sessionId,
-          messages: nextMessages,
-          metadata: {
-            pagePath: window.location.pathname,
-            locale: navigator.language || '',
-            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
-            userAgent: navigator.userAgent || '',
-          },
-        }),
-      });
+  const handleSendMessage = useCallback(
+    (messageText = null) => {
+      const text = `${messageText || inputValue}`.trim();
+      if (!text || isTyping || !clientRef.current) return;
 
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        throw new Error(payload?.error || 'Unable to send the chat message.');
-      }
+      const userMessage = createMessage({ role: 'user', content: text });
+      if (!userMessage) return;
 
-      const reply = `${payload?.data?.message || ''}`.trim();
-      if (!reply) {
-        throw new Error('The chatbot response came back empty.');
-      }
-
-      if (`${payload?.data?.sessionId || ''}`.trim()) {
-        setSessionId(payload.data.sessionId);
-      }
-
-      const assistantMessage =
-        createChatbotMessage(payload?.data?.assistantMessage) ||
-        createChatbotMessage({
+      const sent = clientRef.current.sendMessage(text);
+      if (!sent) {
+        const errMsg = createMessage({
           role: 'bot',
-          content: reply,
+          content: 'Connecting… please try again in a moment.',
         });
-
-      if (!assistantMessage) {
-        throw new Error('The chatbot response came back empty.');
-      }
-
-      setMessages((previous) =>
-        sanitizeChatbotMessages([...previous, assistantMessage]),
-      );
-    } catch (error) {
-      const errorMessage = createChatbotMessage({
-        role: 'bot',
-        content:
-          error?.message ||
-          'Unable to send the chat message right now. Please try again.',
-      });
-
-      if (!errorMessage) {
+        setMessages((prev) =>
+          errMsg ? [...prev, userMessage, errMsg] : [...prev, userMessage],
+        );
         return;
       }
 
-      setMessages((previous) =>
-        sanitizeChatbotMessages([...previous, errorMessage]),
-      );
-    } finally {
-      setIsTyping(false);
-    }
-  };
+      setMessages((prev) => [...prev, userMessage]);
+      setInputValue('');
+      setIsTyping(true);
+    },
+    [inputValue, isTyping],
+  );
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
     event.target.style.height = 'auto';
     event.target.style.height = `${Math.min(event.target.scrollHeight, 140)}px`;
   };
+
   const handleKeyPress = (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       handleSendMessage();
     }
   };
+
   return {
     isOpen,
     messages,
@@ -176,4 +154,5 @@ const useChatbotSession = () => {
     handleKeyPress,
   };
 };
+
 export default useChatbotSession;
