@@ -1,15 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
 
-const BOLD_PATTERN = /\*\*(.*?)\*\*/g;
-
-const renderMessageContent = (content = '') =>
-  `${content || ''}`.split('\n').map((line, lineIndex) => {
+const renderMessageContent = (content = '') => {
+  const boldPattern = /\*\*(.*?)\*\*/g;
+  return `${content || ''}`.split('\n').map((line, lineIndex) => {
     const parts = [];
     let match;
     let lastIndex = 0;
 
-    while ((match = BOLD_PATTERN.exec(line)) !== null) {
+    while ((match = boldPattern.exec(line)) !== null) {
       if (match.index > lastIndex) {
         parts.push(line.slice(lastIndex, match.index));
       }
@@ -24,8 +23,6 @@ const renderMessageContent = (content = '') =>
       parts.push(line.slice(lastIndex));
     }
 
-    BOLD_PATTERN.lastIndex = 0;
-
     return (
       <React.Fragment key={`line-${lineIndex}`}>
         {parts.length > 0 ? parts : line}
@@ -33,6 +30,7 @@ const renderMessageContent = (content = '') =>
       </React.Fragment>
     );
   });
+};
 
 const ChatbotWindow = ({
   cx,
@@ -47,15 +45,18 @@ const ChatbotWindow = ({
   handleInputChange,
   handleKeyPress,
 }) => {
-  const isConnecting = connectionState === 'connecting';
+  const isConnecting = connectionState === 'connecting' || connectionState === 'idle';
+  const isReconnecting = connectionState === 'reconnecting';
   const isClosed = connectionState === 'closed';
-  const inputDisabled = isConnecting || isClosed;
+  const inputDisabled = isConnecting || isReconnecting || isClosed;
   const placeholder = isConnecting
     ? 'Connecting…'
-    : isClosed
-      ? 'Disconnected — refresh to retry'
-      : 'Try: CGPA 8.2, IELTS 7.5, budget 20L INR, target Canada';
-  const sendLabel = isTyping ? 'WAIT' : isConnecting ? '…' : 'SEND';
+    : isReconnecting
+      ? 'Reconnecting…'
+      : isClosed
+        ? 'Disconnected — refresh to retry'
+        : 'Try: CGPA 8.2, IELTS 7.5, budget 20L INR, target Canada';
+  const sendLabel = isTyping ? 'WAIT' : isConnecting || isReconnecting ? '…' : 'SEND';
 
   return (
   <div className={cx('pma-chatbot-widget')}>
@@ -84,6 +85,28 @@ const ChatbotWindow = ({
         </div>
 
         <div className={cx('pma-chatbot-messages')} ref={messagesRef}>
+          {isConnecting && messages.length === 0 && (
+            <div className={cx('pma-chatbot-status-row')}>
+              <div className={cx('pma-chatbot-status-dots')}>
+                <div className={cx('pma-chatbot-dot')}></div>
+                <div className={cx('pma-chatbot-dot')}></div>
+                <div className={cx('pma-chatbot-dot')}></div>
+              </div>
+              <span className={cx('pma-chatbot-status-label')}>Connecting…</span>
+            </div>
+          )}
+
+          {isReconnecting && (
+            <div className={cx('pma-chatbot-reconnect-notice')}>
+              <div className={cx('pma-chatbot-status-dots')}>
+                <div className={cx('pma-chatbot-dot')}></div>
+                <div className={cx('pma-chatbot-dot')}></div>
+                <div className={cx('pma-chatbot-dot')}></div>
+              </div>
+              <span>Reconnecting…</span>
+            </div>
+          )}
+
           {messages.map((message) => (
             <div key={message.id} className={cx('pma-chatbot-message', `pma-chatbot-${message.role}`)}>
               <div className={cx('pma-chatbot-avatar')}>{message.role === 'bot' ? 'AI' : 'U'}</div>
