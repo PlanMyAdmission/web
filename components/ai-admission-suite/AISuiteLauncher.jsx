@@ -95,11 +95,15 @@ const AISuiteLauncher = () => {
           >
             ×
           </button>
-          <Suspense
-            fallback={<div className={cx('pma-suite-loading')}>Loading...</div>}
-          >
-            <AIAdmissionTool />
-          </Suspense>
+          <div className={cx('pma-suite-sheet')}>
+            <Suspense
+              fallback={
+                <div className={cx('pma-suite-loading')}>Loading…</div>
+              }
+            >
+              <AIAdmissionTool />
+            </Suspense>
+          </div>
         </div>
       )}
     </>

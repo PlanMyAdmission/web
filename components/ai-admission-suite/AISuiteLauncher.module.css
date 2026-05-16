@@ -118,19 +118,14 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(244, 0, 118, 0.15),
-      rgba(132, 8, 68, 0.4)
-    ),
-    rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
-  z-index: 10000;
+  background: rgba(15, 8, 18, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 2147483646;
   display: none;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: 24px;
+  padding: 0;
+  overflow-y: auto;
 }
 
 .pma-suite-modal.active {
@@ -138,30 +133,33 @@
 }
 
 .pma-close-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: fixed;
+  top: 16px;
+  right: 16px;
   background: #ffffff;
-  color: #f40076;
-  border: 1px solid rgba(244, 0, 118, 0.2);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  color: #3f1831;
+  border: 1px solid #e8dde3;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
   cursor: pointer;
   font-size: 18px;
-  font-weight: bold;
-  z-index: 10001;
+  line-height: 1;
+  z-index: 2147483647;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .pma-close-button:hover {
-  background: linear-gradient(135deg, #f40076, #840844);
+  background: #f40076;
   color: #ffffff;
-  transform: scale(1.1);
-  box-shadow: 0 4px 15px rgba(244, 0, 118, 0.3);
+  border-color: #f40076;
 }
 
 .pma-close-button:focus {
@@ -169,10 +167,31 @@
   outline-offset: 2px;
 }
 
+.pma-suite-sheet {
+  background: #ffffff;
+  width: 100%;
+  max-width: 880px;
+  margin: 24px auto;
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  min-height: 0;
+}
+
+@media (max-width: 768px) {
+  .pma-suite-sheet {
+    margin: 0;
+    border-radius: 0;
+    min-height: 100vh;
+  }
+}
+
 .pma-suite-loading {
-  color: #f7f5f0;
-  font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
-  font-size: 16px;
+  padding: 48px;
+  text-align: center;
+  color: #6c596f;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 14px;
 }
 
 @media (max-width: 480px) {
