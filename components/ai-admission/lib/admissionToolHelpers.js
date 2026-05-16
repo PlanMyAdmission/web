@@ -5,19 +5,21 @@ export const LOADING_MESSAGES = [
   'Drafting personalized recommendations...',
 ];
 
-export const canContinueFromStart = (formData) =>
-  Boolean(formData.fullName && formData.lastName);
+export const STEP_LABELS = ['Goal', 'Academics', 'Context', 'Result'];
 
-export const canContinueFromCourse = (formData) =>
+export const canContinueFromGoal = (formData) =>
   Boolean(
     formData.targetCountry &&
     formData.degreeLevel &&
     formData.programArea &&
-    formData.scoreValue,
+    formData.targetIntake,
   );
 
-export const canSubmitExtras = (formData) =>
-  Boolean(formData.targetIntake && formData.budgetAmount);
+export const canContinueFromAcademics = (formData) =>
+  Boolean(formData.scoreType && formData.scoreValue);
+
+export const canSubmitContext = (formData) =>
+  Boolean(formData.budgetBucket || formData.budgetAmount);
 
 export const openReportPrintWindow = (reportHtml) => {
   if (!reportHtml) {

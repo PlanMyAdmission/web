@@ -3,16 +3,19 @@
 import React, { useState } from 'react';
 import uniStyles from '@/components/ai-university-search/AIUniversitySearch.module.css';
 import { trackAiToolEvent } from '@/lib/analytics/events.js';
-import { fileToBase64 } from '@/lib/browser/client.js';
+import { fileToBase64, gatewayPost } from '@/lib/browser/client.js';
 import SearchHeader from '@/components/ai-university-search/SearchHeader.jsx';
 import ProfileUpload from '@/components/ai-university-search/ProfileUpload.jsx';
 import ResultsPanel from '@/components/ai-university-search/ResultsPanel.jsx';
+import StepProgress from '@/components/ai-tools/StepProgress.jsx';
 import {
   HERO_CHIPS,
   INITIAL_SEARCH_PROFILE,
   STEP_BY_FIELD,
   validateSearchProfile,
 } from '@/components/ai-university-search/searchProfile.js';
+
+const STEP_LABELS = ['Profile', 'Academics', 'Preferences'];
 
 const cx = (...classNames) =>
   classNames
@@ -22,8 +25,11 @@ const cx = (...classNames) =>
     .join(' ');
 
 const AIUniversitySearch = () => {
-  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
+  const [, setFormStartedAt] = useState(() => Date.now());
   const [results, setResults] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [runId, setRunId] = useState(null);
+  const [unlocked, setUnlocked] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const [activeStep, setActiveStep] = useState(0);
   const [searchProfile, setSearchProfile] = useState(INITIAL_SEARCH_PROFILE);
@@ -105,9 +111,12 @@ const AIUniversitySearch = () => {
     setValidationErrors({});
     setStatus({
       type: 'loading',
-      message: 'Generating family-friendly best-fit university matches...',
+      message: 'Generating your family-friendly shortlist…',
     });
     setResults(null);
+    setPreview(null);
+    setRunId(null);
+    setUnlocked(false);
     trackAiToolEvent({
       toolName: 'university_matchmaker',
       action: 'generate',
@@ -117,29 +126,19 @@ const AIUniversitySearch = () => {
     });
 
     try {
-      const response = await fetch('/api/ai/university-match', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          searchProfile,
-          pdfBase64: pdfFile ? await fileToBase64(pdfFile) : '',
-          pdfMimeType: pdfFile?.type || '',
-        }),
+      const data = await gatewayPost('/tools/university-match/match', {
+        searchProfile,
+        pdfBase64: pdfFile ? await fileToBase64(pdfFile) : '',
+        pdfMimeType: pdfFile?.type || '',
       });
-      const payload = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          payload?.error || 'Something went wrong while generating results.',
-        );
-      }
-
-      const parsed = payload?.data;
+      const parsed = data?.result;
       if (!parsed) {
         throw new Error('Unable to parse AI response. Please retry.');
       }
 
       setResults(parsed);
+      setPreview(data?.preview || null);
+      setRunId(data?.runId || null);
       trackAiToolEvent({
         toolName: 'university_matchmaker',
         action: 'generate',
@@ -149,7 +148,8 @@ const AIUniversitySearch = () => {
       });
       setStatus({
         type: 'success',
-        message: 'Your parent and student friendly matches are ready.',
+        message:
+          'Preview ready. Unlock to see all matches and detailed next steps.',
       });
     } catch (error) {
       trackAiToolEvent({
@@ -167,6 +167,20 @@ const AIUniversitySearch = () => {
     }
   };
 
+  const handleUnlock = (saveData) => {
+    setUnlocked(true);
+    setStatus({
+      type: 'success',
+      message: 'Shortlist unlocked. We will reach out on WhatsApp shortly.',
+    });
+    trackAiToolEvent({
+      toolName: 'university_matchmaker',
+      action: 'unlock',
+      status: 'success',
+      leadId: saveData?.leadId || null,
+    });
+  };
+
   const resetAll = () => {
     trackAiToolEvent({
       toolName: 'university_matchmaker',
@@ -177,6 +191,9 @@ const AIUniversitySearch = () => {
     });
     setPdfFile(null);
     setResults(null);
+    setPreview(null);
+    setRunId(null);
+    setUnlocked(false);
     setValidationErrors({});
     setActiveStep(0);
     setStatus({ type: 'idle', message: '' });
@@ -192,8 +209,8 @@ const AIUniversitySearch = () => {
           <h2>AI University Matchmaker</h2>
           <p className={cx('pma-uni-subtitle')}>
             Build a clear shortlist that both students and parents can trust.
-            This guided flow captures academics, budget, and family priorities
-            before generating matches.
+            Answer a few questions, see your top matches free, then unlock the
+            full shortlist to share with family.
           </p>
           <div className={cx('pma-uni-chip-row')}>
             {HERO_CHIPS.map((chip) => (
@@ -204,6 +221,10 @@ const AIUniversitySearch = () => {
           </div>
         </div>
       </div>
+
+      {!results ? (
+        <StepProgress steps={STEP_LABELS} activeStep={activeStep} />
+      ) : null}
 
       <SearchHeader
         searchProfile={searchProfile}
@@ -224,7 +245,13 @@ const AIUniversitySearch = () => {
         </div>
       )}
 
-      <ResultsPanel results={results} />
+      <ResultsPanel
+        results={results}
+        preview={preview}
+        runId={runId}
+        unlocked={unlocked}
+        onUnlock={handleUnlock}
+      />
     </div>
   );
 };

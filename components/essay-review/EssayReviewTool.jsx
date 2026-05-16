@@ -10,10 +10,10 @@ import {
   validateReviewForm,
 } from '@/components/essay-review/lib/reviewForm.js';
 import { trackAiToolEvent } from '@/lib/analytics/events.js';
-import { fileToBase64 } from '@/lib/browser/client.js';
+import { fileToBase64, gatewayPost } from '@/lib/browser/client.js';
 
 const inputClassName =
-  'w-full rounded-[22px] border border-[#ddcfda] bg-white px-4 py-3 text-sm text-[#341338] shadow-[0_10px_30px_rgba(58,23,52,0.05)] outline-none transition placeholder:text-[#9a8a9d] focus:border-[#f40076] focus:ring-4 focus:ring-[#f9dbe8]';
+  'w-full rounded-md border border-[#ddcfda] bg-white px-4 py-3 text-sm text-[#3f1831] shadow-sm outline-none transition placeholder:text-[#9a8a9d] focus:border-[#f40076] focus:ring-4 focus:ring-[#f9dbe8]';
 
 const statusClassNames = {
   success: 'border-[#b7ead2] bg-[#eefcf4] text-[#166534]',
@@ -28,9 +28,7 @@ const FieldError = ({ message }) =>
 
 const TextInput = ({ label, error, ...props }) => (
   <label className="block">
-    <span className="mb-2 block text-sm font-semibold text-[#4e3852]">
-      {label}
-    </span>
+    <span className="mb-2 block text-sm font-semibold text-grey">{label}</span>
     <input className={inputClassName} {...props} />
     <FieldError message={error} />
   </label>
@@ -38,9 +36,7 @@ const TextInput = ({ label, error, ...props }) => (
 
 const TextArea = ({ label, error, rows = 4, ...props }) => (
   <label className="block">
-    <span className="mb-2 block text-sm font-semibold text-[#4e3852]">
-      {label}
-    </span>
+    <span className="mb-2 block text-sm font-semibold text-grey">{label}</span>
     <textarea className={inputClassName} rows={rows} {...props} />
     <FieldError message={error} />
   </label>
@@ -49,6 +45,8 @@ const TextArea = ({ label, error, rows = 4, ...props }) => (
 export default function EssayReviewTool() {
   const [pdfFile, setPdfFile] = useState(null);
   const [results, setResults] = useState(null);
+  const [runId, setRunId] = useState(null);
+  const [unlocked, setUnlocked] = useState(false);
   const [reviewForm, setReviewForm] = useState(INITIAL_REVIEW_FORM);
   const [validationErrors, setValidationErrors] = useState({});
   const [status, setStatus] = useState({ type: 'idle', message: '' });
@@ -103,10 +101,27 @@ export default function EssayReviewTool() {
     });
     setPdfFile(null);
     setResults(null);
+    setRunId(null);
+    setUnlocked(false);
     setReviewForm(INITIAL_REVIEW_FORM);
     setValidationErrors({});
     setStatus({ type: 'idle', message: '' });
     setFormStartedAt(Date.now());
+  };
+
+  const handleUnlock = (saveData) => {
+    setUnlocked(true);
+    setStatus({
+      type: 'success',
+      message:
+        'Detailed review unlocked. We will reach out on WhatsApp shortly.',
+    });
+    trackAiToolEvent({
+      toolName: 'essay_reviewer',
+      action: 'unlock',
+      status: 'success',
+      leadId: saveData?.leadId || null,
+    });
   };
 
   const handleFile = (event) => {
@@ -166,6 +181,8 @@ export default function EssayReviewTool() {
     }
 
     setResults(null);
+    setRunId(null);
+    setUnlocked(false);
     setValidationErrors({});
     setStatus({
       type: 'loading',
@@ -180,33 +197,22 @@ export default function EssayReviewTool() {
     });
 
     try {
-      const response = await fetch('/api/ai/essay-review', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          reviewForm,
-          pdfBase64: pdfFile ? await fileToBase64(pdfFile) : '',
-          pdfMimeType: pdfFile?.type || '',
-        }),
+      const data = await gatewayPost('/tools/essay-review/review', {
+        reviewForm,
+        pdfBase64: pdfFile ? await fileToBase64(pdfFile) : '',
+        pdfMimeType: pdfFile?.type || '',
       });
 
-      const payload = await response.json();
-      if (!response.ok) {
-        throw new Error(
-          payload?.error || 'Unable to review the draft right now.',
-        );
-      }
-
-      if (!payload?.data) {
+      if (!data || !data.result) {
         throw new Error('The AI review came back empty. Please try again.');
       }
 
-      setResults(payload.data);
+      setResults(data.result);
+      setRunId(data.runId || null);
       setStatus({
         type: 'success',
-        message: 'Your essay review is ready.',
+        message:
+          'Your essay preview is ready. Unlock the line edits and revised excerpt below.',
       });
       trackAiToolEvent({
         toolName: 'essay_reviewer',
@@ -233,102 +239,43 @@ export default function EssayReviewTool() {
   };
 
   return (
-    <div className="bg-[linear-gradient(180deg,#fffdfd_0%,#fff7fb_32%,#ffffff_100%)]">
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-x-0 top-0 h-[420px] bg-[radial-gradient(circle_at_top_left,rgba(244,0,118,0.18),transparent_50%),radial-gradient(circle_at_top_right,rgba(89,33,90,0.2),transparent_36%),linear-gradient(180deg,#fff7fb_0%,rgba(255,255,255,0)_100%)]" />
-        <div className="relative mx-auto max-w-7xl px-4 py-10 md:px-6 md:py-14">
-          <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
-            <div className="rounded-[36px] border border-white/70 bg-white/75 p-7 shadow-[0_28px_90px_rgba(58,23,52,0.09)] backdrop-blur md:p-8">
-              <div className="inline-flex rounded-full bg-[#fff0f6] px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-[#b4236d]">
-                New AI writing tool
-              </div>
-              <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-[-0.06em] text-[#341338] md:text-6xl">
-                Rate your SOP or college essay before it reaches admissions.
-              </h1>
-              <p className="mt-5 max-w-3xl text-base leading-7 text-[#5f4a63] md:text-lg">
-                Paste your draft or upload a PDF to get a detailed
-                admissions-style score, revision priorities, and stronger sample
-                lines in one place.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                {[
-                  'SOPs and personal statements',
-                  'Supplemental essay scoring',
-                  'Line edits and revised excerpt',
-                ].map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full border border-[#f4dce8] bg-white px-4 py-2 text-sm font-medium text-[#7d637f]"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-[36px] bg-[#311334] p-6 text-white shadow-[0_32px_100px_rgba(49,19,52,0.24)]">
-              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-[#f0b7d4]">
-                Review engine
-              </p>
-              <div className="mt-5 space-y-4">
-                {[
-                  {
-                    value: '6',
-                    label: 'Rubric dimensions',
-                  },
-                  {
-                    value: '3',
-                    label: 'Before/after line edits',
-                  },
-                  {
-                    value: '1',
-                    label: 'Submission-ready action plan',
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-[24px] border border-white/10 bg-[rgba(255,255,255,0.08)] px-4 py-4"
-                  >
-                    <p className="text-3xl font-semibold tracking-[-0.04em]">
-                      {item.value}
-                    </p>
-                    <p className="mt-1 text-sm text-[#f5dbe8]">{item.label}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-5 text-sm leading-6 text-[#f5dbe8]">
-                Best for first-pass scoring, draft polishing, and checking
-                whether your story feels distinctive enough for competitive
-                applications.
-              </p>
-            </div>
-          </div>
-        </div>
+    <div className="bg-white">
+      <section className="mx-auto max-w-4xl px-4 pt-10 pb-6 md:px-6 md:pt-12">
+        <p className="text-xs font-semibold uppercase tracking-wider text-main">
+          AI Essay Reviewer
+        </p>
+        <h1 className="mt-2 text-2xl md:text-3xl font-bold text-[#3f1831] leading-tight">
+          Rate your SOP before it reaches admissions
+        </h1>
+        <p className="mt-3 text-base text-grey leading-relaxed max-w-2xl">
+          Paste your draft (or upload a PDF) and get an admissions-style score,
+          priority fixes, and line-level rewrites — across 6 rubric dimensions.
+        </p>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 pb-14 md:px-6 md:pb-[4.5rem]">
+      <section className="mx-auto max-w-4xl px-4 pb-14 md:px-6 md:pb-[4.5rem]">
         {status.message && status.type !== 'idle' && (
           <div
-            className={`mb-6 rounded-[24px] border px-5 py-4 text-sm font-medium ${statusClassNames[status.type]}`}
+            className={`mb-6 rounded-md border px-5 py-4 text-sm font-medium ${statusClassNames[status.type]}`}
           >
             {status.message}
           </div>
         )}
 
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
-          <div className="rounded-[32px] border border-[#eadde4] bg-[rgba(255,255,255,0.92)] p-6 shadow-[0_24px_70px_rgba(58,23,52,0.08)] backdrop-blur md:p-7">
+        <div className="grid gap-6">
+          <div className="rounded-md border border-[#e8dde3] bg-white p-6 shadow-sm md:p-7">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#9a879d]">
+                <p className="text-xs font-semibold uppercase tracking-wider text-grey">
                   Submission form
                 </p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#341338]">
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[#3f1831]">
                   Build the review context
                 </h2>
               </div>
               <button
                 type="button"
-                className="rounded-full border border-[#eadde4] px-4 py-2 text-sm font-semibold text-[#6a576d] transition hover:border-[#d8c6d1] hover:bg-[#faf5f8]"
+                className="rounded-full border border-[#e8dde3] px-4 py-2 text-sm font-semibold text-grey transition hover:border-[#e8dde3] hover:bg-light"
                 onClick={resetAll}
               >
                 Reset
@@ -336,9 +283,7 @@ export default function EssayReviewTool() {
             </div>
 
             <div className="mt-6">
-              <p className="text-sm font-semibold text-[#4e3852]">
-                Document type
-              </p>
+              <p className="text-sm font-semibold text-grey">Document type</p>
               <div className="mt-3 grid gap-3">
                 {DOCUMENT_TYPE_OPTIONS.map((item) => {
                   const isActive = reviewForm.documentType === item.value;
@@ -346,19 +291,19 @@ export default function EssayReviewTool() {
                     <button
                       key={item.value}
                       type="button"
-                      className={`rounded-[24px] border px-5 py-4 text-left transition ${
+                      className={`rounded-md border px-5 py-4 text-left transition ${
                         isActive
-                          ? 'border-[#f19bc5] bg-[linear-gradient(180deg,#fff5fa,#fff)] shadow-[0_18px_40px_rgba(244,0,118,0.12)]'
-                          : 'border-[#eee3e9] bg-white hover:border-[#e7ccd9] hover:bg-[#fffafc]'
+                          ? 'border-[#e8dde3] bg-light shadow-sm'
+                          : 'border-[#e8dde3] bg-white hover:border-[#e8dde3] hover:bg-light'
                       }`}
                       onClick={() => setField('documentType', item.value)}
                     >
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="text-base font-semibold text-[#341338]">
+                          <p className="text-base font-semibold text-[#3f1831]">
                             {item.label}
                           </p>
-                          <p className="mt-1 text-sm leading-6 text-[#6c596f]">
+                          <p className="mt-1 text-sm leading-6 text-grey">
                             {item.description}
                           </p>
                         </div>
@@ -366,7 +311,7 @@ export default function EssayReviewTool() {
                           className={`h-4 w-4 rounded-full border ${
                             isActive
                               ? 'border-[#f40076] bg-[#f40076] shadow-[0_0_0_4px_rgba(244,0,118,0.12)]'
-                              : 'border-[#cdbfcc] bg-white'
+                              : 'border-[#e8dde3] bg-white'
                           }`}
                         />
                       </div>
@@ -438,10 +383,10 @@ export default function EssayReviewTool() {
 
             <div className="mt-6">
               <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold text-[#4e3852]">
+                <p className="text-sm font-semibold text-grey">
                   Review focus areas
                 </p>
-                <p className="text-xs font-medium uppercase tracking-[0.18em] text-[#9a879d]">
+                <p className="text-xs font-medium uppercase tracking-wider text-grey">
                   Pick up to 3
                 </p>
               </div>
@@ -452,17 +397,17 @@ export default function EssayReviewTool() {
                     <button
                       key={item.value}
                       type="button"
-                      className={`rounded-[22px] border px-4 py-4 text-left transition ${
+                      className={`rounded-md border px-4 py-4 text-left transition ${
                         isActive
-                          ? 'border-[#f19bc5] bg-[#fff5fa]'
-                          : 'border-[#eee3e9] bg-white hover:border-[#e5cad7] hover:bg-[#fffafc]'
+                          ? 'border-[#e8dde3] bg-light'
+                          : 'border-[#e8dde3] bg-white hover:border-[#e8dde3] hover:bg-light'
                       }`}
                       onClick={() => toggleFocusArea(item.value)}
                     >
-                      <p className="text-sm font-semibold text-[#341338]">
+                      <p className="text-sm font-semibold text-[#3f1831]">
                         {item.label}
                       </p>
-                      <p className="mt-1 text-sm leading-6 text-[#6c596f]">
+                      <p className="mt-1 text-sm leading-6 text-grey">
                         {item.description}
                       </p>
                     </button>
@@ -481,7 +426,7 @@ export default function EssayReviewTool() {
                 onChange={(event) => setField('essayText', event.target.value)}
                 error={validationErrors.essayText}
               />
-              <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-[22px] border border-[#f0e6eb] bg-[#fffdfd] px-4 py-3 text-sm text-[#6b586f]">
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-md border border-[#e8dde3] bg-light px-4 py-3 text-sm text-grey">
                 <span>{draftWordCount} words in pasted draft</span>
                 {targetWordLimit > 0 && (
                   <span
@@ -497,19 +442,19 @@ export default function EssayReviewTool() {
               </div>
             </div>
 
-            <div className="mt-6 rounded-[28px] border border-dashed border-[#e7ccd9] bg-[linear-gradient(180deg,#fffafd,#fff)] p-5">
+            <div className="mt-6 rounded-md border border-dashed border-[#e8dde3] bg-light p-5">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <p className="text-sm font-semibold text-[#341338]">
+                  <p className="text-sm font-semibold text-[#3f1831]">
                     Optional PDF upload
                   </p>
-                  <p className="mt-1 max-w-xl text-sm leading-6 text-[#6b586f]">
+                  <p className="mt-1 max-w-xl text-sm leading-6 text-grey">
                     Upload a PDF if the draft is easier to review in document
                     form. Pasted text still works best for the strongest line
                     edits.
                   </p>
                 </div>
-                <label className="inline-flex cursor-pointer rounded-full bg-[#341338] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#4d2050]">
+                <label className="inline-flex cursor-pointer rounded-full bg-main px-4 py-2 text-sm font-semibold text-white transition hover:bg-main/90">
                   Choose PDF
                   <input
                     type="file"
@@ -519,7 +464,7 @@ export default function EssayReviewTool() {
                   />
                 </label>
               </div>
-              <div className="mt-4 rounded-[22px] border border-[#f0e6eb] bg-white px-4 py-3 text-sm text-[#5f4a63]">
+              <div className="mt-4 rounded-md border border-[#e8dde3] bg-white px-4 py-3 text-sm text-grey">
                 {pdfFile ? pdfFile.name : 'No PDF selected'}
               </div>
             </div>
@@ -527,7 +472,7 @@ export default function EssayReviewTool() {
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <button
                 type="button"
-                className="inline-flex flex-1 items-center justify-center rounded-[22px] bg-[linear-gradient(135deg,#f40076,#7e0f52)] px-5 py-4 text-sm font-semibold text-white shadow-[0_18px_45px_rgba(244,0,118,0.22)] transition hover:translate-y-[-1px] hover:shadow-[0_24px_55px_rgba(244,0,118,0.28)]"
+                className="inline-flex flex-1 items-center justify-center rounded-md bg-main px-5 py-4 text-sm font-semibold text-white shadow-sm transition hover:translate-y-[-1px] hover:shadow-sm"
                 onClick={reviewEssay}
                 disabled={status.type === 'loading'}
               >
@@ -537,7 +482,7 @@ export default function EssayReviewTool() {
               </button>
               <button
                 type="button"
-                className="inline-flex items-center justify-center rounded-[22px] border border-[#eadde4] px-5 py-4 text-sm font-semibold text-[#5f4a63] transition hover:border-[#d8c6d1] hover:bg-[#faf5f8]"
+                className="inline-flex items-center justify-center rounded-md border border-[#e8dde3] px-5 py-4 text-sm font-semibold text-grey transition hover:border-[#e8dde3] hover:bg-light"
                 onClick={resetAll}
               >
                 Clear draft
@@ -545,11 +490,16 @@ export default function EssayReviewTool() {
             </div>
           </div>
 
-          <ReviewResults
-            results={results}
-            isLoading={status.type === 'loading'}
-            draftWordCount={draftWordCount}
-          />
+          {(results || status.type === 'loading') && (
+            <ReviewResults
+              results={results}
+              isLoading={status.type === 'loading'}
+              draftWordCount={draftWordCount}
+              runId={runId}
+              unlocked={unlocked}
+              onUnlock={handleUnlock}
+            />
+          )}
         </div>
       </section>
     </div>

@@ -1,18 +1,16 @@
 import React from 'react';
-import styles from '@/components/ai-admission/AIAdmissionTool.module.css';
-const cx = (...classNames) =>
-  classNames
-    .flatMap((value) => `${value || ''}`.split(/\s+/))
-    .map((name) => styles[name])
-    .filter(Boolean)
-    .join(' ');
-const ProcessingStep = ({ message }) => {
-  return (
-    <div className={cx('pma-ai-processing')}>
-      <h3>Evaluating Profile</h3>
-      <p>Analyzing your profile...</p>
-      <div className={cx('pma-ai-processing-message')}>{message}</div>
+import { AIToolCard } from '@/components/ai-tools/AIToolShell.jsx';
+
+const ProcessingStep = ({ message }) => (
+  <AIToolCard>
+    <div className="flex flex-col items-center text-center py-8 gap-4">
+      <div className="w-12 h-12 rounded-full border-4 border-light border-t-main animate-spin" />
+      <h3 className="text-lg font-semibold text-[#3f1831]">
+        Evaluating your profile
+      </h3>
+      <p className="text-sm text-grey max-w-md">{message}</p>
     </div>
-  );
-};
+  </AIToolCard>
+);
+
 export default ProcessingStep;

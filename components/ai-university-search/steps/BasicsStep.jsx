@@ -1,70 +1,78 @@
 'use client';
 
 import React from 'react';
-import { countries, degreeLevels, programAreas } from '@/components/ai-university-search/searchHeaderConfig.js';
+import {
+  AIToolField,
+  AIToolChips,
+  inputClass,
+} from '@/components/ai-tools/AIToolShell.jsx';
+import {
+  countries,
+  degreeLevels,
+  programAreas,
+} from '@/components/ai-university-search/searchHeaderConfig.js';
 
-const Label = ({ children }) => <label>{children}</label>;
+const intakes = ['Fall 2026', 'Spring 2027', 'Fall 2027'];
 
-const BasicsStep = ({ cx, searchProfile, onFieldChange, toggleMultiValue, getError, renderError }) => (
-  <div className={cx('pma-uni-search-section')}>
-    <h4>Basic profile</h4>
-    <div className={cx('pma-uni-search-grid')}>
-      <div className={cx('pma-uni-search-field', 'pma-uni-search-field-full')}>
-        <Label>Filled By</Label>
-        <div className={cx('pma-uni-chip-select-row')}>
-          {['student', 'parent', 'guardian'].map((option) => (
-            <button
-              key={option}
-              type="button"
-              className={cx(
-                'pma-uni-chip-select',
-                searchProfile.filledBy === option ? 'selected' : '',
-                getError('filledBy') ? 'input-error' : '',
-              )}
-              onClick={() => onFieldChange('filledBy', option)}
-            >
-              {option.charAt(0).toUpperCase() + option.slice(1)}
-            </button>
-          ))}
-        </div>
-        {renderError('filledBy')}
-      </div>
+const BasicsStep = ({
+  searchProfile,
+  onFieldChange,
+  toggleMultiValue,
+  getError,
+  renderError,
+}) => (
+  <div className="space-y-5">
+    <div>
+      <h3 className="text-base font-semibold text-[#3f1831]">Basic profile</h3>
+      <p className="mt-1 text-sm text-grey">
+        Who&apos;s applying, what they want to study, and where.
+      </p>
+    </div>
 
-      <div className={cx('pma-uni-search-field')}>
-        <Label>Student Name</Label>
+    <AIToolField label="Who's filling this">
+      <AIToolChips
+        options={[
+          { value: 'student', label: 'Student' },
+          { value: 'parent', label: 'Parent' },
+          { value: 'guardian', label: 'Guardian' },
+        ]}
+        value={searchProfile.filledBy}
+        onChange={(v) => onFieldChange('filledBy', v)}
+      />
+      {renderError('filledBy')}
+    </AIToolField>
+
+    <div className="grid gap-4 sm:grid-cols-2">
+      <AIToolField label="Student name" error={getError('studentName')}>
         <input
           type="text"
-          className={cx(getError('studentName') ? 'pma-uni-input-error' : '')}
-          placeholder="Example: Aarav Sharma"
           value={searchProfile.studentName}
           onChange={(event) => onFieldChange('studentName', event.target.value)}
+          placeholder="e.g. Aarav Sharma"
+          className={inputClass}
         />
-        {renderError('studentName')}
-      </div>
+      </AIToolField>
 
-      <div className={cx('pma-uni-search-field')}>
-        <Label>Study Level</Label>
+      <AIToolField label="Study level" error={getError('degreeLevel')}>
         <select
-          className={cx(getError('degreeLevel') ? 'pma-uni-input-error' : '')}
           value={searchProfile.degreeLevel}
           onChange={(event) => onFieldChange('degreeLevel', event.target.value)}
+          className={inputClass}
         >
-          <option value="">Select study level</option>
+          <option value="">Select level</option>
           {degreeLevels.map((level) => (
             <option key={level.value} value={level.value}>
               {level.label}
             </option>
           ))}
         </select>
-        {renderError('degreeLevel')}
-      </div>
+      </AIToolField>
 
-      <div className={cx('pma-uni-search-field')}>
-        <Label>Field of Study</Label>
+      <AIToolField label="Field of study" error={getError('programArea')}>
         <select
-          className={cx(getError('programArea') ? 'pma-uni-input-error' : '')}
           value={searchProfile.programArea}
           onChange={(event) => onFieldChange('programArea', event.target.value)}
+          className={inputClass}
         >
           <option value="">Select field</option>
           {programAreas.map((area) => (
@@ -73,45 +81,34 @@ const BasicsStep = ({ cx, searchProfile, onFieldChange, toggleMultiValue, getErr
             </option>
           ))}
         </select>
-        {renderError('programArea')}
-      </div>
+      </AIToolField>
 
-      <div className={cx('pma-uni-search-field', 'pma-uni-search-field-full')}>
-        <Label>Preferred Destinations (up to 2)</Label>
-        <div className={cx('pma-uni-chip-select-row')}>
-          {countries.map((country) => (
-            <button
-              key={country}
-              type="button"
-              className={cx(
-                'pma-uni-chip-select',
-                (searchProfile.targetCountries || []).includes(country) ? 'selected' : '',
-                getError('targetCountries') ? 'input-error' : '',
-              )}
-              onClick={() => toggleMultiValue('targetCountries', country, 2)}
-            >
-              {country}
-            </button>
-          ))}
-        </div>
-        {renderError('targetCountries')}
-      </div>
-
-      <div className={cx('pma-uni-search-field')}>
-        <Label>Planned Intake</Label>
+      <AIToolField label="Planned intake" error={getError('targetIntake')}>
         <select
-          className={cx(getError('targetIntake') ? 'pma-uni-input-error' : '')}
           value={searchProfile.targetIntake}
           onChange={(event) => onFieldChange('targetIntake', event.target.value)}
+          className={inputClass}
         >
           <option value="">Select intake</option>
-          <option value="Fall 2026">Fall 2026</option>
-          <option value="Spring 2027">Spring 2027</option>
-          <option value="Fall 2027">Fall 2027</option>
+          {intakes.map((i) => (
+            <option key={i} value={i}>
+              {i}
+            </option>
+          ))}
         </select>
-        {renderError('targetIntake')}
-      </div>
+      </AIToolField>
     </div>
+
+    <AIToolField label="Preferred destinations (up to 2)">
+      <AIToolChips
+        options={countries}
+        value={searchProfile.targetCountries || []}
+        onChange={(next) => onFieldChange('targetCountries', next)}
+        multi
+        max={2}
+      />
+      {renderError('targetCountries')}
+    </AIToolField>
   </div>
 );
 

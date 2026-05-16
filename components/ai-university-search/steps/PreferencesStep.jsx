@@ -2,151 +2,122 @@
 
 import React from 'react';
 import {
+  AIToolField,
+  AIToolChips,
+  inputClass,
+} from '@/components/ai-tools/AIToolShell.jsx';
+import {
   contactOptions,
   familyPriorities,
   fundingPlans,
   riskComfortOptions,
   scholarshipNeeds,
-  scoreTypeLabels,
 } from '@/components/ai-university-search/searchHeaderConfig.js';
 
-const Label = ({ children }) => <label>{children}</label>;
+const PreferencesStep = ({ searchProfile, onFieldChange, toggleMultiValue }) => (
+  <div className="space-y-5">
+    <div>
+      <h3 className="text-base font-semibold text-[#3f1831]">
+        Preferences <span className="text-grey font-normal">(all optional)</span>
+      </h3>
+      <p className="mt-1 text-sm text-grey">
+        Tells the AI what your family cares about most.
+      </p>
+    </div>
 
-const PreferencesStep = ({ cx, searchProfile, onFieldChange, toggleMultiValue }) => (
-  <div className={cx('pma-uni-search-section')}>
-    <h4>Preferences (all optional)</h4>
-    <div className={cx('pma-uni-search-grid')}>
-      <div className={cx('pma-uni-search-field')}>
-        <Label>Funding Plan</Label>
-        <select value={searchProfile.fundingPlan} onChange={(event) => onFieldChange('fundingPlan', event.target.value)}>
-          <option value="">Select funding plan</option>
-          {fundingPlans.map((fundingPlan) => (
-            <option key={fundingPlan} value={fundingPlan}>
-              {fundingPlan}
+    <div className="grid gap-4 sm:grid-cols-2">
+      <AIToolField label="Funding plan">
+        <select
+          value={searchProfile.fundingPlan}
+          onChange={(event) => onFieldChange('fundingPlan', event.target.value)}
+          className={inputClass}
+        >
+          <option value="">Select plan</option>
+          {fundingPlans.map((f) => (
+            <option key={f} value={f}>
+              {f}
             </option>
           ))}
         </select>
-      </div>
-
-      <div className={cx('pma-uni-search-field')}>
-        <Label>Scholarship Need</Label>
-        <select value={searchProfile.scholarshipNeed} onChange={(event) => onFieldChange('scholarshipNeed', event.target.value)}>
+      </AIToolField>
+      <AIToolField label="Scholarship need">
+        <select
+          value={searchProfile.scholarshipNeed}
+          onChange={(event) =>
+            onFieldChange('scholarshipNeed', event.target.value)
+          }
+          className={inputClass}
+        >
           <option value="">Select level</option>
-          {scholarshipNeeds.map((need) => (
-            <option key={need} value={need}>
-              {need}
+          {scholarshipNeeds.map((n) => (
+            <option key={n} value={n}>
+              {n}
             </option>
           ))}
         </select>
-      </div>
+      </AIToolField>
+    </div>
 
-      <div className={cx('pma-uni-search-field', 'pma-uni-search-field-full')}>
-        <Label>Top Family Priorities (up to 2)</Label>
-        <div className={cx('pma-uni-chip-select-row')}>
-          {familyPriorities.map((priority) => (
-            <button
-              key={priority}
-              type="button"
-              className={cx(
-                'pma-uni-chip-select',
-                (searchProfile.familyPriorityTop3 || []).includes(priority) ? 'selected' : '',
-              )}
-              onClick={() => toggleMultiValue('familyPriorityTop3', priority, 2)}
-            >
-              {priority}
-            </button>
-          ))}
-        </div>
-      </div>
+    <AIToolField label="Top family priorities (up to 2)">
+      <AIToolChips
+        options={familyPriorities}
+        value={searchProfile.familyPriorityTop3 || []}
+        onChange={(next) => onFieldChange('familyPriorityTop3', next)}
+        multi
+        max={2}
+      />
+    </AIToolField>
 
-      <div className={cx('pma-uni-search-field', 'pma-uni-search-field-full')}>
-        <Label>Risk Comfort</Label>
-        <div className={cx('pma-uni-chip-select-row')}>
-          {riskComfortOptions.map((riskOption) => (
-            <button
-              key={riskOption}
-              type="button"
-              className={cx('pma-uni-chip-select', searchProfile.riskComfort === riskOption ? 'selected' : '')}
-              onClick={() => onFieldChange('riskComfort', riskOption)}
-            >
-              {riskOption}
-            </button>
-          ))}
-        </div>
-      </div>
+    <AIToolField label="Risk comfort">
+      <AIToolChips
+        options={riskComfortOptions}
+        value={searchProfile.riskComfort}
+        onChange={(v) => onFieldChange('riskComfort', v)}
+      />
+    </AIToolField>
 
-      <div className={cx('pma-uni-search-field', 'pma-uni-search-field-full')}>
-        <Label>Preferred Contact Channel</Label>
-        <div className={cx('pma-uni-chip-select-row')}>
-          {contactOptions.map((option) => (
-            <button
-              key={option}
-              type="button"
-              className={cx(
-                'pma-uni-chip-select',
-                (searchProfile.contactPreferences || []).includes(option) ? 'selected' : '',
-              )}
-              onClick={() => toggleMultiValue('contactPreferences', option, 3)}
-            >
-              {option}
-            </button>
-          ))}
-        </div>
-      </div>
+    <AIToolField label="Preferred contact channels (up to 3)">
+      <AIToolChips
+        options={contactOptions}
+        value={searchProfile.contactPreferences || []}
+        onChange={(next) => onFieldChange('contactPreferences', next)}
+        multi
+        max={3}
+      />
+    </AIToolField>
 
-      <div className={cx('pma-uni-search-field')}>
-        <Label>Specialization (optional)</Label>
+    <div className="grid gap-4 sm:grid-cols-2">
+      <AIToolField label="Specialization">
         <input
           type="text"
-          placeholder="Example: Data Engineering"
           value={searchProfile.specialization}
-          onChange={(event) => onFieldChange('specialization', event.target.value)}
+          onChange={(event) =>
+            onFieldChange('specialization', event.target.value)
+          }
+          placeholder="e.g. Data Engineering"
+          className={inputClass}
         />
-      </div>
-
-      <div className={cx('pma-uni-search-field')}>
-        <Label>Career Goal (optional)</Label>
+      </AIToolField>
+      <AIToolField label="Career goal">
         <input
           type="text"
-          placeholder="Example: AI product roles"
           value={searchProfile.careerGoal}
           onChange={(event) => onFieldChange('careerGoal', event.target.value)}
+          placeholder="e.g. AI product roles"
+          className={inputClass}
         />
-      </div>
-
-      <div className={cx('pma-uni-search-field', 'pma-uni-search-field-full')}>
-        <Label>Additional Notes (optional)</Label>
-        <input
-          type="text"
-          placeholder="Example: prefers safer cities and internships"
-          value={searchProfile.query}
-          onChange={(event) => onFieldChange('query', event.target.value)}
-        />
-      </div>
-
-      <div className={cx('pma-uni-review-grid', 'pma-uni-search-field-full')}>
-        <div>
-          <span>Profile</span>
-          <p>{searchProfile.filledBy || 'Not set'}</p>
-        </div>
-        <div>
-          <span>Study Goal</span>
-          <p>{[searchProfile.degreeLevel, searchProfile.programArea].filter(Boolean).join(' · ') || 'Not set'}</p>
-        </div>
-        <div>
-          <span>Academic Score</span>
-          <p>
-            {searchProfile.scoreType && searchProfile.scoreValue
-              ? `${scoreTypeLabels[searchProfile.scoreType] || searchProfile.scoreType}: ${searchProfile.scoreValue}`
-              : 'Not set'}
-          </p>
-        </div>
-        <div>
-          <span>Budget</span>
-          <p>{searchProfile.budgetAmount ? `${searchProfile.budgetAmount} ${searchProfile.budgetCurrency}` : 'Not set'}</p>
-        </div>
-      </div>
+      </AIToolField>
     </div>
+
+    <AIToolField label="Additional notes">
+      <input
+        type="text"
+        value={searchProfile.query}
+        onChange={(event) => onFieldChange('query', event.target.value)}
+        placeholder="Anything else we should know"
+        className={inputClass}
+      />
+    </AIToolField>
   </div>
 );
 

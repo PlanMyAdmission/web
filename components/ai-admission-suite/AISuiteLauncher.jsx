@@ -1,8 +1,11 @@
 'use client';
 
 import React, { Suspense, lazy, useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { trackAiToolEvent } from '@/lib/analytics/events.js';
 import styles from './AISuiteLauncher.module.css';
+
+const HIDDEN_PATHS = ['/essay-review', '/ai-university-matchmaker'];
 const cx = (...classNames) =>
   classNames
     .flatMap((value) => `${value || ''}`.split(/\s+/))
@@ -13,7 +16,14 @@ const AIAdmissionTool = lazy(
   () => import('@/components/ai-admission/AIAdmissionTool'),
 );
 const AISuiteLauncher = () => {
+  const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  const hidden =
+    mounted && HIDDEN_PATHS.some((path) => pathname?.startsWith(path));
   const SUITE_CONFIG = {
     buttonText: 'Launch AI Admission Suite',
     buttonPosition: 'top-right',
@@ -55,8 +65,12 @@ const AISuiteLauncher = () => {
       document.body.style.overflow = 'auto';
     };
   }, []);
+  if (!mounted) return null;
+  if (hidden && !isModalOpen) return null;
+
   return (
     <>
+      {!hidden && (
       <div
         id="pmaAISuiteLauncher"
         className={cx('pma-launcher', SUITE_CONFIG.buttonPosition)}
@@ -70,6 +84,7 @@ const AISuiteLauncher = () => {
           <div className={cx('pma-launcher-pulse')}></div>
         </div>
       </div>
+      )}
 
       {isModalOpen && (
         <div className={cx('pma-suite-modal', 'active')}>
