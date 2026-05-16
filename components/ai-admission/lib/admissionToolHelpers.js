@@ -26,18 +26,31 @@ export const openReportPrintWindow = (reportHtml) => {
     return { ok: false, reason: 'missing_html' };
   }
 
-  const printWindow = window.open('', '_blank', 'noopener,noreferrer');
+  const blob = new Blob([reportHtml], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const printWindow = window.open(url, '_blank');
+
   if (!printWindow) {
+    URL.revokeObjectURL(url);
     return { ok: false, reason: 'popup_blocked' };
   }
 
-  printWindow.document.open();
-  printWindow.document.write(reportHtml);
-  printWindow.document.close();
-  printWindow.onload = () => {
-    printWindow.focus();
-    printWindow.print();
+  const cleanup = () => {
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
   };
+
+  printWindow.addEventListener?.('load', () => {
+    try {
+      printWindow.focus();
+      printWindow.print();
+    } catch {
+      /* user can print manually */
+    }
+    cleanup();
+  });
+
+  // Fallback if 'load' never fires (some browsers with Blob URLs)
+  setTimeout(cleanup, 90_000);
 
   return { ok: true };
 };
