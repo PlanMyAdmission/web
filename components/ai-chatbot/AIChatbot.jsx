@@ -1,40 +1,19 @@
 'use client';
 
-import React from 'react';
-import styles from './AIChatbot.module.css';
-import { mapModuleClasses } from '@/lib/styles/classNames.js';
-import useChatbotSession from '@/components/ai-chatbot/hooks/useChatbotSession.js';
-import ChatbotWindow from '@/components/ai-chatbot/ChatbotWindow.jsx';
-
-const cx = (...classNames) => mapModuleClasses(styles, ...classNames);
+import VoiceOrb from '@/components/ai-chatbot/VoiceOrb.jsx';
+import useVoiceSession from '@/components/ai-chatbot/hooks/useVoiceSession.js';
 
 const AIChatbot = () => {
-  const {
-    isOpen,
-    messages,
-    inputValue,
-    isTyping,
-    connectionState,
-    messagesRef,
-    toggleChat,
-    handleSendMessage,
-    handleInputChange,
-    handleKeyPress,
-  } = useChatbotSession();
+  const { isOpen, status, isMuted, open, close, toggleMute } = useVoiceSession();
 
   return (
-    <ChatbotWindow
-      cx={cx}
+    <VoiceOrb
       isOpen={isOpen}
-      messages={messages}
-      inputValue={inputValue}
-      isTyping={isTyping}
-      connectionState={connectionState}
-      messagesRef={messagesRef}
-      toggleChat={toggleChat}
-      handleSendMessage={handleSendMessage}
-      handleInputChange={handleInputChange}
-      handleKeyPress={handleKeyPress}
+      status={status}
+      isMuted={isMuted}
+      onOpen={open}
+      onClose={close}
+      onToggleMute={toggleMute}
     />
   );
 };
