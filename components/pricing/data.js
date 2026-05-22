@@ -17,7 +17,7 @@ export const pricingPlans = [
   },
   {
     title: 'Advantage Package',
-    price: 24999,
+    price: 14999,
     currency: 'INR',
     frequency: '/One-Time Payment',
     features: [
