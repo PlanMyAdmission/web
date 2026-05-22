@@ -25,7 +25,7 @@ const AISuiteLauncher = () => {
   const hidden =
     mounted && HIDDEN_PATHS.some((path) => pathname?.startsWith(path));
   const SUITE_CONFIG = {
-    buttonText: 'Launch AI Admission Suite',
+    buttonText: 'AI Profile Evaluator',
     buttonPosition: 'top-right',
   };
   const launchAISuite = () => {
@@ -71,19 +71,19 @@ const AISuiteLauncher = () => {
   return (
     <>
       {!hidden && (
-      <div
-        id="pmaAISuiteLauncher"
-        className={cx('pma-launcher', SUITE_CONFIG.buttonPosition)}
-        onClick={launchAISuite}
-      >
-        <div className={cx('pma-launcher-button')}>
-          <div className={cx('pma-launcher-icon')}>🎓</div>
-          <div className={cx('pma-launcher-text')}>
-            {SUITE_CONFIG.buttonText}
+        <div
+          id="pmaAISuiteLauncher"
+          className={cx('pma-launcher', SUITE_CONFIG.buttonPosition)}
+          onClick={launchAISuite}
+        >
+          <div className={cx('pma-launcher-button')}>
+            <div className={cx('pma-launcher-icon')}>🎓</div>
+            <div className={cx('pma-launcher-text')}>
+              {SUITE_CONFIG.buttonText}
+            </div>
+            <div className={cx('pma-launcher-pulse')}></div>
           </div>
-          <div className={cx('pma-launcher-pulse')}></div>
         </div>
-      </div>
       )}
 
       {isModalOpen && (
@@ -97,9 +97,7 @@ const AISuiteLauncher = () => {
           </button>
           <div className={cx('pma-suite-sheet')}>
             <Suspense
-              fallback={
-                <div className={cx('pma-suite-loading')}>Loading…</div>
-              }
+              fallback={<div className={cx('pma-suite-loading')}>Loading…</div>}
             >
               <AIAdmissionTool />
             </Suspense>
