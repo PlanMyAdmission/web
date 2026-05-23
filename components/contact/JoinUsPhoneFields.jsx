@@ -5,7 +5,7 @@ import {
 } from '@/lib/leads/form.js';
 
 const JoinUsPhoneFields = ({ formData, errors, onChange }) => (
-  <div className="w-[90%] grid gap-3 sm:grid-cols-[180px_minmax(0,1fr)]">
+  <div className="w-full grid gap-3 sm:grid-cols-[140px_minmax(0,1fr)]">
     <div>
       <select
         id="phone-country-code"

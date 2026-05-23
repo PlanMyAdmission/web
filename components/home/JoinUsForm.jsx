@@ -157,13 +157,13 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
   };
 
   return (
-    <div className={`py-8 bg-light rounded-lg mb-2 ${className}`}>
+    <div className={`py-8 px-6 bg-light rounded-lg mb-2 ${className}`}>
       {!isSubmitted ? (
         <form
           className="flex flex-col justify-center items-center space-y-5"
           onSubmit={handleSubmit}
         >
-          <div className="w-[90%]">
+          <div className="w-full">
             <input
               type="text"
               id="name"
@@ -190,7 +190,7 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
             }
           />
 
-          <div className="w-[90%]">
+          <div className="w-full">
             <input
               type="email"
               id="email"
@@ -224,7 +224,7 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
             />
           </div>
 
-          <div className="w-[90%]">
+          <div className="w-full">
             <div className="flex items-start space-x-3">
               <input
                 type="checkbox"
@@ -252,7 +252,7 @@ const JoinUsForm = ({ className = '', sourcePage = 'unknown' }) => {
 
           <button
             type="submit"
-            className={`bg-main px-4 py-4 rounded-md text-white w-[90%] transition-colors flex items-center justify-center ${isLoading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-main/90'}`}
+            className={`bg-main px-4 py-4 rounded-md text-white w-full transition-colors flex items-center justify-center ${isLoading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-main/90'}`}
             disabled={isLoading}
           >
             {isLoading ? (

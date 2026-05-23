@@ -112,14 +112,16 @@ const Contact = () => {
                     className="rounded-2xl border border-main/15 bg-white px-4 py-4 transition hover:-translate-y-0.5 hover:border-main/40"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-main/10 text-main">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-main/10 text-main">
                         <Icon fontSize="small" />
                       </span>
-                      <div>
+                      <div className="min-w-0">
                         <p className="text-sm font-semibold text-[#4b2740]">
                           {label}
                         </p>
-                        <p className="text-sm text-[#6f5566]">{value}</p>
+                        <p className="text-sm text-[#6f5566] break-words">
+                          {value}
+                        </p>
                       </div>
                     </div>
                   </a>

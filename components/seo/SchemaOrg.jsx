@@ -11,6 +11,7 @@ import {
   getCanonicalUrl,
   getRouteMeta,
 } from '@/lib/seo';
+import { buildFAQSchema } from '@/lib/seo/faqs.js';
 
 const SchemaOrg = () => {
   const pathname = usePathname() || '/';
@@ -18,6 +19,7 @@ const SchemaOrg = () => {
   const pageTitle = routeMeta.title || DEFAULT_TITLE;
   const pageDescription = routeMeta.description || DEFAULT_DESCRIPTION;
   const canonicalUrl = getCanonicalUrl(pathname);
+  const faqSchema = useMemo(() => buildFAQSchema(pathname), [pathname]);
 
   const organizationSchema = useMemo(
     () => ({
@@ -98,6 +100,14 @@ const SchemaOrg = () => {
           __html: JSON.stringify(webPageSchema),
         }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqSchema),
+          }}
+        />
+      )}
     </>
   );
 };

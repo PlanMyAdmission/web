@@ -1,9 +1,7 @@
 import React from 'react';
 import { pricingPlans } from '@/components/pricing/data.js';
 import Card from '@/components/common/PricingCard';
-import FAQ from '@/components/home/FAQ.jsx';
 import Header from '@/components/common/Header';
-import { pricingFAQ } from '@/components/pricing/data.js';
 const Pricing = ({ content }) => {
   return (
     <main>
@@ -22,10 +20,6 @@ const Pricing = ({ content }) => {
             <Card key={index} {...plan} useFor="pricing" />
           ))}
         </div>
-      </section>
-
-      <section className="mt-16">
-        <FAQ data={content?.faq || pricingFAQ} />
       </section>
     </main>
   );

@@ -1,6 +1,5 @@
 import React from 'react';
 import ArticlesSection from '@/components/home/ArticlesSection.jsx';
-import FAQ from '@/components/home/FAQ.jsx';
 import Hero from '@/components/home/Hero.jsx';
 import HowpmaIsDifferent from '@/components/home/HowpmaIsDifferent.jsx';
 import HowItWorksSection from '@/components/home/HowItWorksSection.jsx';
@@ -25,7 +24,6 @@ const Home = ({ content = {}, articles = [] }) => {
       <SuccessStories />
       <ArticlesSection articles={articles} />
 
-      <FAQ />
       <HowItWorksSection
         heading={content.howItWorks?.heading}
         sectionText={content.howItWorks?.sectionText}
