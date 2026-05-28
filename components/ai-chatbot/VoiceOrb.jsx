@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { Mic, MicOff, PhoneOff } from 'lucide-react';
 import useVoiceSession from './hooks/useVoiceSession.js';
+import useBodyScrollLock from '../../lib/browser/useBodyScrollLock.js';
 import styles from './AIChatbot.module.css';
 
 const ParticleOrb = dynamic(() => import('./ParticleOrb.jsx'), { ssr: false });
@@ -20,6 +21,8 @@ const VoiceOrb = () => {
     toggleMute,
     toggleTranscripts,
   } = useVoiceSession();
+
+  useBodyScrollLock(isOpen);
 
   const micListening = status === 'listening' && !isMuted;
   const role = latestTranscript?.role === 'agent' ? 'AGENT' : 'YOU';
