@@ -1,28 +1,26 @@
 'use client';
 
-import { Mic, MicOff, PhoneOff, X } from 'lucide-react';
+import { Mic, MicOff, PhoneOff } from 'lucide-react';
+import VoiceLevelBars from './VoiceLevelBars.jsx';
 import styles from './AIChatbot.module.css';
 
-const STATUS_LABELS = {
-  idle: '',
-  connecting: 'Connecting…',
-  ready: 'Ready',
-  listening: 'Listening…',
-  speaking: 'Speaking…',
-  error: 'Microphone unavailable',
-  closed: 'Disconnected — refresh to retry',
-};
-
-const ORB_STATE = {
-  connecting: styles.stateConnecting,
-  ready: styles.stateReady,
-  listening: styles.stateListen,
-  speaking: styles.stateSpeak,
-};
-
-const VoiceOrb = ({ isOpen, status, isMuted, onOpen, onClose, onToggleMute }) => {
-  const orbClass = ORB_STATE[status] || styles.stateReady;
-  const isActive = status === 'listening' || status === 'speaking';
+const VoiceOrb = ({
+  isOpen,
+  status,
+  isMuted,
+  micStream,
+  latestTranscript,
+  transcriptsVisible,
+  onOpen,
+  onClose,
+  onToggleMute,
+  onToggleTranscripts,
+}) => {
+  const micListening = status === 'listening' && !isMuted;
+  const role = latestTranscript?.role === 'agent' ? 'AGENT' : 'YOU';
+  const transcriptText = latestTranscript?.content?.trim()
+    ? latestTranscript.content
+    : 'Start talking to see a live transcript.';
 
   return (
     <div className={styles.widget}>
@@ -39,67 +37,75 @@ const VoiceOrb = ({ isOpen, status, isMuted, onOpen, onClose, onToggleMute }) =>
       )}
 
       {isOpen && (
-        <div
-          className={styles.overlay}
-          role="dialog"
-          aria-modal="true"
-          aria-label="AI Voice Consultant"
-        >
-          <div className={styles.panel}>
-            {/* Header */}
-            <div className={styles.panelHeader}>
-              <span className={styles.panelTitle}>AI Consultant</span>
-              <button
-                className={styles.closeBtn}
-                onClick={onClose}
-                type="button"
-                aria-label="Close"
-              >
-                <X className={styles.closeBtnIcon} />
-              </button>
+        <div className={styles.voiceChat}>
+          <button
+            className={styles.closeBtn}
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+          >
+            ×
+          </button>
+
+          <div className={styles.voiceHeader}>
+            <span className={styles.voiceTitle}>AI Consultant</span>
+          </div>
+
+          <div className={styles.voiceBody}>
+            <div className={`${styles.transcriptCopy} ${transcriptsVisible ? '' : styles.transcriptHidden}`}>
+              <div className={`${styles.transcriptRole} ${latestTranscript?.role === 'agent' ? styles.roleAgent : styles.roleUser}`}>
+                {latestTranscript ? role : ''}
+              </div>
+              <div className={styles.transcriptText}>
+                {transcriptText}
+              </div>
             </div>
 
-            {/* Orb */}
-            <div className={`${styles.orbWrap} ${orbClass}`}>
-              <div className={styles.ring} aria-hidden="true" />
-              <div className={styles.ring} aria-hidden="true" />
-              <div className={styles.orb} aria-hidden="true" />
-            </div>
-
-            {/* Status */}
-            <p className={`${styles.statusText} ${isActive ? styles.statusActive : ''}`}>
-              {STATUS_LABELS[status] ?? ''}
-            </p>
-
-            {/* Controls */}
-            <div className={styles.controls}>
-              <button
-                className={styles.controlBtn}
-                onClick={onToggleMute}
-                type="button"
-                aria-label={isMuted ? 'Unmute microphone' : 'Mute microphone'}
-              >
-                <span className={`${styles.controlIcon} ${isMuted ? styles.mutedActive : styles.muteIcon}`}>
+            <div className={styles.micStage}>
+              <div className={styles.micInline}>
+                <button
+                  className={`${styles.mainMic} ${isMuted ? styles.mainMicMuted : ''}`}
+                  type="button"
+                  aria-pressed={isMuted}
+                  aria-label={isMuted ? 'Unmute microphone' : 'Mute microphone'}
+                  onClick={onToggleMute}
+                >
                   {isMuted
-                    ? <MicOff className={styles.controlSvg} />
-                    : <Mic className={styles.controlSvg} />
+                    ? <MicOff style={{ width: 26, height: 26 }} aria-hidden="true" />
+                    : <Mic style={{ width: 26, height: 26 }} aria-hidden="true" />
                   }
+                </button>
+                <span className={styles.micHint}>
+                  {isMuted ? 'Tap to Unmute' : 'Tap to Mute'}
                 </span>
-                <span className={styles.controlLabel}>{isMuted ? 'Unmute' : 'Mute'}</span>
-              </button>
-
-              <button
-                className={styles.controlBtn}
-                onClick={onClose}
-                type="button"
-                aria-label="End call"
-              >
-                <span className={`${styles.controlIcon} ${styles.endIcon}`}>
-                  <PhoneOff className={styles.controlSvg} />
-                </span>
-                <span className={styles.controlLabel}>End</span>
-              </button>
+              </div>
+              <VoiceLevelBars stream={micStream} active={micListening} />
             </div>
+
+            <button
+              className={styles.transcriptToggle}
+              type="button"
+              aria-pressed={transcriptsVisible}
+              onClick={onToggleTranscripts}
+            >
+              <span className={styles.transcriptToggleIcon} aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 20, height: 20 }}>
+                  <rect x="2" y="6" width="20" height="12" rx="2" />
+                  <path d="M6 10h4M6 14h8" />
+                </svg>
+              </span>
+              {transcriptsVisible ? 'Hide Transcript' : 'Show Transcript'}
+            </button>
+
+            <button
+              className={styles.endCall}
+              type="button"
+              onClick={onClose}
+              aria-label="End call"
+            >
+              <PhoneOff style={{ width: 18, height: 18 }} aria-hidden="true" />
+              <span>End Call</span>
+            </button>
           </div>
         </div>
       )}

@@ -50,16 +50,33 @@ const useVoiceSession = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [status, setStatus] = useState('idle');
   const [isMuted, setIsMuted] = useState(false);
+  const [micStream, setMicStream] = useState(null);
+  const [latestTranscript, setLatestTranscript] = useState(null);
+  const [transcriptsVisible, setTranscriptsVisible] = useState(true);
 
   const clientRef = useRef(null);
   const audioCtxRef = useRef(null);
   const micStateRef = useRef(null);
   const nextPlayTimeRef = useRef(0);
+  const activeSourcesRef = useRef([]);
   const isMutedRef = useRef(false);
   const mountedRef = useRef(false);
+  const agentBufferRef = useRef('');
 
   const safeSet = useCallback((s) => {
     if (mountedRef.current) setStatus(s);
+  }, []);
+
+  const stopAllSources = useCallback(() => {
+    for (const src of activeSourcesRef.current) {
+      try {
+        src.stop();
+      } catch (_) {
+        continue;
+      }
+    }
+    activeSourcesRef.current = [];
+    nextPlayTimeRef.current = 0;
   }, []);
 
   const playPCM16 = useCallback((audioCtx, arrayBuffer) => {
@@ -75,6 +92,12 @@ const useVoiceSession = () => {
       const src = audioCtx.createBufferSource();
       src.buffer = buf;
       src.connect(audioCtx.destination);
+      activeSourcesRef.current.push(src);
+      src.onended = () => {
+        activeSourcesRef.current = activeSourcesRef.current.filter(
+          (s) => s !== src,
+        );
+      };
 
       const now = audioCtx.currentTime;
       const startAt = Math.max(now, nextPlayTimeRef.current);
@@ -89,6 +112,8 @@ const useVoiceSession = () => {
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: { echoCancellation: true, noiseSuppression: true },
         });
+
+        if (mountedRef.current) setMicStream(stream);
 
         const nativeRate = audioCtx.sampleRate;
         const source = audioCtx.createMediaStreamSource(stream);
@@ -133,6 +158,8 @@ const useVoiceSession = () => {
     } catch (_) {}
     micStateRef.current = null;
 
+    if (mountedRef.current) setMicStream(null);
+
     try {
       clientRef.current?.close();
     } catch (_) {}
@@ -143,13 +170,16 @@ const useVoiceSession = () => {
     } catch (_) {}
     audioCtxRef.current = null;
 
+    activeSourcesRef.current = [];
     nextPlayTimeRef.current = 0;
+    agentBufferRef.current = '';
   }, []);
 
   const startSession = useCallback(() => {
     if (!CHAT_WS_URL) return;
     cleanup();
     safeSet('connecting');
+    if (mountedRef.current) setLatestTranscript(null);
 
     const audioCtx = new AudioContext({ sampleRate: TARGET_SAMPLE_RATE });
     audioCtxRef.current = audioCtx;
@@ -162,6 +192,25 @@ const useVoiceSession = () => {
       },
       onMode: ({ mode }) => {
         if (mode === 'voice') startMic(client, audioCtx);
+      },
+      onChunkStart: () => {
+        agentBufferRef.current = '';
+      },
+      onChunk: ({ content }) => {
+        agentBufferRef.current += content;
+        if (mountedRef.current) {
+          setLatestTranscript({
+            role: 'agent',
+            content: agentBufferRef.current,
+          });
+        }
+      },
+      onChunkEnd: () => {
+        agentBufferRef.current = '';
+      },
+      onTranscript: ({ content, final }) => {
+        if (!final || !content || !mountedRef.current) return;
+        setLatestTranscript({ role: 'user', content });
       },
       onAudioStart: () => {
         if (!mountedRef.current) return;
@@ -178,7 +227,7 @@ const useVoiceSession = () => {
       },
       onBargeIn: () => {
         if (!mountedRef.current) return;
-        nextPlayTimeRef.current = 0;
+        stopAllSources();
         safeSet('listening');
       },
       onError: () => {
@@ -190,7 +239,7 @@ const useVoiceSession = () => {
     });
 
     clientRef.current = client;
-  }, [cleanup, safeSet, startMic, playPCM16]);
+  }, [cleanup, safeSet, startMic, playPCM16, stopAllSources]);
 
   const open = useCallback(() => {
     setIsOpen(true);
@@ -202,6 +251,7 @@ const useVoiceSession = () => {
     setStatus('idle');
     setIsMuted(false);
     isMutedRef.current = false;
+    setLatestTranscript(null);
     cleanup();
   }, [cleanup]);
 
@@ -212,6 +262,10 @@ const useVoiceSession = () => {
     clientRef.current?.sendClientEvent(next ? 'mic_revoked' : 'mic_granted');
   }, []);
 
+  const toggleTranscripts = useCallback(() => {
+    setTranscriptsVisible((v) => !v);
+  }, []);
+
   useEffect(() => {
     mountedRef.current = true;
     return () => {
@@ -220,7 +274,18 @@ const useVoiceSession = () => {
     };
   }, [cleanup]);
 
-  return { isOpen, status, isMuted, open, close, toggleMute };
+  return {
+    isOpen,
+    status,
+    isMuted,
+    micStream,
+    latestTranscript,
+    transcriptsVisible,
+    open,
+    close,
+    toggleMute,
+    toggleTranscripts,
+  };
 };
 
 export default useVoiceSession;
