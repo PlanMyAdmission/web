@@ -3,7 +3,6 @@
 import dynamic from 'next/dynamic';
 import { Mic, MicOff, PhoneOff } from 'lucide-react';
 import useVoiceSession from './hooks/useVoiceSession.js';
-import VoiceLevelBars from './VoiceLevelBars.jsx';
 import styles from './AIChatbot.module.css';
 
 const ParticleOrb = dynamic(() => import('./ParticleOrb.jsx'), { ssr: false });
@@ -85,28 +84,25 @@ const VoiceOrb = () => {
             </div>
 
             <div className={styles.micStage}>
-              <div className={styles.micInline}>
-                <button
-                  className={`${styles.mainMic} ${isMuted ? styles.mainMicMuted : ''}`}
-                  type="button"
-                  aria-pressed={isMuted}
-                  aria-label={isMuted ? 'Unmute microphone' : 'Mute microphone'}
-                  onClick={toggleMute}
-                >
-                  {isMuted ? (
-                    <MicOff
-                      style={{ width: 26, height: 26 }}
-                      aria-hidden="true"
-                    />
-                  ) : (
-                    <Mic style={{ width: 26, height: 26 }} aria-hidden="true" />
-                  )}
-                </button>
-                <span className={styles.micHint}>
-                  {isMuted ? 'Tap to Unmute' : 'Tap to Mute'}
-                </span>
-              </div>
-              <VoiceLevelBars stream={micStream} active={micListening} />
+              <button
+                className={`${styles.mainMic} ${isMuted ? styles.mainMicMuted : ''}`}
+                type="button"
+                aria-pressed={isMuted}
+                aria-label={isMuted ? 'Unmute microphone' : 'Mute microphone'}
+                onClick={toggleMute}
+              >
+                {isMuted ? (
+                  <MicOff
+                    style={{ width: 26, height: 26 }}
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <Mic style={{ width: 26, height: 26 }} aria-hidden="true" />
+                )}
+              </button>
+              <span className={styles.micHint}>
+                {isMuted ? 'Tap to Unmute' : 'Tap to Mute'}
+              </span>
             </div>
 
             <button

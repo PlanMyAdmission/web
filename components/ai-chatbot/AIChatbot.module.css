@@ -200,15 +200,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   flex-shrink: 0;
-}
-
-.micInline {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 14px;
 }
 
 .mainMic {
@@ -355,6 +348,9 @@
     max-width: 100vw;
     max-height: 100dvh;
     border-radius: 0;
+    /* Prevent the background page from scrolling through the overlay */
+    overscroll-behavior: none;
+    touch-action: pan-y;
   }
 
   .widget {
@@ -364,10 +360,25 @@
 
   .voiceChat {
     padding: calc(14px + env(safe-area-inset-top)) 16px calc(18px + env(safe-area-inset-bottom));
+    /* Allow the panel itself to absorb overscroll so page behind stays locked */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Body must not scroll when widget is open — lock it via the widget overlay */
+  .voiceBody {
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .transcriptCopy {
-    height: 220px;
-    max-height: 220px;
+    height: auto;
+    max-height: 180px;
+  }
+
+  .orbWrap {
+    width: 130px;
+    height: 130px;
   }
 }
