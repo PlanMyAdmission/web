@@ -6,6 +6,7 @@ import {
   CHAT_WS_URL,
   CHATBOT_SESSION_ID_STORAGE_KEY,
 } from '@/lib/chat/constants.js';
+import audioWorkletProcessorSource from '../audioWorkletProcessor.js';
 
 const TARGET_SAMPLE_RATE = 16000;
 
@@ -62,6 +63,7 @@ const useVoiceSession = () => {
   const isMutedRef = useRef(false);
   const mountedRef = useRef(false);
   const agentBufferRef = useRef('');
+  const workletUrlRef = useRef(null);
 
   const safeSet = useCallback((s) => {
     if (mountedRef.current) setStatus(s);
@@ -85,10 +87,8 @@ const useVoiceSession = () => {
       const i16 = new Int16Array(arrayBuffer);
       const f32 = new Float32Array(i16.length);
       for (let i = 0; i < i16.length; i++) f32[i] = i16[i] / 32768;
-
       const buf = audioCtx.createBuffer(1, f32.length, TARGET_SAMPLE_RATE);
       buf.getChannelData(0).set(f32);
-
       const src = audioCtx.createBufferSource();
       src.buffer = buf;
       src.connect(audioCtx.destination);
@@ -98,7 +98,6 @@ const useVoiceSession = () => {
           (s) => s !== src,
         );
       };
-
       const now = audioCtx.currentTime;
       const startAt = Math.max(now, nextPlayTimeRef.current);
       src.start(startAt);
@@ -110,29 +109,61 @@ const useVoiceSession = () => {
     async (client, audioCtx) => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          audio: { echoCancellation: true, noiseSuppression: true },
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true,
+            channelCount: 1,
+          },
         });
 
         if (mountedRef.current) setMicStream(stream);
 
-        const nativeRate = audioCtx.sampleRate;
         const source = audioCtx.createMediaStreamSource(stream);
-        const silentGain = audioCtx.createGain();
-        silentGain.gain.value = 0;
+        let workletNode = null;
+        let processor = null;
 
-        const processor = audioCtx.createScriptProcessor(4096, 1, 1);
-        processor.onaudioprocess = (e) => {
-          if (isMutedRef.current || !clientRef.current) return;
-          const raw = e.inputBuffer.getChannelData(0);
-          const resampled = downsample(raw, nativeRate, TARGET_SAMPLE_RATE);
-          clientRef.current.sendAudio(toInt16(resampled).buffer);
-        };
+        try {
+          if (audioCtx.state === 'suspended') await audioCtx.resume();
+          const blob = new Blob([audioWorkletProcessorSource], {
+            type: 'text/javascript',
+          });
+          const url = URL.createObjectURL(blob);
+          workletUrlRef.current = url;
+          await audioCtx.audioWorklet.addModule(url);
+          workletNode = new AudioWorkletNode(
+            audioCtx,
+            'voice-stream-processor',
+          );
+          workletNode.port.postMessage({
+            type: 'setMuted',
+            value: isMutedRef.current,
+          });
+          workletNode.port.onmessage = (event) => {
+            if (event.data.type === 'audioData' && clientRef.current) {
+              clientRef.current.sendAudio(event.data.buffer);
+            }
+          };
+          source.connect(workletNode);
+          workletNode.connect(audioCtx.destination);
+          micStateRef.current = { stream, source, node: workletNode };
+        } catch (_) {
+          const nativeRate = audioCtx.sampleRate;
+          processor = audioCtx.createScriptProcessor(4096, 1, 1);
+          const silentGain = audioCtx.createGain();
+          silentGain.gain.value = 0;
+          processor.onaudioprocess = (e) => {
+            if (isMutedRef.current || !clientRef.current) return;
+            const raw = e.inputBuffer.getChannelData(0);
+            const resampled = downsample(raw, nativeRate, TARGET_SAMPLE_RATE);
+            clientRef.current.sendAudio(toInt16(resampled).buffer);
+          };
+          source.connect(processor);
+          processor.connect(silentGain);
+          silentGain.connect(audioCtx.destination);
+          micStateRef.current = { stream, source, processor, silentGain };
+        }
 
-        source.connect(processor);
-        processor.connect(silentGain);
-        silentGain.connect(audioCtx.destination);
-
-        micStateRef.current = { stream, source, processor, silentGain };
         client.sendClientEvent('mic_granted');
         safeSet('listening');
       } catch (_) {
@@ -144,19 +175,35 @@ const useVoiceSession = () => {
   );
 
   const cleanup = useCallback(() => {
-    try {
-      micStateRef.current?.processor?.disconnect();
-    } catch (_) {}
-    try {
-      micStateRef.current?.source?.disconnect();
-    } catch (_) {}
-    try {
-      micStateRef.current?.silentGain?.disconnect();
-    } catch (_) {}
-    try {
-      micStateRef.current?.stream?.getTracks().forEach((t) => t.stop());
-    } catch (_) {}
+    const mic = micStateRef.current;
+    if (mic) {
+      try {
+        mic.node?.disconnect();
+      } catch (_) {}
+      try {
+        mic.node?.port && (mic.node.port.onmessage = null);
+      } catch (_) {}
+      try {
+        mic.processor?.disconnect();
+      } catch (_) {}
+      try {
+        mic.silentGain?.disconnect();
+      } catch (_) {}
+      try {
+        mic.source?.disconnect();
+      } catch (_) {}
+      try {
+        mic.stream?.getTracks().forEach((t) => t.stop());
+      } catch (_) {}
+    }
     micStateRef.current = null;
+
+    if (workletUrlRef.current) {
+      try {
+        URL.revokeObjectURL(workletUrlRef.current);
+      } catch (_) {}
+      workletUrlRef.current = null;
+    }
 
     if (mountedRef.current) setMicStream(null);
 
@@ -259,6 +306,10 @@ const useVoiceSession = () => {
     const next = !isMutedRef.current;
     isMutedRef.current = next;
     setIsMuted(next);
+    const mic = micStateRef.current;
+    if (mic?.node?.port) {
+      mic.node.port.postMessage({ type: 'setMuted', value: next });
+    }
     clientRef.current?.sendClientEvent(next ? 'mic_revoked' : 'mic_granted');
   }, []);
 
