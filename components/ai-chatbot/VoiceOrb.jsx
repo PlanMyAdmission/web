@@ -1,9 +1,12 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { Mic, MicOff, PhoneOff } from 'lucide-react';
 import useVoiceSession from './hooks/useVoiceSession.js';
 import VoiceLevelBars from './VoiceLevelBars.jsx';
 import styles from './AIChatbot.module.css';
+
+const ParticleOrb = dynamic(() => import('./ParticleOrb.jsx'), { ssr: false });
 
 const VoiceOrb = () => {
   const {
@@ -78,10 +81,7 @@ const VoiceOrb = () => {
               aria-hidden="true"
             >
               <div className={styles.orbAura} />
-              <div className={styles.orbBlob}>
-                <div className={styles.orbLayer} />
-                <div className={styles.orbHighlight} />
-              </div>
+              <ParticleOrb stream={micStream} active={micListening} />
             </div>
 
             <div className={styles.micStage}>

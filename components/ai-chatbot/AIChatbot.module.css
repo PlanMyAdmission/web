@@ -292,7 +292,7 @@
 
 .endCall:hover { background: rgba(210, 0, 70, 0.95); transform: scale(1.03); }
 
-/* ── Orb (ElevenLabs-style fluid blob) ──────────────────────────── */
+/* ── Particle Orb (WebGL particle sphere) ───────────────────────── */
 .orbWrap {
   position: relative;
   width: 150px;
@@ -314,101 +314,17 @@
   transition: opacity 0.6s ease;
 }
 
-/* Main morphing blob */
-.orbBlob {
-  width: 96px;
-  height: 96px;
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-  background:
-    radial-gradient(circle at 30% 25%, rgba(255, 130, 190, 0.55) 0%, transparent 50%),
-    radial-gradient(circle at 70% 75%, rgba(120, 0, 60, 0.7) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, #c2005e 0%, #3d0020 65%, #1a000e 100%);
-  box-shadow:
-    0 0 0 1px rgba(244, 0, 118, 0.15),
-    0 0 28px rgba(244, 0, 118, 0.45),
-    0 0 60px rgba(244, 0, 118, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  position: relative;
-  z-index: 2;
-  overflow: hidden;
-  animation: blobIdle 9s ease-in-out infinite;
+/* ── connecting — dim aura pulse ────── */
+.stateConnecting .orbAura {
+  animation: auraFade 2.4s ease-in-out infinite;
+  opacity: 0.45;
+}
+@keyframes auraFade {
+  0%, 100% { opacity: 0.3; transform: scale(0.95); }
+  50%       { opacity: 0.55; transform: scale(1.05); }
 }
 
-/* Animated shimmer sweep */
-.orbLayer {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    125deg,
-    transparent 20%,
-    rgba(255, 100, 170, 0.18) 45%,
-    rgba(255, 180, 220, 0.1) 55%,
-    transparent 75%
-  );
-  animation: shimmerSweep 4s ease-in-out infinite;
-}
-
-/* Specular highlight top-left */
-.orbHighlight {
-  position: absolute;
-  top: 10%;
-  left: 14%;
-  width: 30%;
-  height: 28%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 240, 250, 0.65) 0%, transparent 70%);
-  filter: blur(3px);
-  pointer-events: none;
-}
-
-@keyframes blobIdle {
-  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-  20%       { border-radius: 40% 60% 55% 45% / 45% 55% 45% 55%; }
-  40%       { border-radius: 30% 60% 70% 40% / 55% 45% 55% 45%; }
-  60%       { border-radius: 55% 45% 40% 60% / 35% 65% 35% 65%; }
-  80%       { border-radius: 45% 55% 60% 40% / 65% 35% 65% 35%; }
-}
-
-@keyframes shimmerSweep {
-  0%        { transform: translateX(-100%) rotate(0deg);   opacity: 0; }
-  20%       { opacity: 1; }
-  80%       { opacity: 1; }
-  100%      { transform: translateX(100%) rotate(10deg);   opacity: 0; }
-}
-
-/* ── connecting — dim, slow pulse ───── */
-.stateConnecting .orbBlob {
-  animation: blobIdle 9s ease-in-out infinite, orbFade 2.4s ease-in-out infinite;
-  opacity: 0.55;
-}
-@keyframes orbFade {
-  0%, 100% { opacity: 0.45; }
-  50%       { opacity: 0.7; }
-}
-
-/* ── ready — gentle breathe ─────────── */
-.stateReady .orbBlob {
-  animation: blobIdle 9s ease-in-out infinite, orbBreathe 3.8s ease-in-out infinite;
-}
-@keyframes orbBreathe {
-  0%, 100% { transform: scale(1);    box-shadow: 0 0 0 1px rgba(244,0,118,0.15), 0 0 28px rgba(244,0,118,0.4),  0 0 60px rgba(244,0,118,0.12), inset 0 1px 0 rgba(255,255,255,0.12); }
-  50%       { transform: scale(1.06); box-shadow: 0 0 0 1px rgba(244,0,118,0.2),  0 0 44px rgba(244,0,118,0.65), 0 0 80px rgba(244,0,118,0.22), inset 0 1px 0 rgba(255,255,255,0.14); }
-}
-
-/* ── listening — livelier morph + glow */
-.stateListen .orbBlob {
-  animation: blobListen 5s ease-in-out infinite, orbListenGlow 1.6s ease-in-out infinite;
-}
-@keyframes blobListen {
-  0%, 100% { border-radius: 55% 45% 35% 65% / 55% 35% 65% 45%; }
-  25%       { border-radius: 45% 55% 60% 40% / 40% 60% 40% 60%; }
-  50%       { border-radius: 35% 65% 45% 55% / 60% 40% 60% 40%; }
-  75%       { border-radius: 65% 35% 55% 45% / 45% 55% 45% 55%; }
-}
-@keyframes orbListenGlow {
-  0%, 100% { box-shadow: 0 0 0 1px rgba(244,0,118,0.2),  0 0 36px rgba(244,0,118,0.6),  0 0 70px rgba(244,0,118,0.2),  inset 0 1px 0 rgba(255,255,255,0.12); }
-  50%       { box-shadow: 0 0 0 1px rgba(244,0,118,0.3),  0 0 52px rgba(244,0,118,0.85), 0 0 90px rgba(244,0,118,0.3),  inset 0 1px 0 rgba(255,255,255,0.16); }
-}
+/* ── listening — livelier aura pulse */
 .stateListen .orbAura {
   animation: auraListen 1.6s ease-in-out infinite;
 }
@@ -417,29 +333,13 @@
   50%       { opacity: 1;   transform: scale(1.15); }
 }
 
-/* ── speaking — fast throb + intense glow */
-.stateSpeak .orbBlob {
-  animation: blobSpeak 2.5s ease-in-out infinite, orbSpeakGlow 0.9s ease-in-out infinite;
-}
-@keyframes blobSpeak {
-  0%, 100% { border-radius: 50% 50% 40% 60% / 50% 40% 60% 50%; transform: scale(1);    }
-  25%       { border-radius: 60% 40% 50% 50% / 40% 60% 50% 50%; transform: scale(1.05); }
-  50%       { border-radius: 40% 60% 60% 40% / 60% 40% 50% 50%; transform: scale(1.09); }
-  75%       { border-radius: 55% 45% 45% 55% / 50% 55% 45% 50%; transform: scale(1.04); }
-}
-@keyframes orbSpeakGlow {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(244,0,118,0.25), 0 0 45px rgba(244,0,118,0.75), 0 0 90px rgba(244,0,118,0.3),  inset 0 1px 0 rgba(255,255,255,0.15); }
-  50%       { box-shadow: 0 0 0 4px rgba(244,0,118,0),   0 0 70px rgba(244,0,118,1),    0 0 120px rgba(244,0,118,0.45), inset 0 1px 0 rgba(255,255,255,0.2); }
-}
+/* ── speaking — fast throb */
 .stateSpeak .orbAura {
   animation: auraSpeak 0.9s ease-in-out infinite;
 }
 @keyframes auraSpeak {
   0%, 100% { opacity: 0.9; transform: scale(1.1); }
   50%       { opacity: 1;   transform: scale(1.35); }
-}
-.stateSpeak .orbLayer {
-  animation: shimmerSweep 1.4s ease-in-out infinite;
 }
 
 /* ── Mobile: full screen when open ─────────────────────────────── */

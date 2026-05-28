@@ -360,3 +360,13 @@ button.rec.rec-arrow:focus {
   border-top: 1px solid rgba(157, 19, 95, 0.15);
   margin: 2rem 0;
 }
+
+/* Particle orb canvas mount — overflow visible so particles bleed outside bounds */
+.pma-particle-orb {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  overflow: visible;
+  flex-shrink: 0;
+  z-index: 2;
+}
