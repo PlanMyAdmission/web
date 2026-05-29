@@ -50,8 +50,8 @@ const PreferencesStep = ({ searchProfile, onFieldChange, toggleMultiValue }) => 
         >
           <option value="">Select level</option>
           {scholarshipNeeds.map((n) => (
-            <option key={n} value={n}>
-              {n}
+            <option key={n.value} value={n.value}>
+              {n.label}
             </option>
           ))}
         </select>

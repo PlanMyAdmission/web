@@ -34,7 +34,7 @@ const BasicsStep = ({
         options={[
           { value: 'student', label: 'Student' },
           { value: 'parent', label: 'Parent' },
-          { value: 'guardian', label: 'Guardian' },
+          { value: 'both', label: 'Student + Parent' },
         ]}
         value={searchProfile.filledBy}
         onChange={(v) => onFieldChange('filledBy', v)}

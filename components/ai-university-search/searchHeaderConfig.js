@@ -5,9 +5,11 @@ export const steps = [
 ];
 
 export const degreeLevels = [
-  { value: 'UG', label: 'Undergraduate (UG)' },
-  { value: 'PG', label: 'Postgraduate (PG)' },
-  { value: 'PhD', label: 'Doctorate (PhD)' },
+  { value: 'bachelor', label: 'Undergraduate (UG)' },
+  { value: 'master', label: 'Postgraduate (PG)' },
+  { value: 'phd', label: 'Doctorate (PhD)' },
+  { value: 'diploma', label: 'Diploma' },
+  { value: 'certificate', label: 'Certificate' },
 ];
 
 export const programAreas = [
@@ -49,7 +51,11 @@ export const fundingPlans = [
   'Scholarship dependent',
   'Mixed',
 ];
-export const scholarshipNeeds = ['Low', 'Medium', 'High'];
+export const scholarshipNeeds = [
+  { value: 'low', label: 'Low' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'high', label: 'High' },
+];
 export const contactOptions = ['WhatsApp', 'Email', 'Call'];
 export const familyPriorities = [
   'Affordability',

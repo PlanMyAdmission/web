@@ -19,7 +19,13 @@ const targetCountries = [
   'New Zealand',
 ];
 
-const degreeLevels = ['UG', 'PG', 'PhD'];
+const degreeLevels = [
+  { value: 'bachelor', label: 'UG / Bachelor' },
+  { value: 'master', label: 'PG / Master' },
+  { value: 'phd', label: 'PhD' },
+  { value: 'diploma', label: 'Diploma' },
+  { value: 'certificate', label: 'Certificate' },
+];
 
 const programAreas = [
   'Computer Science',
@@ -76,7 +82,7 @@ const StartStep = ({
               onChange={onFileChange}
               className="hidden"
             />
-            <p className="text-base font-semibold text-[#3f1831]">
+            <p className="text-base font-semibold text-[#3f1831] truncate max-w-full" title={pdfFile ? pdfFile.name : undefined}>
               {pdfFile ? pdfFile.name : 'Click to upload your profile PDF'}
             </p>
             <p className="mt-2 text-sm text-grey">
@@ -131,8 +137,8 @@ const StartStep = ({
             >
               <option value="">Select level</option>
               {degreeLevels.map((d) => (
-                <option key={d} value={d}>
-                  {d}
+                <option key={d.value} value={d.value}>
+                  {d.label}
                 </option>
               ))}
             </select>

@@ -18,7 +18,7 @@ const ProfileUpload = ({ pdfFile, onFileChange }) => {
         return a strong general shortlist for your selected profile.
       </p>
       {pdfFile && (
-        <div className={cx('pma-uni-upload-file')}>Selected: {pdfFile.name}</div>
+        <div className={cx('pma-uni-upload-file')} title={pdfFile.name} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Selected: {pdfFile.name}</div>
       )}
     </div>
   );

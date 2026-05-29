@@ -7,7 +7,7 @@ import { AIToolCard } from '@/components/ai-tools/AIToolShell.jsx';
 const ScoreHero = ({ score, summary }) => (
   <div className="rounded-md border border-[#e8dde3] bg-white shadow-sm p-6 md:p-7 flex flex-col md:flex-row gap-6 items-start">
     <div className="flex-shrink-0">
-      <div className="w-24 h-24 rounded-md bg-main text-white flex flex-col items-center justify-center">
+      <div className="w-24 h-24 rounded-md bg-main text-white flex flex-col items-center justify-center overflow-hidden">
         <span className="text-3xl font-bold leading-none">{score || '—'}</span>
         <span className="text-[10px] uppercase tracking-wider mt-1 opacity-90">
           Fit Score
@@ -18,7 +18,7 @@ const ScoreHero = ({ score, summary }) => (
       <p className="text-xs uppercase tracking-wider text-main font-semibold mb-1">
         Admission Outlook
       </p>
-      <p className="text-base text-[#3f1831] leading-relaxed">{summary}</p>
+      <p className="text-base text-[#3f1831] leading-relaxed break-words">{summary}</p>
     </div>
   </div>
 );
@@ -42,7 +42,7 @@ const ListCard = ({ title, items, tone = 'neutral' }) => {
             <span
               className={`mt-1.5 inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${dot}`}
             />
-            <span>{item}</span>
+            <span className="min-w-0 break-words">{item}</span>
           </li>
         ))}
       </ul>
@@ -122,7 +122,7 @@ const ResultStep = ({
                     <span className="flex-shrink-0 w-5 h-5 rounded-full bg-main text-white text-xs font-bold flex items-center justify-center">
                       {i + 1}
                     </span>
-                    <span>{a}</span>
+                    <span className="min-w-0">{a}</span>
                   </li>
                 ))}
               </ol>
