@@ -17,7 +17,7 @@ export const StepOne = ({
   <div className="m-5 grid gap-4 grid-cols-1 sm:grid-cols-6 justify-center">
     <div className="col-span-1 sm:col-span-2">
       <p className="text-base">
-        Choose your prefered Country<label className="text-main">*</label>
+        Choose your preferred Country<span className="text-main">*</span>
       </p>
       <select
         className="bg-light px-4 py-2 rounded-md my-1 w-full"
@@ -39,7 +39,7 @@ export const StepOne = ({
 
     <div className="col-span-1 sm:col-span-1">
       <p>
-        Select State<label className="text-main">*</label>
+        Select State<span className="text-main">*</span>
       </p>
       <select
         className="bg-light px-4 py-2 rounded-md my-1 w-full"
@@ -62,7 +62,7 @@ export const StepOne = ({
     <div className="col-span-1 sm:col-span-2">
       <p>
         Select the degree you wish to pursue
-        <label className="text-main">*</label>
+        <span className="text-main">*</span>
       </p>
       <select
         className="bg-light px-4 py-2 rounded-md my-1 w-full"
@@ -85,7 +85,7 @@ export const StepOne = ({
     <div className="col-span-1 sm:col-span-3 mt-2">
       <p>
         Select your preferred discipline/specialization
-        <label className="text-main">*</label>
+        <span className="text-main">*</span>
       </p>
       <select
         className="bg-light px-4 py-2 rounded-md my-1 w-full"

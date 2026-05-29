@@ -21,7 +21,7 @@ import {
   openReportPrintWindow,
 } from '@/components/ai-admission/lib/admissionToolHelpers.js';
 import { trackAiToolEvent } from '@/lib/analytics/events.js';
-import { fileToBase64, gatewayPost } from '@/lib/browser/client.js';
+import { uploadPdf, gatewayPost } from '@/lib/browser/client.js';
 
 const FLOW_TO_STEP_INDEX = {
   start: 0,
@@ -46,6 +46,7 @@ const AIAdmissionTool = () => {
   const [preview, setPreview] = useState(null);
   const [reportHtml, setReportHtml] = useState('');
   const [runId, setRunId] = useState(null);
+  const [claimToken, setClaimToken] = useState(null);
   const [unlocked, setUnlocked] = useState(false);
   const [loadingMessageIndex, setLoadingMessageIndex] = useState(0);
   const [status, setStatus] = useState({ type: 'idle', message: '' });
@@ -88,7 +89,10 @@ const AIAdmissionTool = () => {
 
   const generateReport = async () => {
     if (mode === 'form') {
-      if (!canContinueFromGoal(formData) || !canContinueFromAcademics(formData)) {
+      if (
+        !canContinueFromGoal(formData) ||
+        !canContinueFromAcademics(formData)
+      ) {
         setStatus({
           type: 'error',
           message: 'Please complete destination, program, intake, and score.',
@@ -97,7 +101,10 @@ const AIAdmissionTool = () => {
         return;
       }
     } else if (!pdfFile) {
-      setStatus({ type: 'error', message: 'Please upload a PDF profile to continue.' });
+      setStatus({
+        type: 'error',
+        message: 'Please upload a PDF profile to continue.',
+      });
       setFlow('start');
       return;
     }
@@ -120,11 +127,11 @@ const AIAdmissionTool = () => {
     if (mode === 'form') persistProfile();
 
     try {
+      const fileKey = pdfFile ? await uploadPdf(pdfFile) : null;
       const data = await gatewayPost('/tools/admission/report', {
         formData,
         mode,
-        pdfBase64: pdfFile ? await fileToBase64(pdfFile) : '',
-        pdfMimeType: pdfFile?.type || '',
+        ...(fileKey ? { fileKey } : {}),
       });
       const parsed = data?.result;
       if (!parsed) throw new Error('Unable to parse AI response.');
@@ -132,6 +139,7 @@ const AIAdmissionTool = () => {
       setReportData(parsed);
       setPreview(data?.preview || null);
       setRunId(data?.runId || null);
+      setClaimToken(data?.claimToken || null);
       setReportHtml(buildReportHtml(parsed));
       setStatus({
         type: 'success',
@@ -183,6 +191,7 @@ const AIAdmissionTool = () => {
     setPreview(null);
     setReportHtml('');
     setRunId(null);
+    setClaimToken(null);
     setUnlocked(false);
     setStatus({ type: 'idle', message: '' });
     setFlow('start');
@@ -247,7 +256,10 @@ const AIAdmissionTool = () => {
           onBack={() => setFlow('start')}
           onNext={() => {
             if (!canContinueFromAcademics(formData)) {
-              setStatus({ type: 'error', message: 'Please enter your academic score.' });
+              setStatus({
+                type: 'error',
+                message: 'Please enter your academic score.',
+              });
               return;
             }
             setStatus({ type: 'idle', message: '' });
@@ -263,7 +275,10 @@ const AIAdmissionTool = () => {
           onBack={() => setFlow('course')}
           onSubmit={() => {
             if (!canSubmitContext(formData)) {
-              setStatus({ type: 'error', message: 'Pick a budget bucket to continue.' });
+              setStatus({
+                type: 'error',
+                message: 'Pick a budget bucket to continue.',
+              });
               return;
             }
             setFlow('processing');
@@ -276,19 +291,22 @@ const AIAdmissionTool = () => {
         <ProcessingStep message={LOADING_MESSAGES[loadingMessageIndex]} />
       )}
 
-      {status.message && status.type !== 'loading' && status.type !== 'idle' && (
-        <div
-          className={`mt-4 px-4 py-3 rounded-md border text-sm ${STATUS_STYLES[status.type] || STATUS_STYLES.loading}`}
-        >
-          {status.message}
-        </div>
-      )}
+      {status.message &&
+        status.type !== 'loading' &&
+        status.type !== 'idle' && (
+          <div
+            className={`mt-4 px-4 py-3 rounded-md border text-sm ${STATUS_STYLES[status.type] || STATUS_STYLES.loading}`}
+          >
+            {status.message}
+          </div>
+        )}
 
       {flow === 'result' && (
         <ResultStep
           reportData={reportData}
           preview={preview}
           runId={runId}
+          claimToken={claimToken}
           unlocked={unlocked}
           onUnlock={handleUnlock}
           onDownload={handlePrint}

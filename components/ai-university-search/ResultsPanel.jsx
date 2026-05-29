@@ -42,7 +42,14 @@ const getFitMeta = (fitValue) => {
   };
 };
 
-const ResultsPanel = ({ results, preview, runId, unlocked, onUnlock }) => {
+const ResultsPanel = ({
+  results,
+  preview,
+  runId,
+  claimToken,
+  unlocked,
+  onUnlock,
+}) => {
   if (!results && !preview) return null;
 
   const universities = unlocked
@@ -76,7 +83,9 @@ const ResultsPanel = ({ results, preview, runId, unlocked, onUnlock }) => {
                 <span className={cx('pma-uni-rank')}>
                   #{String(index + 1).padStart(2, '0')}
                 </span>
-                <span className={cx('pma-uni-fit-band')}>{fitMeta.fitBand}</span>
+                <span className={cx('pma-uni-fit-band')}>
+                  {fitMeta.fitBand}
+                </span>
               </div>
 
               <div className={cx('pma-uni-card-header')}>
@@ -125,9 +134,8 @@ const ResultsPanel = ({ results, preview, runId, unlocked, onUnlock }) => {
           <ContactGateCard
             toolName="university_matchmaker"
             runId={runId}
-            title={`Unlock all ${
-              (preview?.totalCount || 10)
-            } university matches`}
+            claimToken={claimToken}
+            title={`Unlock all ${preview?.totalCount || 10} university matches`}
             subtitle="Free, instant — your full shortlist on WhatsApp + email."
             primaryCta="Reveal my full shortlist"
             onSaved={onUnlock}

@@ -21,6 +21,7 @@ const inputClass =
 const ContactGateCard = ({
   toolName,
   runId,
+  claimToken,
   title = 'Get your full report',
   subtitle = 'We will send the full report to your WhatsApp and email — free, instant.',
   primaryCta = 'Send me my report',
@@ -41,7 +42,9 @@ const ContactGateCard = ({
     setError('');
 
     if (!runId) {
-      setError('We could not match your report. Please try generating it again.');
+      setError(
+        'We could not match your report. Please try generating it again.',
+      );
       return;
     }
     if (name.trim().length < 2) {
@@ -49,8 +52,8 @@ const ContactGateCard = ({
       return;
     }
     const cleanPhone = sanitizePhone(phone);
-    if (cleanPhone.length < 6) {
-      setError('Please enter a valid phone number.');
+    if (!email && cleanPhone.length < 6) {
+      setError('Enter a phone number or an email address to continue.');
       return;
     }
     if (email && !isEmail(email)) {
@@ -69,10 +72,11 @@ const ContactGateCard = ({
       const data = await gatewayPost('/tools/runs/save', {
         runId,
         name: name.trim(),
-        phone: `${countryCode} ${cleanPhone}`,
+        phone: cleanPhone.length >= 6 ? `${countryCode} ${cleanPhone}` : null,
         email: email.trim() || null,
         whatsappOptIn,
         isParent,
+        claimToken,
       });
       trackAiToolEvent({
         toolName,
@@ -81,7 +85,8 @@ const ContactGateCard = ({
       });
       onSaved?.(data);
     } catch (err) {
-      const message = err?.message || 'Could not save your details. Please retry.';
+      const message =
+        err?.message || 'Could not save your details. Please retry.';
       trackAiToolEvent({
         toolName,
         action: 'contact_card_submit',
@@ -97,16 +102,19 @@ const ContactGateCard = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-md rounded-md border border-[#e8dde3] bg-white p-6 shadow-sm"
+      className="w-full max-w-md overflow-hidden rounded-xl border border-main/20 bg-white shadow-sm"
     >
-      <div className="mb-5">
-        <h3 className="text-xl font-semibold text-[#3f1831]">{title}</h3>
-        <p className="mt-1 text-sm leading-6 text-grey">{subtitle}</p>
+      <div className="bg-gradient-to-r from-main to-blurpink px-6 py-4">
+        <h3 className="text-lg font-semibold text-white">{title}</h3>
+        <p className="mt-0.5 text-sm leading-5 text-white/80">{subtitle}</p>
       </div>
-
+      <div className="p-6">
       <div className="space-y-4">
         <div>
-          <label htmlFor="contact-name" className="block text-sm text-[#3f1831] mb-1">
+          <label
+            htmlFor="contact-name"
+            className="block text-sm text-[#3f1831] mb-1"
+          >
             Full name
           </label>
           <input
@@ -123,7 +131,10 @@ const ContactGateCard = ({
 
         <div className="grid grid-cols-[100px_minmax(0,1fr)] gap-2">
           <div>
-            <label htmlFor="contact-country" className="block text-sm text-[#3f1831] mb-1">
+            <label
+              htmlFor="contact-country"
+              className="block text-sm text-[#3f1831] mb-1"
+            >
               Code
             </label>
             <select
@@ -140,8 +151,12 @@ const ContactGateCard = ({
             </select>
           </div>
           <div>
-            <label htmlFor="contact-phone" className="block text-sm text-[#3f1831] mb-1">
-              WhatsApp / Phone
+            <label
+              htmlFor="contact-phone"
+              className="block text-sm text-[#3f1831] mb-1"
+            >
+              WhatsApp / Phone{' '}
+              <span className="text-grey font-normal">(optional if email provided)</span>
             </label>
             <input
               id="contact-phone"
@@ -152,13 +167,15 @@ const ContactGateCard = ({
               placeholder="9876543210"
               autoComplete="tel-national"
               className={`${inputClass} border-[#e8dde3] focus:border-main`}
-              required
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="contact-email" className="block text-sm text-[#3f1831] mb-1">
+          <label
+            htmlFor="contact-email"
+            className="block text-sm text-[#3f1831] mb-1"
+          >
             Email <span className="text-grey font-normal">(optional)</span>
           </label>
           <input
@@ -193,14 +210,12 @@ const ContactGateCard = ({
         </label>
       </div>
 
-      {error ? (
-        <p className="mt-4 text-sm text-red-500">{error}</p>
-      ) : null}
+      {error ? <p className="mt-4 text-sm text-red-500">{error}</p> : null}
 
       <button
         type="submit"
         disabled={submitting}
-        className={`mt-5 w-full bg-main rounded-md text-white px-4 py-3 transition-colors ${
+        className={`mt-5 w-full bg-main rounded-full text-white px-4 py-3 font-semibold transition-colors ${
           submitting ? 'opacity-75 cursor-not-allowed' : 'hover:bg-main/90'
         }`}
       >
@@ -211,6 +226,7 @@ const ContactGateCard = ({
         We never share your details. One follow-up call from a PlanMyAdmission
         counsellor within 24h.
       </p>
+      </div>
     </form>
   );
 };

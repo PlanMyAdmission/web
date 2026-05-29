@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 import RecommendationResults from '@/components/recommendations/RecommendationResults.jsx';
 import {
   StepOne,

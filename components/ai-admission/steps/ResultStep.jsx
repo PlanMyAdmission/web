@@ -25,14 +25,23 @@ const ScoreHero = ({ score, summary }) => (
 
 const ListCard = ({ title, items, tone = 'neutral' }) => {
   const dot =
-    tone === 'good' ? 'bg-green-500' : tone === 'risk' ? 'bg-red-400' : 'bg-main';
+    tone === 'good'
+      ? 'bg-green-500'
+      : tone === 'risk'
+        ? 'bg-red-400'
+        : 'bg-main';
   return (
     <div className="rounded-md border border-[#e8dde3] bg-white p-5">
       <h4 className="text-sm font-semibold text-[#3f1831] mb-3">{title}</h4>
       <ul className="space-y-2">
         {items.map((item, i) => (
-          <li key={i} className="flex gap-2.5 text-sm text-[#3f1831] leading-relaxed">
-            <span className={`mt-1.5 inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${dot}`} />
+          <li
+            key={i}
+            className="flex gap-2.5 text-sm text-[#3f1831] leading-relaxed"
+          >
+            <span
+              className={`mt-1.5 inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${dot}`}
+            />
             <span>{item}</span>
           </li>
         ))}
@@ -45,6 +54,7 @@ const ResultStep = ({
   reportData,
   preview,
   runId,
+  claimToken,
   unlocked,
   onUnlock,
   onDownload,
@@ -143,14 +153,26 @@ const ResultStep = ({
               Locked in your full report
             </h4>
             <ul className="space-y-2 text-sm text-grey">
-              <li className="flex gap-2"><span className="text-main">•</span> {recommendedPrograms.length || 'Personalized'} program matches with fit reasoning</li>
-              <li className="flex gap-2"><span className="text-main">•</span> Step-by-step action plan ({advice.length || 'several'} items)</li>
-              <li className="flex gap-2"><span className="text-main">•</span> Downloadable PDF report</li>
+              <li className="flex gap-2">
+                <span className="text-main">•</span>{' '}
+                {recommendedPrograms.length || 'Personalized'} program matches
+                with fit reasoning
+              </li>
+              <li className="flex gap-2">
+                <span className="text-main">•</span> Step-by-step action plan (
+                {advice.length || 'several'} items)
+              </li>
+              <li className="flex gap-2">
+                <span className="text-main">•</span> Downloadable PDF report
+              </li>
             </ul>
             <div className="mt-4 grid gap-2">
               {(recommendedPrograms.length
                 ? recommendedPrograms
-                : [{ program: '••••••', country: '•••' }, { program: '••••••', country: '•••' }]
+                : [
+                    { program: '••••••', country: '•••' },
+                    { program: '••••••', country: '•••' },
+                  ]
               )
                 .slice(0, 3)
                 .map((p, i) => (
@@ -168,6 +190,7 @@ const ResultStep = ({
           <ContactGateCard
             toolName="admission_evaluation"
             runId={runId}
+            claimToken={claimToken}
             title="Unlock your full admission report"
             subtitle="Program matches, action plan, and PDF on WhatsApp + email."
             primaryCta="Send me my report"

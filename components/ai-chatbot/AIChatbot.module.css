@@ -56,7 +56,7 @@
 .widget:has(.voiceChat) {
   width: 380px;
   max-width: calc(100vw - 48px);
-  height: min(600px, calc(100vh - 60px));
+  height: min(420px, calc(100vh - 60px));
   background: linear-gradient(135deg, rgba(14, 3, 8, 0.99) 0%, rgba(6, 0, 3, 1) 100%);
   backdrop-filter: blur(20px) saturate(1.2);
   border: 1px solid rgba(255, 255, 255, 0.07);
@@ -139,22 +139,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   overflow: hidden;
 }
 
 /* ── Transcript ─────────────────────────────────────────────────── */
 .transcriptCopy {
   width: 100%;
-  height: 180px;
-  min-height: 80px;
-  max-height: 180px;
+  flex: 1 1 0;
+  min-height: 48px;
+  max-height: 90px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: 6px;
   overflow: hidden;
-  flex-shrink: 1;
 }
 
 .transcriptHidden {
@@ -194,6 +193,17 @@
 .transcriptText::-webkit-scrollbar-track { background: transparent; }
 .transcriptText::-webkit-scrollbar-thumb { background: rgba(244, 0, 118, 0.3); border-radius: 2px; }
 .transcriptText::-webkit-scrollbar-thumb:hover { background: rgba(244, 0, 118, 0.5); }
+
+/* ── Control row: [CC] [orb] [mic] ─────────────────────────────── */
+.controlRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 8px;
+  flex-shrink: 0;
+  margin-top: auto;
+}
 
 /* ── Mic stage ──────────────────────────────────────────────────── */
 .micStage {
@@ -240,28 +250,28 @@
 
 /* ── Transcript toggle ──────────────────────────────────────────── */
 .transcriptToggle {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  min-height: 52px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  color: rgba(244, 0, 118, 0.85);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  border: none;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 13px;
-  letter-spacing: 0.03em;
-  padding: 8px 0;
+  justify-content: center;
+  padding: 0;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
   font-family: inherit;
 }
 
-.transcriptToggle:hover { color: #ffffff; }
-
-.transcriptToggleIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(244, 0, 118, 0.85);
+.transcriptToggle:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(244, 0, 118, 0.4);
+  color: #f40076;
 }
 
 /* ── End call ───────────────────────────────────────────────────── */
@@ -288,8 +298,8 @@
 /* ── Particle Orb (WebGL particle sphere) ───────────────────────── */
 .orbWrap {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -348,7 +358,6 @@
     max-width: 100vw;
     max-height: 100dvh;
     border-radius: 0;
-    /* Prevent the background page from scrolling through the overlay */
     overscroll-behavior: none;
     touch-action: pan-y;
   }
@@ -360,13 +369,11 @@
 
   .voiceChat {
     padding: calc(14px + env(safe-area-inset-top)) 16px calc(18px + env(safe-area-inset-bottom));
-    /* Allow the panel itself to absorb overscroll so page behind stays locked */
     overflow-y: auto;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Body must not scroll when widget is open — lock it via the widget overlay */
   .voiceBody {
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -374,11 +381,11 @@
 
   .transcriptCopy {
     height: auto;
-    max-height: 180px;
+    max-height: 90px;
   }
 
   .orbWrap {
-    width: 130px;
-    height: 130px;
+    width: 110px;
+    height: 110px;
   }
 }

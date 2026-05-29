@@ -10,7 +10,7 @@ import {
   validateReviewForm,
 } from '@/components/essay-review/lib/reviewForm.js';
 import { trackAiToolEvent } from '@/lib/analytics/events.js';
-import { fileToBase64, gatewayPost } from '@/lib/browser/client.js';
+import { uploadPdf, gatewayPost } from '@/lib/browser/client.js';
 
 const inputClassName =
   'w-full rounded-md border border-[#ddcfda] bg-white px-4 py-3 text-sm text-[#3f1831] shadow-sm outline-none transition placeholder:text-[#9a8a9d] focus:border-[#f40076] focus:ring-4 focus:ring-[#f9dbe8]';
@@ -46,6 +46,7 @@ export default function EssayReviewTool() {
   const [pdfFile, setPdfFile] = useState(null);
   const [results, setResults] = useState(null);
   const [runId, setRunId] = useState(null);
+  const [claimToken, setClaimToken] = useState(null);
   const [unlocked, setUnlocked] = useState(false);
   const [reviewForm, setReviewForm] = useState(INITIAL_REVIEW_FORM);
   const [validationErrors, setValidationErrors] = useState({});
@@ -102,6 +103,7 @@ export default function EssayReviewTool() {
     setPdfFile(null);
     setResults(null);
     setRunId(null);
+    setClaimToken(null);
     setUnlocked(false);
     setReviewForm(INITIAL_REVIEW_FORM);
     setValidationErrors({});
@@ -182,6 +184,7 @@ export default function EssayReviewTool() {
 
     setResults(null);
     setRunId(null);
+    setClaimToken(null);
     setUnlocked(false);
     setValidationErrors({});
     setStatus({
@@ -197,10 +200,10 @@ export default function EssayReviewTool() {
     });
 
     try {
+      const fileKey = pdfFile ? await uploadPdf(pdfFile) : null;
       const data = await gatewayPost('/tools/essay-review/review', {
         reviewForm,
-        pdfBase64: pdfFile ? await fileToBase64(pdfFile) : '',
-        pdfMimeType: pdfFile?.type || '',
+        ...(fileKey ? { fileKey } : {}),
       });
 
       if (!data || !data.result) {
@@ -209,6 +212,7 @@ export default function EssayReviewTool() {
 
       setResults(data.result);
       setRunId(data.runId || null);
+      setClaimToken(data.claimToken || null);
       setStatus({
         type: 'success',
         message:
@@ -239,7 +243,7 @@ export default function EssayReviewTool() {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-gradient-to-br from-[#fdf7fa] to-white">
       <section className="mx-auto max-w-4xl px-4 pt-10 pb-6 md:px-6 md:pt-12">
         <p className="text-xs font-semibold uppercase tracking-wider text-main">
           AI Essay Reviewer
@@ -247,7 +251,8 @@ export default function EssayReviewTool() {
         <h1 className="mt-2 text-2xl md:text-3xl font-bold text-[#3f1831] leading-tight">
           Rate your SOP before it reaches admissions
         </h1>
-        <p className="mt-3 text-base text-grey leading-relaxed max-w-2xl">
+        <div className="mt-3 h-1 w-14 rounded-full bg-gradient-to-r from-main to-blurpink" />
+        <p className="mt-4 text-base text-grey leading-relaxed max-w-2xl">
           Paste your draft (or upload a PDF) and get an admissions-style score,
           priority fixes, and line-level rewrites — across 6 rubric dimensions.
         </p>
@@ -293,8 +298,8 @@ export default function EssayReviewTool() {
                       type="button"
                       className={`rounded-md border px-5 py-4 text-left transition ${
                         isActive
-                          ? 'border-[#e8dde3] bg-light shadow-sm'
-                          : 'border-[#e8dde3] bg-white hover:border-[#e8dde3] hover:bg-light'
+                          ? 'border-main/40 bg-light shadow-sm'
+                          : 'border-[#e8dde3] bg-white hover:border-main/20 hover:bg-light'
                       }`}
                       onClick={() => setField('documentType', item.value)}
                     >
@@ -472,7 +477,7 @@ export default function EssayReviewTool() {
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <button
                 type="button"
-                className="inline-flex flex-1 items-center justify-center rounded-md bg-main px-5 py-4 text-sm font-semibold text-white shadow-sm transition hover:translate-y-[-1px] hover:shadow-sm"
+                className="inline-flex flex-1 items-center justify-center rounded-full bg-main px-5 py-4 text-sm font-semibold text-white shadow-sm transition hover:translate-y-[-1px] hover:shadow-sm"
                 onClick={reviewEssay}
                 disabled={status.type === 'loading'}
               >
@@ -482,7 +487,7 @@ export default function EssayReviewTool() {
               </button>
               <button
                 type="button"
-                className="inline-flex items-center justify-center rounded-md border border-[#e8dde3] px-5 py-4 text-sm font-semibold text-grey transition hover:border-[#e8dde3] hover:bg-light"
+                className="inline-flex items-center justify-center rounded-full border border-[#e8dde3] px-5 py-4 text-sm font-semibold text-grey transition hover:border-[#e8dde3] hover:bg-light"
                 onClick={resetAll}
               >
                 Clear draft
@@ -496,6 +501,7 @@ export default function EssayReviewTool() {
               isLoading={status.type === 'loading'}
               draftWordCount={draftWordCount}
               runId={runId}
+              claimToken={claimToken}
               unlocked={unlocked}
               onUnlock={handleUnlock}
             />

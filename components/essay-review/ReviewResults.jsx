@@ -1,3 +1,5 @@
+import ContactGateCard from '@/components/ai-tools/ContactGateCard.jsx';
+
 const SCORE_PALETTES = [
   {
     min: 85,
@@ -16,8 +18,7 @@ const SCORE_PALETTES = [
   },
 ];
 
-const shellClass =
-  'rounded-md border border-[#e8dde3] bg-white p-6 shadow-sm';
+const shellClass = 'rounded-md border border-[#e8dde3] bg-white p-6 shadow-sm';
 
 const getPalette = (score) =>
   SCORE_PALETTES.find((palette) => score >= palette.min) || SCORE_PALETTES[2];
@@ -35,9 +36,16 @@ const EmptyState = () => (
       and a stronger sample excerpt in one pass.
     </p>
     <ul className="grid gap-2 text-sm text-grey">
-      <li className="flex gap-2"><span className="text-main">•</span> Weighted rubric for admissions</li>
-      <li className="flex gap-2"><span className="text-main">•</span> Specific feedback for SOPs &amp; supplements</li>
-      <li className="flex gap-2"><span className="text-main">•</span> High-impact fixes before submission</li>
+      <li className="flex gap-2">
+        <span className="text-main">•</span> Weighted rubric for admissions
+      </li>
+      <li className="flex gap-2">
+        <span className="text-main">•</span> Specific feedback for SOPs &amp;
+        supplements
+      </li>
+      <li className="flex gap-2">
+        <span className="text-main">•</span> High-impact fixes before submission
+      </li>
     </ul>
   </div>
 );
@@ -45,20 +53,21 @@ const EmptyState = () => (
 const LoadingState = () => (
   <div className={`${shellClass} animate-pulse space-y-5`}>
     <div className="h-5 w-36 rounded-full bg-[#f1dfe8]" />
-    <div className="grid gap-4 md:grid-cols-[220px_minmax(0,1fr)]">
-      <div className="rounded-md bg-[#f7ecf1] p-5">
-        <div className="mx-auto h-28 w-28 rounded-full bg-[#eedbe5]" />
-        <div className="mx-auto mt-4 h-4 w-24 rounded-full bg-[#eedbe5]" />
+    <div className="grid gap-5 lg:grid-cols-[220px_minmax(0,1fr)]">
+      <div className="rounded-md bg-[#f2c4d8] p-5">
+        <div className="mx-auto h-32 w-32 rounded-full bg-[#e8aac8]" />
+        <div className="mx-auto mt-4 h-4 w-24 rounded-full bg-[#e8aac8]" />
       </div>
       <div className="space-y-4">
         <div className="h-24 rounded-md bg-[#f7ecf1]" />
-        <div className="grid gap-3 sm:grid-cols-2">
-          <div className="h-28 rounded-md bg-[#f7ecf1]" />
-          <div className="h-28 rounded-md bg-[#f7ecf1]" />
+        <div className="grid gap-3 sm:grid-cols-3">
+          <div className="h-20 rounded-md bg-[#f7ecf1]" />
+          <div className="h-20 rounded-md bg-[#f7ecf1]" />
+          <div className="h-20 rounded-md bg-[#f7ecf1]" />
         </div>
       </div>
     </div>
-    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+    <div className="grid gap-3 md:grid-cols-2">
       {Array.from({ length: 6 }).map((_, index) => (
         <div
           key={`score-skeleton-${index}`}
@@ -122,14 +131,12 @@ const ListCard = ({ title, items, accent }) => (
   </div>
 );
 
-// eslint-disable-next-line import/order
-import ContactGateCard from '@/components/ai-tools/ContactGateCard.jsx';
-
 export default function ReviewResults({
   results,
   isLoading,
   draftWordCount,
   runId,
+  claimToken,
   unlocked = false,
   onUnlock,
 }) {
@@ -209,9 +216,7 @@ export default function ReviewResults({
       </div>
 
       {unlocked && results.coachSummary && (
-        <div
-          className={`${shellClass} bg-light`}
-        >
+        <div className={`${shellClass} bg-light`}>
           <p className="text-xs font-semibold uppercase tracking-wider text-grey">
             Admissions coach summary
           </p>
@@ -288,15 +293,24 @@ export default function ReviewResults({
                 Get every line edit, priority fix, and revised excerpt.
               </h3>
               <ul className="mt-4 space-y-2 text-sm leading-6 text-grey">
-                <li>• {results.priorityFixes?.length || 0} prioritized high-impact fixes with revision moves</li>
-                <li>• {results.sentenceEdits?.length || 0} line-level before/after rewrites with rationale</li>
+                <li>
+                  • {results.priorityFixes?.length || 0} prioritized high-impact
+                  fixes with revision moves
+                </li>
+                <li>
+                  • {results.sentenceEdits?.length || 0} line-level before/after
+                  rewrites with rationale
+                </li>
                 <li>• Stronger sample excerpt rewriting the weakest section</li>
-                <li>• Personalised admissions coach summary + next-draft checklist</li>
+                <li>
+                  • Personalised admissions coach summary + next-draft checklist
+                </li>
               </ul>
             </div>
             <ContactGateCard
               toolName="essay_review"
               runId={runId}
+              claimToken={claimToken}
               title="Unlock the detailed feedback"
               subtitle="Line edits, sample rewrite, and the next-draft checklist — free, on WhatsApp + email."
               primaryCta="Send my detailed review"
@@ -377,9 +391,7 @@ export default function ReviewResults({
       )}
 
       {unlocked && results.revisedExcerpt && (
-        <div
-          className={`${shellClass} bg-light`}
-        >
+        <div className={`${shellClass} bg-light`}>
           <h3 className="text-xl font-semibold text-[#3f1831]">
             Stronger sample excerpt
           </h3>

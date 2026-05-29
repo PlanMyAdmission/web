@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import uniStyles from '@/components/ai-university-search/AIUniversitySearch.module.css';
 import { trackAiToolEvent } from '@/lib/analytics/events.js';
-import { fileToBase64, gatewayPost } from '@/lib/browser/client.js';
+import { uploadPdf, gatewayPost } from '@/lib/browser/client.js';
 import SearchHeader from '@/components/ai-university-search/SearchHeader.jsx';
 import ProfileUpload from '@/components/ai-university-search/ProfileUpload.jsx';
 import ResultsPanel from '@/components/ai-university-search/ResultsPanel.jsx';
@@ -25,10 +25,10 @@ const cx = (...classNames) =>
     .join(' ');
 
 const AIUniversitySearch = () => {
-  const [, setFormStartedAt] = useState(() => Date.now());
   const [results, setResults] = useState(null);
   const [preview, setPreview] = useState(null);
   const [runId, setRunId] = useState(null);
+  const [claimToken, setClaimToken] = useState(null);
   const [unlocked, setUnlocked] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const [activeStep, setActiveStep] = useState(0);
@@ -116,6 +116,7 @@ const AIUniversitySearch = () => {
     setResults(null);
     setPreview(null);
     setRunId(null);
+    setClaimToken(null);
     setUnlocked(false);
     trackAiToolEvent({
       toolName: 'university_matchmaker',
@@ -126,10 +127,10 @@ const AIUniversitySearch = () => {
     });
 
     try {
+      const fileKey = pdfFile ? await uploadPdf(pdfFile) : null;
       const data = await gatewayPost('/tools/university-match/match', {
         searchProfile,
-        pdfBase64: pdfFile ? await fileToBase64(pdfFile) : '',
-        pdfMimeType: pdfFile?.type || '',
+        ...(fileKey ? { fileKey } : {}),
       });
       const parsed = data?.result;
       if (!parsed) {
@@ -139,6 +140,7 @@ const AIUniversitySearch = () => {
       setResults(parsed);
       setPreview(data?.preview || null);
       setRunId(data?.runId || null);
+      setClaimToken(data?.claimToken || null);
       trackAiToolEvent({
         toolName: 'university_matchmaker',
         action: 'generate',
@@ -193,12 +195,12 @@ const AIUniversitySearch = () => {
     setResults(null);
     setPreview(null);
     setRunId(null);
+    setClaimToken(null);
     setUnlocked(false);
     setValidationErrors({});
     setActiveStep(0);
     setStatus({ type: 'idle', message: '' });
     setSearchProfile(INITIAL_SEARCH_PROFILE);
-    setFormStartedAt(Date.now());
   };
 
   return (
@@ -249,6 +251,7 @@ const AIUniversitySearch = () => {
         results={results}
         preview={preview}
         runId={runId}
+        claimToken={claimToken}
         unlocked={unlocked}
         onUnlock={handleUnlock}
       />

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const AIToolShell = ({ eyebrow, title, subtitle, children }) => (
-  <div className="bg-white">
+  <div className="bg-gradient-to-br from-[#fdf7fa] to-white">
     <div className="mx-auto max-w-4xl px-4 py-8 md:py-12 md:px-6">
       {eyebrow ? (
         <p className="text-xs font-semibold uppercase tracking-wider text-main mb-3">
@@ -11,8 +11,9 @@ const AIToolShell = ({ eyebrow, title, subtitle, children }) => (
       <h1 className="text-2xl md:text-3xl font-bold text-[#3f1831] leading-tight">
         {title}
       </h1>
+      <div className="mt-3 h-1 w-14 rounded-full bg-gradient-to-r from-main to-blurpink" />
       {subtitle ? (
-        <p className="mt-3 text-base text-grey leading-relaxed max-w-2xl">
+        <p className="mt-4 text-base text-grey leading-relaxed max-w-2xl">
           {subtitle}
         </p>
       ) : null}
@@ -23,7 +24,7 @@ const AIToolShell = ({ eyebrow, title, subtitle, children }) => (
 
 export const AIToolCard = ({ children, className = '' }) => (
   <div
-    className={`rounded-md border border-[#e8dde3] bg-white p-6 md:p-7 shadow-sm ${className}`}
+    className={`rounded-md border border-[#efc5d9] bg-[#fdfaf9] p-6 md:p-7 shadow-sm ${className}`}
   >
     {children}
   </div>
@@ -63,11 +64,12 @@ export const inputClass =
 
 export const AIToolChips = ({ options, value, onChange, multi = false, max }) => {
   const selected = multi ? value || [] : value;
+  const atMax = multi && max != null && selected.length >= max;
   const isActive = (v) => (multi ? selected.includes(v) : selected === v);
   const toggle = (v) => {
     if (!multi) return onChange(v === selected ? '' : v);
     if (selected.includes(v)) return onChange(selected.filter((x) => x !== v));
-    if (max && selected.length >= max) return onChange([...selected.slice(1), v]);
+    if (atMax) return;
     return onChange([...selected, v]);
   };
   return (
@@ -76,14 +78,18 @@ export const AIToolChips = ({ options, value, onChange, multi = false, max }) =>
         const v = typeof opt === 'string' ? opt : opt.value;
         const label = typeof opt === 'string' ? opt : opt.label;
         const active = isActive(v);
+        const locked = atMax && !active;
         return (
           <button
             key={v}
             type="button"
             onClick={() => toggle(v)}
+            disabled={locked}
             className={`px-3 py-2 text-sm rounded-md border transition-colors ${
               active
                 ? 'bg-main text-white border-main'
+                : locked
+                ? 'bg-white text-[#b8a8be] border-[#e8dde3] cursor-not-allowed'
                 : 'bg-white text-[#3f1831] border-[#e8dde3] hover:border-main'
             }`}
           >
@@ -101,7 +107,7 @@ export const AIToolActions = ({ onBack, onNext, nextLabel = 'Continue', disabled
       <button
         type="button"
         onClick={onBack}
-        className="px-4 py-2.5 rounded-md border border-[#e8dde3] text-[#3f1831] hover:bg-light transition-colors"
+        className="px-4 py-2.5 rounded-full border border-[#e8dde3] text-[#3f1831] hover:bg-light transition-colors"
       >
         Back
       </button>
@@ -112,7 +118,7 @@ export const AIToolActions = ({ onBack, onNext, nextLabel = 'Continue', disabled
       type="button"
       onClick={onNext}
       disabled={disabled}
-      className={`px-6 py-2.5 rounded-md bg-main text-white font-semibold transition-colors ${
+      className={`px-6 py-2.5 rounded-full bg-main text-white font-semibold transition-colors ${
         disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-main/90'
       }`}
     >

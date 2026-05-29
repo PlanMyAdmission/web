@@ -1,8 +1,15 @@
-import { Block, Lines, Panel, SectionLabel } from '@/components/loading/skeletons/primitives.jsx';
+import {
+  Block,
+  Lines,
+  Panel,
+  SectionLabel,
+} from '@/components/loading/skeletons/primitives.jsx';
 
-export const MatchmakerSkeleton = () => (
+export const MatchmakerSkeleton = ({
+  label = 'Loading AI University Matchmaker',
+}) => (
   <div role="status" className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10">
-    <span className="sr-only">Loading AI University Matchmaker</span>
+    <span className="sr-only">{label}</span>
     <div className="space-y-6">
       <div className="rounded-[32px] bg-[linear-gradient(135deg,#fff3f8_0%,#f7ecf1_55%,#fff8fb_100%)] p-6 md:p-8">
         <div className="max-w-3xl space-y-5">
@@ -15,7 +22,10 @@ export const MatchmakerSkeleton = () => (
         <div className="space-y-4">
           <div className="flex flex-wrap gap-3">
             {Array.from({ length: 3 }).map((_, index) => (
-              <Block key={`step-pill-${index}`} className="h-10 w-28 rounded-full bg-[#ece7ea]" />
+              <Block
+                key={`step-pill-${index}`}
+                className="h-10 w-28 rounded-full bg-[#ece7ea]"
+              />
             ))}
           </div>
           <Block className="h-2 w-full rounded-full bg-[#ece7ea]" />
@@ -44,7 +54,10 @@ export const ExploreSearchSkeleton = () => (
         </div>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {Array.from({ length: 8 }).map((_, index) => (
-            <Block key={`filter-${index}`} className="h-12 rounded-xl bg-white/80" />
+            <Block
+              key={`filter-${index}`}
+              className="h-12 rounded-xl bg-white/80"
+            />
           ))}
         </div>
       </div>
@@ -69,12 +82,17 @@ export const ExploreResultSkeleton = () => (
     <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px]">
       <Panel className="space-y-5 p-5">
         <Block className="h-6 w-44 rounded-full bg-[#ece7ea]" />
-        <Lines widths={['w-full', 'w-full', 'w-11/12', 'w-full', 'w-10/12', 'w-4/5']} />
+        <Lines
+          widths={['w-full', 'w-full', 'w-11/12', 'w-full', 'w-10/12', 'w-4/5']}
+        />
       </Panel>
       <Panel className="space-y-4 p-5">
         <Block className="h-6 w-28 rounded-full bg-[#ece7ea]" />
         {Array.from({ length: 4 }).map((_, index) => (
-          <Block key={`side-block-${index}`} className="h-16 rounded-2xl bg-[#ece7ea]" />
+          <Block
+            key={`side-block-${index}`}
+            className="h-16 rounded-2xl bg-[#ece7ea]"
+          />
         ))}
       </Panel>
     </div>

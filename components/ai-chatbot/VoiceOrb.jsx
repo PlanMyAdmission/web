@@ -78,15 +78,36 @@ const VoiceOrb = () => {
               <div className={styles.transcriptText}>{transcriptText}</div>
             </div>
 
-            <div
-              className={`${styles.orbWrap} ${orbStateClass}`}
-              aria-hidden="true"
-            >
-              <div className={styles.orbAura} />
-              <ParticleOrb stream={micStream} active={micListening} />
-            </div>
+            <div className={styles.controlRow}>
+              <button
+                className={styles.transcriptToggle}
+                type="button"
+                aria-pressed={transcriptsVisible}
+                aria-label={transcriptsVisible ? 'Hide transcript' : 'Show transcript'}
+                onClick={toggleTranscripts}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ width: 20, height: 20 }}
+                >
+                  <rect x="2" y="6" width="20" height="12" rx="2" />
+                  <path d="M6 10h4M6 14h8" />
+                </svg>
+              </button>
 
-            <div className={styles.micStage}>
+              <div
+                className={`${styles.orbWrap} ${orbStateClass}`}
+                aria-hidden="true"
+              >
+                <div className={styles.orbAura} />
+                <ParticleOrb stream={micStream} active={micListening} />
+              </div>
+
               <button
                 className={`${styles.mainMic} ${isMuted ? styles.mainMicMuted : ''}`}
                 type="button"
@@ -103,33 +124,7 @@ const VoiceOrb = () => {
                   <Mic style={{ width: 26, height: 26 }} aria-hidden="true" />
                 )}
               </button>
-              <span className={styles.micHint}>
-                {isMuted ? 'Tap to Unmute' : 'Tap to Mute'}
-              </span>
             </div>
-
-            <button
-              className={styles.transcriptToggle}
-              type="button"
-              aria-pressed={transcriptsVisible}
-              onClick={toggleTranscripts}
-            >
-              <span className={styles.transcriptToggleIcon} aria-hidden="true">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ width: 20, height: 20 }}
-                >
-                  <rect x="2" y="6" width="20" height="12" rx="2" />
-                  <path d="M6 10h4M6 14h8" />
-                </svg>
-              </span>
-              {transcriptsVisible ? 'Hide Transcript' : 'Show Transcript'}
-            </button>
 
             <button
               className={styles.endCall}
