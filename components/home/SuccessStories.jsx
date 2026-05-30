@@ -12,10 +12,7 @@ const Bhavesh = '/images/home/Bhavesh .jpg';
 const Mansi = '/images/home/Mansi .jpg';
 const Deepanshi = '/images/home/Deepanshi .jpg';
 const Mitransh = '/images/home/Mitransh .jpg';
-const Testimony1 = '/images/testimonials/PlanMyAdmission -1.png';
-const Testimony2 = '/images/testimonials/PlanMyAdmission -2.png';
-const Testimony3 = '/images/testimonials/PlanMyAdmission -3.png';
-const Testimony4 = '/images/testimonials/PlanMyAdmission -4.png';
+
 const responsive = {
   mobile: {
     breakpoint: {
@@ -42,23 +39,19 @@ const responsive = {
 const dataYT = [
   {
     id: 1,
-    thumbnail: Testimony1,
-    link: 'https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-1.mp4?alt=media&token=a08295c7-6864-4985-ba53-200165452c02',
+    videoId: 'vpnCunS28oM',
   },
   {
     id: 2,
-    thumbnail: Testimony2,
-    link: 'https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-2.mp4?alt=media&token=0e431a07-9cf3-4094-abb6-924d6c6b4738',
+    videoId: 'M7cM1c2qKmA',
   },
   {
     id: 3,
-    thumbnail: Testimony3,
-    link: 'https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-3.mp4?alt=media&token=01e090cc-aae4-4d0f-9d8d-9e4e644a4f40',
+    videoId: '6Jcq9jwOya8',
   },
   {
     id: 4,
-    thumbnail: Testimony4,
-    link: 'https://firebasestorage.googleapis.com/v0/b/abroad-studies.appspot.com/o/testimonials%2FPlanMyAdmission%20-4.mp4?alt=media&token=8475eae3-eb40-4c49-a59c-22f7ca80d419',
+    videoId: 'Evyzp-rBRuA',
   },
 ];
 const dataTestimo = [
@@ -160,20 +153,22 @@ const SuccessStories = () => {
 };
 const YouTube = ({ props }) => {
   const [play, setPlay] = useState(false);
+  const thumbnail = `https://img.youtube.com/vi/${props.videoId}/hqdefault.jpg`;
+  const embedUrl = `https://www.youtube.com/embed/${props.videoId}?autoplay=1&rel=0`;
   return (
     <div className="w-full max-w-sm mx-auto aspect-[9/16] relative rounded-xl overflow-hidden bg-black shadow-md">
       {play ? (
-        <video
-          src={props.link}
-          controls
-          autoPlay
-          className="w-full h-full object-cover"
-          preload="metadata"
+        <iframe
+          src={embedUrl}
+          title="YouTube video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="w-full h-full"
         />
       ) : (
         <>
           <Image
-            src={props.thumbnail}
+            src={thumbnail}
             alt="Video Thumbnail"
             className="w-full h-full object-cover"
             fill
